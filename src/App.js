@@ -9,11 +9,11 @@ import TestPage from './Pages/TestPage/TestPage';
 import ListProduct from './Pages/DetailPage/ListProduct';
 import AdminLayout from './Layout/AdminLayout';
 import AdminPage from './Pages/AdminPage/AdminPage';
+import Feedbacks from './Pages/Feedbacks/Feedbacks';
 
 function App() {
   return (
     <div className="min-h-screen">
-
 
        <BrowserRouter>
         <Routes>
@@ -24,6 +24,7 @@ function App() {
            */}
           <Route path='*' element={<NotFoundPage />} />
           <Route path='/test' element={<Layout Component={TestPage} />} />
+          <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />
           <Route path='/detail' element={<Layout Component={ListProduct} />} />
 
         </Routes>
@@ -33,3 +34,4 @@ function App() {
 }
 
 export default App;
+
