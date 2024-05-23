@@ -1,0 +1,30 @@
+import Header from '../Components/Header/Header'
+import React from 'react'
+import Footer from '../Components/Footer/Footer'
+import NavSide from '../Components/NavSide/NavSide'
+
+export default function ({ Component }) {
+    return (
+        <div className='min-h-screen h-full flex flex-col space-y-10'>
+            <Header />
+            <div 
+                style={{
+                    margin : '0',
+                    display : 'flex',
+            }}>
+                <div
+                    style={{
+                        width: '13%',
+                        height: '80vh'
+                    }}
+                >
+                    <NavSide />
+                </div>
+                <div className="flex-grow">
+                    <Component />
+                </div>
+            </div>
+            <Footer />
+        </div>
+    )
+}

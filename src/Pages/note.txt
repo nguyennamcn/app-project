@@ -1,0 +1,2 @@
+mỗi 1 trang tạo 1 folder trong đó sẽ chứa page 
+gồm đuôi .js chữ đầu viết hoa
