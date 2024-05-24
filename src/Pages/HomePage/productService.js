@@ -1,11 +1,8 @@
-import axios from "axios"
-import { BASE_URL, configHeader, https} from "../../service/config"
+import {https} from "../../service/config"
 
 export const productServ={
-    getItemList: () => {
+    getProductList: () => {
         return https.get("");
     },
-    getDetailItem: (itemID) => {
-        return https.get(`link=${itemID}`)
-    }
+
 }
