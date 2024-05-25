@@ -14,6 +14,19 @@ const items = [
 
 export default function DetailPage() {
     const [sanPham, setSanPham] = useState([]);
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [stock, setStock] = useState({
+        12: 10,
+        13: 15,
+        14: 20,
+        15: 5,
+        16: 8,
+        17: 12,
+        18: 7,
+        19: 3,
+        20: 9,
+        21: 6,
+    });
 
     useEffect(() => {
         adornicaServ.getDetailProduct()
@@ -25,6 +38,10 @@ export default function DetailPage() {
                 console.log(err);
             });
     }, []);
+
+    const handleSizeClick = (size) => {
+        setSelectedSize(size);
+    };
 
     return (
         <div style={{ display: 'flex', marginTop: '10px', marginLeft:'70px' }}>
@@ -107,9 +124,27 @@ export default function DetailPage() {
                     <p style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '20px' }}>Size</p>
                     <div style={{ display: 'flex', alignItems: 'center' ,marginLeft:'170px'}}>
                         {[12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(size => (
-                            <button key={size} style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}>{size}</button>
+                            <button
+                                key={size}
+                                style={{
+                                    width: '30px',
+                                    height: '30px',
+                                    border: '1px solid #000',
+                                    margin: '0 5px',
+                                    cursor: 'pointer',
+                                    backgroundColor: selectedSize === size ? 'lightblue' : 'white',
+                                }}
+                                onClick={() => handleSizeClick(size)}
+                            >
+                                {size}
+                            </button>
                         ))}
                     </div>
+                    {selectedSize !== null && (
+                        <div style={{ marginTop: '20px', fontSize: '20px', marginLeft:'170px' }}>
+                            <p>Available Stock for Size {selectedSize}: {stock[selectedSize]}</p>
+                        </div>
+                    )}
                     <div style={{ display: 'flex', alignItems: 'center', marginTop: '30px' }}>
                         <p style={{ fontSize: '20px', fontWeight: 'bold', marginRight: '200px' }}>Quantity</p>
                         <button style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}>-</button>
@@ -122,5 +157,3 @@ export default function DetailPage() {
         </div>
     );
 }
-
-
