@@ -20,7 +20,9 @@ export default function ({ Component }) {
                 >
                     <NavSide />
                 </div>
-                <div className="flex-grow">
+                <div className="flex-grow" style={{
+                    width : '87%'
+                }}>
                     <Component />
                 </div>
             </div>

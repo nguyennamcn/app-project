@@ -44,12 +44,9 @@ export default function DetailPage() {
     };
 
     return (
-        <div style={{ display: 'flex', marginTop: '10px', marginLeft:'70px' }}>
-            {/* Left side: Images and Product Information */}
-            <div style={{ display: 'flex', flexDirection: 'column', marginRight: '20px' }}>
-                {/* Images Container */}
+        <div style={{ display: 'flex',  height: '50vh', width: '100%'}}>
+            <div style={{ display: 'flex', flexDirection: 'column'}}>
                 <div style={{ display: 'flex' }}>
-                    {/* Image Thumbnails */}
                     <div style={{ display: 'flex', flexDirection: 'column', marginRight: '20px' }}>
                         <img
                             style={{
@@ -85,7 +82,7 @@ export default function DetailPage() {
                         src="https://cdn.pnj.io/images/detailed/205/sp-gnddddw060595-nhan-kim-cuong-vang-trang-kim-cuong-pnj-1.png" alt="h4" />
                 </div>
                 {/* Product Information */}
-                <div style={{ marginTop: '20px' }}>
+                <div style={{ }}>
                     <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
                     <div style={{ display: 'flex', marginTop: '5px' }}>
                         <div style={{ marginRight: '130px',fontSize:'20px' }}>
