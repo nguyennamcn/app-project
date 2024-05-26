@@ -46,10 +46,10 @@ export default function DetailPage() {
     };
 
     return (
-        <div style={{ display: 'flex', height: '50vh', width: '100%' ,marginTop:'10px' }}>
+        <div style={{ display: 'flex', height: '50vh' ,marginTop:'40px',marginLeft:'50px' }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ marginLeft: '30px',display: 'flex' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginRight: '20px' }}>
+                <div style={{ width :'1300px',marginLeft: '50px',display: 'flex' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column',}}>
                         <img
                             style={{ width: '100px', height: '100px', marginBottom: '20px', border: '1px solid #000', marginTop: '20px' }}
                             src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png"
@@ -71,44 +71,25 @@ export default function DetailPage() {
                     </div>
                     {/* Main Image */}
                     <img
-                        style={{width: '400px', height: '400px' }}
+                        style={{width: '350px', height: '350px' ,marginLeft:'30px'}}
                         src={mainImageSrc}
                         alt="Main product image"
                     />
-                </div>
-                {/* Product Information */}
-                <div style={{ marginLeft:'25px',marginTop:'30px'}}>
-                    <span style={{ fontSize: '22px', fontWeight: 'bold' }}>Product information</span>
-                    <div style={{ display: 'flex', marginTop: '5px' }}>
-                        <div style={{ marginRight: '130px', fontSize: '20px' }}>
-                            <div>ID: 120576</div>
-                            <div>Gender: Female</div>
-                            <div>Category: Ring</div>
-                        </div>
-                        <div style={{fontSize: '20px'}}>
-                            <div>Weight: 140g</div>
-                            <div>Material: White gold</div>
-                            <div>Gem: Natural diamonds</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            {/* Right side: Description and Price */}
-            <div style={{ flex: 1, marginLeft: '20px' }}>
+                <div style={{ flex: 1 }}>
                 {/* Title with Close Button */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <p style={{ fontSize: '35px', fontWeight: '500', marginLeft: '100px', marginBottom: '30px' }}>White gold rings 12057</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' ,marginLeft:'250px'}}>
+                    <p style={{ fontSize: '35px', fontWeight: '500', marginBottom: '30px' }}>White gold rings 12057</p>
                     <button style={{ background: 'red',borderRadius: '100%', width: '40px', height: '40px',  color: 'white', fontWeight: 'bold', cursor: 'pointer' }}
                      >
                         X
                     </button>
                 </div>
                 {/* Description and Pricing Details */}
-                <div style={{ marginLeft: '100px'}}>
+                <div style={{marginLeft:'250px'}}>
                     <div style={{display:'flex',marginBottom: '15px'}}>
-                            <p style={{fontSize: '23px',fontWeight: 'bold',  }}>Price of the product:</p>
-                            <h1 style={{marginLeft:'170px' ,fontSize: '45px',color: 'red',fontWeight: 'bold'}}>1900,37 $</h1>
+                            <p style={{fontSize: '23px',fontWeight: 'bold', marginRight:'50px' }}>Price of the product:</p>
+                            <h1 style={{ fontSize: '45px',color: 'red',fontWeight: 'bold'}}>1900,37 $</h1>
                     </div>
                     <div style={{  fontSize: '23px',marginBottom:'10px' }}>
                             <p style={{fontWeight: 'bold', }}>Description</p>
@@ -160,6 +141,30 @@ export default function DetailPage() {
                     <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }}>ADD</button>
                 </div>
             </div>
+                </div>
+                {/* Product Information */}
+                <div style={{ marginLeft:'40px'}}>
+                    <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
+                    <div style={{ display: 'flex', marginTop: '5px' }}>
+                        <div style={{  fontSize: '15px' ,marginRight:'150px'}}>
+                            <div>ID: 120576</div>
+                            <div>Gender: Female</div>
+                            <div>Category: Ring</div>
+                        </div>
+                        <div style={{fontSize: '15px'}}>
+                            <div>Weight: 140g</div>
+                            <div>Material: White gold</div>
+                            <div>Gem: Natural diamonds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Right side: Description and Price */}
+            {/* < style={{ flex: 1 }}>
+                {/* Title with Close Button */}
+              
+            
         </div>
     );
 }
