@@ -17,7 +17,7 @@ const LoginPage = () => {
     console.log('Success:', values);
     userService.postLogin(values)
       .then((res) => {
-        message.success("login thành công");
+        message.success("login successfully");
         // lưu thông tin user vào localStorage
         localService.set(res.data.content);
         dispatch(setLoginAction(
@@ -31,7 +31,7 @@ const LoginPage = () => {
         console.log(res);
       })
       .catch((err) => {
-        message.error("đăng nhập thất bại");
+        message.error("login failed");
         console.log(err);
       })
   };
@@ -96,7 +96,7 @@ const LoginPage = () => {
                   </Form.Item>
                   <Form.Item className="flex justify-center" wrapperCol={{ span: 24 }}>
                     <Button className="bg-black text-yellow-600 hover:text-white hover:border-hidden" htmlType="submit">
-                      Đăng Nhập
+                      Login
                     </Button>
                   </Form.Item>
                 </Form>
