@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 
-const onChange = (key) => {
-    console.log(key);
-};
-const items = [
-    {
-        key: '1',
-        label: `Tab 1`,
-        children: `Content of Tab Pane 1`,
-    },
-];
-
 export default function DetailPage() {
     const [sanPham, setSanPham] = useState([]);
     const [selectedSize, setSelectedSize] = useState(null);
+    const [mainImageSrc, setMainImageSrc] = useState('https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png');
     const [stock, setStock] = useState({
         12: 10,
         13: 15,
@@ -27,6 +17,7 @@ export default function DetailPage() {
         20: 9,
         21: 6,
     });
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         adornicaServ.getDetailProduct()
@@ -43,83 +34,70 @@ export default function DetailPage() {
         setSelectedSize(size);
     };
 
+    const handleImageClick = (newSrc) => {
+        setMainImageSrc(newSrc);
+    };
+
+    const handleQuantityChange = (change) => {
+        setQuantity(prevQuantity => {
+            const newQuantity = prevQuantity + change;
+            return newQuantity > 0 ? newQuantity : 1;
+        });
+    };
+
     return (
-        <div style={{ display: 'flex',  height: '50vh', width: '100%'}}>
-            <div style={{ display: 'flex', flexDirection: 'column'}}>
-                <div style={{ display: 'flex' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', marginRight: '20px' }}>
+        <div style={{ display: 'flex', height: '50vh' ,marginTop:'40px',marginLeft:'50px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ width :'1300px',marginLeft: '50px',display: 'flex' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column',}}>
                         <img
-                            style={{
-                                width: '100px',
-                                height: '100px',
-                                marginBottom: '20px',
-                                border: '1px solid #000',
-                                marginTop: '20px',
-                            }}
-                            src="https://cdn.pnj.io/images/detailed/206/on-gnddddw060595-nhan-kim-cuong-vang-trang-kim-cuong-pnj-1.jpg" alt="h1" />
+                            style={{ width: '100px', height: '100px', marginBottom: '20px', border: '1px solid #000', marginTop: '20px' }}
+                            src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png"
+                            alt="h1"
+                            onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png")}
+                        />
                         <img
-                            style={{
-                                width: '100px',
-                                height: '100px',
-                                border: '1px solid #000',
-                                marginBottom: '20px',
-                            }}
-                            src="https://cdn.pnj.io/images/detailed/205/sp-gnddddw060595-nhan-kim-cuong-vang-trang-kim-cuong-pnj-2.png" alt="h2" />
+                            style={{ width: '100px', height: '100px', border: '1px solid #000', marginBottom: '20px' }}
+                            src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png"
+                            alt="h2"
+                            onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png")}
+                        />
                         <img
-                            style={{
-                                width: '100px',
-                                height: '100px',
-                                border: '1px solid #000',
-                            }}
-                            src="https://cdn.pnj.io/images/detailed/205/sp-gnddddw060595-nhan-kim-cuong-vang-trang-kim-cuong-pnj-3.png" alt="h3" />
+                            style={{ width: '100px', height: '100px', border: '1px solid #000' }}
+                            src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png"
+                            alt="h3"
+                            onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png")}
+                        />
                     </div>
                     {/* Main Image */}
                     <img
-                        style={{
-                            width: '400px',
-                            height: '400px',
-                        }}
-                        src="https://cdn.pnj.io/images/detailed/205/sp-gnddddw060595-nhan-kim-cuong-vang-trang-kim-cuong-pnj-1.png" alt="h4" />
-                </div>
-                {/* Product Information */}
-                <div style={{ }}>
-                    <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
-                    <div style={{ display: 'flex', marginTop: '5px' }}>
-                        <div style={{ marginRight: '130px',fontSize:'20px' }}>
-                            <div>ID: 120576</div>
-                            <div>Gender: Female</div>
-                            <div>Category: Ring</div>
-                        </div>
-                        <div style={{fontSize:'20px'}}>
-                            <div>Weight: 140g</div>
-                            <div>Material: White gold</div>
-                            <div>Gem: Natural diamonds</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        style={{width: '350px', height: '350px' ,marginLeft:'30px'}}
+                        src={mainImageSrc}
+                        alt="Main product image"
+                    />
 
-            {/* Right side: Description and Price */}
-            <div style={{ flex: 1, marginLeft: '20px' }}>
+                <div style={{ flex: 1 }}>
                 {/* Title with Close Button */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <p style={{ fontSize: '40px', fontWeight: '500', marginLeft: '50px',marginBottom:'30px' }}>White gold rings 12057</p>
-                    <button style={{    border: 'none', background: 'red', fontSize: '20px', fontWeight: 'bold', 
-                                        cursor: 'pointer' ,marginRight:'150px',marginBottom:'30px',
-                                        border: '1px solid #000',
-                                        padding: '2px 5px',
-                                        cursor: 'pointer',
-                                        fontSize: '20px',
-                                        color : 'white'}}>X</button>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' ,marginLeft:'250px'}}>
+                    <p style={{ fontSize: '35px', fontWeight: '500', marginBottom: '30px' }}>White gold rings 12057</p>
+                    <button style={{ background: 'red',borderRadius: '100%', width: '40px', height: '40px',  color: 'white', fontWeight: 'bold', cursor: 'pointer' }}
+                     >
+                        X
+                    </button>
                 </div>
                 {/* Description and Pricing Details */}
-                <div style={{marginLeft:'50px'}}>
-                    <p style={{ fontSize: '20px', fontWeight: 'bold', marginBottom:'15px' }}>Price of the product:</p>
-                    <h1 style={{ color: 'red', fontSize: '50px', marginBottom:'15px' }}>1900,37 $</h1>
-                    <p style={{ fontSize: '20px', fontWeight: 'bold',marginBottom:'15px' }}>Description</p>
-                    <span style={{ fontSize: '20px' ,marginBottom:'20px' }}>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
-                    <p style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '20px' }}>Size</p>
-                    <div style={{ display: 'flex', alignItems: 'center' ,marginLeft:'170px'}}>
+                <div style={{marginLeft:'250px'}}>
+                    <div style={{display:'flex',marginBottom: '15px'}}>
+                            <p style={{fontSize: '23px',fontWeight: 'bold', marginRight:'50px' }}>Price of the product:</p>
+                            <h1 style={{ fontSize: '45px',color: 'red',fontWeight: 'bold'}}>1900,37 $</h1>
+                    </div>
+                    <div style={{  fontSize: '23px',marginBottom:'10px' }}>
+                            <p style={{fontWeight: 'bold', }}>Description</p>
+                            <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
+                    </div>
+                    <div>
+                            <p style={{  fontSize: '23px',fontWeight: 'bold', marginTop: '0px' }}>Size</p>
+                    <div style={{ fontSize: '15px',display: 'flex', alignItems: 'center', marginLeft: '170px' }}>
                         {[12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(size => (
                             <button
                                 key={size}
@@ -138,19 +116,55 @@ export default function DetailPage() {
                         ))}
                     </div>
                     {selectedSize !== null && (
-                        <div style={{ marginTop: '20px', fontSize: '20px', marginLeft:'170px' }}>
+                        <div style={{marginTop: '20px', fontSize: '18px', marginLeft: '170px' }}>
                             <p>Available Stock for Size {selectedSize}: {stock[selectedSize]}</p>
                         </div>
                     )}
-                    <div style={{ display: 'flex', alignItems: 'center', marginTop: '30px' }}>
-                        <p style={{ fontSize: '20px', fontWeight: 'bold', marginRight: '200px' }}>Quantity</p>
-                        <button style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}>-</button>
-                        <input type="text" value="1" style={{ width: '50px', textAlign: 'center' }} readOnly />
-                        <button style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}>+</button>
+                    <div style={{ display: 'flex', alignItems: 'center',marginTop:'20px' }}>
+                        <p style={{ fontSize: '23px', fontWeight: 'bold', marginRight: '75px' }}>Quantity</p>
+                        <button
+                            style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}
+                            onClick={() => handleQuantityChange(-1)}
+                        >
+                            -
+                        </button>
+                        <input type="text" value={quantity} style={{ width: '50px', textAlign: 'center' }} readOnly />
+                        <button
+                            style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}
+                            onClick={() => handleQuantityChange(1)}
+                        >
+                            +
+                        </button>
+                        
                     </div>
-                    <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft:'280px' }}>ADD</button>
+                    </div>
+                    <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }}>ADD</button>
                 </div>
             </div>
+                </div>
+                {/* Product Information */}
+                <div style={{ marginLeft:'40px'}}>
+                    <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
+                    <div style={{ display: 'flex', marginTop: '5px' }}>
+                        <div style={{  fontSize: '15px' ,marginRight:'150px'}}>
+                            <div>ID: 120576</div>
+                            <div>Gender: Female</div>
+                            <div>Category: Ring</div>
+                        </div>
+                        <div style={{fontSize: '15px'}}>
+                            <div>Weight: 140g</div>
+                            <div>Material: White gold</div>
+                            <div>Gem: Natural diamonds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Right side: Description and Price */}
+            {/* < style={{ flex: 1 }}>
+                {/* Title with Close Button */}
+              
+            
         </div>
     );
 }
