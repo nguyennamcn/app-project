@@ -5,6 +5,6 @@ export const adornicaServ={
         return https.get("pokemon/ditto");
     },
     getDetailProduct:(maSp) =>{
-        return https.get(`/api/v1/products`)
+        return https.get(`/api/v1/products/${maSp}`)
     }
 }
