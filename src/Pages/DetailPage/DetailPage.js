@@ -117,7 +117,7 @@ export default function DetailPage() {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '250px' }}>
                             <p style={{ fontSize: '35px', fontWeight: '500', marginBottom: '5%' }}>White gold rings 12057</p>
                             <button style={{ background: 'red', borderRadius: '100%', width: '40px', height: '40px', color: 'white', fontWeight: 'bold', cursor: 'pointer' }}
-                            >
+                                    type="button" onClick={() => alert('Back to homepage')} >
                                 X
                             </button>
                         </div>
@@ -174,7 +174,9 @@ export default function DetailPage() {
 
                                 </div>
                             </div>
-                            <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }}>ADD</button>
+                            <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }}
+                                    type="button" onClick={() => alert('Added to cart')}
+                            >ADD</button>
                         </div>
                     </div>
                 </div>
