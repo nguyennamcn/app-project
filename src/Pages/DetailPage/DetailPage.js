@@ -23,8 +23,8 @@ export default function DetailPage() {
     useEffect(() => {
         adornicaServ.getDetailProduct()
             .then((res) => {
-                setProduct(res.data.content);
-                console.log(res);
+                setProduct(res.data.metadata);
+                console.log(res.data.metadata);
             })
             .catch((err) => {
                 console.log(err);

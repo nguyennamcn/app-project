@@ -9,6 +9,7 @@ import ListProduct from './Pages/DetailPage/ListProduct';
 import AdminPage from './Pages/AdminPage/AdminPage';
 import Feedbacks from './Pages/Feedbacks/Feedbacks';
 import JewelryPage from './Pages/JewelryPage/JewelryPage';
+import DetailPage from './Pages/DetailPage/DetailPage';
 
 function App() {
   return (
@@ -18,8 +19,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LoginPage />} />
           <Route path='/adminPage' element={<AdminPage />} />
-          {/* <Route path='*' element={<Layout Component={NotFoundPage} />} />
-           */}
+          <Route path='/detail' element={<DetailPage />} />
           <Route path='*' element={<NotFoundPage />} />
           <Route path='/test' element={<Layout Component={TestPage} />} />
           <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />

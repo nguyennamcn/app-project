@@ -1,7 +1,7 @@
 import axios from "axios";
 import { localService } from "./localService";
 
-export const BASE_URL="http://localhost:8080";
+export const BASE_URL="https://check-production-d237.up.railway.app";
 
 const TokenApp = "";
 

@@ -13,7 +13,7 @@ const GemForm = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '20px',
+      padding: '30px',
       margin: 'auto',
       backgroundColor: '#E0F7FA',
       borderRadius: '8px',
