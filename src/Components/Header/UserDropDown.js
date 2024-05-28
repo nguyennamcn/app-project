@@ -19,7 +19,8 @@ const UserDropdown = ({user,logoutBtn}) => (
   >
     <a onClick={(e) => e.preventDefault()}>
       <Space> 
-        {user.hoTen}
+        {/* {user.hoTen} */}
+        nam
         {/* cái này nhập lại cái id trong của m nha */}
         <DownOutlined />
       </Space>

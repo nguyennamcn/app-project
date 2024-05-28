@@ -50,10 +50,10 @@ const LoginPage = () => {
           </div>
         </div>
         <div class="header__login__right">
-          <a href="#">Service</a>
-          <a href="#">Policy</a>
-          <a href="#">Shop</a>
-          <a href="#">About system</a>
+          <a style={{textDecoration: 'none'}} href="#">Service</a>
+          <a style={{textDecoration: 'none'}} href="#">Policy</a>
+          <a style={{textDecoration: 'none'}} href="#">Shop</a>
+          <a style={{textDecoration: 'none'}} href="#">About system</a>
         </div>
       </div>
       <div class="login-form container">

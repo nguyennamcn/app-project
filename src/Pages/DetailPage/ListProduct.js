@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './ListProduct.css'
-import DetailPage from './DetailPage';  // Import the DetailPage component
-import CartPage from './CartPage';      // Import the CartPage component
-import DiamondPage from './DiamondPage';
-import GoldPage from './GoldPage';
+import CartPage from '../CartPage/CartPage';      // Import the CartPage component
+import DiamondPage from '../DiamondPage/DiamondPage';
+import GoldPage from '../GoldPage/GoldPage';
+import JewelryPage from '../JewelryPage/JewelryPage';
 
 export default function ListProduct({ product }) {
     const [isActive, setIsActive] = useState('Jewelry');
@@ -45,7 +45,7 @@ export default function ListProduct({ product }) {
                 <hr style={{ zIndex: '2', color: 'black' }} />
             </div>
             <div style={{ padding: '20px' }}>
-                {isActive === 'Jewelry' && <DetailPage />}
+                {isActive === 'Jewelry' && <JewelryPage />}
                 {isActive === 'Gold' && <GoldPage />}
                 {isActive === 'Diamond' && <DiamondPage />}
                 {isActive === 'Cart' && <CartPage />}       
