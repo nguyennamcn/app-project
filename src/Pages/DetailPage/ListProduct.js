@@ -37,7 +37,7 @@ export default function ListProduct({ product }) {
                     </span>
                     <span
                         className={`button-nor ${isActive === 'Cart' ? 'active' : ''}`}
-                        onClick={() => handleClick('Cart')}
+                        onClick={() => handleClick('Cart')}s
                     >
                         Cart
                     </span>

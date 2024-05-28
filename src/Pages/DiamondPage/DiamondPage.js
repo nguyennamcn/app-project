@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 const GemForm = () => {
   const [color, setColor] = useState('D');
-  const [clarity, setClarity] = useState('Internally Flawless (IF)');
-  const [caratWeight, setCaratWeight] = useState(1.25);
+  const [clarity, setClarity] = useState('VS2');
+  const [caratWeight, setCaratWeight] = useState(0.46);
   const [cut, setCut] = useState('Excellent');
-  const [totalPrice, setTotalPrice] = useState('340,000,000'); // You might want to calculate this based on selections
+  const [totalPrice, setTotalPrice] = useState('60,163,000'); // This will need to be dynamically calculated based on selections
 
   const styles = {
     container: {
@@ -66,6 +66,10 @@ const GemForm = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    alert('Added to cart');
+  };
+
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Select GEM Type</h1>
@@ -83,8 +87,11 @@ const GemForm = () => {
           <label style={styles.label}>
             Clarity:
             <select style={styles.input} value={clarity} onChange={e => setClarity(e.target.value)}>
-              <option value="Internally Flawless (IF)">Internally Flawless (IF)</option>
-              <option value="Very Slightly Included (VS1)">Very Slightly Included (VS1)</option>
+              <option value="IF">IF</option>
+              <option value="VVS1">VVS1</option>
+              <option value="VVS2">VVS2</option>
+              <option value="VS1">VS1</option>
+              <option value="VS2">VS2</option>
               {/* Add more options as needed */}
             </select>
           </label>
@@ -93,8 +100,11 @@ const GemForm = () => {
           <label style={styles.label}>
             Carat weight:
             <select style={styles.input} value={caratWeight} onChange={e => setCaratWeight(parseFloat(e.target.value))}>
-              <option value={1.25}>1.25 ct (6.8 mm)</option>
-              <option value={0.75}>0.75 ct (5.9 mm)</option>
+              <option value={0.46}>0.46 ct</option>
+              <option value={1}>1 ct</option>
+              <option value={0.62}>0.62 ct</option>
+              <option value={0.36}>0.36 ct</option>
+              <option value={1.03}>1.03 ct</option>
               {/* Add more options as needed */}
             </select>
           </label>
@@ -102,16 +112,15 @@ const GemForm = () => {
             Cut:
             <select style={styles.input} value={cut} onChange={e => setCut(e.target.value)}>
               <option value="Excellent">Excellent</option>
-              <option value="Very Good">Very Good</option>
               {/* Add more options as needed */}
             </select>
           </label>
         </div>
         <div style={styles.totalPrice}>
           Total price: {totalPrice}
-          {/* tính theo 4C */}
+          {/* This should be dynamically calculated */}
         </div>
-        <button style={styles.button} type="button" onClick={() => alert('Added to cart')}>Add</button>
+        <button style={styles.button} type="button" onClick={handleAddToCart}>Add</button>
       </form>
     </div>
   );
