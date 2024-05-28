@@ -2,15 +2,22 @@
     margin-left: 10px;
     border: solid 1px;
     border-radius: 10px;
+    padding: 2px;
 }
 
 .filter .search__input{
     position: absolute;
-    right: 0;
-    margin-right: 28px;
+    right: 48px;
+    top: 104px;
 }
 
 .list__products .card{
     margin-left: 0px;
     margin-bottom: 0px;
+}
+
+.custom__pagination{
+    position: fixed;
+    bottom: 92px;
+    right: 47px;
 }
