@@ -1,126 +1,162 @@
-import React, { useState } from 'react';
 
-const GoldForm = () => {
-  const [goldType, setGoldType] = useState('Vàng miếng SJC 999.9');
-  const [weight, setWeight] = useState('');
-  const [totalPrice, setTotalPrice] = useState('');
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { productServ } from './productService'
+import { Card, List } from 'antd';
+import './GoldPage.css'
+const { Meta } = Card;
 
-  const handleWeightChange = (event) => {
-    const inputWeight = event.target.value;
-    setWeight(inputWeight);
-    updateTotalPrice(goldType, inputWeight);
-  };
+export default function GoldPage() {
 
-  const updateTotalPrice = (type, weight) => {
-    const pricePerGram = 2372000; // Dummy price per gram
-    setTotalPrice(pricePerGram * weight);
-  };
+  const data = Array.from({ length: 51 }).map((_, i) => ({
+    title: `Title aaaaaaa aaaaaaaaaaaaa aaaaaaaaa aaaaa${i}`,
+    code: `Code ${i}`,
+    cost: `Cost ${i}`,
+    img: 'https://cdn.pnj.io/images/detailed/210/sp-gz0000y000980-vang-tai-loc-passport-0.3-chi-24k-pnj-1.png',
+  }));
 
-  const styles = {
-    container: {
-        fontFamily: 'Arial, sans-serif',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '20px',
-        margin: 'auto',
-        backgroundColor: '#F7F0B6',
-        borderRadius: '8px',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-        width: '80%',
-        maxWidth: '800px',
-        marginTop: '20px',
-    },
-    header: {
-      color: '#333',
-      fontSize: '50px',
-      marginBottom: '40px',
-    },
-    form: {
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-      maxWidth: '500px',
-    },
-    label: {
-      marginBottom: '10px',
-      width: '100%',
-      fontSize: '20px',
-    },
-    select: {
-      padding: '8px',
-      marginTop: '5px',
-      width: '100%',
-      fontSize: '20px',
-      backgroundColor: '#F2F3F9',
-    },
-    input: {
-      padding: '8px',
-      marginTop: '10px',
-      width: '100%',
-      fontSize: '20px',
-      backgroundColor: '#F2F3F9',
-    },
-    button: {
-      marginTop: '20px',
-      backgroundColor: 'black',
-      color: 'white',
-      border: 'none',
-      padding: '10px 20px',
-      cursor: 'pointer',
-      borderRadius: '20px',
-      width: '200px',
-      fontSize: '20px',
-      alignSelf: 'center',
-    },
-    totalPrice: {
-      textAlign: 'center',
-      fontSize: '18px',
-      margin: '20px 0',
-      fontWeight: 'bold',
-    },
-  };
+  const [products, setItem] = useState([]);
+  useEffect(() => {
+    productServ.getProductList()
+      .then((res) => {
+        console.log(res);
+        setItem(res.data.content)
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+      )
+  }, [])
 
+  console.log("result", products);
   return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>Select Gold Type</h1>
-      <form style={styles.form}>
-        <label style={styles.label}>
-          Gold type:
-          <select
-            style={styles.select}
-            value={goldType}
-            onChange={e => setGoldType(e.target.value)}
-          >
-            <option value="Vàng miếng SJC 999.9">Vàng miếng SJC 999.9</option>
-            <option value="Vàng miếng SJC 998.9">Vàng miếng SJC 998.9</option>
-            <option value="Vàng miếng SJC 997.9">Vàng miếng SJC 997.9</option>
-            <option value="Vàng miếng SJC 996.9">Vàng miếng SJC 996.9</option>
-            <option value="Vàng miếng SJC 995.9">Vàng miếng SJC 995.9</option>
-          </select>
-        </label>
-        <label style={styles.label}>
-          Weight (gram):
-          <input
-            style={styles.input}
-            type="number"
-            value={weight}
-            onChange={handleWeightChange}
-          />
-        </label>
-        <div style={styles.totalPrice}>
-          Total price: {totalPrice.toLocaleString('en-US')}
-        </div>
-        <button
-          style={styles.button}
-          type="button"
-          onClick={() => alert('Added to cart')}
-        >
-          Add
-        </button>
-      </form>
-    </div>
-  );
-};
+    <div>
 
-export default GoldForm;
+    <div className='filter' style={{
+      display: 'flex',
+      marginBottom: '10px',
+      marginLeft:'22px',
+      justifyContent: 'space-between',
+    }}>
+
+      <div>
+        <select name='jewelry__category' id='category'>
+          <option value='gold-ring'>Gold ring</option>
+          <option value='gold-bars'>Gold bars</option>
+        </select>
+
+        {/* <select name='jewelry__gender' id='gender'>
+          <option value='male'>Male</option>
+          <option value='female'>Female</option>
+        </select> */}
+
+        {/* <select name='jewelry__price' id='price'>
+          <option value=''>0-5000$</option>
+          <option value=''>5000$-10000$</option>
+          <option value=''>10.000$-20.000$</option>
+          <option value=''>20.000$-50.000$</option>
+          <option value=''>50.000$-100.000$</option>
+          <option value=''>over 100.000$</option>
+        </select> */}
+      </div>
+
+      <div className='search__input ' style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '6px',
+        border: 'solid black 1px',
+        borderRadius: '20px',
+      }}>
+        <input type='text' placeholder='Search...' style={{ outline: 'none', margin: '-4px 0 -4px 8px' }}></input>
+        <svg style={{ marginRight: '10px' }} xmlns="http://www.w3.org/2000/svg" maxWidth="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+        </svg>
+      </div>
+
+    </div>
+    <div className='contain__list'
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <List
+        style={{
+          maxWidth: '95%',
+        }}
+        grid={{ gutter: 11, column: 5 }}
+        size='small'
+        itemLayout='vertical'
+        pagination={{
+          onChange: (page) => {
+            console.log(page);
+          },
+          pageSize: 10,
+          position: 'bottom',
+          align: 'end',
+          className: 'custom__pagination',
+        }}
+        dataSource={data} //lấy data set sẵn để test
+        renderItem={(item) => (
+          <List.Item
+            className='list__products'
+            style={{
+              padding: '0 0',
+            }}
+          >
+            <Card
+              className='card'
+              hoverable
+              bodyStyle={{ padding: '8px' }}
+              style={{
+                maxWidth: '240px',
+                textAlign: 'center',
+                borderRadius: '10px',
+              }}
+              cover={
+                <img
+                  style={{ maxWidth: '100%', height: '120px', objectFit: 'cover' }}
+                  alt="example"
+                  src={item.img}
+                />
+              }
+            >
+              <Meta
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  padding: '0',
+                }}
+                title={
+                  <span style={{
+                    fontSize: '11.4px',
+                    whiteSpace: 'normal',
+                    marginBottom: '0',
+                    display: 'block',
+                  }}>
+                    {item.title} {item.code}
+                  </span>
+                }
+                description={
+                  <span style={{
+                    textAlign: 'center',
+                    marginTop: '4px',
+                  }}>
+                    {item.cost}
+                  </span>
+                }
+              />
+            </Card>
+
+          </List.Item>
+        )}
+      />
+    </div>
+
+  </div>
+  )
+}
+
+

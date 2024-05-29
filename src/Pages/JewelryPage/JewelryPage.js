@@ -72,7 +72,7 @@ export default function JewelryPage() {
         borderRadius: '20px',
       }}>
         <input type='text' placeholder='Search...' style={{ outline: 'none', margin: '-4px 0 -4px 8px' }}></input>
-        <svg style={{ marginRight: '10px' }} xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <svg style={{ marginRight: '10px' }} xmlns="http://www.w3.org/2000/svg" maxWidth="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
         </svg>
       </div>
@@ -86,7 +86,7 @@ export default function JewelryPage() {
     >
       <List
         style={{
-          width: '95%',
+          maxWidth: '95%',
         }}
         grid={{ gutter: 11, column: 5 }}
         size='small'
@@ -113,13 +113,13 @@ export default function JewelryPage() {
               hoverable
               bodyStyle={{ padding: '8px' }}
               style={{
-                width: '240px',
+                maxWidth: '240px',
                 textAlign: 'center',
                 borderRadius: '10px',
               }}
               cover={
                 <img
-                  style={{ width: '100%', height: '120px', objectFit: 'cover' }}
+                  style={{ maxWidth: '100%', height: '120px', objectFit: 'cover' }}
                   alt="example"
                   src={item.img}
                 />
