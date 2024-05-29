@@ -16,10 +16,10 @@ export default function Footer() {
     >
       <div>
         <p>Version: 1.0.1</p>
-        <p>Last update: 10/5/2024</p>
+        <p>Last update: 29/5/2024</p>
       </div>
       <div>
-        Make by: Unknow
+        Make by: Team 3
       </div>
     </div>
   )
