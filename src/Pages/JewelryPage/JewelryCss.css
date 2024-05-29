@@ -2,26 +2,22 @@
     margin-left: 10px;
     border: solid 1px;
     border-radius: 10px;
+    padding: 2px;
 }
 
 .filter .search__input{
     position: absolute;
-    right: 0;
-    margin-right: 28px;
-}
-
-.list__products{
-    width: 1321.710px;
-    max-height: 467px;
-    right: 0;
-    margin-top: 16px;
-    display: flex;
-    flex-wrap: wrap;
-    overflow-y: auto;
-    justify-content: space-evenly;
+    right: 48px;
+    top: 112px;
 }
 
 .list__products .card{
-    margin-left: 10px;
-    margin-bottom: 6px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+.custom__pagination{
+    position: fixed;
+    bottom: 86px;
+    right: 47px;
 }
