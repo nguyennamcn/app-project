@@ -10,7 +10,8 @@ import AdminPage from './Pages/AdminPage/AdminPage';
 import Feedbacks from './Pages/Feedbacks/Feedbacks';
 import JewelryPage from './Pages/JewelryPage/JewelryPage';
 import DetailPage from './Pages/DetailPage/DetailPage';
-import BuyProductPage from './Pages/BuyJewelry/BuyJewlry'
+import BuyJewelry from './Pages/BuyJewelry/BuyJewelry'
+import BuyListProduct from './Pages/BuyJewelry/BuyListProduct';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
           <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />
           <Route path='/homePage' element={<Layout Component={ListProduct} />} />
           <Route path='/detail' element={<Layout Component={DetailPage} />} />
-          <Route path='/buyproduct' element={<Layout Component={BuyProductPage} />} />
+          <Route path='/byproducts' element={<Layout Component={BuyListProduct} />} />
 
         </Routes>
       </BrowserRouter>

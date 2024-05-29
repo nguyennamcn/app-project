@@ -57,7 +57,7 @@ export default function DetailPage() {
     };
 
     return (
-        <div style={{ display: 'flex', height: '50vh' , marginTop:'5%',marginLeft:'5%'}}>
+        <div style={{ display: 'flex', height: '50vh', marginTop:'5%',marginLeft:'5%' }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ maxWidth: '1300px', display: 'flex' }}>
                     <div>
