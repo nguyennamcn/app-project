@@ -57,28 +57,28 @@ export default function DetailPage() {
     };
 
     return (
-        <div style={{ display: 'flex', height: '50vh' }}>
+        <div style={{ display: 'flex', height: '50vh' , marginTop:'5%',marginLeft:'5%'}}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ width: '1300px', display: 'flex' }}>
+                <div style={{ maxWidth: '1300px', display: 'flex' }}>
                     <div>
                         <div style={{
                             display: 'flex'
                         }}>
                             <div style={{ display: 'flex', flexDirection: 'column', }}>
                                 <img
-                                    style={{ cursor: 'pointer', width: '100px', height: '100px', marginBottom: '20px', border: '1px solid #000', marginTop: '20px' }}
+                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', marginBottom: '20px', border: '1px solid #000', marginTop: '20px' }}
                                     src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png"
                                     alt="h1"
                                     onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png")}
                                 />
                                 <img
-                                    style={{ cursor: 'pointer', width: '100px', height: '100px', border: '1px solid #000', marginBottom: '20px' }}
+                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000', marginBottom: '20px' }}
                                     src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png"
                                     alt="h2"
                                     onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png")}
                                 />
                                 <img
-                                    style={{ cursor: 'pointer', width: '100px', height: '100px', border: '1px solid #000' }}
+                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000' }}
                                     src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png"
                                     alt="h3"
                                     onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png")}
@@ -86,7 +86,7 @@ export default function DetailPage() {
                             </div>
                             {/* Main Image */}
                             <img
-                                style={{ width: '350px', height: '350px', marginLeft: '30px' }}
+                                style={{ maxWidth: '350px', height: '350px', marginLeft: '30px' }}
                                 src={mainImageSrc}
                                 alt="Main product image"
                             />

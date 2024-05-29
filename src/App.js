@@ -19,11 +19,12 @@ function App() {
         <Routes>
           <Route path='/' element={<LoginPage />} />
           <Route path='/adminPage' element={<AdminPage />} />
-          <Route path='/detail' element={<DetailPage />} />
+          {/* <Route path='/detail' element={<DetailPage />} /> */}
           <Route path='*' element={<NotFoundPage />} />
           <Route path='/test' element={<Layout Component={TestPage} />} />
           <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />
           <Route path='/homePage' element={<Layout Component={ListProduct} />} />
+          <Route path='/detail' element={<Layout Component={DetailPage} />} />
 
         </Routes>
       </BrowserRouter>
