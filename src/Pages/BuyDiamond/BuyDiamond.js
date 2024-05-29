@@ -47,9 +47,9 @@ const BuyDiamond = () => {
             marginRight: '10px',
         },
         input: {
-            padding: '8px',
+            padding: '10px',
             marginTop: '5px',
-            width: '100%',
+            maxWidth: '100%',
             backgroundColor:'#C2C2C2',
         },
         button: {
@@ -109,7 +109,7 @@ const BuyDiamond = () => {
                                         </select>
                                     </label>
 
-                    </div>
+                    </div>                                      
                     <div style={styles.inputRow}>
                     <label style={styles.label}>
                                         Clarity:
