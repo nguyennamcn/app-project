@@ -1,7 +1,7 @@
 import axios from "axios";
 import { localService } from "./localService";
 
-export const BASE_URL="https://check-production-d237.up.railway.app";
+export const BASE_URL="https://agile-connection-production.up.railway.app";
 
 const TokenApp = "";
 

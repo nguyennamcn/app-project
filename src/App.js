@@ -26,8 +26,8 @@ function App() {
           <Route path='/test' element={<Layout Component={TestPage} />} />
           <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />
           <Route path='/homePage' element={<Layout Component={ListProduct} />} />
-          <Route path='/detail' element={<Layout Component={DetailPage} />} />
-          <Route path='/byproducts' element={<Layout Component={BuyListProduct} />} />
+          <Route path='/detail/:productCode' element={<Layout Component={DetailPage} />} />
+          <Route path='/buyproducts' element={<Layout Component={BuyListProduct} />} />
 
         </Routes>
       </BrowserRouter>
