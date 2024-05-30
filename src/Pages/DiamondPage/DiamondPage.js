@@ -42,47 +42,47 @@ export default function DiamondPage() {
       <div>
         <select name='jewelry__category' id='Carat'>
           <option value='Carat'>Carat</option>
-          <option value='0.30-0.49'>0.30-0.49</option>
-          <option value='0.50-0.89'>0.50-0.89</option>
-          <option value='0.9-1.3'>0.9-1.3</option>
-          <option value='1.4-1.9'>1.4-1.9</option>
-          <option value='2.0-3.0'>2.0-3.0</option>
-          <option value='above 3.0<'>above 3.0</option>
+          <option value='Carat'>0.30-0.49</option>
+          <option value='Carat'>0.50-0.89</option>
+          <option value='Carat'>0.9-1.3</option>
+          <option value='Carat'>1.4-1.9</option>
+          <option value='Carat'>2.0-3.0</option>
+          <option value='Carat<'>above 3.0</option>
         </select>
 
         <select name='jewelry__size' id='size'>
           <option value='size'>Size</option>
-          <option value='rings'>4.3-4.9</option>
-          <option value='earrings'>5.0-5.9</option>
-          <option value='necklaces'>6.0-6.9</option>
-          <option value='bracelets'>7.0-7.9</option>
+          <option value='size'>4.3-4.9</option>
+          <option value='size'>5.0-5.9</option>
+          <option value='size'>6.0-6.9</option>
+          <option value='size'>7.0-7.9</option>
         </select>
 
         <select name='jewelry__color' id='color'>
           <option value='color'>Color</option>
-          <option value='category'>D</option>
-          <option value='rings'>E</option>
-          <option value='earrings'>F</option>
-          <option value='necklaces'>G</option>
-          <option value='bracelets'>H</option>
-          <option value='bracelets'>I</option>
-          <option value='bracelets'>J</option>
-          <option value='bracelets'>K</option>
-          <option value='bracelets'>L</option>
-          <option value='bracelets'>M</option>
+          <option value=''>D</option>
+          <option value=''>E</option>
+          <option value=''>F</option>
+          <option value=''>G</option>
+          <option value=''>H</option>
+          <option value=''>I</option>
+          <option value=''>J</option>
+          <option value=''>K</option>
+          <option value=''>L</option>
+          <option value=''>M</option>
         </select>
 
         <select name='jewelry__clarity' id='clarity'>
           <option value='clarity'>Clarity</option>
-          <option value='IF'>IF</option>
-          <option value='VVS1'>VVS1</option>
-          <option value='VVS2'>VVS2</option>
-          <option value='VS1'>VS1</option>
-          <option value='VS2'>VS2</option>
-          <option value='SI1'>SI1</option>
-          <option value='SI2'>SI2</option>
-          <option value='I1'>I1</option>
-          <option value='I2'>I2</option>
+          <option value=''>IF</option>
+          <option value=''>VVS1</option>
+          <option value=''>VVS2</option>
+          <option value=''>VS1</option>
+          <option value=''>VS2</option>
+          <option value=''>SI1</option>
+          <option value=''>SI2</option>
+          <option value=''>I1</option>
+          <option value=''>I2</option>
         </select>
 
         <select name='jewelry__price' id='price'>
