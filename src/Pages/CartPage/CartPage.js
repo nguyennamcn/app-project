@@ -111,10 +111,11 @@ const CartPage = () => {
             <p>TotalPrice: {totalAllPrice}</p>
           </div>
           <div style={{
-            marginTop: '4%'
+            marginTop: '4%',
+            width:'20%',
           }}>
-            <p>Phone Member: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black' }} type="text" placeholder='Phone member' /></p>
-            <p>Customer: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black', marginLeft: '13.5%', marginTop: '10px' }} type="text" placeholder='Customer' /></p>
+            {/* <p>Phone Member: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black' }} type="text" placeholder='Phone member' /></p> */}
+            <p>Customer: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black', marginLeft: '1%', marginTop: '10px' }} type="text" placeholder='Customer' /></p>
           </div>
         </div>
         <button onClick={handleSendOrder} style={{
