@@ -1,0 +1,16 @@
+
+.customer__info{
+
+}
+
+.customer__info label{
+    display: block;
+    margin: 30px 0 30px 6%;
+}
+
+.customer__info select,
+.customer__info input{
+    padding: 4px;
+    border-radius: 10px;
+    border: solid 2px;
+}
