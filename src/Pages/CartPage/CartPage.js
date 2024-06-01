@@ -115,16 +115,17 @@ const CartPage = () => {
             width:'20%',
           }}>
             {/* <p>Phone Member: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black' }} type="text" placeholder='Phone member' /></p> */}
-            <p>Customer: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black', marginLeft: '1%', marginTop: '10px' }} type="text" placeholder='Customer' /></p>
+            <p>Customer: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black', marginTop: '10px', width:'100%', paddingLeft:'10px'}} type="text" placeholder='Name' /></p>
           </div>
         </div>
-        <button onClick={handleSendOrder} style={{
-          marginLeft: '45%',
-          padding: '15px',
+        <Button onClick={handleSendOrder} style={{
+          marginLeft: '43%',
           background: '#15B83F',
           borderRadius: '10px',
-          color: 'white'
-        }}>Send order</button>
+          color: 'white',
+        }}
+        size='large'
+        >Send order</Button>
       </div>
     </div>
   );

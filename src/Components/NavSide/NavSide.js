@@ -6,7 +6,7 @@ import { Flex } from 'antd'
 export default function NavSide() {
   return (
     <div className='navbar'>
-        <NavLink to='/login' 
+        <NavLink to='/homePage' 
           style={{
             width : '50%',
             display : 'flex',
@@ -54,7 +54,7 @@ export default function NavSide() {
             Employees
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        <NavLink to='/cashierListOrder' 
           style={{
             width : '50%',
             display : 'flex',
@@ -67,7 +67,7 @@ export default function NavSide() {
           style={{
             marginLeft: '12px',
           }}>
-            Transactions
+            Order list
           </p>
         </NavLink>
         <NavLink to='/login' 
