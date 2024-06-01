@@ -125,10 +125,10 @@ export default function ListOrderPage() {
             <label>Phone<input style={{ marginLeft: '9.6%' }} type="text" /></label>
             <label>Address<input style={{ marginLeft: '7.1%' }} type="text" /></label>
             <label>Date sell<input style={{ marginLeft: '6.2%' }} type="text" disabled /></label>
-            <label>Payment status<select style={{ marginLeft: '6.4%' }}>
+            {/* <label>Payment status<select style={{ marginLeft: '6.4%' }}>
               <option>Fully paid</option>
               <option>Payments in instalments</option>
-            </select></label>
+            </select></label> */}
             <label>Payment methods<select style={{ marginLeft: '2%' }}>
               <option>Cash</option>
               <option>Banking</option>
