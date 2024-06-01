@@ -19,12 +19,12 @@ const LoginPage = () => {
       .then((res) => {
         message.success("login successfully");
         // lưu thông tin user vào localStorage
-        localService.set(res.data.content);
+        localService.set(res.data.metadata);
         dispatch(setLoginAction(
-          res.data.content
+          res.data.metadata
         ));
         // chuyển hướng user tới trang chủ
-        if(res.data.role != 'admin')
+        if(res.data.metadata.role != 'admin')
           navigate("/homePage");
         else
           navigate('/adminPage');
