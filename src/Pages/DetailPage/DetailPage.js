@@ -135,7 +135,7 @@ export default function DetailPage() {
                                             <h1>{mt.name}</h1>
                                         </div>
                                     ))}
-                                    <div style={{ cursor: 'pointer', color: 'blue' }} onClick={showModal}>Gem: {product.gemName}</div>
+                                    <div style={{ cursor: 'pointer', color: 'blue' }} onClick={showModal}>Gem:</div>
                                 </div>
                             </div>
                         </div>
