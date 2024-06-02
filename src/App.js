@@ -31,7 +31,7 @@ function App() {
           <Route path='/detail/:productCode' element={<Layout Component={DetailPage} />} />
           <Route path='/buyproducts' element={<Layout Component={BuyListProduct} />} />
           <Route path='/cashierListOrder' element={<Layout Component={CashierListOrder} />} />
-          <Route path='/cashierOrderDetail' element={<Layout Component={CashierOrderDetail} />} />
+          <Route path='/cashierOrderDetail/:orderKey' element={<Layout Component={CashierOrderDetail} />} />
 
         </Routes>
       </BrowserRouter>

@@ -27,7 +27,7 @@ const styles = {
     fontWeight: 'bold',
   },
   input: {
-    padding: '10px',
+    padding: '0px',
     border: '2px solid #cccccc',
     borderRadius: '5px',
     fontSize: '16px'
@@ -36,7 +36,7 @@ const styles = {
     backgroundColor: '#222222',
     color: 'white',
     border: 'none',
-    padding: '10px 20px',
+    padding: '0px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '18px',
@@ -52,7 +52,6 @@ const styles = {
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
-    margin: '20px 0'
   }
 };
 

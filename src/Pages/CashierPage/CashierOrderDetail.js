@@ -1,175 +1,159 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "antd";
-import { Table } from 'antd';
-import './CashierOrderDetail.css'
+import { Button, Table, Input, Select } from 'antd';
+import { adornicaServ } from '../../service/adornicaServ';
+import './CashierOrderDetail.css';
+import { NavLink, useParams } from 'react-router-dom';
 
 export default function ListOrderPage() {
+  const [product, setProduct] = useState({});
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [mainImageSrc, setMainImageSrc] = useState('https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png');
+    const [quantity, setQuantity] = useState(1);
+    const { orderKey } = useParams();
 
-  const [dataSource, setDataSource] = useState([
-    { key: '1', name: 'Item 1', quantity: 1, price: 10 },
-    { key: '2', name: 'Item 2', quantity: 2, price: 15 },
-    { key: '3', name: 'Item 3', quantity: 3, price: 25 },
-  ]);
+    useEffect(() => {
+        adornicaServ.getListOrderDetail(orderKey)
+            .then((res) => {
+                setProduct(res.data.metadata);
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [orderKey]);
 
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalAllPrice, setTotalAllPrice] = useState(0);
-  const [timeoutId, setTimeoutId] = useState(null);
+    const handleSizeClick = (size) => {
+        setSelectedSize(size);
+        setQuantity(1); // Reset quantity when a new size is selected
+    };
 
-  const handleQuantityChange = (key, delta) => {
-    const newDataSource = dataSource
-      .map(item => {
-        if (item.key === key) {
-          const newQuantity = item.quantity + delta;
-          if (newQuantity <= 0) {
-            return null;
-          }
-          return { ...item, quantity: newQuantity, totalPrice: newQuantity * item.price };
-        }
-        return item;
-      })
-      .filter(item => item !== null);
+    const handleImageClick = (newSrc) => {
+        setMainImageSrc(newSrc);
+    };
 
-    setDataSource(newDataSource);
-  };
+    const handleQuantityChange = (change) => {
+        setQuantity(prevQuantity => {
+            const newQuantity = prevQuantity + change;
+            const availableStock = selectedProduct ? selectedProduct.diameter : Infinity;
+            return newQuantity > 0 && newQuantity <= availableStock ? newQuantity : prevQuantity;
+        });
+    };
 
-  useEffect(() => {
-    const totalQty = dataSource.reduce((acc, item) => acc + item.quantity, 0);
-    setTotalQuantity(totalQty);
-    const totalAllPrice = dataSource.reduce((acc, item) => acc + item.totalPrice, 0);
-    setTotalAllPrice(totalAllPrice);
 
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
+    
 
-    const newTimeoutId = setTimeout(() => {
-      setDataSource([]);
-    }, 3600000); // 1 tiếng là xóa hết sản phẩm
+    const selectedProduct = selectedSize ? product.sizeProducts?.find(sp => sp.size === selectedSize) : null;
 
-    setTimeoutId(newTimeoutId);
-
-    return () => clearTimeout(newTimeoutId);
-  }, [dataSource]);
-
-  useEffect(() => {
-    const initialData = dataSource.map(item => ({
-      ...item,
-      totalPrice: item.quantity * item.price,
-    }));
-    setDataSource(initialData);
-  }, []);
-
-  const handleSendOrder = () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    console.log("Order sent");
-  };
-
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Quantity',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      render: (text, record) => (
-        <div>
-          <Button size='small' onClick={() => handleQuantityChange(record.key, -1)}>-</Button>
-          <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-          <Button size='small' onClick={() => handleQuantityChange(record.key, 1)}>+</Button>
-        </div>
-      ),
-    },
-    {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'productPrice',
-    },
-    {
-      title: 'Total Price',
-      dataIndex: 'totalPrice',
-      key: 'totalPrice',
-      render: (text, record) => <span>{record.totalPrice}</span>,
-    },
-    {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
-      render: (text, record) => (
-        <Button size='medium' onClick={() => handleQuantityChange(record.key, -100)}>Delete</Button>
-
-      ),
-    },
-  ];
-
-  return (
-    <div>
-      <div className='title'>
-        <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0', }}>Order</h1>
-        <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
-      </div>
-      <div className="container">
-        <div className="row justify-content-md-center">
-          <div className="customer__info col-sm-5" style={{
-            marginRight: '10px',
-            backgroundColor: 'white',
-            width: '100px',
-            height: '400px',
-            padding: '0',
-          }}>
-            <label>Name<input style={{ marginLeft: '10%' }} type="text" /></label>
-            <label>Phone<input style={{ marginLeft: '9.6%' }} type="text" /></label>
-            <label>Address<input style={{ marginLeft: '7.1%' }} type="text" /></label>
-            <label>Date sell<input style={{ marginLeft: '6.2%' }} type="text" disabled /></label>
-            {/* <label>Payment status<select style={{ marginLeft: '6.4%' }}>
-              <option>Fully paid</option>
-              <option>Payments in instalments</option>
-            </select></label> */}
-            <label>Payment methods<select style={{ marginLeft: '2%' }}>
-              <option>Cash</option>
-              <option>Banking</option>
-            </select></label>
-          </div>
-
-          <div className="product__table col-sm-6"
-            style={{
-              marginLeft: '10px',
-              backgroundColor: 'white',
-              width: '100px',
-              height: '400px',
-              padding: '0',
-            }}>
-            <Table style={{ margin: '20px 60px 0 60px', width:'90%' }} dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 168 }} />
-            <div className="row">
-              <div className="col-sm-12"><h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item:<span style={{ marginLeft: '4%' }}>2</span></h1></div>
-              <div className="col-sm-12"><h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount:<span style={{ marginLeft: '4%' }}>10%</span></h1></div>
-              <div className="col-sm-12"><h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:<span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>16.665,21$</span><span style={{ marginLeft: '4%', color: 'orange' }}>14.700,21$</span></h1></div>
+    return (
+        <div style={{ display: 'flex', height: '50vh', marginTop: '1%', marginLeft: '5%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ maxWidth: '1300px', display: 'flex' }}>
+                    <div>
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <img
+                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', marginBottom: '20px', border: '1px solid #000', marginTop: '20px' }}
+                                    src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png"
+                                    alt="h1"
+                                    onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png")}
+                                />
+                                <img
+                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000', marginBottom: '20px' }}
+                                    src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png"
+                                    alt="h2"
+                                    onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png")}
+                                />
+                                <img
+                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000' }}
+                                    src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png"
+                                    alt="h3"
+                                    onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png")}
+                                />
+                            </div>
+                            <img
+                                style={{ maxWidth: '350px', height: '350px', marginLeft: '30px' }}
+                                src={mainImageSrc}
+                                alt="Main product image"
+                            />
+                        </div>
+                        <div style={{ marginLeft: '20px', marginTop: '20px' }}>
+                            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
+                            <div style={{ display: 'flex', marginTop: '5px' }}>
+                                <div style={{ fontSize: '15px', marginRight: '150px' }}>
+                                    <div>ID: {product.id}</div>
+                                    <div>Gender: {product.gender}</div>
+                                    <div>Category: {product.category}</div>
+                                </div>
+                                <div style={{ fontSize: '15px' }}>
+                                    {product.materials?.map((mt, index) => (
+                                        <div key={index}>
+                                            <h1>{mt.name}</h1>
+                                        </div>
+                                    ))}
+                                    <div style={{ cursor: 'pointer', color: 'blue' }}>Gem: {product.gemName}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '250px' }}>
+                            <p style={{ fontSize: '35px', fontWeight: '500', marginBottom: '5%' }}>{product.productName}</p>
+                            
+                                <NavLink to='/homePage'>
+                                <button style={{ background: 'red', borderRadius: '100%', width: '40px', height: '40px', color: 'white', fontWeight: 'bold', cursor: 'pointer' }} type="button">
+                                    X
+                                </button>
+                                </NavLink>
+                            
+                        </div>
+                        <div style={{ marginLeft: '100px' }}>
+                            <div style={{ display: 'flex', marginBottom: '15px' }}>
+                                <p style={{ fontSize: '23px', fontWeight: 'bold', marginRight: '50px' }}>Price of the product:</p>
+                                <h1 style={{ fontSize: '45px', color: 'red', fontWeight: 'bold' }}>{product.productionCost} $</h1>
+                            </div>
+                            <div style={{ fontSize: '23px', marginBottom: '10px' }}>
+                                <p style={{ fontWeight: 'bold' }}>Description</p>
+                                <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
+                            </div>
+                            <div>
+                                <p style={{ fontSize: '23px', fontWeight: 'bold', marginTop: '0px' }}>Size</p>
+                                <div style={{ fontSize: '15px', display: 'flex', alignItems: 'center', marginLeft: '170px' }}>
+                                    {product.sizeProducts?.map((sp) => (
+                                        <button
+                                            key={sp.id}
+                                            style={{
+                                                width: '30px',
+                                                height: '30px',
+                                                border: '1px solid #000',
+                                                margin: '0 5px',
+                                                cursor: 'pointer',
+                                                backgroundColor: selectedSize === sp.size ? 'lightblue' : 'white',
+                                            }}
+                                            onClick={() => handleSizeClick(sp.size)}
+                                        >
+                                            {sp.size}
+                                        </button>
+                                    ))}
+                                </div>
+                                {selectedSize !== null && (
+                                    <div style={{ marginTop: '20px', fontSize: '18px', marginLeft: '170px' }}>
+                                        <p>Available Stock for Size: {selectedProduct?.diameter}</p>
+                                    </div>
+                                )}
+                                <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+                                    <p style={{ fontSize: '23px', fontWeight: 'bold', marginRight: '75px' }}>Quantity</p>
+                                    
+                                    <input type="text" value={quantity} style={{ width: '50px', textAlign: 'center' }} readOnly />
+                                    
+                                </div>
+                            </div>
+                            <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }} type="button" >
+                                ADD
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <div className="col-sm-12 flex justify-center mt-6">
-            <Button
-              size="large"
-              htmlType='submit'
-            >Submit order</Button>
-          </div>
         </div>
-
-        <div className="stick" style={{
-          position: 'absolute',
-          width: '1px',
-          height: '55%',
-          backgroundColor: 'black',
-          top: '21%',
-          right: '43.5%',
-        }}></div>
-        {/* <h2 style={{ position: 'absolute', bottom: '12%', right: '2%', textAlign: 'center', fontSize: '18px', fontWeight: '500', margin: '10px 0 20px 0', }}>By statf: To Hoang Trung Hieu</h2>
-        <h2 style={{ position: 'absolute', bottom: '8%', right: '11%', textAlign: 'center', fontSize: '18px', fontWeight: '500', margin: '10px 0 20px 0', }}>Staff ID: 0001</h2> */}
-      </div>
-    </div>
-  );
+    );
 }
