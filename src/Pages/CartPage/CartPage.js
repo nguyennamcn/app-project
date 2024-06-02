@@ -70,11 +70,12 @@ const CartPage = () => {
         const orderList = dataSource.map(item => ({
             productId: item.productCode,
             productName: item.name || "Unknown Product", // Ensure this is not undefined or null
-            sizeId: item.size, // Assuming size is used as sizeId
+            sizeId: item.sizeId, // Assuming size is used as sizeId
             quantity: item.quantity,
             price: item.price,
         }));
-    
+        console.log(orderList)
+
         const orderData = {
             staffId: 1, // Replace with actual staff ID if available
             customer: customerName,

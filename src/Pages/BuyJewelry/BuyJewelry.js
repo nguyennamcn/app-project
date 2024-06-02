@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 const styles = {
   container: {
     background: '#AFBEF9',
-    padding: '30px',
+    padding: '10px',
     maxWidth: '900px',
     margin: '30px auto',
     borderRadius: '10px',
