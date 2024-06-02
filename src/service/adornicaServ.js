@@ -27,7 +27,16 @@ export const adornicaServ = {
     },
 
     getListOrderDetail: (orderKey) => {
-        console.log(orderKey)
         return https.get(`/api/v1/orders/pre-order-product/${orderKey}`);
     },
+
+    postOrderCode: (orderCode) => {
+        return https.post(`/api/v1/purchases/validate-order`, orderCode);
+    },
+    
+    postSummit: (orderData) => {
+        console.log(orderData)
+        return https.post(`/api/v1/orders/order-product`, orderData);
+    },
+    
 }

@@ -6,7 +6,7 @@ import { NavLink, useParams } from 'react-router-dom';
 export default function DetailPage() {
     const [product, setProduct] = useState({});
     const [selectedSize, setSelectedSize] = useState(null);
-    const [mainImageSrc, setMainImageSrc] = useState('https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png');
+    const [mainImageSrc, setMainImageSrc] = useState("https://cdn.photoroom.com/v1/assets-cached.jpg?path=backgrounds_v3/white/Photoroom_white_background_extremely_fine_texture_only_white_co_d4046f3b-0a21-404a-891e-3f8d37c5aa94.jpg");
     const [quantity, setQuantity] = useState(1);
     const { productCode } = useParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,17 +52,17 @@ export default function DetailPage() {
     };
 
     const handleAddToCart = () => {
-        if (selectedSize) {
             const selectedProduct = product.sizeProducts.find(sp => sp.size === selectedSize);
             const item = {
                 productCode,
                 name: product.productName,
                 size: selectedSize,
+                sizeId : product.id,
                 quantity,
                 price: product.productionCost,
                 totalPrice: quantity * product.productionCost
             };
-
+            console.log(item)
             // Get existing cart items from local storage
             const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
@@ -82,9 +82,6 @@ export default function DetailPage() {
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
             alert('Added to cart');
-        } else {
-            alert('Please select a size');
-        }
     };
 
     const selectedProduct = selectedSize ? product.sizeProducts?.find(sp => sp.size === selectedSize) : null;
@@ -96,23 +93,24 @@ export default function DetailPage() {
                     <div>
                         <div style={{ display: 'flex' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                
                                 <img
                                     style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', marginBottom: '20px', border: '1px solid #000', marginTop: '20px' }}
-                                    src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png"
+                                    src={product.productAsset ? product.productAsset.img1 : ''}
                                     alt="h1"
-                                    onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-1.png")}
+                                    onClick={() => handleImageClick(product.productAsset ? product.productAsset.img1 : '')}
                                 />
                                 <img
                                     style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000', marginBottom: '20px' }}
-                                    src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png"
+                                    src={product.productAsset ? product.productAsset.img2 : ''}
                                     alt="h2"
-                                    onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-2.png")}
+                                    onClick={() => handleImageClick(product.productAsset ? product.productAsset.img2 : '')}
                                 />
                                 <img
                                     style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000' }}
-                                    src="https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png"
+                                    src={product.productAsset ? product.productAsset.img3 : ''}
                                     alt="h3"
-                                    onClick={() => handleImageClick("https://cdn.pnj.io/images/detailed/189/sp-gn0000y002531-nhan-vang-24k-pnj-3.png")}
+                                    onClick={() => handleImageClick(product.productAsset ? product.productAsset.img3 : '')}
                                 />
                             </div>
                             <img
