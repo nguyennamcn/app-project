@@ -209,10 +209,15 @@ export default function DetailPage() {
                     </div>
                 </div>
             </div>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+            <Modal title="Gem Detail" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            {product.gem?.map((sp) => (
+                <div>
+                    <h1 style={{marginTop: '5px'}}>Name : {sp.gemName}</h1>
+                    <h1 style={{marginTop: '5px'}}>Clarity : {sp.clarity}</h1>
+                    <h1 style={{marginTop: '5px'}}>Color : {sp.color}</h1>
+                    <h1 style={{marginTop: '5px'}}>Carat : {sp.weight}</h1>
+                </div>
+            ))}
             </Modal>
         </div>
     );
