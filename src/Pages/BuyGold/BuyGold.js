@@ -103,7 +103,7 @@ const GoldSelection = () => {
         <button type="submit" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-        >Add</button>
+        >PURCHASE</button>
       </form>
     </div>
   );
