@@ -122,28 +122,41 @@ const CartPage = () => {
         },
     ];
 
-    return (
-        <div>
-            <Table dataSource={dataSource} columns={columns} rowKey="productCode" />
-            <hr />
-            <div>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order CODE: #1003</h1>
-                <div style={{ display: "flex", justifyContent: "space-around", fontSize: '24px' }}>
-                    <div style={{ marginTop: '4%' }}>
-                        <p>Quantity: {totalQuantity}</p>
-                        <p>Total Price: {totalAllPrice}</p>
-                    </div>
-                    <div style={{ marginTop: '4%', width: '20%' }}>
-                        <p>Customer: <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black', marginLeft: '1%', marginTop: '10px' }} placeholder='Customer' /></p>
-                        <p>Phone: <Input value={phone} onChange={(e) => setPhone(e.target.value)} style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black', marginLeft: '1%', marginTop: '10px' }} placeholder='Phone' /></p>
-                    </div>
-                </div>
-                <Button onClick={handleSendOrder} style={{ marginLeft: '45%', padding: '15px', background: '#15B83F', borderRadius: '10px', color: 'white' }}>
-                    Send order
-                </Button>
-            </div>
+  return (
+    <div>
+      <Table dataSource={dataSource} columns={columns} />
+      <hr />
+      <div>
+        <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order CODE: #1003</h1>
+        <div style={{
+          display: "flex",
+          justifyContent: "space-around",
+          fontSize: '24px',
+        }}>
+          <div style={{
+            marginTop: '4%'
+          }}>
+            <p>Quantity: {totalQuantity}</p>
+            <p>TotalPrice: {totalAllPrice}</p>
+          </div>
+          <div style={{
+            marginTop: '4%',
+            width:'20%',
+          }}>
+            {/* <p>Phone Member: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black' }} type="text" placeholder='Phone member' /></p> */}
+            <p>Customer: <input style={{ border: '1px solid black', borderRadius: '10px', background: '#C7CCD0', color: 'black', marginLeft: '1%', marginTop: '10px' }} type="text" placeholder='Customer' /></p>
+          </div>
         </div>
-    );
+        <button onClick={handleSendOrder} style={{
+          marginLeft: '45%',
+          padding: '15px',
+          background: '#15B83F',
+          borderRadius: '10px',
+          color: 'white'
+        }}>Send order</button>
+      </div>
+    </div>
+  );
 };
 
 export default CartPage;
