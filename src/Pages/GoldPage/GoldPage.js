@@ -1,10 +1,10 @@
 
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { productServ } from './goldService'
 import { Card, List } from 'antd';
 import { NavLink } from 'react-router-dom';
 import './GoldPage.css';
+import { adornicaServ } from '../../service/adornicaServ';
 const { Meta } = Card;
 
 export default function GoldPage() {
@@ -12,7 +12,7 @@ export default function GoldPage() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    productServ.getProductList()
+    adornicaServ.getListGold()
       .then((res) => {
         console.log(res.data.metadata.data);
         setProducts(res.data.metadata.data);
@@ -86,7 +86,7 @@ export default function GoldPage() {
               className="product-card-container"
               key={sp.productCode}>
 
-              <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productCode}`}>
+              <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
                 <Card
                   hoverable
                   bodyStyle={{ padding: '8px' }}

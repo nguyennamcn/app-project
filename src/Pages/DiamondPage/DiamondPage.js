@@ -1,10 +1,10 @@
 
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { productServ } from './diamondService'
 import { Card, List } from 'antd';
 import { NavLink } from 'react-router-dom';
 import './DiamondPage.css'
+import { adornicaServ } from '../../service/adornicaServ';
 const { Meta } = Card;
 
 export default function DiamondPage() {
@@ -19,7 +19,7 @@ export default function DiamondPage() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    productServ.getProductList()
+    adornicaServ.getListDiamond()
       .then((res) => {
         console.log(res.data.metadata.data);
         setProducts(res.data.metadata.data);
@@ -133,7 +133,7 @@ export default function DiamondPage() {
           className="product-card-container"
           key={sp.productCode}>
 
-          <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productCode}`}>
+          <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
             <Card
               hoverable
               bodyStyle={{ padding: '8px' }}

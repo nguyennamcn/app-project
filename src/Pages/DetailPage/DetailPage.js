@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { Modal } from 'antd';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
 export default function DetailPage() {
     const [product, setProduct] = useState({});
@@ -15,7 +15,7 @@ export default function DetailPage() {
         adornicaServ.getDetailProduct(productCode)
             .then((res) => {
                 setProduct(res.data.metadata);
-                console.log(res.data.metadata.materials);
+                console.log(res.data.metadata);
             })
             .catch((err) => {
                 console.log(err);
@@ -51,10 +51,46 @@ export default function DetailPage() {
         setIsModalOpen(false);
     };
 
+    const handleAddToCart = () => {
+        if (selectedSize) {
+            const selectedProduct = product.sizeProducts.find(sp => sp.size === selectedSize);
+            const item = {
+                productCode,
+                name: product.productName,
+                size: selectedSize,
+                quantity,
+                price: product.productionCost,
+                totalPrice: quantity * product.productionCost
+            };
+
+            // Get existing cart items from local storage
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Check if the item is already in the cart
+            const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
+
+            if (existingItemIndex > -1) {
+                // Update the quantity if the item exists
+                cartItems[existingItemIndex].quantity += item.quantity;
+                cartItems[existingItemIndex].totalPrice += item.totalPrice;
+            } else {
+                // Add new item to the cart
+                cartItems.push(item);
+            }
+
+            // Save updated cart items to local storage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            alert('Added to cart');
+        } else {
+            alert('Please select a size');
+        }
+    };
+
     const selectedProduct = selectedSize ? product.sizeProducts?.find(sp => sp.size === selectedSize) : null;
 
     return (
-        <div style={{ display: 'flex', height: '50vh', marginTop: '5%', marginLeft: '5%' }}>
+        <div style={{ display: 'flex', height: '50vh', marginTop: '1%', marginLeft: '5%' }}>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ maxWidth: '1300px', display: 'flex' }}>
                     <div>
@@ -106,10 +142,14 @@ export default function DetailPage() {
                     </div>
                     <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '250px' }}>
-                            <p style={{ fontSize: '35px', fontWeight: '500', marginBottom: '5%' }}>White gold rings 12057</p>
-                            <button style={{ background: 'red', borderRadius: '100%', width: '40px', height: '40px', color: 'white', fontWeight: 'bold', cursor: 'pointer' }} type="button" onClick={() => alert('Back to homepage')}>
-                                X
-                            </button>
+                            <p style={{ fontSize: '35px', fontWeight: '500', marginBottom: '5%' }}>{product.productName}</p>
+                            
+                                <NavLink to='/homePage'>
+                                <button style={{ background: 'red', borderRadius: '100%', width: '40px', height: '40px', color: 'white', fontWeight: 'bold', cursor: 'pointer' }} type="button">
+                                    X
+                                </button>
+                                </NavLink>
+                            
                         </div>
                         <div style={{ marginLeft: '100px' }}>
                             <div style={{ display: 'flex', marginBottom: '15px' }}>
@@ -162,7 +202,7 @@ export default function DetailPage() {
                                     </button>
                                 </div>
                             </div>
-                            <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }} type="button" onClick={() => alert('Added to cart')}>
+                            <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }} type="button" onClick={handleAddToCart}>
                                 ADD
                             </button>
                         </div>

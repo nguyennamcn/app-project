@@ -12,6 +12,8 @@ import JewelryPage from './Pages/JewelryPage/JewelryPage';
 import DetailPage from './Pages/DetailPage/DetailPage';
 import BuyProductPage from './Pages/BuyJewelry/BuyJewelry'
 import BuyListProduct from './Pages/BuyJewelry/BuyListProduct';
+import CashierListOrder from './Pages/CashierPage/ListOrderPage';
+import CashierOrderDetail from './Pages/CashierPage/CashierOrderDetail';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path='/homePage' element={<Layout Component={ListProduct} />} />
           <Route path='/detail/:productCode' element={<Layout Component={DetailPage} />} />
           <Route path='/buyproducts' element={<Layout Component={BuyListProduct} />} />
+          <Route path='/cashierListOrder' element={<Layout Component={CashierListOrder} />} />
+          <Route path='/cashierOrderDetail' element={<Layout Component={CashierOrderDetail} />} />
 
         </Routes>
       </BrowserRouter>

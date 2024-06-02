@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { productServ } from './productService';
 import { Card, List } from 'antd';
 import './JewelryCss.css';
 import { NavLink } from 'react-router-dom';
+import { adornicaServ } from '../../service/adornicaServ';
 
 const { Meta } = Card;
 
@@ -10,7 +10,7 @@ export default function JewelryPage() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    productServ.getProductList()
+    adornicaServ.getListJewelry()
       .then((res) => {
         console.log(res.data.metadata.data);
         setProducts(res.data.metadata.data);
@@ -45,14 +45,6 @@ export default function JewelryPage() {
           <option value='female'>Female</option>
         </select>
 
-        {/* <select name='jewelry__price' id='price'>
-          <option value=''>0-5000$</option>
-          <option value=''>5000$-10000$</option>
-          <option value=''>10.000$-20.000$</option>
-          <option value=''>20.000$-50.000$</option>
-          <option value=''>50.000$-100.000$</option>
-          <option value=''>over 100.000$</option>
-        </select> */}
       </div>
 
       <div className='search__input ' style={{
@@ -102,7 +94,7 @@ export default function JewelryPage() {
         className="product-card-container"
         key={sp.productCode}>
 
-          <NavLink style={{textDecoration:'none'}} to={`/detail/${sp.productCode}`}>
+          <NavLink style={{textDecoration:'none'}} to={`/detail/${sp.productId}`}>
             <Card
               hoverable
               bodyStyle={{ padding: '8px' }}
