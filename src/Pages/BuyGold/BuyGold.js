@@ -1,119 +1,114 @@
 import React, { useState } from 'react';
 
-const BuyGold = () => {
-    const [name, setName] = useState('Nguyen Quoc Nam');
-    const [phone, setPhone] = useState('0987656789');
-    const [goldType, setGoldType] = useState('Vàng miếng SJC 999.9');
-    const [weight, setWeight] = useState(3);
-    const [totalPrice, setTotalPrice] = useState('8,890,000');
-
-    const styles = {
-        container: {
-            fontFamily: 'Arial, sans-serif',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '30px',
-            margin: 'auto',
-            backgroundColor: '#F7F0B6',
-            borderRadius: '8px',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-            width: '80%',
-            maxWidth: '800px',
-            marginTop: '20px',
-        },
-        header: {
-            fontSize: '24px',
-            marginBottom: '20px',
-        },
-        form: {
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-        },
-        inputRow: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginBottom: '20px',
-            width: '100%',
-        },
-        label: {
-            display: 'flex',
-            flexDirection: 'column',
-            flex: '1 1 auto',
-            marginRight: '10px',
-            maxWidth: '300px',
-            maxHeight: '60%',
-        },
-        input: {
-            padding: '8px',
-            marginTop: '5px',
-            width: '100%',
-            backgroundColor:'#C2C2C2',
-        },
-        button: {
-            marginTop: '20px',
-            backgroundColor: 'black',
-            color: 'white',
-            border: 'none',
-            padding: '10px 20px',
-            cursor: 'pointer',
-            borderRadius: '5px',
-            alignSelf: 'center',
-        },
-        totalPrice: {
-            textAlign: 'center',
-            fontSize: '18px',
-            margin: '20px 0',
-            fontWeight: 'bold',
-        }
-    };
-
-    const handlePurchase = () => {
-        alert('Purchase confirmed');
-    };
-
-    return (
-        <div>
-            <div style={styles.container}>
-                <h1 style={styles.header}>Buy Gold #20001</h1>
-                <form style={styles.form}>
-                    <div style={styles.inputRow}>
-                        <label style={styles.label}>
-                            Name:
-                            <input style={styles.input} type="text" value={name} onChange={e => setName(e.target.value)} />
-                        </label>
-                        <label style={styles.label}>
-                            Phone:
-                            <input style={styles.input} type="text" value={phone} onChange={e => setPhone(e.target.value)} />
-                        </label>
-                    </div>
-                    <div style={styles.inputRow}>
-                        <label style={styles.label}>
-                            Gold type:
-                            <select style={styles.input} value={goldType} onChange={e => setGoldType(e.target.value)}>
-                                <option value="Vàng miếng SJC 999.9">Vàng miếng SJC 999.9</option>
-                                <option value="Vàng nhẫn SJC 999.9">Vàng nhẫn SJC 999.9</option>
-                                <option value="Vàng trang sức 24K">Vàng trang sức 24K</option>
-                                {/* Add more options as needed */}
-                            </select>
-                        </label>
-                        <label style={styles.label}>
-                            Weight (gram):
-                            <input style={styles.input} type="number" value={weight} onChange={e => setWeight(parseFloat(e.target.value))} />
-                        </label>
-                    </div>
-                    <div style={styles.totalPrice}>
-                        Total price: {totalPrice}
-                    </div>
-                    <button style={styles.button} type="button" onClick={handlePurchase}>Purchase</button>
-                </form>
-                <footer style={{ textAlign: 'right', marginTop: '20px', color: 'black' }}>
-                    <p>By staff: To Hoang Trung Hieu Staff ID: 0001</p>
-                </footer>
-            </div>
-        </div>
-    );
+// Define styles as objects
+const styles = {
+  container: {
+    background: '#F7F0B6',
+    padding: '30px',
+    maxWidth: '900px',
+    margin: '50px auto',
+    borderRadius: '10px',
+    boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
+    fontFamily: 'Arial, sans-serif',
+  },
+  form: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '15px'
+  },
+  formGroup: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  label: {
+    fontSize: '16px',
+    color: '#333',
+    marginBottom: '5px',
+    fontWeight: 'bold',
+  },
+  input: {
+    padding: '10px',
+    border: '2px solid #cccccc',
+    borderRadius: '5px',
+    fontSize: '16px'
+  },
+  button: {
+    backgroundColor: '#222222',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '18px',
+    // transition: 'background-color 0.3s',
+    gridColumn: 'span 2',
+    textAlign: 'center'
+  },
+  buttonHover: { // This style needs to be applied dynamically on hover
+    backgroundColor: '#000000'
+  },
+  totalPrice: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    gridColumn: 'span 2',
+    textAlign: 'center',
+    margin: '20px 0'
+  }
 };
 
-export default BuyGold;
+const GoldSelection = () => {
+  const [name, setName] = useState('Nguyen Quoc Nam');
+  const [goldType, setGoldType] = useState('Vàng miếng SJC 999.9');
+  const [weight, setWeight] = useState('');
+  const [phone, setPhone] = useState('');
+  const [totalPrice, setTotalPrice] = useState('340,000,000');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = {
+      goldType,
+      weight,
+      phone,
+    };
+    console.log('Form Data Submitted:', formData);
+    // You would typically handle the form submission here, perhaps sending data to a server
+  };
+
+  return (
+    <div style={styles.container}>
+      <form style={styles.form} onSubmit={handleSubmit}>
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Name:</label>
+          <input type="text" style={styles.input} value={name} onChange={e => setName(e.target.value)} />
+        </div>     
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Phone:</label>
+          <input type="text" style={styles.input} value={phone} onChange={e => setPhone(e.target.value)} />
+        </div>
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Gold type:</label>
+          <select style={styles.input} value={goldType} onChange={e => setGoldType(e.target.value)}>
+            <option value="Vàng miếng SJC 999.9">Vàng miếng SJC 999.9</option>
+            <option value="Vàng 18K">Vàng 18K</option>
+            <option value="Vàng 24K">Vàng 24K</option>
+          </select>
+        </div>
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Weight (gram):</label>
+          <input type="number" style={styles.input} value={weight} onChange={e => setWeight(e.target.value)} />
+        </div>
+        <div style={styles.totalPrice}>
+          Total price: {totalPrice}
+        </div>
+        <button type="submit" style={styles.button}
+          onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
+          onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
+        >Add</button>
+      </form>
+    </div>
+  );
+};
+
+export default GoldSelection;
+
+
