@@ -74,15 +74,17 @@ export default function DiamondPage() {
 
         <select name='jewelry__clarity' id='clarity'>
           <option value='clarity'>Clarity</option>
-          <option value=''>IF</option>
-          <option value=''>VVS1</option>
-          <option value=''>VVS2</option>
-          <option value=''>VS1</option>
-          <option value=''>VS2</option>
-          <option value=''>SI1</option>
-          <option value=''>SI2</option>
-          <option value=''>I1</option>
-          <option value=''>I2</option>
+          <option value='FL'>FL</option>
+            <option value='IF'>IF</option>
+            <option value='VVS1'>VVS1</option>
+            <option value='VVS2'>VVS2</option>
+            <option value='VS1'>VS1</option>
+            <option value='VS2'>VS2</option>
+            <option value='SI1'>SI1</option>
+            <option value='SI2'>SI2</option>
+            <option value='I1'>I1</option>
+            <option value='I2'>I2</option>
+            <option value='I3'>I3</option>
         </select>
     </div>
 

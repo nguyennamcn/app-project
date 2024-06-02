@@ -109,11 +109,15 @@ const GoldSelection = () => {
           <select style={styles.input} value={cut} onChange={e => setCut(e.target.value)}>
             <option value="Excellent">Excellent</option>
             <option value="Very Good">Very Good</option>
+            <option value="Fair">Fair</option>
+            <option value="Poor">Poor</option>
           </select>
         </div>
         <div style={styles.formGroup}>
           <label style={styles.label}>Clarity:</label>
           <select style={styles.input} value={clarity} onChange={e => setClarity(e.target.value)}>
+            <option value='FL'>FL</option>
+            <option value='IF'>IF</option>
             <option value='VVS1'>VVS1</option>
             <option value='VVS2'>VVS2</option>
             <option value='VS1'>VS1</option>
@@ -122,6 +126,7 @@ const GoldSelection = () => {
             <option value='SI2'>SI2</option>
             <option value='I1'>I1</option>
             <option value='I2'>I2</option>
+            <option value='I3'>I3</option>
           </select>
         </div>
         <div style={styles.formGroup}>
