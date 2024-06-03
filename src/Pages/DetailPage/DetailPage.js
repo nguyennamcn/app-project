@@ -52,173 +52,439 @@ export default function DetailPage() {
     };
 
     const handleAddToCart = () => {
-            const selectedProduct = product.sizeProducts.find(sp => sp.size === selectedSize);
-            const item = {
-                productCode,
-                name: product.productName,
-                size: selectedSize,
-                sizeId : product.id,
-                quantity,
-                price: product.productionCost,
-                totalPrice: quantity * product.productionCost
-            };
-            console.log(item)
-            // Get existing cart items from local storage
-            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const selectedProduct = product.sizeProducts.find(sp => sp.size === selectedSize);
+        const item = {
+            productCode,
+            name: product.productName,
+            size: selectedSize,
+            sizeId: product.id,
+            quantity,
+            price: product.productionCost,
+            totalPrice: quantity * product.productionCost
+        };
+        console.log(item);
+        // Get existing cart items from local storage
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-            // Check if the item is already in the cart
-            const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
+        // Check if the item is already in the cart
+        const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
 
-            if (existingItemIndex > -1) {
-                // Update the quantity if the item exists
-                cartItems[existingItemIndex].quantity += item.quantity;
-                cartItems[existingItemIndex].totalPrice += item.totalPrice;
-            } else {
-                // Add new item to the cart
-                cartItems.push(item);
-            }
+        if (existingItemIndex > -1) {
+            // Update the quantity if the item exists
+            cartItems[existingItemIndex].quantity += item.quantity;
+            cartItems[existingItemIndex].totalPrice += item.totalPrice;
+        } else {
+            // Add new item to the cart
+            cartItems.push(item);
+        }
 
-            // Save updated cart items to local storage
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        // Save updated cart items to local storage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-            alert('Added to cart');
+        alert('Added to cart');
     };
 
     const selectedProduct = selectedSize ? product.sizeProducts?.find(sp => sp.size === selectedSize) : null;
 
     return (
-        <div style={{ display: 'flex', height: '50vh', marginTop: '1%', marginLeft: '5%' }}>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ maxWidth: '1300px', display: 'flex' }}>
-                    <div>
-                        <div style={{ display: 'flex' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                
-                                <img
-                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', marginBottom: '20px', border: '1px solid #000', marginTop: '20px' }}
-                                    src={product.productAsset ? product.productAsset.img1 : ''}
-                                    alt="h1"
-                                    onClick={() => handleImageClick(product.productAsset ? product.productAsset.img1 : '')}
-                                />
-                                <img
-                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000', marginBottom: '20px' }}
-                                    src={product.productAsset ? product.productAsset.img2 : ''}
-                                    alt="h2"
-                                    onClick={() => handleImageClick(product.productAsset ? product.productAsset.img2 : '')}
-                                />
-                                <img
-                                    style={{ cursor: 'pointer', maxWidth: '100px', height: '100px', border: '1px solid #000' }}
-                                    src={product.productAsset ? product.productAsset.img3 : ''}
-                                    alt="h3"
-                                    onClick={() => handleImageClick(product.productAsset ? product.productAsset.img3 : '')}
-                                />
-                            </div>
+        <div className="detail-page">
+            <div className="main-section">
+                <div className="image-info-section">
+                    <div className="image-section">
+                        <div className="thumbnail-images">
                             <img
-                                style={{ maxWidth: '350px', height: '350px', marginLeft: '30px' }}
-                                src={mainImageSrc}
-                                alt="Main product image"
+                                className="thumbnail"
+                                src={product.productAsset ? product.productAsset.img1 : ''}
+                                alt="h1"
+                                onClick={() => handleImageClick(product.productAsset ? product.productAsset.img1 : '')}
+                            />
+                            <img
+                                className="thumbnail"
+                                src={product.productAsset ? product.productAsset.img2 : ''}
+                                alt="h2"
+                                onClick={() => handleImageClick(product.productAsset ? product.productAsset.img2 : '')}
+                            />
+                            <img
+                                className="thumbnail"
+                                src={product.productAsset ? product.productAsset.img3 : ''}
+                                alt="h3"
+                                onClick={() => handleImageClick(product.productAsset ? product.productAsset.img3 : '')}
                             />
                         </div>
-                        <div style={{ marginLeft: '20px', marginTop: '20px' }}>
-                            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
-                            <div style={{ display: 'flex', marginTop: '5px' }}>
-                                <div style={{ fontSize: '15px', marginRight: '150px' }}>
-                                    <div>ID: {product.id}</div>
-                                    <div>Gender: {product.gender}</div>
-                                    <div>Category: {product.category}</div>
-                                </div>
-                                <div style={{ fontSize: '15px' }}>
-                                    {product.materials?.map((mt, index) => (
-                                        <div key={index}>
-                                            <h1>{mt.name}</h1>
-                                        </div>
-                                    ))}
-                                    <div style={{ cursor: 'pointer', color: 'blue' }} onClick={showModal}>Gem:</div>
-                                </div>
-                            </div>
-                        </div>
+                        <img
+                            className="main-image"
+                            src={mainImageSrc}
+                            alt="Main product image"
+                        />
                     </div>
-                    <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '250px' }}>
-                            <p style={{ fontSize: '30px', fontWeight: '500', marginBottom: '5%' }}>{product.productName}</p>
-                            
-                                <NavLink to='/homePage'>
-                                <button style={{ background: 'red', borderRadius: '100%', width: '40px', height: '40px', color: 'white', fontWeight: 'bold', cursor: 'pointer' }} type="button">
-                                    X
-                                </button>
-                                </NavLink>
-                            
-                        </div>
-                        <div style={{ marginLeft: '100px' }}>
-                            <div style={{ display: 'flex', marginBottom: '15px' }}>
-                                <p style={{ fontSize: '20px', fontWeight: 'bold', marginRight: '50px' }}>Price of the product:</p>
-                                <h1 style={{ fontSize: '45px', color: 'red', fontWeight: 'bold' }}>{product.productionCost} $</h1>
+                    <div className="product-information">
+                        <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
+                        <div style={{ display: 'flex', marginTop: '5px' }}>
+                            <div style={{ fontSize: '15px', marginRight: '150px' }}>
+                                <div>ID: {product.id}</div>
+                                <div>Gender: {product.gender}</div>
+                                <div>Category: {product.category}</div>
                             </div>
-                            <div style={{ fontSize: '20px', marginBottom: '10px' }}>
-                                <p style={{ fontWeight: 'bold' }}>Description</p>
-                                <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
-                            </div>
-                            <div>
-                                <p style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '0px' }}>Size</p>
-                                <div style={{ fontSize: '15px', display: 'flex', alignItems: 'center', marginLeft: '170px' }}>
-                                    {product.sizeProducts?.map((sp) => (
-                                        <button
-                                            key={sp.id}
-                                            style={{
-                                                width: '30px',
-                                                height: '30px',
-                                                border: '1px solid #000',
-                                                margin: '0 5px',
-                                                cursor: 'pointer',
-                                                backgroundColor: selectedSize === sp.size ? 'lightblue' : 'white',
-                                            }}
-                                            onClick={() => handleSizeClick(sp.size)}
-                                        >
-                                            {sp.size}
-                                        </button>
-                                    ))}
-                                </div>
-                                {selectedSize !== null && (
-                                    <div style={{ marginTop: '20px', fontSize: '18px', marginLeft: '170px' }}>
-                                        <p>Available Stock for Size: {selectedProduct?.diameter}</p>
+                            <div style={{ fontSize: '15px' }}>
+                                {product.materials?.map((mt, index) => (
+                                    <div key={index}>
+                                        <h1>{mt.name}</h1>
                                     </div>
-                                )}
-                                <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
-                                    <p style={{ fontSize: '20px', fontWeight: 'bold', marginRight: '75px' }}>Quantity</p>
-                                    <button
-                                        style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}
-                                        onClick={() => handleQuantityChange(-1)}
-                                    >
-                                        -
-                                    </button>
-                                    <input type="text" value={quantity} style={{ width: '50px', textAlign: 'center' }} readOnly />
-                                    <button
-                                        style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}
-                                        onClick={() => handleQuantityChange(1)}
-                                    >
-                                        +
-                                    </button>
-                                </div>
+                                ))}
+                                <div style={{ cursor: 'pointer', color: 'blue' }} onClick={showModal}>Gem:</div>
                             </div>
-                            <NavLink to='/CartPage'> 
-                            <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }} type="button" onClick={handleAddToCart}>
-                                ADD
-                            </button>
-                            </NavLink>
                         </div>
                     </div>
+                </div>
+                <div className="info-section">
+                    <div className="product-header">
+                        <p className="product-name">{product.productName}</p>
+                        <NavLink to='/homePage'>
+                            <button className="close-button" type="button">
+                                X
+                            </button>
+                        </NavLink>
+                    </div>
+                    <p className="product-price">Price of the product: <span className="price-amount">{product.productionCost} $</span></p>
+                    <div className="product-description">
+                        <p className="description-title">Description</p>
+                        <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
+                    </div>
+                    <div className="product-size-quantity">
+                        <div className="product-size">
+                            <p className="size-title">Size</p>
+                            <div className="size-buttons">
+                                {product.sizeProducts?.map((sp) => (
+                                    <button
+                                        key={sp.id}
+                                        className={`size-button ${selectedSize === sp.size ? 'selected' : ''}`}
+                                        onClick={() => handleSizeClick(sp.size)}
+                                    >
+                                        {sp.size}
+                                    </button>
+                                ))}
+                            </div>
+                            {selectedSize !== null && (
+                                <p className="available-stock">Available Stock for Size: {selectedProduct?.diameter}</p>
+                            )}
+                        </div>
+                       
+                    </div>
+                     <div className="product-quantity">
+                            <p className="quantity-title">Quantity</p>
+                            <div className="quantity-controls">
+                                <button className="quantity-button" onClick={() => handleQuantityChange(-1)}>-</button>
+                                <input type="text" value={quantity} className="quantity-input" readOnly />
+                                <button className="quantity-button" onClick={() => handleQuantityChange(1)}>+</button>
+                            </div>
+                        </div>
+                        <NavLink to='/CartPage'>
+                        <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
+                            ADD
+                        </button>
+                    </NavLink>
                 </div>
             </div>
             <Modal title="Gem Detail" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            {product.gem?.map((sp) => (
-                <div>
-                    <h1 style={{marginTop: '5px'}}>Name : {sp.gemName}</h1>
-                    <h1 style={{marginTop: '5px'}}>Clarity : {sp.clarity}</h1>
-                    <h1 style={{marginTop: '5px'}}>Color : {sp.color}</h1>
-                    <h1 style={{marginTop: '5px'}}>Carat : {sp.weight}</h1>
-                </div>
-            ))}
+                {product.gem?.map((sp, index) => (
+                    <div key={index}>
+                        <h1 style={{ marginTop: '5px' }}>Name: {sp.gemName}</h1>
+                        <h1 style={{ marginTop: '5px' }}>Clarity: {sp.clarity}</h1>
+                        <h1 style={{ marginTop: '5px' }}>Color: {sp.color}</h1>
+                        <h1 style={{ marginTop: '5px' }}>Carat: {sp.weight}</h1>
+                    </div>
+                ))}
             </Modal>
+            <style jsx>{`
+                .detail-page {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 1% 5%;
+                }
+
+                .main-section {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                }
+
+                .image-info-section {
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: 20px;
+                }
+
+                .image-section {
+                    display: flex;
+                }
+
+                .thumbnail-images {
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: 10px;
+                }
+
+                .thumbnail {
+                    cursor: pointer;
+                    max-width: 100px;
+                    height: 100px;
+                    border: 1px solid #000;
+                    margin-bottom: 10px;
+                }
+
+                .main-image {
+                    max-width: 350px;
+                    height: 350px;
+                }
+
+                .info-section {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px;
+                    max-width: 600px;
+                }
+
+                .product-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .product-name {
+                    font-size: 30px;
+                    font-weight: 500;
+                }
+
+                .close-button {
+                    background: red;
+                    border-radius: 100%;
+                    width: 40px;
+                    height: 40px;
+                    color: white;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+
+                .product-price {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .price-amount {
+                    font-size: 45px;
+                    color: red;
+                    font-weight: bold;
+                }
+
+                .product-description {
+                    margin: 10px 0;
+                }
+
+                .description-title {
+                    font-weight: bold;
+                }
+
+                .product-size-quantity {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                }
+
+                .product-size {
+                    margin: 20px 0;
+                }
+
+                .size-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .size-buttons {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                .size-button {
+                    width: 30px;
+                    height: 30px;
+                    border: 1px solid #000;
+                    margin: 5px;
+                    cursor: pointer;
+                    background-color: white;
+                }
+
+                .size-button.selected {
+                    background-color: lightblue;
+                }
+
+                .available-stock {
+                    margin-top: 10px;
+                    font-size: 18px;
+                }
+
+                .product-quantity {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .quantity-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .quantity-controls {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .quantity-button {
+                    width: 30px;
+                    height: 30px;
+                    border: 1px solid #000;
+                    margin: 0 5px;
+                    cursor: pointer;
+                }
+
+                .quantity-input {
+                    width: 50px;
+                    text-align: center;
+                    border: 1px solid #000;
+                }
+
+                .add-to-cart-button {
+                    background: red;
+                    color: #fff;
+                    font-size: 20px;
+                    padding: 10px 50px;
+                    border: none;
+                    cursor: pointer;
+                    margin-top: 30px;
+                }
+
+                .product-information {
+                    margin-top: 20px;
+                }
+
+                @media (max-width: 768px) {
+                    .main-section {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .image-info-section {
+                        align-items: center;
+                    }
+
+                    .image-section {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .thumbnail-images {
+                        flex-direction: row;
+                        margin-bottom: 10px;
+                    }
+
+                    .thumbnail {
+                        margin-right: 10px;
+                    }
+
+                    .main-image {
+                        margin-bottom: 20px;
+                    }
+
+                    .info-section {
+                        align-items: center;
+                        text-align: center;
+                    }
+
+                    .product-header {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .product-name {
+                        margin-bottom: 10px;
+                    }
+
+                    .close-button {
+                        margin-top: 10px;
+                    }
+
+                    .product-description, .product-size, .product-quantity {
+                        text-align: center;
+                    }
+
+                    .product-size-quantity {
+                        flex-direction: column;
+                    }
+
+                    .add-to-cart-button {
+                        align-self: center;
+                    }
+                }
+
+                @media (min-width: 769px) and (max-width: 1024px) {
+                    .main-section {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .image-info-section {
+                        align-items: center;
+                    }
+
+                    .image-section {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .thumbnail-images {
+                        flex-direction: row;
+                        margin-bottom: 10px;
+                    }
+
+                    .thumbnail {
+                        margin-right: 10px;
+                    }
+
+                    .main-image {
+                        margin-bottom: 20px;
+                    }
+
+                    .info-section {
+                        align-items: center;
+                        text-align: center;
+                    }
+
+                    .product-header {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .product-name {
+                        margin-bottom: 10px;
+                    }
+
+                    .close-button {
+                        margin-top: 10px;
+                    }
+
+                    .product-description, .product-size, .product-quantity {
+                        text-align: center;
+                    }
+
+                    .product-size-quantity {
+                        flex-direction: column;
+                    }
+
+                    .add-to-cart-button {
+                        align-self: center;
+                    }
+                }
+            `}</style>
         </div>
     );
 }
