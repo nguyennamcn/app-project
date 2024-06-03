@@ -140,7 +140,7 @@ export default function DetailPage() {
                     </div>
                     <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '250px' }}>
-                            <p style={{ fontSize: '35px', fontWeight: '500', marginBottom: '5%' }}>{product.productName}</p>
+                            <p style={{ fontSize: '30px', fontWeight: '500', marginBottom: '5%' }}>{product.productName}</p>
                             
                                 <NavLink to='/homePage'>
                                 <button style={{ background: 'red', borderRadius: '100%', width: '40px', height: '40px', color: 'white', fontWeight: 'bold', cursor: 'pointer' }} type="button">
@@ -151,15 +151,15 @@ export default function DetailPage() {
                         </div>
                         <div style={{ marginLeft: '100px' }}>
                             <div style={{ display: 'flex', marginBottom: '15px' }}>
-                                <p style={{ fontSize: '23px', fontWeight: 'bold', marginRight: '50px' }}>Price of the product:</p>
+                                <p style={{ fontSize: '20px', fontWeight: 'bold', marginRight: '50px' }}>Price of the product:</p>
                                 <h1 style={{ fontSize: '45px', color: 'red', fontWeight: 'bold' }}>{product.productionCost} $</h1>
                             </div>
-                            <div style={{ fontSize: '23px', marginBottom: '10px' }}>
+                            <div style={{ fontSize: '20px', marginBottom: '10px' }}>
                                 <p style={{ fontWeight: 'bold' }}>Description</p>
                                 <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
                             </div>
                             <div>
-                                <p style={{ fontSize: '23px', fontWeight: 'bold', marginTop: '0px' }}>Size</p>
+                                <p style={{ fontSize: '20px', fontWeight: 'bold', marginTop: '0px' }}>Size</p>
                                 <div style={{ fontSize: '15px', display: 'flex', alignItems: 'center', marginLeft: '170px' }}>
                                     {product.sizeProducts?.map((sp) => (
                                         <button
@@ -184,7 +184,7 @@ export default function DetailPage() {
                                     </div>
                                 )}
                                 <div style={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
-                                    <p style={{ fontSize: '23px', fontWeight: 'bold', marginRight: '75px' }}>Quantity</p>
+                                    <p style={{ fontSize: '20px', fontWeight: 'bold', marginRight: '75px' }}>Quantity</p>
                                     <button
                                         style={{ width: '30px', height: '30px', border: '1px solid #000', margin: '0 5px', cursor: 'pointer' }}
                                         onClick={() => handleQuantityChange(-1)}
@@ -200,9 +200,11 @@ export default function DetailPage() {
                                     </button>
                                 </div>
                             </div>
+                            <NavLink to='/CartPage'> 
                             <button style={{ background: 'red', color: '#fff', fontSize: '20px', padding: '10px 50px', border: 'none', cursor: 'pointer', marginTop: '30px', marginLeft: '175px' }} type="button" onClick={handleAddToCart}>
                                 ADD
                             </button>
+                            </NavLink>
                         </div>
                     </div>
                 </div>
