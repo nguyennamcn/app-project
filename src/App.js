@@ -14,6 +14,7 @@ import BuyProductPage from './Pages/BuyJewelry/BuyJewelry'
 import BuyListProduct from './Pages/BuyJewelry/BuyListProduct';
 import CashierListOrder from './Pages/CashierPage/ListOrderPage';
 import CashierOrderDetail from './Pages/CashierPage/CashierOrderDetail';
+import CartPage from './Pages/CartPage/CartPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path='/buyproducts' element={<Layout Component={BuyListProduct} />} />
           <Route path='/cashierListOrder' element={<Layout Component={CashierListOrder} />} />
           <Route path='/cashierOrderDetail/:orderKey' element={<Layout Component={CashierOrderDetail} />} />
+          <Route path='/CartPage' element={<Layout Component={CartPage} />} />
 
         </Routes>
       </BrowserRouter>
