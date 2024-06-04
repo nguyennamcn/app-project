@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 
+
 const columns = (handleView, handleDelete) => [
     {
         title: 'Order Key',
@@ -10,31 +11,42 @@ const columns = (handleView, handleDelete) => [
         key: 'orderKey',
     },
     {
+        title: 'Status', //trạng thái progessing hoặc đã thanh toán
+        dataIndex: 'status',
+        key: 'status',
+    },
+    {
         title: 'Action',
         key: 'action',
         width: 180,
         render: (_, record) => (
             <div style={{ width: '50%', display: 'flex' }}>
+                <NavLink to={`/OrderStatus/${record.orderKey}`}>
                 <Button
                     style={{ marginRight: '14px' }}
                     type="primary"
                     onClick={() => handleView(record.orderKey)}
                 >
-                    <NavLink to={`/cashierOrderDetail/${record.orderKey}`}>View</NavLink>
+                    View
                 </Button>
+                </NavLink>
                 <Button 
                     type="primary" 
                     danger 
                     onClick={() => handleDelete(record.orderKey)}
                 >
-                    Delete
+                    Cancel
                 </Button>
             </div>
         ),
     },
 ];
 
-export default function ListOrderPage() {
+
+
+
+
+export default function SentPage(){
     const [dataSource, setDataSource] = useState([]);
 
     useEffect(() => {
@@ -50,12 +62,12 @@ export default function ListOrderPage() {
                 console.log(err);
             });
     }, []);
-
+    
     const handleDelete = (key) => {
         const newDataSource = dataSource.filter((item) => item.orderKey !== key);
         setDataSource(newDataSource);
     };
-
+    
     const handleView = (key) => {
         adornicaServ.getListOrderDetail(key)
             .then((res) => {
@@ -66,10 +78,10 @@ export default function ListOrderPage() {
             });
     };
 
-    return (
+    return(
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>List Order</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>List order sended</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div>
@@ -77,7 +89,7 @@ export default function ListOrderPage() {
                     style={{ margin: '30px 60px 0 60px' }}
                     dataSource={dataSource}
                     columns={columns(handleView, handleDelete)}
-                    pagination={{className:'custom__pagination' ,pageSize: 5 }}
+                    pagination={{className:'custom__pagination', pageSize: 4 }}
                 />
             </div>
         </div>

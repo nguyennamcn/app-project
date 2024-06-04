@@ -166,7 +166,7 @@ export default function NavSide() {
             Feedback
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        <NavLink to='/buyproducts' 
           style={{
             width : '50%',
             display : 'flex',

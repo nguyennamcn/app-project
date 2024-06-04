@@ -4,6 +4,7 @@ import CartPage from '../CartPage/CartPage';      // Import the CartPage compone
 import DiamondPage from '../DiamondPage/DiamondPage';
 import GoldPage from '../GoldPage/GoldPage';
 import JewelryPage from '../JewelryPage/JewelryPage';
+import SentPage from '../OrderStatusPage/SentPage';
 
 export default function ListProduct({ product }) {
     const [isActive, setIsActive] = useState('Jewelry');
@@ -41,6 +42,12 @@ export default function ListProduct({ product }) {
                     >
                         Cart
                     </span>
+                    <span
+                        className={`button-nor ${isActive === 'Sent' ? 'active' : ''}`}
+                        onClick={() => handleClick('Sent')}
+                    >
+                        Sent
+                    </span>
                 </div>
                 <hr style={{ zIndex: '2', color: 'black' }} />
             </div>
@@ -49,6 +56,7 @@ export default function ListProduct({ product }) {
                 {isActive === 'Gold' && <GoldPage />}
                 {isActive === 'Diamond' && <DiamondPage />}
                 {isActive === 'Cart' && <CartPage />}       
+                {isActive === 'Sent' && <SentPage />}       
             </div>
         </div>
     );
