@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Input, Select } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
-import './DetailOrderStatus.css';
-import { useParams, useNavigate, NavLink } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export default function ListOrderPage() {
+export default function BuyDetail(){
     const [products, setProducts] = useState([]);
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
@@ -33,6 +32,24 @@ export default function ListOrderPage() {
         const calculatedTotalPrice = products.reduce((total, product) => total + product.totalPrice, 0);
         setTotalPrice(calculatedTotalPrice);
     }, [products]);
+
+    const handleQuantityChange = (key, change) => {
+        setProducts(prevProducts => {
+            return prevProducts.map(item => {
+                if (item.productId === key) {
+                    const newQuantity = item.quantity + change;
+                    if (newQuantity > 0) {
+                        return {
+                            ...item,
+                            quantity: newQuantity,
+                            totalPrice: newQuantity * item.price
+                        };
+                    }
+                }
+                return item;
+            }).filter(item => item.quantity > 0);
+        });
+    };
 
     const handleSubmit = () => {
         const orderData = {
@@ -88,26 +105,38 @@ export default function ListOrderPage() {
             key: 'totalPrice',
             render: (text, record) => <span>{record.quantity * record.price}</span>,
         },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            render: (text, record) => (
+                <Button size='medium' onClick={() => handleQuantityChange(record.productId, -record.quantity)}>Delete</Button>
+            ),
+        },
     ];
 
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0', }}>Order</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0', }}>Buy products</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
             </div>
             <div className="container">
                 <div className="row justify-content-md-center">
                     <div className="customer__info col-sm-5" style={{
+                        marginRight: '10px',
                         backgroundColor: 'white',
                         width: '100px',
                         height: '400px',
                         padding: '0',
                     }}>
-                        <label>Name:<h2 style={{ marginLeft: '10%', display:'inline-block' }}>Nguyen Van A</h2></label>
-                        <label>Phone:<h2 style={{ marginLeft: '9.6%',display:'inline-block' }}>0987654321</h2></label>
-                        <label>Payment methods:<h2 style={{ marginLeft: '2%',display:'inline-block' }} >Cash</h2></label>
-                        <label>Order status:<h2 style={{ marginLeft: '2%' ,display:'inline-block', color:'green', fontSize:'20px'}} >Paid</h2></label>
+                        <label>Name<input style={{ marginLeft: '10%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
+                        <label>Phone<input style={{ marginLeft: '9.6%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
+                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display:'inline-block', }} type="text" value={customerPhone} /*onChange={(e) => setCustomerPhone(e.target.value)}*/ >20/3/2024</h1></label>
+                        <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} /*onChange={(e) => setPaymentMethod(e.target.value)}*/>
+                            <option value='CASH'>Cash</option>
+                            <option value='BANKING'>Banking</option>
+                        </select></label>
                     </div>
 
                     <div className="product__table col-sm-6"
@@ -127,19 +156,19 @@ export default function ListOrderPage() {
                     </div>
 
                     <div className="col-sm-12 flex justify-center mt-6">
-                    <NavLink to={"/homePage"}>
-                        <Button
-                        style={{padding:'0 56px 0 56px'}}
+                    <a href='/buyproducts'><Button
+                        style={{padding:'0 56px 0 56px', marginRight:'30px'}}
                             size="large"
                             danger
-                        >Back</Button>
-                        </NavLink>
+                        >Back</Button></a>
+                        <a href='/' >
                         <Button
-                        style={{marginLeft:'10%'}}
                             size="large"
                             htmlType='submit'
                             onClick={handleSubmit}
-                        >Confirm delivered</Button>
+                            style={{ padding:'0 60px', marginLeft:'30px'}}            
+                        >Finish</Button> 
+                        </a>          
                     </div>
                 </div>
 
