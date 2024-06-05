@@ -132,11 +132,10 @@ export default function CashierDelivered() {
                         height: '400px',
                         padding: '0',
                     }}>
-                        <label>Name<input style={{ marginLeft: '10%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
-                        <label>Phone<input style={{ marginLeft: '9.6%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
-                        <label>Address<input style={{ marginLeft: '7.3%' }} type="text" value={customerPhone} /*onChange={(e) => setCustomerPhone(e.target.value)}*/ /></label>
-                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display:'inline-block', }} type="text" value={customerPhone} /*onChange={(e) => setCustomerPhone(e.target.value)}*/ >20/3/2024</h1></label>
-                        <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} /*onChange={(e) => setPaymentMethod(e.target.value)}*/>
+                        <label>Name</label>
+                        <label>Phone</label>
+                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display:'inline-block', }} type="text" value={customerPhone}>20/3/2024</h1></label>
+                        <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} >
                             <option value='CASH'>Cash</option>
                             <option value='BANKING'>Banking</option>
                         </select></label>
@@ -170,7 +169,7 @@ export default function CashierDelivered() {
                             htmlType='submit'
                             onClick={handleSubmit}
                             style={{marginLeft:'10%', padding:'0 30px 0 30px'}}
-                        >Paid</Button>           
+                        >Finish</Button>           
                     </div>
                 </div>
 
