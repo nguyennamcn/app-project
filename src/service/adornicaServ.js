@@ -38,5 +38,19 @@ export const adornicaServ = {
         console.log(orderData)
         return https.post(`/api/v1/orders/order-product`, orderData);
     },
-    
+
+    postCustomerPhone: (phoneData) => {
+        console.log(phoneData)
+        return https.post(`/api/v1/customers/${phoneData}`);
+    },
+
+    postPurchaseOrderCode: (purchaseOrderCode) => {
+        return https.post(`/api/v1/purchases/create`, purchaseOrderCode);
+    },
+
+    deletePreOrder: (OrderCode) => {
+        return https.delete(`/api/v1/orders/pre-order/${OrderCode}`);
+    },
+
+
 }

@@ -39,8 +39,6 @@ const columns = (handleView, handleDelete) => [
 
 
 
-
-
 export default function SentPage(){
     const [dataSource, setDataSource] = useState([]);
 
@@ -57,10 +55,19 @@ export default function SentPage(){
                 console.log(err);
             });
     }, []);
-    
+
     const handleDelete = (key) => {
-        const newDataSource = dataSource.filter((item) => item.orderKey !== key);
-        setDataSource(newDataSource);
+        // Make API request to delete the order
+        adornicaServ.deletePreOrder(key)
+            .then(() => {
+                // If deletion is successful, update the dataSource state by filtering out the deleted order
+                const newDataSource = dataSource.filter((item) => item.orderKey !== key);
+                setDataSource(newDataSource);
+            })
+            .catch((err) => {
+                console.log("Error deleting order:", err);
+                // Handle error if deletion fails
+            });
     };
     
     const handleView = (key) => {
