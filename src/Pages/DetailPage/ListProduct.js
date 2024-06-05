@@ -4,7 +4,7 @@ import CartPage from '../CartPage/CartPage';      // Import the CartPage compone
 import DiamondPage from '../DiamondPage/DiamondPage';
 import GoldPage from '../GoldPage/GoldPage';
 import JewelryPage from '../JewelryPage/JewelryPage';
-import SentPage from '../OrderStatusPage/SentPage';
+import SentPage from '../ListOrderSended/SentPage';
 
 export default function ListProduct({ product }) {
     const [isActive, setIsActive] = useState('Jewelry');

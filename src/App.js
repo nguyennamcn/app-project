@@ -15,8 +15,11 @@ import BuyListProduct from './Pages/BuyJewelry/BuyListProduct';
 import CashierListOrder from './Pages/CashierPage/ListOrderPage';
 import CashierOrderDetail from './Pages/CashierPage/CashierOrderDetail';
 import CartPage from './Pages/CartPage/CartPage';
-import DetailOrderStatus from './Pages/OrderStatusPage/DetialOrderStatus';
-import SentPagee from './Pages/OrderStatusPage/SentPage';
+import DetailOrderSended from './Pages/ListOrderSended/DetialOrderSended';
+import SentPagee from './Pages/ListOrderSended/SentPage';
+import StoreProductDetail from './Pages/BuyStoreProduct/StoreProductDetail';
+import CashierDelivered from './Pages/CashierPage/CashierDelivered';
+import BuyDetail from './Pages/BuyCustomerProduct/BuyDetail';
 
 function App() {
   return (
@@ -36,8 +39,11 @@ function App() {
           <Route path='/cashierListOrder' element={<Layout Component={CashierListOrder} />} />
           <Route path='/cashierOrderDetail/:orderKey' element={<Layout Component={CashierOrderDetail} />} />
           <Route path='/CartPage' element={<Layout Component={CartPage} />} />
-          <Route path='/OrderStatus/:orderKey' element={<Layout Component={DetailOrderStatus} />} />
+          <Route path='/detailOrderSended/:orderKey' element={<Layout Component={DetailOrderSended} />} />
           <Route path='/listOrderSent' element={<Layout Component={SentPagee} />} />
+          <Route path='/storeProductDetail' element={<Layout Component={StoreProductDetail} />} />
+          <Route path='/cashierDelivered' element={<Layout Component={CashierDelivered} />} />
+          <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
 
         </Routes>
       </BrowserRouter>

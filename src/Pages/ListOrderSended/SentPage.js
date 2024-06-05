@@ -11,17 +11,12 @@ const columns = (handleView, handleDelete) => [
         key: 'orderKey',
     },
     {
-        title: 'Status', //trạng thái progessing hoặc đã thanh toán
-        dataIndex: 'status',
-        key: 'status',
-    },
-    {
         title: 'Action',
         key: 'action',
         width: 180,
         render: (_, record) => (
             <div style={{ width: '50%', display: 'flex' }}>
-                <NavLink to={`/OrderStatus/${record.orderKey}`}>
+                <NavLink to={`/detailOrderSended/${record.orderKey}`}>
                 <Button
                     style={{ marginRight: '14px' }}
                     type="primary"

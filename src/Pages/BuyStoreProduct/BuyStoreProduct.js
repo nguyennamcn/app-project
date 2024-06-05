@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
+import StoreProductDetail from './StoreProductDetail';
 
 // Define styles as objects
 const styles = {
@@ -101,10 +102,10 @@ const StoreSelection = () => {
           <label style={styles.label}>Order code:</label>
           <input style={styles.input} type="text" value={ordercode} onChange={e => setOrdercode(e.target.value)} />
         </div>
-        <button type="submit" style={styles.button}
+        <button  type="submit" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-        >Check</button>
+        ><a href='/storeProductDetail'>Check</a></button>
       </form>
     </div>
   );
