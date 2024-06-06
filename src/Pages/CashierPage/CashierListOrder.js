@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 
-const columns = (handleView, handleDelete) => [
+const columns = (handleView, handleDelete, handleUpdate) => [
     {
         title: 'Order Key',
         dataIndex: 'orderKey',
@@ -23,12 +23,22 @@ const columns = (handleView, handleDelete) => [
                     <NavLink to={`/cashierOrderDetail/${record.orderKey}`}>View</NavLink>
                 </Button>
                 <Button 
+                    style={{ marginRight: '14px' }}
                     type="primary" 
                     danger 
                     onClick={() => handleDelete(record.orderKey)}
                 >
                     Delete
                 </Button>
+
+                <NavLink to='/cashierUpdateOrder'>
+                <Button 
+                    type="primary" 
+                    style={{backgroundColor:'#74FF33'}}
+                >
+                    Update
+                </Button>
+                </NavLink>
             </div>
         ),
     },
@@ -52,8 +62,17 @@ export default function ListOrderPage() {
     }, []);
 
     const handleDelete = (key) => {
-        const newDataSource = dataSource.filter((item) => item.orderKey !== key);
-        setDataSource(newDataSource);
+        // Make API request to delete the order
+        adornicaServ.deletePreOrder(key)
+            .then(() => {
+                // If deletion is successful, update the dataSource state by filtering out the deleted order
+                const newDataSource = dataSource.filter((item) => item.orderKey !== key);
+                setDataSource(newDataSource);
+            })
+            .catch((err) => {
+                console.log("Error deleting order:", err);
+                // Handle error if deletion fails
+            });
     };
 
     const handleView = (key) => {
