@@ -31,14 +31,13 @@ const columns = (handleView, handleDelete, handleUpdate) => [
                     Delete
                 </Button>
 
-                <NavLink to='/cashierUpdateOrder'>
                 <Button 
                     type="primary" 
                     style={{backgroundColor:'#74FF33'}}
                 >
-                    Update
+                    <NavLink to={`/cashierUpdateOrder/${record.orderKey}`}>Update</NavLink>
                 </Button>
-                </NavLink>
+                
             </div>
         ),
     },

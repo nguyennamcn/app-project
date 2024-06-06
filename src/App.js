@@ -45,7 +45,7 @@ function App() {
           <Route path='/storeProductDetail' element={<Layout Component={StoreProductDetail} />} />
           <Route path='/cashierDelivered' element={<Layout Component={CashierDelivered} />} />
           <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
-          <Route path='/cashierUpdateOrder' element={<Layout Component={CashierUpdateOrder} />} />
+          <Route path='/cashierUpdateOrder/:orderKey' element={<Layout Component={CashierUpdateOrder} />} />
 
         </Routes>
       </BrowserRouter>
