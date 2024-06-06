@@ -107,14 +107,14 @@ export default function ListOrderPage() {
             key: 'totalPrice',
             render: (text, record) => <span>{record.quantity * record.price}</span>,
         },
-        {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-            render: (text, record) => (
-                <Button size='medium' onClick={() => handleQuantityChange(record.productId, -record.quantity)}>Delete</Button>
-            ),
-        },
+        // {
+        //     title: 'Action',
+        //     dataIndex: 'action',
+        //     key: 'action',
+        //     render: (text, record) => (
+        //         <Button size='medium' onClick={() => handleQuantityChange(record.productId, -record.quantity)}>Delete</Button>
+        //     ),
+        // },
     ];
 
     return (

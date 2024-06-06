@@ -54,8 +54,8 @@ export const adornicaServ = {
     },
 
     
-    updatePreOrder: (OrderCode) => {
-        return https.put(`/api/v1/orders/pre-order?key=${OrderCode}`);
+    updatePreOrder: (orderData) => {
+        return https.put(`/api/v1/orders/pre-order?key=${orderData.keyProOrder}`, orderData);
     },
 
 }
