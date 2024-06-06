@@ -161,14 +161,14 @@ export default function BuyDetail(){
                             size="large"
                             danger
                         >Back</Button></a>
-                        <a href='/' >
+                       
                         <Button
                             size="large"
                             htmlType='submit'
                             onClick={handleSubmit}
                             style={{ padding:'0 60px', marginLeft:'30px'}}            
                         >Finish</Button> 
-                        </a>          
+                        
                     </div>
                 </div>
 
