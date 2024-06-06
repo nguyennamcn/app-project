@@ -78,7 +78,7 @@ const StoreSelection = () => {
 
     console.log("Order Data:", orderData); // Log the order data
 
-    adornicaServ.postOrderCode(ordercode)
+    adornicaServ.postOrderCode(phone, ordercode)
       .then(response => {
         console.log("Order sent successfully:", response.data);
         setProduct([]);

@@ -8,11 +8,16 @@ const CartPage = () => {
     const [totalAllPrice, setTotalAllPrice] = useState(0);
     const [timeoutId, setTimeoutId] = useState(null);
     const [customerName, setCustomerName] = useState('');
+    const [customerPhone, setCustomerPhone] = useState('');
     console.log(dataSource)
     // Handle input change for customer name
     const handleInputChange = (event) => {
         setCustomerName(event.target.value);
     };
+    const handleInputChange1 = (event) => {
+        setCustomerPhone(event.target.value);
+    };
+
 
     // Load cart items from localStorage when component mounts
     useEffect(() => {
@@ -79,6 +84,7 @@ const CartPage = () => {
         const orderData = {
             staffId: 1, // Replace with actual staff ID if available
             customer: customerName,
+            phone: customerPhone,
             orderList,
             totalPrice: totalAllPrice
         };
@@ -165,6 +171,22 @@ const CartPage = () => {
                                 placeholder='Customer'
                                 value={customerName}
                                 onChange={handleInputChange}
+                            />
+                        </p>
+                        <p>Phone: 
+                            <input
+                                style={{
+                                    border: '1px solid black',
+                                    borderRadius: '10px',
+                                    background: '#C7CCD0',
+                                    color: 'black',
+                                    marginLeft: '1%',
+                                    marginTop: '10px'
+                                }}
+                                type="text"
+                                placeholder='Phone'
+                                value={customerPhone}
+                                onChange={handleInputChange1}
                             />
                         </p>
                     </div>

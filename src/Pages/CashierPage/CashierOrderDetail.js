@@ -55,6 +55,7 @@ export default function ListOrderPage() {
     const handleSubmit = () => {
         const orderData = {
             keyProOrder: orderKey,
+            orderCode : 1,
             staffId: 1, // Assuming staffId is 1 for now
             phone: customerPhone,
             name: customerName,
@@ -162,14 +163,14 @@ export default function ListOrderPage() {
                             size="large"
                             danger
                         >Back</Button></a>
-                        <a href='/cashierDelivered' >
+                        
                         <Button
                             size="large"
                             htmlType='submit'
                             onClick={handleSubmit}
                             style={{ padding:'0 60px', marginLeft:'30px'}}            
                         >Paid</Button> 
-                        </a>          
+                             
                     </div>
                 </div>
 
