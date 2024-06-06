@@ -52,5 +52,9 @@ export const adornicaServ = {
         return https.delete(`/api/v1/orders/pre-order/${OrderCode}`);
     },
 
+    
+    updatePreOrder: (OrderCode) => {
+        return https.put(`/api/v1/orders/pre-order?key=${OrderCode}`);
+    },
 
 }

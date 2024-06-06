@@ -12,7 +12,7 @@ import JewelryPage from './Pages/JewelryPage/JewelryPage';
 import DetailPage from './Pages/DetailPage/DetailPage';
 import BuyProductPage from './Pages/BuyJewelry/BuyJewelry'
 import BuyListProduct from './Pages/BuyJewelry/BuyListProduct';
-import CashierListOrder from './Pages/CashierPage/ListOrderPage';
+import CashierListOrder from './Pages/CashierPage/CashierListOrder';
 import CashierOrderDetail from './Pages/CashierPage/CashierOrderDetail';
 import CartPage from './Pages/CartPage/CartPage';
 import DetailOrderSended from './Pages/ListOrderSended/DetialOrderSended';
@@ -20,6 +20,7 @@ import SentPagee from './Pages/ListOrderSended/SentPage';
 import StoreProductDetail from './Pages/BuyStoreProduct/StoreProductDetail';
 import CashierDelivered from './Pages/CashierPage/CashierDelivered';
 import BuyDetail from './Pages/BuyCustomerProduct/BuyDetail';
+import CashierUpdateOrder from './Pages/CashierPage/CashierUpdateOrder';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path='/storeProductDetail' element={<Layout Component={StoreProductDetail} />} />
           <Route path='/cashierDelivered' element={<Layout Component={CashierDelivered} />} />
           <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
+          <Route path='/cashierUpdateOrder' element={<Layout Component={CashierUpdateOrder} />} />
 
         </Routes>
       </BrowserRouter>
