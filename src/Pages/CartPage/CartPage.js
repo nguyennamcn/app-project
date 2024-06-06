@@ -84,6 +84,7 @@ const CartPage = () => {
         const orderData = {
             staffId: 1, // Replace with actual staff ID if available
             customer: customerName,
+            phone: customerPhone,
             orderList,
             totalPrice: totalAllPrice
         };
