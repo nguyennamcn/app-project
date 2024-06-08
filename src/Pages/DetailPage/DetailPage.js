@@ -315,10 +315,12 @@ export default function DetailPage() {
                     margin: 5px;
                     cursor: pointer;
                     background-color: white;
+                    color: black;
                 }
 
                 .size-button.selected {
-                    background-color: lightblue;
+                    background-color: black;
+                    color: white;
                 }
 
                 .available-stock {
