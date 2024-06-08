@@ -4,8 +4,8 @@ import './BuyListProduct.css';
 import BuyJewelry from './BuyJewelry';
 import BuyGold from '../BuyGold/BuyGold';
 import BuyDiamond from '../BuyDiamond/BuyDiamond';
-import BuyStoreProduct from '../BuyStoreProduct/BuyStoreProduct';
 import History from '../History/History';
+import StoreSelection from '../BuyStoreProduct/BuyStoreProduct';
 
 export default function BuyListProduct({ product }) {
     const [isActive, setIsActive] = useState('Jewelry');
@@ -23,7 +23,25 @@ export default function BuyListProduct({ product }) {
                         className={`button-nor ${isActive === 'Jewelry' ? 'active' : ''}`}
                         onClick={() => handleClick('Jewelry')}
                     >
-                        Detail Buy
+                        Jewelry
+                    </span>
+                    <span
+                        className={`button-nor ${isActive === 'Gold' ? 'active' : ''}`}
+                        onClick={() => handleClick('Gold')}
+                    >
+                        Gold
+                    </span>
+                    <span
+                        className={`button-nor ${isActive === 'Diamond' ? 'active' : ''}`}
+                        onClick={() => handleClick('Diamond')}
+                    >
+                        Diamond
+                    </span>
+                    <span
+                        className={`button-nor ${isActive === 'StoreSelection' ? 'active' : ''}`}
+                        onClick={() => handleClick('StoreSelection')}
+                    >
+                        StoreSelection
                     </span>
                     <span
                         className={`button-nor ${isActive === 'History' ? 'active' : ''}`}
@@ -36,6 +54,9 @@ export default function BuyListProduct({ product }) {
             </div>
             <div style={{ padding: '20px' }}>
                 {isActive === 'Jewelry' && <BuyJewelry />}
+                {isActive === 'Gold' && <BuyGold />}
+                {isActive === 'Diamond' && <BuyDiamond />}
+                {isActive === 'StoreSelection' && <StoreSelection />}
                 {isActive === 'History' && <History />}
             </div>
         </div>

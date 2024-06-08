@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { adornicaServ } from '../../service/adornicaServ';
+import { useSelector } from 'react-redux';
 
 // Define styles as objects
 const styles = {
@@ -57,21 +59,52 @@ const styles = {
 };
 
 const GoldSelection = () => {
-  const [name, setName] = useState('Nguyen Quoc Nam');
-  const [goldType, setGoldType] = useState('Vàng miếng SJC 999.9');
+  const [name, setName] = useState('');
+  const [goldType, setGoldType] = useState('');
   const [weight, setWeight] = useState('');
   const [phone, setPhone] = useState('');
   const [totalPrice, setTotalPrice] = useState('340,000,000');
 
-  const handleSubmit = (event) => {
+  let userInfo = useSelector((state) => {
+    return state.userReducer.userInfo;
+  })
+  console.log(userInfo);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = {
-      goldType,
-      weight,
-      phone,
+      staffId: userInfo.id,
+      customerName: name,
+      phone: phone,
+      list: [
+        {
+          name:  goldType,
+          weight: parseFloat(weight),
+          origin: 'Unknown',
+          price: totalPrice
+        }
+      ],
+      totalPrice: totalPrice,
+      productStore: true
     };
+
     console.log('Form Data Submitted:', formData);
-    // You would typically handle the form submission here, perhaps sending data to a server
+
+    try {
+      const response = await adornicaServ.postPurchaseOrderCode(formData);
+      console.log('Order sent successfully:', response.data);
+      alert('Order sent successfully');
+    } catch (error) {
+      console.error('There was an error sending the order:', error);
+      if (error.response) {
+        console.error('Response data:', error.response);
+      } else if (error.request) {
+        console.error('Request data:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+      alert('Failed to send order. Please check your input data.');
+    }
   };
 
   return (
@@ -88,6 +121,7 @@ const GoldSelection = () => {
         <div style={styles.formGroup}>
           <label style={styles.label}>Gold type:</label>
           <select style={styles.input} value={goldType} onChange={e => setGoldType(e.target.value)}>
+            <option value=""></option>
             <option value="Vàng miếng SJC 999.9">Vàng miếng SJC 999.9</option>
             <option value="Vàng 18K">Vàng 18K</option>
             <option value="Vàng 24K">Vàng 24K</option>

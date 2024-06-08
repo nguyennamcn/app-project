@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
+import { useSelector } from 'react-redux';
 
 const CartPage = () => {
     const [dataSource, setDataSource] = useState([]);
@@ -18,6 +19,10 @@ const CartPage = () => {
         setCustomerPhone(event.target.value);
     };
 
+    let userInfo = useSelector((state) => {
+        return state.userReducer.userInfo;
+      })
+      console.log(userInfo);
 
     // Load cart items from localStorage when component mounts
     useEffect(() => {
@@ -82,7 +87,7 @@ const CartPage = () => {
         console.log(orderList)
 
         const orderData = {
-            staffId: 1, // Replace with actual staff ID if available
+            staffId: userInfo.id, // Replace with actual staff ID if available
             customer: customerName,
             phone: customerPhone,
             orderList,
