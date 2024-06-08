@@ -86,7 +86,7 @@ export default function NavSide() {
             Profile
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        <NavLink to='/goldprice' 
           style={{
             width : '50%',
             display : 'flex',
