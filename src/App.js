@@ -22,6 +22,10 @@ import CashierDelivered from './Pages/CashierPage/CashierDelivered';
 import BuyDetail from './Pages/BuyCustomerProduct/BuyDetail';
 import CashierUpdateOrder from './Pages/CashierPage/CashierUpdateOrder';
 import StoreSelection from './Pages/BuyStoreProduct/BuyStoreProduct';
+import Inventory from './Pages/Invetory/Inventory';
+import ManageGold from './Pages/ManageProduct/ManageGold';
+import ManageDiamond from './Pages/ManageProduct/ManageDiamond';
+import ManageJewelry from './Pages/ManageProduct/ManageJewelry';
 
 function App() {
   return (
@@ -47,7 +51,10 @@ function App() {
           <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
           <Route path='/buyProduct' element={<Layout Component={StoreSelection} />} />
           <Route path='/cashierUpdateOrder/:orderKey' element={<Layout Component={CashierUpdateOrder} />} />
-
+          <Route path='/inventory' element={<Layout Component={Inventory} />} />
+          <Route path='/manageGold' element={<Layout Component={ManageGold} />} />
+          <Route path='/manageDiamond' element={<Layout Component={ManageDiamond} />} />
+          <Route path='/manageJewelry' element={<Layout Component={ManageJewelry} />} />
         </Routes>
       </BrowserRouter>
     </div>
