@@ -22,7 +22,7 @@ export default function NavSide() {
             Home
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        <NavLink to='/inventory' 
           style={{
             width : '50%',
             display : 'flex',
@@ -150,7 +150,7 @@ export default function NavSide() {
             DashBoard
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        <NavLink to='/feedbacks' 
           style={{
             width : '50%',
             display : 'flex',
