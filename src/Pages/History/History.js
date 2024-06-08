@@ -11,11 +11,15 @@ const BuyHistory = () => {
     { id: '#10006', date: '24/04/2024', customer: 'Nguyen Quoc Nam', category: 'Store product', quantity: 1 },
     { id: '#10007', date: '23/04/2024', customer: 'Nguyen Quoc Nam', category: 'Store product', quantity: 1 },
     { id: '#10008', date: '21/04/2024', customer: 'Nguyen Quoc Nam', category: 'Gold', quantity: 4 },
+    { id: '#10008', date: '21/04/2024', customer: 'Nguyen Quoc Nam', category: 'Gold', quantity: 4 },
+    { id: '#10008', date: '21/04/2024', customer: 'Nguyen Quoc Nam', category: 'Gold', quantity: 4 },
+    { id: '#10008', date: '21/04/2024', customer: 'Nguyen Quoc Nam', category: 'Gold', quantity: 4 },
+    { id: '#10008', date: '21/04/2024', customer: 'Nguyen Quoc Nam', category: 'Gold', quantity: 4 },
 
     // Add more items here to increase the total count for pagination
   ];
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 7;
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate the total number of pages
@@ -27,6 +31,7 @@ const BuyHistory = () => {
       setCurrentPage(newPage);
     }
   };
+
   const styles = {
     buyHistory: {
       padding: '20px',
@@ -34,12 +39,15 @@ const BuyHistory = () => {
       borderRadius: '8px',
       boxShadow: '0 0 10px rgba(0,0,0,0.1)',
       border: '1px solid #ddd',
-      margin: '20px',
+      margin: '0px',
+      width: '100%',
+      height: '100%',
+      overflowX: 'auto',
     },
     table: {
       width: '100%',
       borderCollapse: 'collapse',
-      marginBottom: '20px',
+      marginBottom: '0px',
     },
     tableHeader: {
       padding: '10px',
@@ -122,14 +130,12 @@ const BuyHistory = () => {
         </tbody>
       </table>
       <div style={styles.pagination}>
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} style={styles.button}>{'<'}</button>
+        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} style={{...styles.button, ...(currentPage === 1 && styles.buttonDisabled)}}>{'<'}</button>
         <span>{`Page ${currentPage} of ${pageCount}`}</span>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === pageCount} style={styles.button}>{'>'}</button>
+        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === pageCount} style={{...styles.button, ...(currentPage === pageCount && styles.buttonDisabled)}}>{'>'}</button>
       </div>
     </div>
   );
 };
-
-
 
 export default BuyHistory;

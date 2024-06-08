@@ -6,7 +6,7 @@ const styles = {
     background: '#AFBEF9',
     padding: '10px',
     maxWidth: '900px',
-    margin: '30px auto',
+    margin: '20px auto',
     borderRadius: '10px',
     boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
     fontFamily: 'Arial, sans-serif',

@@ -76,6 +76,8 @@ export default function CashierUpdateOrder() {
             .catch((err) => {
                 console.error('Error updating order:', err.response); // Log error details
             });
+
+            alert("Update successfully");
     };
 
     // Define table columns
@@ -130,12 +132,23 @@ export default function CashierUpdateOrder() {
                     </div>
                     <hr />
                     <div className='row col-sm-12 justify-center'>
+                    <NavLink to='/cashierListOrder'>
+                        <button style={{
+                            padding: '15px 40px',
+                            background: 'red',
+                            borderRadius: '10px',
+                            color: 'white',
+                            marginRight:'70px'
+                        }}>Back</button>
+                        </NavLink>
+                        
                         <button onClick={handleUpdateOrder} style={{
                             padding: '15px 40px',
                             background: '#15B83F',
                             borderRadius: '10px',
                             color: 'white',
                         }}>Update</button>
+                        
                     </div>
                 </div>
             </div>
