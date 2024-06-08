@@ -26,6 +26,7 @@ import Inventory from './Pages/Invetory/Inventory';
 import ManageGold from './Pages/ManageProduct/ManageGold';
 import ManageDiamond from './Pages/ManageProduct/ManageDiamond';
 import ManageJewelry from './Pages/ManageProduct/ManageJewelry';
+import GoldPrice from './Pages/GoldPrice/GoldPrice';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           <Route path='/manageGold' element={<Layout Component={ManageGold} />} />
           <Route path='/manageDiamond' element={<Layout Component={ManageDiamond} />} />
           <Route path='/manageJewelry' element={<Layout Component={ManageJewelry} />} />
+          <Route path='/goldprice' element={<Layout Component={GoldPrice} />} />
         </Routes>
       </BrowserRouter>
     </div>
