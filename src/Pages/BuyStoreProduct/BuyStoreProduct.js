@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
-import StoreProductDetail from './StoreProductDetail';
 
 // Define styles as objects
 const styles = {
@@ -47,23 +47,13 @@ const styles = {
   },
   buttonHover: {
     backgroundColor: '#000000'
-  },
-  totalPrice: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    gridColumn: 'span 2',
-    textAlign: 'center',
-    margin: '20px 0'
   }
 };
 
 const StoreSelection = () => {
-  const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [ordercode, setOrdercode] = useState('');
-  const [productcode, setProductcode] = useState('');
-  const [product, setProduct] = useState(null);
-
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -72,18 +62,17 @@ const StoreSelection = () => {
 
   const handleSendOrder = () => {
     const orderData = {
-      phone : phone,
-      orderId : ordercode
+      phone: phone,
+      orderCode: ordercode
     };
 
-    console.log("Order Data:", orderData); // Log the order data
+    console.log("Order Data:", orderData);
 
     adornicaServ.postOrderCode(phone, ordercode)
       .then(response => {
         console.log("Order sent successfully:", response.data);
-        setProduct([]);
-        localStorage.removeItem('cartItems');
         alert('Order sent successfully');
+        navigate('/gold-selection', { state: { customerData: response.data } });
       })
       .catch(error => {
         console.error("There was an error sending the order:", error);
@@ -102,10 +91,10 @@ const StoreSelection = () => {
           <label style={styles.label}>Order code:</label>
           <input style={styles.input} type="text" value={ordercode} onChange={e => setOrdercode(e.target.value)} />
         </div>
-        <button  type="submit" style={styles.button}
+        <button type="submit" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-        ><a href='/storeProductDetail'>Check</a></button>
+        >Check</button>
       </form>
     </div>
   );
