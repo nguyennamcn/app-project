@@ -76,7 +76,7 @@ const InventoryPage = () => {
   );
 };
 
-// CSS-in-JS styles
+
 const styles = {
   container: {
     padding: '20px',

@@ -81,7 +81,7 @@ const ManageDiamond = () => {
   );
 };
 
-// Tiếp tục sử dụng các định nghĩa style như đã cho trước
+
 
 
 
