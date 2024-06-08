@@ -52,10 +52,16 @@ export default function ListOrderPage() {
         });
     };
 
+    const generateRandomKey = () => {
+        return 'order_' + Math.random().toString(36).substr(2, 9);
+    };
+
     const handleSubmit = () => {
+        const randomOrderKey = generateRandomKey();
+
         const orderData = {
             keyProOrder: orderKey,
-            orderCode : 1,
+            orderCode: randomOrderKey,
             staffId: 1, // Assuming staffId is 1 for now
             phone: customerPhone,
             name: customerName,
@@ -107,14 +113,14 @@ export default function ListOrderPage() {
             key: 'totalPrice',
             render: (text, record) => <span>{record.quantity * record.price}</span>,
         },
-        // {
-        //     title: 'Action',
-        //     dataIndex: 'action',
-        //     key: 'action',
-        //     render: (text, record) => (
-        //         <Button size='medium' onClick={() => handleQuantityChange(record.productId, -record.quantity)}>Delete</Button>
-        //     ),
-        // },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            render: (text, record) => (
+                <Button size='medium' onClick={() => handleQuantityChange(record.productId, -record.quantity)}>Delete</Button>
+            ),
+        },
     ];
 
     return (
