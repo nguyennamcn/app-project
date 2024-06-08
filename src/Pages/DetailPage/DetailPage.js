@@ -306,6 +306,7 @@ export default function DetailPage() {
                 .size-buttons {
                     display: flex;
                     flex-wrap: wrap;
+                    justify-content: center;
                 }
 
                 .size-button {

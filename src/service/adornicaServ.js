@@ -61,4 +61,8 @@ export const adornicaServ = {
         return https.put(`/api/v1/orders/pre-order?key=${orderData.keyProOrder}`, orderData);
     },
 
+
+    getHistoryOrders: () => {
+        return https.get(`/api/v1/orders/all-history-orders`);
+    },
 }
