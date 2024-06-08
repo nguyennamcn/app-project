@@ -23,25 +23,7 @@ export default function BuyListProduct({ product }) {
                         className={`button-nor ${isActive === 'Jewelry' ? 'active' : ''}`}
                         onClick={() => handleClick('Jewelry')}
                     >
-                        Jewelry
-                    </span>
-                    <span
-                        className={`button-nor ${isActive === 'Gold' ? 'active' : ''}`}
-                        onClick={() => handleClick('Gold')}
-                    >
-                        Gold
-                    </span>
-                    <span
-                        className={`button-nor ${isActive === 'Diamond' ? 'active' : ''}`}
-                        onClick={() => handleClick('Diamond')}
-                    >
-                        Diamond
-                    </span>
-                    <span
-                        className={`button-nor ${isActive === 'Store-product' ? 'active' : ''}`}
-                        onClick={() => handleClick('Store-product')}
-                    >
-                        Store's product
+                        Detail Buy
                     </span>
                     <span
                         className={`button-nor ${isActive === 'History' ? 'active' : ''}`}
@@ -54,9 +36,6 @@ export default function BuyListProduct({ product }) {
             </div>
             <div style={{ padding: '20px' }}>
                 {isActive === 'Jewelry' && <BuyJewelry />}
-                {isActive === 'Gold' && <BuyGold />}
-                {isActive === 'Diamond' && <BuyDiamond />}
-                {isActive === 'Store-product' && <BuyStoreProduct />}
                 {isActive === 'History' && <History />}
             </div>
         </div>

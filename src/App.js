@@ -21,6 +21,7 @@ import StoreProductDetail from './Pages/BuyStoreProduct/StoreProductDetail';
 import CashierDelivered from './Pages/CashierPage/CashierDelivered';
 import BuyDetail from './Pages/BuyCustomerProduct/BuyDetail';
 import CashierUpdateOrder from './Pages/CashierPage/CashierUpdateOrder';
+import StoreSelection from './Pages/BuyStoreProduct/BuyStoreProduct';
 
 function App() {
   return (
@@ -30,13 +31,12 @@ function App() {
         <Routes>
           <Route path='/' element={<LoginPage />} />
           <Route path='/adminPage' element={<AdminPage />} />
-          {/* <Route path='/detail' element={<DetailPage />} /> */}
           <Route path='*' element={<NotFoundPage />} />
           <Route path='/test' element={<Layout Component={TestPage} />} />
           <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />
           <Route path='/homePage' element={<Layout Component={ListProduct} />} />
           <Route path='/detail/:productCode' element={<Layout Component={DetailPage} />} />
-          <Route path='/buyproducts' element={<Layout Component={BuyListProduct} />} />
+          <Route path='/gold-selection' element={<Layout Component={BuyListProduct} />} />
           <Route path='/cashierListOrder' element={<Layout Component={CashierListOrder} />} />
           <Route path='/cashierOrderDetail/:orderKey' element={<Layout Component={CashierOrderDetail} />} />
           <Route path='/CartPage' element={<Layout Component={CartPage} />} />
@@ -45,6 +45,7 @@ function App() {
           <Route path='/storeProductDetail' element={<Layout Component={StoreProductDetail} />} />
           <Route path='/cashierDelivered' element={<Layout Component={CashierDelivered} />} />
           <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
+          <Route path='/buyProduct' element={<Layout Component={StoreSelection} />} />
           <Route path='/cashierUpdateOrder/:orderKey' element={<Layout Component={CashierUpdateOrder} />} />
 
         </Routes>
