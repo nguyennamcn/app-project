@@ -12,7 +12,7 @@ const initialDiamonds = [
   { id: 7, name: "Pear Cut", carat: 2.1, clarity: "VS1", color: "H", cut: "Good", price: 21000 },
   { id: 8, name: "Heart Cut", carat: 2.2, clarity: "SI1", color: "E", cut: "Excellent", price: 18000 }
   
-];
+]; // data ảo
 
 const ManageDiamond = () => {
   const [diamonds, setDiamonds] = useState(initialDiamonds);
@@ -80,10 +80,6 @@ const ManageDiamond = () => {
     </div>
   );
 };
-
-// Tiếp tục sử dụng các định nghĩa style như đã cho trước
-
-
 
 const styles = {
   container: {
