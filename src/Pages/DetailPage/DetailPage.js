@@ -6,6 +6,7 @@ import { NavLink, useParams } from 'react-router-dom';
 export default function DetailPage() {
     const [product, setProduct] = useState({});
     const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedId, setSelectedId] = useState(null);
     const [mainImageSrc, setMainImageSrc] = useState("https://cdn.photoroom.com/v1/assets-cached.jpg?path=backgrounds_v3/white/Photoroom_white_background_extremely_fine_texture_only_white_co_d4046f3b-0a21-404a-891e-3f8d37c5aa94.jpg");
     const [quantity, setQuantity] = useState(1);
     const { productCode } = useParams();
@@ -23,7 +24,9 @@ export default function DetailPage() {
     }, [productCode]);
 
     const handleSizeClick = (size) => {
+        const selectedProduct = product.sizeProducts.find(sp => sp.size === size);
         setSelectedSize(size);
+        setSelectedId(selectedProduct ? selectedProduct.id : null);
         setQuantity(1); // Reset quantity when a new size is selected
     };
 
@@ -57,7 +60,7 @@ export default function DetailPage() {
             productCode,
             name: product.productName,
             size: selectedSize,
-            sizeId: product.id,
+            sizeId: selectedId,
             quantity,
             price: product.productionCost,
             totalPrice: quantity * product.productionCost
