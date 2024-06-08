@@ -306,6 +306,7 @@ export default function DetailPage() {
                 .size-buttons {
                     display: flex;
                     flex-wrap: wrap;
+                    justify-content: center;
                 }
 
                 .size-button {
@@ -315,10 +316,12 @@ export default function DetailPage() {
                     margin: 5px;
                     cursor: pointer;
                     background-color: white;
+                    color: black;
                 }
 
                 .size-button.selected {
-                    background-color: lightblue;
+                    background-color: black;
+                    color: white;
                 }
 
                 .available-stock {
