@@ -30,7 +30,7 @@ export default function DiamondPage() {
   }, []);
   return (
 
-  <div className="gold-container">
+  <div className="diamond-container">
   <div className='filter' style={{
     display: 'flex',
     marginTop: '-6px',
@@ -105,7 +105,7 @@ export default function DiamondPage() {
   </div>
   <List
     style={{
-      maxWidth: '100%',
+      width: '90%',
       marginLeft: '30px',
       height: '100px',
     }}

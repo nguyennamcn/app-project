@@ -96,11 +96,13 @@ const CartPage = () => {
                 console.log("Order sent successfully:", response.data);
                 setDataSource([]);
                 localStorage.removeItem('cartItems');
+                alert('Order sent successfully');
             })
             .catch(error => {
                 console.error("There was an error sending the order:", error);
                 alert('Failed to send order. Please check your input data.');
             });
+
     };
     
     
@@ -143,20 +145,20 @@ const CartPage = () => {
 
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} />
+            <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{y: 170}}/>
             <hr />
-            <div>
+            <div >
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order CODE: #1003</h1>
                 <div style={{
                     display: "flex",
                     justifyContent: "space-around",
                     fontSize: '24px',
                 }}>
-                    <div style={{ marginTop: '4%' }}>
+                    <div style={{ marginTop: '0%' }}>
                         <p>Quantity: {totalQuantity}</p>
                         <p>Total Price: {totalAllPrice}</p>
                     </div>
-                    <div style={{ marginTop: '4%', width: '20%' }}>
+                    <div style={{ marginTop: '0%', width: '20%' }}>
                         <p>Customer: 
                             <input
                                 style={{

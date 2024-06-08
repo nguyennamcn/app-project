@@ -8,6 +8,8 @@ export default function ListOrderPage() {
     const [products, setProducts] = useState([]);
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
+    const [customerAddress, setCustomerAddress] = useState('');
+    const [customerBirthday, setCustomerBirthday] = useState(0);
     const [paymentMethod, setPaymentMethod] = useState('CASH');
     const [discount, setDiscount] = useState(10);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -65,6 +67,8 @@ export default function ListOrderPage() {
             staffId: 1, // Assuming staffId is 1 for now
             phone: customerPhone,
             name: customerName,
+            // address: customerAddress,
+            // dateOfBirth: customerBirthday,
             orderList: products.map(product => ({
                 productId: product.productId,
                 sizeId: product.sizeId,
@@ -113,14 +117,6 @@ export default function ListOrderPage() {
             key: 'totalPrice',
             render: (text, record) => <span>{record.quantity * record.price}</span>,
         },
-        {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-            render: (text, record) => (
-                <Button size='medium' onClick={() => handleQuantityChange(record.productId, -record.quantity)}>Delete</Button>
-            ),
-        },
     ];
 
     return (
@@ -140,8 +136,10 @@ export default function ListOrderPage() {
                     }}>
                         <label>Name<input style={{ marginLeft: '10%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
                         <label>Phone<input style={{ marginLeft: '9.6%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
-                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display:'inline-block', }} type="text" value={customerPhone} /*onChange={(e) => setCustomerPhone(e.target.value)}*/ >20/3/2024</h1></label>
-                        <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} /*onChange={(e) => setPaymentMethod(e.target.value)}*/>
+                        <label>Address<input style={{ marginLeft: '9.6%' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
+                        <label>Birthday<input style={{ marginLeft: '9.6%' }} type="text" value={customerBirthday} onChange={(e) => setCustomerBirthday(e.target.value)} /></label>
+                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display:'inline-block', }} type="text" /*value={} onChange={(e) => setCustomerPhone(e.target.value)}*/ >20/3/2024</h1></label>
+                        <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
                             <option value='CASH'>Cash</option>
                             <option value='BANKING'>Banking</option>
                         </select></label>

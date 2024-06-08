@@ -136,7 +136,7 @@ export default function DetailPage() {
                         </div>
                     </div>
                 </div>
-                <div className="info-section">
+                <div className="info-section" style={{position: 'absolute', right:'8%', top:'9%'}}>
                     <div className="product-header">
                         <p className="product-name">{product.productName}</p>
                         <NavLink to='/homePage'>
@@ -178,7 +178,7 @@ export default function DetailPage() {
                                 <button className="quantity-button" onClick={() => handleQuantityChange(1)}>+</button>
                             </div>
                         </div>
-                        <NavLink to='/CartPage'>
+                        <NavLink to='/homePage'>
                         <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
                             ADD
                         </button>
