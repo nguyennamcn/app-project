@@ -10,16 +10,26 @@ const initialJewelry = [
 
 const JewelryInventoryPage = () => {
   const [jewelry, setJewelry] = useState(initialJewelry);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const handleDelete = (jewelryId) => {
     const updatedJewelry = jewelry.filter(item => item.id !== jewelryId);
     setJewelry(updatedJewelry);
   };
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const currentJewelry = jewelry.slice(firstItemIndex, lastItemIndex);
+  const totalPages = Math.ceil(jewelry.length / itemsPerPage);
+
+  const changePage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1 style={styles.title}>Jewelry Inventory</h1>
+        <h1 style={styles.title}>JEWELRY INVENTORY</h1>
         <button style={styles.addButton}>+ ADD PRODUCT</button>
       </header>
       <table style={styles.table}>
@@ -35,7 +45,7 @@ const JewelryInventoryPage = () => {
           </tr>
         </thead>
         <tbody>
-          {jewelry.map((item) => (
+          {currentJewelry.map((item) => (
             <tr key={item.id}>
               <td style={styles.td}>{item.id}</td>
               <td style={styles.td}>{item.name}</td>
@@ -44,18 +54,25 @@ const JewelryInventoryPage = () => {
               <td style={styles.td}>{item.carat}</td>
               <td style={styles.td}>${item.price}</td>
               <td style={styles.td}>
-                <button style={styles.editButton}>Edit</button>
+                <button style={styles.updateButton}>Update</button>
                 <button style={styles.deleteButton} onClick={() => handleDelete(item.id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div style={styles.pagination}>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button key={i} style={styles.pageButton} onClick={() => changePage(i + 1)}>
+            {i + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
 
-// Styles defined using JavaScript object
+
 const styles = {
   container: {
     padding: '20px',
@@ -69,7 +86,7 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '24px'
+    fontSize: '25px'
   },
   addButton: {
     backgroundColor: '#4CAF50',
@@ -95,7 +112,7 @@ const styles = {
     padding: '8px',
     textAlign: 'left'
   },
-  editButton: {
+  updateButton: {
     padding: '5px 10px',
     marginRight: '5px',
     backgroundColor: '#4CAF50',
@@ -110,6 +127,20 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
+    cursor: 'pointer'
+  },
+  pagination: {
+    display: 'flex',
+    justifyContent: 'flex-end', // Căn phải các nút phân trang
+    padding: '10px 20px'
+  },
+  pageButton: {
+    padding: '5px 10px',
+    margin: '0 5px',
+    backgroundColor: '#000000', // Màu nền của nút là màu đen
+    color: 'white', // Màu chữ là trắng
+    border: 'none',
+    borderRadius: '5px',
     cursor: 'pointer'
   }
 };

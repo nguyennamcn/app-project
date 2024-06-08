@@ -8,12 +8,22 @@ const initialProducts = [
 ];
 
 const InventoryPage = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const [gold, setGold] = useState(initialProducts);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Hàm để xóa sản phẩm theo ID
   const handleDelete = (productId) => {
-    const updatedProducts = products.filter(product => product.id !== productId);
-    setProducts(updatedProducts);
+    const updatedProducts = gold.filter(product => product.id !== productId);
+    setGold(updatedProducts);
+  };
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const currentGold = gold.slice(firstItemIndex, lastItemIndex);
+  const totalPages = Math.ceil(gold.length / itemsPerPage);
+
+  const changePage = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -37,7 +47,7 @@ const InventoryPage = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {currentGold.map((product) => (
             <tr key={product.id}>
               <td style={styles.td}>{product.id}</td>
               <td style={styles.td}>{product.name}</td>
@@ -48,18 +58,25 @@ const InventoryPage = () => {
               <td style={styles.td}>{product.material}</td>
               <td style={styles.td}>{product.quantity}</td>
               <td style={styles.td}>
-                <button style={styles.editButton}>Edit</button>
+                <button style={styles.updateButton}>Update</button>
                 <button style={styles.deleteButton} onClick={() => handleDelete(product.id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div style={styles.pagination}>
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button key={i} style={styles.pageButton} onClick={() => changePage(i + 1)}>
+            {i + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
 
-// CSS-in-JS styles
+
 const styles = {
   container: {
     padding: '20px',
@@ -74,7 +91,7 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '30px'
+    fontSize: '25px'
   },
   addButton: {
     backgroundColor: '#4CAF50',
@@ -101,7 +118,7 @@ const styles = {
     padding: '8px',
     textAlign: 'left'
   },
-  editButton: {
+  updateButton: {
     padding: '5px 10px',
     marginRight: '5px',
     backgroundColor: '#4CAF50',
@@ -117,6 +134,20 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
+    cursor: 'pointer'
+  },
+  pagination: {
+    display: 'flex',
+    justifyContent: 'flex-end', // Căn phải các nút phân trang
+    padding: '10px 20px'
+  },
+  pageButton: {
+    padding: '5px 10px',
+    margin: '0 5px',
+    backgroundColor: '#000000', // Màu nền của nút là màu đen
+    color: 'white', // Màu chữ là trắng
+    border: 'none',
+    borderRadius: '5px',
     cursor: 'pointer'
   }
 };

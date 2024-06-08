@@ -36,7 +36,7 @@ const ManageDiamond = () => {
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1 style={styles.title}>Diamond Inventory</h1>
+        <h1 style={styles.title}>DIAMOND INVENTORY</h1>
         <button style={styles.addButton}>+ ADD PRODUCT</button>
       </header>
       <table style={styles.table}>
@@ -63,7 +63,7 @@ const ManageDiamond = () => {
               <td style={styles.td}>{diamond.cut}</td>
               <td style={styles.td}>${diamond.price}</td>
               <td style={styles.td}>
-                <button style={styles.editButton}>Edit</button>
+                <button style={styles.updateButton}>Update</button>
                 <button style={styles.deleteButton} onClick={() => handleDelete(diamond.id)}>Delete</button>
               </td>
             </tr>
@@ -81,7 +81,7 @@ const ManageDiamond = () => {
   );
 };
 
-// Tiếp tục sử dụng các định nghĩa style như đã cho trước
+
 
 
 
@@ -98,7 +98,7 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '24px'
+    fontSize: '25px'
   },
   addButton: {
     backgroundColor: '#4CAF50',
@@ -124,7 +124,7 @@ const styles = {
     padding: '8px',
     textAlign: 'left'
   },
-  editButton: {
+  updateButton: {
     padding: '5px 10px',
     marginRight: '5px',
     backgroundColor: '#4CAF50',
