@@ -40,7 +40,7 @@ function App() {
           <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />
           <Route path='/homePage' element={<Layout Component={ListProduct} />} />
           <Route path='/detail/:productCode' element={<Layout Component={DetailPage} />} />
-          <Route path='/gold-selection' element={<Layout Component={BuyListProduct} />} />
+          <Route path='/buyProduct' element={<Layout Component={BuyListProduct} />} />
           <Route path='/cashierListOrder' element={<Layout Component={CashierListOrder} />} />
           <Route path='/cashierOrderDetail/:orderKey' element={<Layout Component={CashierOrderDetail} />} />
           <Route path='/CartPage' element={<Layout Component={CartPage} />} />
@@ -49,7 +49,6 @@ function App() {
           <Route path='/storeProductDetail' element={<Layout Component={StoreProductDetail} />} />
           <Route path='/cashierDelivered' element={<Layout Component={CashierDelivered} />} />
           <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
-          <Route path='/buyProduct' element={<Layout Component={StoreSelection} />} />
           <Route path='/cashierUpdateOrder/:orderKey' element={<Layout Component={CashierUpdateOrder} />} />
           <Route path='/inventory' element={<Layout Component={Inventory} />} />
           <Route path='/manageGold' element={<Layout Component={ManageGold} />} />
