@@ -3,6 +3,7 @@ import { Button, Table, Input, Select } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import './CashierOrderDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function ListOrderPage() {
     const [products, setProducts] = useState([]);
@@ -15,6 +16,12 @@ export default function ListOrderPage() {
     const [totalPrice, setTotalPrice] = useState(0);
     const { orderKey } = useParams();
     const navigate = useNavigate();
+
+    let userInfo = useSelector((state) => {
+        return state.userReducer.userInfo;
+      })
+      console.log(userInfo);
+
 
     useEffect(() => {
         adornicaServ.getListOrderDetail(orderKey)
@@ -64,7 +71,7 @@ export default function ListOrderPage() {
         const orderData = {
             keyProOrder: orderKey,
             orderCode: randomOrderKey,
-            staffId: 1, // Assuming staffId is 1 for now
+            staffId: userInfo.id, // Assuming staffId is 1 for now
             phone: customerPhone,
             name: customerName,
             // address: customerAddress,

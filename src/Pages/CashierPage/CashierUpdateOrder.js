@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function CashierUpdateOrder() {
     const [products, setProducts] = useState([]);
@@ -9,6 +10,13 @@ export default function CashierUpdateOrder() {
     const [totalAllPrice, setTotalAllPrice] = useState(0);
     const { orderKey } = useParams();
     console.log(products);
+
+
+    let userInfo = useSelector((state) => {
+        return state.userReducer.userInfo;
+      })
+    console.log(userInfo);
+
 
     useEffect(() => {
         adornicaServ.getListOrderDetail(orderKey)
@@ -58,7 +66,7 @@ export default function CashierUpdateOrder() {
         const orderData = {
             keyProOrder: orderKey,
             orderCode: 1,
-            staffId: 1,
+            staffId: userInfo.id,
             orderList: products.map(product => ({
                 productId: product.productId,
                 productName: product.productName,

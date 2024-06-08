@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { adornicaServ } from '../../service/adornicaServ';
+import { useSelector } from 'react-redux';
 
 // Define styles as objects
 const styles = {
@@ -57,25 +59,58 @@ const styles = {
 };
 
 const GoldSelection = () => {
-  const [name, setName] = useState('Nguyen Quoc Nam');
+  const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [color, setColor] = useState('D');
-  const [cut, setCut] = useState('Excellent');
-  const [clarity, setClarity] = useState('Internally Flawless (IF)');
+  const [color, setColor] = useState('');
+  const [cut, setCut] = useState('');
+  const [clarity, setClarity] = useState('');
   const [caratWeight, setCaratWeight] = useState('');
   const [totalPrice, setTotalPrice] = useState('340,000,000');
 
-  const handleSubmit = (event) => {
+  let userInfo = useSelector((state) => {
+    return state.userReducer.userInfo;
+  })
+  console.log(userInfo);
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = {
-      phone,
-      color,
-      cut,
-      clarity,
-      caratWeight
+      staffId: userInfo.id,
+      customerName: name,
+      phone: phone,
+      list: [
+        {
+          name:'Diamond',
+          origin: 'Unknown',
+          color: color,
+          clarity: clarity,
+          cut: cut,
+          carat: parseFloat(caratWeight),
+          price: totalPrice
+        }
+      ],
+      totalPrice: totalPrice,
+      productStore: true
     };
+
     console.log('Form Data Submitted:', formData);
-    // You would typically handle the form submission here, perhaps sending data to a server
+
+    try {
+      const response = await adornicaServ.postPurchaseOrderCode(formData);
+      console.log('Order sent successfully:', response.data);
+      alert('Order sent successfully');
+    } catch (error) {
+      console.error('There was an error sending the order:', error);
+      if (error.response) {
+        console.error('Response data:', error.response);
+      } else if (error.request) {
+        console.error('Request data:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+      alert('Failed to send order. Please check your input data.');
+    }
   };
 
   return (
@@ -92,6 +127,7 @@ const GoldSelection = () => {
         <div style={styles.formGroup}>
           <label style={styles.label}>Color:</label>
           <select style={styles.input} value={color} onChange={e => setColor(e.target.value)}>
+            <option value=''></option>
             <option value='D'>D</option>
             <option value='E'>E</option>
             <option value='F'>F</option>
@@ -107,6 +143,7 @@ const GoldSelection = () => {
         <div style={styles.formGroup}>
           <label style={styles.label}>Cut:</label>
           <select style={styles.input} value={cut} onChange={e => setCut(e.target.value)}>
+            <option value=""></option>
             <option value="Excellent">Excellent</option>
             <option value="Very Good">Very Good</option>
             <option value="Fair">Fair</option>
@@ -116,6 +153,7 @@ const GoldSelection = () => {
         <div style={styles.formGroup}>
           <label style={styles.label}>Clarity:</label>
           <select style={styles.input} value={clarity} onChange={e => setClarity(e.target.value)}>
+            <option value=''></option>
             <option value='FL'>FL</option>
             <option value='IF'>IF</option>
             <option value='VVS1'>VVS1</option>
