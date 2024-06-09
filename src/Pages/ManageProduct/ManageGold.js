@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { adornicaServ } from '../../service/adornicaServ';
 
-const initialProducts = [
-  { id: 1, name: "14K White Gold & Diamond Wedding Ring", gem: "Diamond", productionCost: "3250", gender: "Male", weight: "7g", material: "White gold", quantity: 20 },
-  { id: 2, name: "18K White Gold Wedding Ring", gem: "None", productionCost: "2205", gender: "Unisex", weight: "5g", material: "White gold", quantity: 15 },
-  { id: 3, name: "14K Yellow Gold Wedding Ring", gem: "None", productionCost: "1900", gender: "Female", weight: "4g", material: "Yellow gold", quantity: 10 },
-  { id: 4, name: "Platinum & Diamond Wedding Band", gem: "Diamond", productionCost: "4500", gender: "Unisex", weight: "6g", material: "Platinum", quantity: 5 }
-];
+export default function ManageGold() {
+const [goldManage, setGoldManage] = useState([]);
 
-const InventoryPage = () => {
-  const [gold, setGold] = useState(initialProducts);
+useEffect(() => {
+  adornicaServ. getPriceMaterial()
+    .then((res) => {
+      console.log(res.data.metadata);
+      setGoldManage(res.data.metadata);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, []);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
   // Hàm để xóa sản phẩm theo ID
   const handleDelete = (productId) => {
-    const updatedProducts = gold.filter(product => product.id !== productId);
-    setGold(updatedProducts);
+    const updatedProducts = goldManage.filter(product => product.materialId !== productId);
+    setGoldManage(updatedProducts);
   };
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
-  const currentGold = gold.slice(firstItemIndex, lastItemIndex);
-  const totalPages = Math.ceil(gold.length / itemsPerPage);
+  const currentGold = goldManage.slice(firstItemIndex, lastItemIndex);
+  const totalPages = Math.ceil(goldManage.length / itemsPerPage);
 
   const changePage = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -37,29 +43,23 @@ const InventoryPage = () => {
           <tr>
             <th style={styles.th}>ID</th>
             <th style={styles.th}>Name</th>
-            <th style={styles.th}>Gem</th>
-            <th style={styles.th}>Production Cost</th>
-            <th style={styles.th}>Gender</th>
-            <th style={styles.th}>Weight</th>
-            <th style={styles.th}>Material</th>
-            <th style={styles.th}>Quantity</th>
+            <th style={styles.th}>Buy Price</th>
+            <th style={styles.th}>Sell Price</th>
+            <th style={styles.th}>Date</th>
             <th style={styles.th}>Action</th>
           </tr>
         </thead>
         <tbody>
           {currentGold.map((product) => (
             <tr key={product.id}>
-              <td style={styles.td}>{product.id}</td>
-              <td style={styles.td}>{product.name}</td>
-              <td style={styles.td}>{product.gem}</td>
-              <td style={styles.td}>${product.productionCost}</td>
-              <td style={styles.td}>{product.gender}</td>
-              <td style={styles.td}>{product.weight}</td>
-              <td style={styles.td}>{product.material}</td>
-              <td style={styles.td}>{product.quantity}</td>
+              <td style={styles.td}>{product.materialId}</td>
+              <td style={styles.td}>{product.materialName}</td>
+              <td style={styles.td}>{product.materialBuyPrice}</td>
+              <td style={styles.td}>${product.materialSellPrice}</td>
+              <td style={styles.td}>{product.effectDate}</td>
               <td style={styles.td}>
                 <button style={styles.updateButton}>Update</button>
-                <button style={styles.deleteButton} onClick={() => handleDelete(product.id)}>Delete</button>
+                <button style={styles.deleteButton} onClick={() => handleDelete(product.materialId)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -152,4 +152,4 @@ const styles = {
   }
 };
 
-export default InventoryPage;
+
