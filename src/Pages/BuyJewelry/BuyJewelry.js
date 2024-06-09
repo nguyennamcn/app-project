@@ -56,7 +56,7 @@ const styles = {
   }
 };
 
-const GoldSelection = () => {
+const JewelrySelection = () => {
   const location = useLocation();
   const { customerData } = location.state || {};
 
@@ -68,8 +68,11 @@ const GoldSelection = () => {
   const [color, setColor] = useState('');
   const [cut, setCut] = useState('');
   const [clarity, setClarity] = useState('');
-  const [caratWeight, setCaratWeight] = useState('');
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [carat, setCaratWeight] = useState('');
+  const [totalGoldPrice, setTotalGoldPrice] = useState('0.00');
+  const [totalDiamondPrice, setTotalDiamondPrice] = useState('0.00');
+  const [totalPrice, setTotalPrice] = useState('0.00');
+  const [goldPrices, setGoldPrices] = useState([]);
 
   let userInfo = useSelector((state) => state.userReducer.userInfo);
 
@@ -82,35 +85,72 @@ const GoldSelection = () => {
   }, [customerData]);
 
   useEffect(() => {
-    const calculateTotalPrice = async () => {
+    adornicaServ.getPriceMaterial()
+      .then((res) => {
+        setGoldPrices(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    const selectedGold = goldPrices.find(gold => gold.materialName === goldType);
+    if (selectedGold) {
+      const calculatedPrice = selectedGold.materialBuyPrice * parseFloat(weight || 0);
+      setTotalGoldPrice(calculatedPrice.toFixed(2));
+    }
+  }, [goldType, weight, goldPrices]);
+
+  useEffect(() => {
+    const fetchPrice = async () => {
       try {
-        let goldPrice = 0;
-        let diamondPrice = 0;
+        if (cut && carat && clarity && color && diamond) {
+          const caratValue = parseFloat(carat);
+          if (isNaN(caratValue)) {
+            console.warn('Invalid carat value');
+            setTotalDiamondPrice('0.00');
+            return;
+          }
 
-        if (goldType !== 'None' && weight) {
-          const goldResponse = await adornicaServ.getPriceMaterial(goldType, parseFloat(weight));
-          goldPrice = goldResponse.price;
+          const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, diamond);
+          console.log('API response:', res.data); // Debug log
+
+          if (res.data && res.data.metadata) {
+            const priceData = res.data.metadata.find((data) => (
+              data.cut === cut &&
+              data.carat === caratValue &&
+              data.clarity === clarity &&
+              data.color === color &&
+              data.origin === diamond
+            ));
+
+            console.log('Matching price data:', priceData); // Debug log
+
+            if (priceData) {
+              setTotalDiamondPrice(priceData.gemBuyPrice.toFixed(2).toString());
+              console.log('Total price set to:', priceData.gemBuyPrice.toString()); // Debug log
+            } else {
+              console.warn('No matching price data found');
+              setTotalDiamondPrice('0.00');
+            }
+          } else {
+            console.warn('Invalid response structure', res.data);
+            setTotalDiamondPrice('0.00');
+          }
         }
-
-        if (diamond !== 'None' && caratWeight) {
-          const diamondResponse = await adornicaServ.getDiamondPrice({
-            type: diamond,
-            caratWeight: parseFloat(caratWeight),
-            color,
-            cut,
-            clarity,
-          });
-          diamondPrice = diamondResponse.price;
-        }
-
-        setTotalPrice(goldPrice + diamondPrice);
-      } catch (error) {
-        console.error('Error calculating total price:', error);
+      } catch (err) {
+        console.error('Error fetching price:', err);
+        setTotalDiamondPrice('0.00');
       }
     };
 
-    calculateTotalPrice();
-  }, [goldType, weight, diamond, caratWeight, color, cut, clarity]);
+    fetchPrice();
+  }, [cut, carat, clarity, color, diamond]);
+
+  useEffect(() => {
+    setTotalPrice((parseFloat(totalGoldPrice) || 0) + (parseFloat(totalDiamondPrice) || 0));
+  }, [totalGoldPrice, totalDiamondPrice]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -186,7 +226,7 @@ const GoldSelection = () => {
           <select style={styles.input} value={diamond} onChange={e => setDiamond(e.target.value)}>
             <option value=""></option>
             <option value="None">None</option>
-            <option value="Natural">Natural</option>
+            <option value="NATURAL">Natural</option>
             <option value="Synthetic">Synthetic</option>
           </select>
         </div>
@@ -196,7 +236,7 @@ const GoldSelection = () => {
           <input
             type="number"
             style={styles.input}
-            value={caratWeight}
+            value={carat}
             onChange={e => setCaratWeight(e.target.value)}
             disabled={diamond === 'None'}
           />
@@ -260,7 +300,7 @@ const GoldSelection = () => {
           </select>
         </div>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice.toLocaleString()}
+          Total price: {totalPrice.toLocaleString()} $
         </div>
         <button type="submit" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
@@ -271,4 +311,4 @@ const GoldSelection = () => {
   );
 };
 
-export default GoldSelection;
+export default JewelrySelection;
