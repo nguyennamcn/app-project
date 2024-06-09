@@ -115,6 +115,7 @@ const BuyHistory = () => {
           <tr>
             <th style={styles.tableHeader}>ID</th>
             <th style={styles.tableHeader}>Sales Staff</th>
+            <th style={styles.tableHeader}>Order Code</th>
             <th style={styles.tableHeader}>Total Price</th>
             <th style={styles.tableHeader}>Order Date</th>
             <th style={styles.tableHeader}>Payment Method</th>
@@ -131,6 +132,7 @@ const BuyHistory = () => {
                   </NavLink>
                 </td>
                 <td style={styles.tableData}>{order.salesStaffName}</td>
+                <td style={styles.tableData}>{order.oerderCode}</td>
                 <td style={styles.tableData}>{order.totalPrice}</td>
                 <td style={styles.tableData}>{order.dateOrder}</td>
                 <td style={styles.tableData}>{order.paymentMethod}</td>

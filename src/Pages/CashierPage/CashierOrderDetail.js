@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Input, Select } from 'antd';
+import { Button, Table, Input, Select, DatePicker } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import './CashierOrderDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 export default function ListOrderPage() {
     const [products, setProducts] = useState([]);
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
     const [customerAddress, setCustomerAddress] = useState('');
-    const [customerBirthday, setCustomerBirthday] = useState(0);
+    const [customerBirthday, setCustomerBirthday] = useState(null); // Change to null to work with DatePicker
     const [paymentMethod, setPaymentMethod] = useState('CASH');
     const [discount, setDiscount] = useState(10);
     const [totalPrice, setTotalPrice] = useState(0);
     const { orderKey } = useParams();
     const navigate = useNavigate();
+    const [customer, setCustomer] = useState(null);
 
-    let userInfo = useSelector((state) => {
-        return state.userReducer.userInfo;
-      })
-      console.log(userInfo);
-
+    const userInfo = useSelector((state) => state.userReducer.userInfo);
+    console.log(userInfo);
 
     useEffect(() => {
         adornicaServ.getListOrderDetail(orderKey)
@@ -32,6 +31,12 @@ export default function ListOrderPage() {
                 }));
                 setProducts(orderList);
                 console.log(res.data.metadata);
+                const customerData = res.data.metadata;
+                setCustomer(customerData);
+                setCustomerName(customerData.customer || '');
+                setCustomerPhone(customerData.phone || '');
+                setCustomerAddress(customerData.address || '');
+                setCustomerBirthday(customerData.dateOfBirth ? moment(customerData.dateOfBirth).valueOf() : null);
             })
             .catch((err) => {
                 console.log(err);
@@ -71,11 +76,11 @@ export default function ListOrderPage() {
         const orderData = {
             keyProOrder: orderKey,
             orderCode: randomOrderKey,
-            staffId: userInfo.id, // Assuming staffId is 1 for now
+            staffId: userInfo.id,
             phone: customerPhone,
             name: customerName,
-            // address: customerAddress,
-            // dateOfBirth: customerBirthday,
+            address: customerAddress,
+            dateOfBirth: customerBirthday ? customerBirthday : '',
             orderList: products.map(product => ({
                 productId: product.productId,
                 sizeId: product.sizeId,
@@ -89,11 +94,11 @@ export default function ListOrderPage() {
         adornicaServ.postSummit(orderData)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
-                navigate('/homePage'); // Navigate to the orders page or another page after successful submission
+                navigate('/homePage');
             })
             .catch((err) => {
-                console.log('Error submitting order:', err.response); // Log error details
-                // alert( err.response.data.metadata.message)
+                console.log('Error submitting order:', err.response);
+                // alert(err.response.data.metadata.message)
             });
     };
 
@@ -109,8 +114,8 @@ export default function ListOrderPage() {
             key: 'quantity',
             render: (text, record) => (
                 <div>
-                     <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-                 </div>
+                    <span style={{ margin: '0 10px' }}>{record.quantity}</span>
+                </div>
             ),
         },
         {
@@ -126,11 +131,13 @@ export default function ListOrderPage() {
         },
     ];
 
+    const currentDate = moment().format('DD/MM/YYYY');
+
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0', }}>Order</h1>
-                <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order</h1>
+                <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div className="container">
                 <div className="row justify-content-md-center">
@@ -141,25 +148,24 @@ export default function ListOrderPage() {
                         height: '400px',
                         padding: '0',
                     }}>
-                        <label>Name<input style={{ marginLeft: '10%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
-                        <label>Phone<input style={{ marginLeft: '9.6%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
+                        <label>Name: {customerName}</label>
+                        <label>Phone: {customerPhone}</label>
                         <label>Address<input style={{ marginLeft: '9.6%' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
-                        <label>Birthday<input style={{ marginLeft: '9.6%' }} type="text" value={customerBirthday} onChange={(e) => setCustomerBirthday(e.target.value)} /></label>
-                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display:'inline-block', }} type="text" /*value={} onChange={(e) => setCustomerPhone(e.target.value)}*/ >20/3/2024</h1></label>
+                        <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
+                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display: 'inline-block' }} type="text">{currentDate}</h1></label>
                         <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
                             <option value='CASH'>Cash</option>
                             <option value='BANKING'>Banking</option>
                         </select></label>
                     </div>
 
-                    <div className="product__table col-sm-6"
-                        style={{
-                            marginLeft: '10px',
-                            backgroundColor: 'white',
-                            width: '100px',
-                            height: '400px',
-                            padding: '0',
-                        }}>
+                    <div className="product__table col-sm-6" style={{
+                        marginLeft: '10px',
+                        backgroundColor: 'white',
+                        width: '100px',
+                        height: '400px',
+                        padding: '0',
+                    }}>
                         <Table style={{ margin: '20px 60px 0 60px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
                         <div className="row">
                             <div className="col-sm-12"><h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item:<span style={{ marginLeft: '4%' }}>{products.length}</span></h1></div>
@@ -169,19 +175,18 @@ export default function ListOrderPage() {
                     </div>
 
                     <div className="col-sm-12 flex justify-center mt-6">
-                    <a href='/cashierListOrder'><Button
-                        style={{padding:'0 56px 0 56px', marginRight:'30px'}}
+                        <a href='/cashierListOrder'><Button
+                            style={{ padding: '0 56px 0 56px', marginRight: '30px' }}
                             size="large"
                             danger
                         >Back</Button></a>
-                        
+
                         <Button
                             size="large"
                             htmlType='submit'
                             onClick={handleSubmit}
-                            style={{ padding:'0 60px', marginLeft:'30px'}}            
-                        >Paid</Button> 
-                             
+                            style={{ padding: '0 60px', marginLeft: '30px' }}
+                        >Paid</Button>
                     </div>
                 </div>
 

@@ -30,6 +30,11 @@ export const adornicaServ = {
         return https.get(`/api/v1/orders/pre-order-product/${orderKey}`);
     },
 
+    getPhoneCustomer: (phone) => {
+        console.log(phone)
+        return https.post(`/api/v1/customers/${phone}`);
+    },
+
     postOrderCode: (phone, orderCode) => {
         const data = {
           phone: phone,

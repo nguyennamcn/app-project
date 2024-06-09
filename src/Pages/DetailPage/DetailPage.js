@@ -57,7 +57,8 @@ export default function DetailPage() {
     const handleAddToCart = () => {
         const selectedProduct = product.sizeProducts.find(sp => sp.size === selectedSize);
         const item = {
-            productCode,
+            productId: product.id,
+            productCode: product.productCode,
             name: product.productName,
             size: selectedSize,
             sizeId: selectedId,
