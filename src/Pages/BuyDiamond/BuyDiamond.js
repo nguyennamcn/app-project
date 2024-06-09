@@ -58,7 +58,7 @@ const styles = {
   }
 };
 
-const GoldSelection = () => {
+const DiamondSelection = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [color, setColor] = useState('');
@@ -183,6 +183,6 @@ const GoldSelection = () => {
   );
 };
 
-export default GoldSelection;
+export default DiamondSelection;
 
 
