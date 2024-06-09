@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-// Dữ liệu mẫu cho các mặt hàng trang sức
+
 const initialJewelry = [
   { id: 1, name: "Gold Necklace", type: "Necklace", material: "Gold", carat: 18, price: 1500 },
   { id: 2, name: "Diamond Earrings", type: "Earrings", material: "Diamond", carat: 22, price: 3000 },
@@ -131,14 +131,14 @@ const styles = {
   },
   pagination: {
     display: 'flex',
-    justifyContent: 'flex-end', // Căn phải các nút phân trang
+    justifyContent: 'flex-end', 
     padding: '10px 20px'
   },
   pageButton: {
     padding: '5px 10px',
     margin: '0 5px',
-    backgroundColor: '#000000', // Màu nền của nút là màu đen
-    color: 'white', // Màu chữ là trắng
+    backgroundColor: '#000000', 
+    color: 'white', 
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer'

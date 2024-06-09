@@ -16,7 +16,7 @@ export default function ManageDiamond() {
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Số lượng mục trên mỗi trang đã được cập nhật
+  const itemsPerPage = 5; 
 
   const handleDelete = (diamondId) => {
     const updatedDiamonds = diamondManage.filter(diamond => diamond.gemId !== diamondId);
@@ -146,14 +146,14 @@ const styles = {
   },
   pagination: {
     display: 'flex',
-    justifyContent: 'flex-end', // Căn phải các nút phân trang
+    justifyContent: 'flex-end', 
     padding: '10px 20px'
   },
   pageButton: {
     padding: '5px 10px',
     margin: '0 5px',
-    backgroundColor: '#000000', // Màu nền của nút là màu đen
-    color: 'white', // Màu chữ là trắng
+    backgroundColor: '#000000', 
+    color: 'white', 
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer'

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
+import { adornicaServ } from '../../service/adornicaServ';
 
 const styles = {
   container: {
@@ -69,7 +69,7 @@ const GoldSelection = () => {
   const [cut, setCut] = useState('');
   const [clarity, setClarity] = useState('');
   const [caratWeight, setCaratWeight] = useState('');
-  const [totalPrice, setTotalPrice] = useState(340000000);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   let userInfo = useSelector((state) => state.userReducer.userInfo);
 
@@ -77,10 +77,40 @@ const GoldSelection = () => {
     if (customerData) {
       setName(customerData.customerName);
       setPhone(customerData.phone);
-      // Set other fields as needed from customerData
       console.log(customerData);
     }
   }, [customerData]);
+
+  useEffect(() => {
+    const calculateTotalPrice = async () => {
+      try {
+        let goldPrice = 0;
+        let diamondPrice = 0;
+
+        if (goldType !== 'None' && weight) {
+          const goldResponse = await adornicaServ.getPriceMaterial(goldType, parseFloat(weight));
+          goldPrice = goldResponse.price;
+        }
+
+        if (diamond !== 'None' && caratWeight) {
+          const diamondResponse = await adornicaServ.getDiamondPrice({
+            type: diamond,
+            caratWeight: parseFloat(caratWeight),
+            color,
+            cut,
+            clarity,
+          });
+          diamondPrice = diamondResponse.price;
+        }
+
+        setTotalPrice(goldPrice + diamondPrice);
+      } catch (error) {
+        console.error('Error calculating total price:', error);
+      }
+    };
+
+    calculateTotalPrice();
+  }, [goldType, weight, diamond, caratWeight, color, cut, clarity]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

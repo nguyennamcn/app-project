@@ -18,7 +18,7 @@ useEffect(() => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // Hàm để xóa sản phẩm theo ID
+ 
   const handleDelete = (productId) => {
     const updatedProducts = goldManage.filter(product => product.materialId !== productId);
     setGoldManage(updatedProducts);
@@ -138,14 +138,14 @@ const styles = {
   },
   pagination: {
     display: 'flex',
-    justifyContent: 'flex-end', // Căn phải các nút phân trang
+    justifyContent: 'flex-end', 
     padding: '10px 20px'
   },
   pageButton: {
     padding: '5px 10px',
     margin: '0 5px',
-    backgroundColor: '#000000', // Màu nền của nút là màu đen
-    color: 'white', // Màu chữ là trắng
+    backgroundColor: '#000000', 
+    color: 'white', 
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer'
