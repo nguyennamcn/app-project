@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
+import { NavLink } from 'react-router-dom';
 
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
@@ -36,7 +37,7 @@ export default function ManageDiamond() {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.title}>DIAMOND INVENTORY</h1>
-        <button style={styles.addButton}>+ ADD PRODUCT</button>
+        <NavLink to="/addproduct" style={styles.addButton}> ADD PRODUCT</NavLink>
       </header>
       <table style={styles.table}>
         <thead>
@@ -66,7 +67,7 @@ export default function ManageDiamond() {
               <td style={styles.td}>${diamond.gemSellPrice}</td>
               <td style={styles.td}>${diamond.effectDate}</td>
               <td style={styles.td}>
-                <button style={styles.updateButton}>Update</button>
+                <NavLink to="/updateproduct" style={styles.updateButton}>Update</NavLink>
                 <button style={styles.deleteButton} onClick={() => handleDelete(diamond.gemId)}>Delete</button>
               </td>
             </tr>

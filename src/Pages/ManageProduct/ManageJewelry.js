@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { NavLink } from 'react-router-dom';
 
 const initialJewelry = [
   { id: 1, name: "Gold Necklace", type: "Necklace", material: "Gold", carat: 18, price: 1500 },
@@ -30,7 +30,7 @@ const JewelryInventoryPage = () => {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.title}>JEWELRY INVENTORY</h1>
-        <button style={styles.addButton}>+ ADD PRODUCT</button>
+        <NavLink to="/addproduct" style={styles.addButton}> ADD PRODUCT</NavLink>
       </header>
       <table style={styles.table}>
         <thead>
@@ -54,7 +54,7 @@ const JewelryInventoryPage = () => {
               <td style={styles.td}>{item.carat}</td>
               <td style={styles.td}>${item.price}</td>
               <td style={styles.td}>
-                <button style={styles.updateButton}>Update</button>
+                <NavLink to="/updateproduct" style={styles.updateButton}>Update</NavLink>
                 <button style={styles.deleteButton} onClick={() => handleDelete(item.id)}>Delete</button>
               </td>
             </tr>

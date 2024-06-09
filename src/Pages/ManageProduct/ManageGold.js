@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
+import { NavLink } from 'react-router-dom';
 
 export default function ManageGold() {
 const [goldManage, setGoldManage] = useState([]);
@@ -36,7 +37,7 @@ useEffect(() => {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.title}>GOLD</h1>
-        <button style={styles.addButton}>+ ADD PRODUCT</button>
+        <NavLink to="/addproduct" style={styles.addButton}> ADD PRODUCT</NavLink>
       </header>
       <table style={styles.table}>
         <thead>
@@ -58,7 +59,7 @@ useEffect(() => {
               <td style={styles.td}>${product.materialSellPrice}</td>
               <td style={styles.td}>{product.effectDate}</td>
               <td style={styles.td}>
-                <button style={styles.updateButton}>Update</button>
+              <NavLink to="/updateproduct" style={styles.updateButton}>Update</NavLink>
                 <button style={styles.deleteButton} onClick={() => handleDelete(product.materialId)}>Delete</button>
               </td>
             </tr>
