@@ -122,9 +122,10 @@ const GoldSelection = () => {
           <label style={styles.label}>Gold type:</label>
           <select style={styles.input} value={goldType} onChange={e => setGoldType(e.target.value)}>
             <option value=""></option>
-            <option value="Vàng miếng SJC 999.9">Vàng miếng SJC 999.9</option>
-            <option value="Vàng 18K">Vàng 18K</option>
-            <option value="Vàng 24K">Vàng 24K</option>
+            <option value="Gold Bars">Gold Bars</option>
+            <option value="24K Gold (990)">24K Gold (990)</option>
+            <option value="18K Gold (750)">18K Gold (750)</option>
+            <option value="	White Gold Au750">White Gold Au750</option>
           </select>
         </div>
         <div style={styles.formGroup}>

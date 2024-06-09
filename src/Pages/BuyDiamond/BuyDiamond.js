@@ -144,10 +144,10 @@ const GoldSelection = () => {
           <label style={styles.label}>Cut:</label>
           <select style={styles.input} value={cut} onChange={e => setCut(e.target.value)}>
             <option value=""></option>
-            <option value="Excellent">Excellent</option>
-            <option value="Very Good">Very Good</option>
-            <option value="Fair">Fair</option>
-            <option value="Poor">Poor</option>
+            <option value="EX">EX</option>
+            <option value="G">G</option>
+            <option value="F">F</option>
+            <option value="P">P</option>
           </select>
         </div>
         <div style={styles.formGroup}>
