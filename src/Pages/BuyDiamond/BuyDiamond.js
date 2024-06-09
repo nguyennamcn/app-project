@@ -6,8 +6,8 @@ const styles = {
   container: {
     background: '#7FDBF8',
     padding: '20px 20px',
-    maxWidth: '900px',
-    margin: '20px auto',
+    maxWidth: '850px',
+    margin: 'auto',
     borderRadius: '10px',
     boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
     fontFamily: 'Arial, sans-serif',
@@ -28,7 +28,7 @@ const styles = {
     fontWeight: 'bold',
   },
   input: {
-    padding: '10px',
+    padding: '5px',
     border: '2px solid #cccccc',
     borderRadius: '5px',
     fontSize: '16px',
