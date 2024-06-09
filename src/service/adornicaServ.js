@@ -74,6 +74,7 @@ export const adornicaServ = {
     getPriceMaterial: () => {
         return https.get(`/api/v1/prices/materials`);
     },
+
     getDiamondPrice: () => {
         return https.get(`/api/v1/prices/gems`);
     },
@@ -82,5 +83,9 @@ export const adornicaServ = {
         console.log(orderID)
         return https.post(`/api/v1/orders/delivery/${orderID}`);
 
+    },
+
+    getPurchaseDiamondPrice: (cut, carat, clarity, color, origin) => {
+        return https.get(`/api/v1/purchases/prices?cut=${cut}&clarity=${clarity}&color=${color}&origin=${origin}`);
     },
 }

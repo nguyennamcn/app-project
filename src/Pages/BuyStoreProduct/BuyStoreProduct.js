@@ -72,7 +72,7 @@ const StoreSelection = () => {
       .then(response => {
         console.log("Order sent successfully:", response.data);
         alert('Order sent successfully');
-        navigate('/gold-selection', { state: { customerData: response.data } });
+        navigate('/storeProductDetail', { state: { customerData: response.data } });
       })
       .catch(error => {
         console.error("There was an error sending the order:", error);
