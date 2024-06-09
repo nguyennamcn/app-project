@@ -67,7 +67,6 @@ const DiamondSelection = () => {
   const [totalPrice, setTotalPrice] = useState('0.00');
   const userInfo = useSelector((state) => state.userReducer.userInfo);
 
-  
   useEffect(() => {
     const fetchPrice = async () => {
       try {
@@ -113,26 +112,36 @@ const DiamondSelection = () => {
 
     fetchPrice();
   }, [cut, carat, clarity, color, origin]);
-  
+
   const handleSubmit = () => {
-    if (!name || !phone || !color || !cut || !clarity || !origin ) {
+    if (!name || !phone || !color || !cut || !clarity || !origin || !carat) {
       alert('Please fill in all the fields.');
       return;
     }
 
-    const diamondData = {
-      color: color,
-      cut: cut,
-      clarity: clarity,
-      origin: origin,
-      
-    };
+    const caratValue = parseFloat(carat);
+    if (isNaN(caratValue)) {
+      alert('Please enter a valid carat weight.');
+      return;
+    }
+
+    const list = [
+      {
+        origin: origin,
+        color: color,
+        clarity: clarity,
+        cut: cut,
+        carat: caratValue,
+      }
+    ];
+
     const purchaseData = {
       staffId: userInfo.id,
-      customer: name,
+      customerName: name,
       phone: phone,
-      diamondData,
-      totalPrice: totalPrice,
+      list: list,
+      totalPrice: parseFloat(totalPrice), // Ensure totalPrice is a number
+      productStore: false, // Assuming the productStore is true
     };
 
     console.log('Submitting purchase data:', purchaseData);

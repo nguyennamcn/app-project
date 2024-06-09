@@ -49,7 +49,7 @@ function App() {
           <Route path='/CartPage' element={<Layout Component={CartPage} />} />
           <Route path='/detailOrderSended/:orderKey' element={<Layout Component={DetailOrderSended} />} />
           <Route path='/listOrderSent' element={<Layout Component={SentPagee} />} />
-          <Route path='/storeProductDetail' element={<Layout Component={StoreProductDetail} />} />
+          <Route path='/storeProductDetail/:orderCode' element={<Layout Component={StoreProductDetail} />} />
           <Route path='/cashierDelivered' element={<Layout Component={CashierDelivered} />} />
           <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
           <Route path='/cashierUpdateOrder/:orderKey' element={<Layout Component={CashierUpdateOrder} />} />

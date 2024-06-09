@@ -5,6 +5,11 @@ export const adornicaServ = {
         return https.get(`/api/v1/products/${productCode}`);
     },
 
+    getOrderDetail: (orderCode) => {
+        console.log(orderCode)
+        return https.get(`/api/v1/orders/order-detail/${orderCode}`);
+    },
+
     getListGold: () => {
         return https.get(`/api/v1/products?categoryType=GOLD`);
     },

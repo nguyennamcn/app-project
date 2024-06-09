@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 
 // Define styles as objects
@@ -72,7 +72,6 @@ const StoreSelection = () => {
       .then(response => {
         console.log("Order sent successfully:", response.data);
         alert('Order sent successfully');
-        navigate('/storeProductDetail', { state: { customerData: response.data } });
       })
       .catch(error => {
         console.error("There was an error sending the order:", error);
@@ -91,10 +90,12 @@ const StoreSelection = () => {
           <label style={styles.label}>Order code:</label>
           <input style={styles.input} type="text" value={ordercode} onChange={e => setOrdercode(e.target.value)} />
         </div>
-        <button type="submit" style={styles.button}
-          onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-          onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-        >Check</button>
+        <NavLink to={`/storeProductDetail/${ordercode}`}>
+          <button type="submit" style={styles.button}
+            onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
+            onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
+          >Check</button>
+        </NavLink>
       </form>
     </div>
   );

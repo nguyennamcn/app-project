@@ -162,12 +162,16 @@ const JewelrySelection = () => {
         {
           name: 'Jewelry',
           weight: parseFloat(weight),
-          origin: 'Unknown',
-          price: totalPrice
+          color: color,
+          clarity: clarity,
+          origin: diamond,
+          cut: cut,
+          carat: carat,
+          price: totalDiamondPrice,
         }
       ],
       totalPrice: totalPrice,
-      productStore: true
+      productStore: false
     };
 
     console.log('Form Data Submitted:', formData);
