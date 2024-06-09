@@ -73,5 +73,6 @@ export const adornicaServ = {
     postUpdateDeliveryOrder: (orderID) => {
         console.log(orderID)
         return https.post(`/api/v1/orders/delivery/${orderID}`);
+
     },
 }

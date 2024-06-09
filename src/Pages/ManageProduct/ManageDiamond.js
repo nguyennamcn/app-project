@@ -1,33 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { adornicaServ } from '../../service/adornicaServ';
 
-// Dữ liệu mẫu cho kim cương
-const initialDiamonds = [
-  { id: 1, name: "Round Brilliant Cut", carat: 1.2, clarity: "VS1", color: "E", cut: "Excellent", price: 12000 },
-  { id: 2, name: "Princess Cut", carat: 1.5, clarity: "SI1", color: "G", cut: "Very Good", price: 10000 },
-  { id: 3, name: "Cushion Cut", carat: 2.0, clarity: "VVS2", color: "H", cut: "Good", price: 18000 },
-  { id: 4, name: "Emerald Cut", carat: 2.5, clarity: "VS2", color: "F", cut: "Excellent", price: 25000 },
-  // Giả sử có thêm nhiều mục để phù hợp với phân trang
-  { id: 5, name: "Marquise Cut", carat: 1.8, clarity: "SI2", color: "I", cut: "Fair", price: 9700 },
-  { id: 6, name: "Oval Cut", carat: 1.3, clarity: "VVS1", color: "J", cut: "Very Good", price: 11000 },
-  { id: 7, name: "Pear Cut", carat: 2.1, clarity: "VS1", color: "H", cut: "Good", price: 21000 },
-  { id: 8, name: "Heart Cut", carat: 2.2, clarity: "SI1", color: "E", cut: "Excellent", price: 18000 }
+export default function ManageDiamond() {
+  const [diamondManage, setDiamondManage] = useState([]);
   
-];
+  useEffect(() => {
+    adornicaServ. getDiamondPrice()
+      .then((res) => {
+        console.log(res.data.metadata);
+        setDiamondManage(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-const ManageDiamond = () => {
-  const [diamonds, setDiamonds] = useState(initialDiamonds);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Số lượng mục trên mỗi trang đã được cập nhật
 
   const handleDelete = (diamondId) => {
-    const updatedDiamonds = diamonds.filter(diamond => diamond.id !== diamondId);
-    setDiamonds(updatedDiamonds);
+    const updatedDiamonds = diamondManage.filter(diamond => diamond.gemId !== diamondId);
+    setDiamondManage(updatedDiamonds);
   };
 
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
-  const currentDiamonds = diamonds.slice(firstItemIndex, lastItemIndex);
-  const totalPages = Math.ceil(diamonds.length / itemsPerPage);
+  const currentDiamonds = diamondManage.slice(firstItemIndex, lastItemIndex);
+  const totalPages = Math.ceil(diamondManage.length / itemsPerPage);
 
   const changePage = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -43,28 +42,32 @@ const ManageDiamond = () => {
         <thead>
           <tr>
             <th style={styles.th}>ID</th>
-            <th style={styles.th}>Name</th>
+            <th style={styles.th}>Origin</th>
             <th style={styles.th}>Carat</th>
             <th style={styles.th}>Clarity</th>
             <th style={styles.th}>Color</th>
             <th style={styles.th}>Cut</th>
-            <th style={styles.th}>Price</th>
+            <th style={styles.th}>BuyPrice</th>
+            <th style={styles.th}>SellPrice</th>
+            <th style={styles.th}>Date</th>
             <th style={styles.th}>Action</th>
           </tr>
         </thead>
         <tbody>
           {currentDiamonds.map((diamond) => (
             <tr key={diamond.id}>
-              <td style={styles.td}>{diamond.id}</td>
-              <td style={styles.td}>{diamond.name}</td>
+              <td style={styles.td}>{diamond.gemId}</td>
+              <td style={styles.td}>{diamond.origin}</td>
               <td style={styles.td}>{diamond.carat}</td>
               <td style={styles.td}>{diamond.clarity}</td>
               <td style={styles.td}>{diamond.color}</td>
               <td style={styles.td}>{diamond.cut}</td>
-              <td style={styles.td}>${diamond.price}</td>
+              <td style={styles.td}>${diamond.gemBuyPrice}</td>
+              <td style={styles.td}>${diamond.gemSellPrice}</td>
+              <td style={styles.td}>${diamond.effectDate}</td>
               <td style={styles.td}>
                 <button style={styles.updateButton}>Update</button>
-                <button style={styles.deleteButton} onClick={() => handleDelete(diamond.id)}>Delete</button>
+                <button style={styles.deleteButton} onClick={() => handleDelete(diamond.gemId)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -158,4 +161,3 @@ const styles = {
 };
 
 
-export default ManageDiamond;

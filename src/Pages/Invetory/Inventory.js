@@ -30,7 +30,6 @@ const Inventory = () => {
                     <tr>
                         <th>ID</th>
                         <th>Categories</th>
-                        <th>Quantity of items</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -39,7 +38,6 @@ const Inventory = () => {
                         <tr key={item.id}>
                             <td>{item.id}</td>
                             <td>{item.category}</td>
-                            <td>{item.quantity}</td>
                             <td>
                                 <button onClick={() => handleViewClick(item.category)}>View</button>
                             </td>
