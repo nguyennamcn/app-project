@@ -5,7 +5,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 const BuyHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 7;
+  const ordersPerPage = 5;
 
   useEffect(() => {
     adornicaServ.getHistoryOrders()
@@ -20,19 +20,34 @@ const BuyHistory = () => {
       });
   }, []);
 
+  const handleSubmit = (keyID) => {
+    const orderID = keyID;
+
+    adornicaServ.postUpdateDeliveryOrder(orderID)
+      .then((res) => {
+        console.log('Order submitted successfully:', res.data);
+        alert("Submit success");
+      })
+      .catch((err) => {
+        console.log('Error submitting order:', err.response); // Log error details
+        // alert( err.response.data.metadata.message)
+      });
+  };
+
   // Calculate the orders to be displayed on the current page
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = orderHistory.slice(indexOfFirstOrder, indexOfLastOrder);
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  // Calculate the total number of pages
+  const pageCount = Math.ceil(orderHistory.length / ordersPerPage);
 
-  // Generate page numbers
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(orderHistory.length / ordersPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  // Change page
+  const handlePageChange = (newPage) => {
+    if (newPage > 0 && newPage <= pageCount) {
+      setCurrentPage(newPage);
+    }
+  };
 
   const styles = {
     buyHistory: {
@@ -70,19 +85,27 @@ const BuyHistory = () => {
     },
     pagination: {
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       marginTop: '20px',
     },
-    pageItem: {
-      padding: '10px',
+    button: {
+      padding: '5px 10px',
+      backgroundColor: '#000',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '4px',
       cursor: 'pointer',
     },
-    activePageItem: {
-      padding: '10px',
-      cursor: 'pointer',
-      fontWeight: 'bold',
-      textDecoration: 'underline',
+    buttonDisabled: {
+      backgroundColor: '#ccc',
     },
+    button_style: {
+      backgroundColor: 'green',
+      padding: '4px',
+      color: 'white',
+      borderRadius: '4px',
+    }
   };
 
   return (
@@ -112,6 +135,14 @@ const BuyHistory = () => {
                 <td style={styles.tableData}>{order.dateOrder}</td>
                 <td style={styles.tableData}>{order.paymentMethod}</td>
                 <td style={styles.tableData}>{order.deliveryStatus}</td>
+                <td style={styles.tableData}>
+                  <button
+                    style={styles.button_style}
+                    onClick={() => handleSubmit(order.orderId)}
+                  >
+                    Submit
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
@@ -122,15 +153,9 @@ const BuyHistory = () => {
         </tbody>
       </table>
       <div style={styles.pagination}>
-        {pageNumbers.map(number => (
-          <span
-            key={number}
-            style={currentPage === number ? styles.activePageItem : styles.pageItem}
-            onClick={() => paginate(number)}
-          >
-            {number}
-          </span>
-        ))}
+        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} style={{...styles.button, ...(currentPage === 1 && styles.buttonDisabled)}}>{'<'}</button>
+        <span>{`Page ${currentPage} of ${pageCount}`}</span>
+        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === pageCount} style={{...styles.button, ...(currentPage === pageCount && styles.buttonDisabled)}}>{'>'}</button>
       </div>
     </div>
   );
