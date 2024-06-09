@@ -5,20 +5,23 @@ import { adornicaServ } from '../../service/adornicaServ';
 const BuyHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [refreshOrders, setRefreshOrders] = useState(false); // Trigger for re-fetching orders
+  const [isAscending, setIsAscending] = useState(true); // Sorting order for Delivery Status
   const ordersPerPage = 5;
 
   useEffect(() => {
     adornicaServ.getHistoryOrders()
       .then((res) => {
         if (res.data && res.data.metadata) {
-          setOrderHistory(res.data.metadata);
+          const sortedOrders = res.data.metadata.sort((a, b) => a.orderId - b.orderId);
+          setOrderHistory(sortedOrders);
         }
         console.log(res.data.metadata);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refreshOrders]); // Add refreshOrders to the dependency array
 
   const handleSubmit = (keyID) => {
     const orderID = keyID;
@@ -27,11 +30,24 @@ const BuyHistory = () => {
       .then((res) => {
         console.log('Order submitted successfully:', res.data);
         alert("Submit success");
+        setRefreshOrders(!refreshOrders); // Toggle the refresh state to re-fetch orders
       })
       .catch((err) => {
         console.log('Error submitting order:', err.response); // Log error details
         // alert( err.response.data.metadata.message)
       });
+  };
+
+  const handleSort = () => {
+    const sortedOrders = [...orderHistory].sort((a, b) => {
+      if (isAscending) {
+        return a.deliveryStatus.localeCompare(b.deliveryStatus);
+      } else {
+        return b.deliveryStatus.localeCompare(a.deliveryStatus);
+      }
+    });
+    setOrderHistory(sortedOrders);
+    setIsAscending(!isAscending);
   };
 
   // Calculate the orders to be displayed on the current page
@@ -70,6 +86,18 @@ const BuyHistory = () => {
       padding: '10px',
       textAlign: 'left',
       border: '1px solid #ddd',
+    },
+    tableHeaderButton: {
+      background: 'none',
+      border: 'none',
+      padding: 0,
+      margin: 0,
+      cursor: 'pointer',
+      fontWeight: 'bold',
+      textDecoration: 'none',
+    },
+    tableHeaderButtonHover: {
+      textDecoration: 'underline',
     },
     tableData: {
       padding: '10px',
@@ -119,7 +147,17 @@ const BuyHistory = () => {
             <th style={styles.tableHeader}>Total Price</th>
             <th style={styles.tableHeader}>Order Date</th>
             <th style={styles.tableHeader}>Payment Method</th>
-            <th style={styles.tableHeader}>Delivery Status</th>
+            <th style={styles.tableHeader}>
+              <button
+                style={styles.tableHeaderButton}
+                onClick={handleSort}
+                onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
+                onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
+              >
+                Delivery Status
+              </button>
+            </th>
+            <th style={styles.tableHeader}>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -127,29 +165,29 @@ const BuyHistory = () => {
             currentOrders.map((order, index) => (
               <tr key={index}>
                 <td style={styles.tableData}>
-                  <NavLink style={styles.navLink} to={`/detail/${order.orderId}`}>
-                    {order.orderId}
-                  </NavLink>
+                  {order.orderId}
                 </td>
                 <td style={styles.tableData}>{order.salesStaffName}</td>
-                <td style={styles.tableData}>{order.oerderCode}</td>
+                <td style={styles.tableData}>{order.orderCode}</td>
                 <td style={styles.tableData}>{order.totalPrice}</td>
                 <td style={styles.tableData}>{order.dateOrder}</td>
                 <td style={styles.tableData}>{order.paymentMethod}</td>
                 <td style={styles.tableData}>{order.deliveryStatus}</td>
                 <td style={styles.tableData}>
-                  <button
-                    style={styles.button_style}
-                    onClick={() => handleSubmit(order.orderId)}
-                  >
-                    Submit
-                  </button>
+                  {order.deliveryStatus !== 'SUCCESS' && (
+                    <button
+                      style={styles.button_style}
+                      onClick={() => handleSubmit(order.orderId)}
+                    >
+                      Delivery
+                    </button>
+                  )}
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td style={styles.tableData} colSpan="6">No orders found</td>
+              <td style={styles.tableData} colSpan="8">No orders found</td>
             </tr>
           )}
         </tbody>
