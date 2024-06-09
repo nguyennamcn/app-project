@@ -59,7 +59,7 @@ export default function Header() {
                 logoutBtn={
                   <button
                     onClick={handleLogout}
-                    className={buttonCss}>Đăng xuất</button>
+                    className={buttonCss}>Log out</button>
                 }
 
               />
