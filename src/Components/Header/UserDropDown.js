@@ -10,7 +10,7 @@ const UserDropdown = ({user,logoutBtn}) => (
         key:"1",
       },
       {
-        label: <span>Cập nhật tài khoản</span>,
+        label: <span>Edit account</span>,
         key: "2",
       },
     ],
