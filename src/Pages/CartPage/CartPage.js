@@ -10,19 +10,19 @@ const CartPage = () => {
     const [timeoutId, setTimeoutId] = useState(null);
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
-    console.log(dataSource)
+
     // Handle input change for customer name
     const handleInputChange = (event) => {
         setCustomerName(event.target.value);
     };
+
     const handleInputChange1 = (event) => {
         setCustomerPhone(event.target.value);
     };
 
     let userInfo = useSelector((state) => {
         return state.userReducer.userInfo;
-      })
-      console.log(userInfo);
+    });
 
     // Load cart items from localStorage when component mounts
     useEffect(() => {
@@ -30,9 +30,27 @@ const CartPage = () => {
         setDataSource(cartItems);
     }, []);
 
+    // Fetch customer data when phone number changes
+    useEffect(() => {
+        if (customerPhone) {
+            adornicaServ.getPhoneCustomer(customerPhone)
+                .then(response => {
+                    if (response.data) {
+                        setCustomerName(response.data.metadata.name);
+                        console.log(response)
+                    } else {
+                        setCustomerName('');
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching customer data:", error);
+                    setCustomerName(''); // Clear the customer name if there's an error
+                });
+        }
+    }, [customerPhone]);
+
     // Calculate totals and set up auto-clear timeout
     useEffect(() => {
-        console.log("Current DataSource:", dataSource); // Debugging log
         const totalQty = dataSource.reduce((acc, item) => acc + item.quantity, 0);
         setTotalQuantity(totalQty);
         const totalPrice = dataSource.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
@@ -51,7 +69,6 @@ const CartPage = () => {
     
         return () => clearTimeout(newTimeoutId);
     }, [dataSource]);
-    
 
     // Handle quantity change for cart items
     const handleQuantityChange = (productCode, size, delta) => {
@@ -69,36 +86,30 @@ const CartPage = () => {
             .filter(item => item !== null);
 
         setDataSource(newDataSource);
-        console.log(dataSource)
         localStorage.setItem('cartItems', JSON.stringify(newDataSource));
     };
 
     // Handle sending the order
     const handleSendOrder = () => {
-        console.log("Data Source:", dataSource); // Log data source for debugging
-        
         const orderList = dataSource.map(item => ({
-            productId: item.productCode,
-            productName: item.name || "Unknown Product", // Ensure this is not undefined or null
-            sizeId: item.sizeId, // Assuming size is used as sizeId
+            productCode: item.productCode,
+            productId: item.productId,
+            productName: item.name || "Unknown Product", 
+            sizeId: item.sizeId,
             quantity: item.quantity,
             price: item.price,
         }));
         console.log(orderList)
-
         const orderData = {
-            staffId: userInfo.id, // Replace with actual staff ID if available
+            staffId: userInfo.id,
             customer: customerName,
             phone: customerPhone,
             orderList,
             totalPrice: totalAllPrice
         };
     
-        console.log("Order Data:", orderData); // Log the order data
-    
         adornicaServ.postOrder(orderData)
             .then(response => {
-                console.log("Order sent successfully:", response.data);
                 setDataSource([]);
                 localStorage.removeItem('cartItems');
                 alert('Order sent successfully');
@@ -107,10 +118,8 @@ const CartPage = () => {
                 console.error("There was an error sending the order:", error);
                 alert('Failed to send order. Please check your input data.');
             });
-
     };
-    
-    
+
     // Define table columns
     const columns = [
         {
@@ -150,9 +159,9 @@ const CartPage = () => {
 
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{y: 170}}/>
+            <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
             <hr />
-            <div >
+            <div>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order CODE: #1003</h1>
                 <div style={{
                     display: "flex",
@@ -164,7 +173,7 @@ const CartPage = () => {
                         <p>Total Price: {totalAllPrice}</p>
                     </div>
                     <div style={{ marginTop: '0%', width: '20%' }}>
-                        <p>Customer: 
+                        <p>Customer:
                             <input
                                 style={{
                                     border: '1px solid black',
@@ -180,7 +189,7 @@ const CartPage = () => {
                                 onChange={handleInputChange}
                             />
                         </p>
-                        <p>Phone: 
+                        <p>Phone:
                             <input
                                 style={{
                                     border: '1px solid black',
