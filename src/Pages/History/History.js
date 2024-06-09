@@ -5,7 +5,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 const BuyHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 7;
+  const ordersPerPage = 5;
 
   useEffect(() => {
     adornicaServ.getHistoryOrders()
@@ -19,6 +19,20 @@ const BuyHistory = () => {
         console.log(err);
       });
   }, []);
+
+  const handleSubmit = (keyID) => {
+    const orderID = keyID;
+
+    adornicaServ.postUpdateDeliveryOrder(orderID)
+      .then((res) => {
+        console.log('Order submitted successfully:', res.data);
+        alert("Submit success");
+      })
+      .catch((err) => {
+        console.log('Error submitting order:', err.response); // Log error details
+        // alert( err.response.data.metadata.message)
+      });
+  };
 
   // Calculate the orders to be displayed on the current page
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -83,6 +97,12 @@ const BuyHistory = () => {
       fontWeight: 'bold',
       textDecoration: 'underline',
     },
+    button_style: {
+      backgroundColor: 'green',
+      padding:'4px',
+      color:'white',
+      borderRadius:'4px',
+    }
   };
 
   return (
@@ -112,6 +132,14 @@ const BuyHistory = () => {
                 <td style={styles.tableData}>{order.dateOrder}</td>
                 <td style={styles.tableData}>{order.paymentMethod}</td>
                 <td style={styles.tableData}>{order.deliveryStatus}</td>
+                <td style={styles.tableData}>
+                  <button
+                    style={styles.button_style}
+                    onClick={() => handleSubmit(order.orderId)}
+                  >
+                    Submit
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
