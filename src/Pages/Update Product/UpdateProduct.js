@@ -31,7 +31,7 @@ function UpdateProduct() {
   };
 
   return (
-    <div className="container">
+    <div className="container1">
       <div className="content">
         <div className="update-product">
           <h2>Update products</h2>
