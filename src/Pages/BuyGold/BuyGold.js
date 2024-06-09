@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
@@ -42,11 +42,10 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '18px',
-    // transition: 'background-color 0.3s',
     gridColumn: 'span 2',
     textAlign: 'center'
   },
-  buttonHover: { // This style needs to be applied dynamically on hover
+  buttonHover: {
     backgroundColor: '#000000'
   },
   totalPrice: {
@@ -63,12 +62,28 @@ const GoldSelection = () => {
   const [goldType, setGoldType] = useState('');
   const [weight, setWeight] = useState('');
   const [phone, setPhone] = useState('');
-  const [totalPrice, setTotalPrice] = useState('340,000,000');
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [goldPrices, setGoldPrices] = useState([]);
 
-  let userInfo = useSelector((state) => {
-    return state.userReducer.userInfo;
-  })
-  console.log(userInfo);
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+
+  useEffect(() => {
+    adornicaServ.getPriceMaterial()
+      .then((res) => {
+        setGoldPrices(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    const selectedGold = goldPrices.find(gold => gold.materialName === goldType);
+    if (selectedGold) {
+      const calculatedPrice = selectedGold.materialBuyPrice * parseFloat(weight || 0);
+      setTotalPrice(calculatedPrice.toFixed(2));
+    }
+  }, [goldType, weight, goldPrices]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -78,7 +93,7 @@ const GoldSelection = () => {
       phone: phone,
       list: [
         {
-          name:  goldType,
+          name: goldType,
           weight: parseFloat(weight),
           origin: 'Unknown',
           price: totalPrice
@@ -88,21 +103,12 @@ const GoldSelection = () => {
       productStore: true
     };
 
-    console.log('Form Data Submitted:', formData);
-
     try {
       const response = await adornicaServ.postPurchaseOrderCode(formData);
       console.log('Order sent successfully:', response.data);
       alert('Order sent successfully');
     } catch (error) {
       console.error('There was an error sending the order:', error);
-      if (error.response) {
-        console.error('Response data:', error.response);
-      } else if (error.request) {
-        console.error('Request data:', error.request);
-      } else {
-        console.error('Error message:', error.message);
-      }
       alert('Failed to send order. Please check your input data.');
     }
   };
@@ -113,7 +119,7 @@ const GoldSelection = () => {
         <div style={styles.formGroup}>
           <label style={styles.label}>Name:</label>
           <input type="text" style={styles.input} value={name} onChange={e => setName(e.target.value)} />
-        </div>     
+        </div>
         <div style={styles.formGroup}>
           <label style={styles.label}>Phone:</label>
           <input type="text" style={styles.input} value={phone} onChange={e => setPhone(e.target.value)} />
@@ -122,10 +128,9 @@ const GoldSelection = () => {
           <label style={styles.label}>Gold type:</label>
           <select style={styles.input} value={goldType} onChange={e => setGoldType(e.target.value)}>
             <option value=""></option>
-            <option value="Gold Bars">Gold Bars</option>
-            <option value="24K Gold (990)">24K Gold (990)</option>
-            <option value="18K Gold (750)">18K Gold (750)</option>
-            <option value="	White Gold Au750">White Gold Au750</option>
+            {goldPrices.map((gold) => (
+              <option key={gold.materialId} value={gold.materialName}>{gold.materialName}</option>
+            ))}
           </select>
         </div>
         <div style={styles.formGroup}>
@@ -133,7 +138,7 @@ const GoldSelection = () => {
           <input type="number" style={styles.input} value={weight} onChange={e => setWeight(e.target.value)} />
         </div>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice}
+          Total price: {totalPrice} $
         </div>
         <button type="submit" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
@@ -145,5 +150,3 @@ const GoldSelection = () => {
 };
 
 export default GoldSelection;
-
-
