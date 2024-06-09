@@ -9,9 +9,9 @@
 .filter .search__input {
     display: flex;
     align-items: center;
-    padding: 6px;
+    padding: 2px;
     border: solid black 1px;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-right: 10px;
 }
 

@@ -56,12 +56,12 @@ const styles = {
     marginBottom: '10px',
   },
   heading: {
-    marginBottom: '20px',
+    marginBottom: '10px',
     fontSize: '30px',
   },
   textarea: {
     width: '100%',
-    height: '400px',
+    height: '300px',
     marginBottom: '20px',
     fontSize: '20px',
   },
