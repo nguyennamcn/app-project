@@ -56,43 +56,63 @@ const styles = {
   },
 };
 
-const GoldSelection = () => {
+const DiamondSelection = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [color, setColor] = useState('');
   const [cut, setCut] = useState('');
   const [clarity, setClarity] = useState('');
   const [origin, setOrigin] = useState('');
-  const [caratWeight, setCaratWeight] = useState('');
-  const [totalPrice, setTotalPrice] = useState('340000000');
+  const [carat, setCaratWeight] = useState('');
+  const [totalPrice, setTotalPrice] = useState('0.00');
   const userInfo = useSelector((state) => state.userReducer.userInfo);
 
+  
   useEffect(() => {
-    if (cut && caratWeight && clarity && color && origin) {
-      adornicaServ.getPurchaseDiamondPrice(cut, caratWeight, clarity, color, origin)
-        .then((res) => {
-          console.log('API response:', res.data); // Debug log
-          
-          const priceData = res.data.metadata.find((data) => (
-            data.cut === cut &&
-            data.clarity === clarity &&
-            data.color === color &&
-            data.origin === origin
-          ));
-
-          if (priceData) {
-            setTotalPrice(priceData.gemBuyPrice.toString());
-          } else {
-            console.warn('No matching price data found');
-            setTotalPrice('Can not find cost cause the data do not have');
+    const fetchPrice = async () => {
+      try {
+        if (cut && carat && clarity && color && origin) {
+          const caratValue = parseFloat(carat);
+          if (isNaN(caratValue)) {
+            console.warn('Invalid carat value');
+            setTotalPrice('Invalid carat value');
+            return;
           }
-        })
-        .catch((err) => {
-          console.error('Error fetching price:', err);
-        });
-    }
-  }, [cut, caratWeight, clarity, color, origin]);
 
+          const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, origin);
+          console.log('API response:', res.data); // Debug log
+
+          if (res.data && res.data.metadata) {
+            const priceData = res.data.metadata.find((data) => (
+              data.cut === cut &&
+              data.carat === caratValue &&
+              data.clarity === clarity &&
+              data.color === color &&
+              data.origin === origin
+            ));
+
+            console.log('Matching price data:', priceData); // Debug log
+
+            if (priceData) {
+              setTotalPrice(priceData.gemBuyPrice.toFixed(2).toString());
+              console.log('Total price set to:', priceData.gemBuyPrice.toString()); // Debug log
+            } else {
+              console.warn('No matching price data found');
+              setTotalPrice('0.00');
+            }
+          } else {
+            console.warn('Invalid response structure', res.data);
+            setTotalPrice('Invalid response structure');
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching price:', err);
+        setTotalPrice('Error fetching price');
+      }
+    };
+
+    fetchPrice();
+  }, [cut, carat, clarity, color, origin]);
   const handleSubmit = () => {
     if (!name || !phone || !color || !cut || !clarity || !origin ) {
       alert('Please fill in all the fields.');
@@ -187,7 +207,7 @@ const GoldSelection = () => {
           <input
             type="number"
             style={styles.input}
-            value={caratWeight}
+            value={carat}
             onChange={(e) => setCaratWeight(e.target.value)}
           />
         </div>
@@ -198,7 +218,7 @@ const GoldSelection = () => {
             <option value="NATURAL">NATURAL</option>
           </select>
         </div>
-        <div style={styles.totalPrice}>Total price: {totalPrice}</div>
+        <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
         <button
           onClick={handleSubmit}
           style={styles.button}
@@ -212,4 +232,4 @@ const GoldSelection = () => {
   );
 };
 
-export default GoldSelection;
+export default DiamondSelection;
