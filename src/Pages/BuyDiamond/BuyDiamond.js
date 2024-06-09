@@ -113,6 +113,7 @@ const DiamondSelection = () => {
 
     fetchPrice();
   }, [cut, carat, clarity, color, origin]);
+  
   const handleSubmit = () => {
     if (!name || !phone || !color || !cut || !clarity || !origin ) {
       alert('Please fill in all the fields.');
