@@ -69,6 +69,9 @@ export const adornicaServ = {
     getPriceMaterial: () => {
         return https.get(`/api/v1/prices/materials`);
     },
+    getDiamondPrice: () => {
+        return https.get(`/api/v1/prices/gems`);
+    },
 
     postUpdateDeliveryOrder: (orderID) => {
         console.log(orderID)
