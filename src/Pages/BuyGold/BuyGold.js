@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 // Define styles as objects
 const styles = {
@@ -43,7 +44,8 @@ const styles = {
     cursor: 'pointer',
     fontSize: '18px',
     gridColumn: 'span 2',
-    textAlign: 'center'
+    textAlign: 'center',
+    textDecoration: 'none', // Add this line
   },
   buttonHover: {
     backgroundColor: '#000000'
@@ -182,10 +184,12 @@ const GoldSelection = () => {
         <div style={styles.totalPrice}>
           Total price: {totalPrice} $
         </div>
-        <button type="submit" style={styles.button}
+        <NavLink to="/billbuyng" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-        >PURCHASE</button>
+        >
+          PURCHASE
+        </NavLink>
       </form>
     </div>
   );
