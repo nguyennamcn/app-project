@@ -168,19 +168,19 @@ export default function DetailPage() {
                                     </button>
                                 ))}
                             </div>
-                            {selectedSize !== null && (
+                            {/* {selectedSize !== null && (
                                 <p className="available-stock">Available Stock for Size: {selectedProduct?.diameter}</p>
-                            )}
+                            )} */}
                         </div>
                        
                     </div>
                      <div className="product-quantity">
-                            <p className="quantity-title">Quantity</p>
+                            {/* <p className="quantity-title">Quantity</p>
                             <div className="quantity-controls">
                                 <button className="quantity-button" onClick={() => handleQuantityChange(-1)}>-</button>
                                 <input type="text" value={quantity} className="quantity-input" readOnly />
                                 <button className="quantity-button" onClick={() => handleQuantityChange(1)}>+</button>
-                            </div>
+                            </div> */}
                         </div>
                         <NavLink to='/homePage'>
                         <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
