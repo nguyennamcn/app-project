@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 const styles = {
   container: {
     background: '#7FDBF8',
-    padding: '20px 20px',
+    padding: '10px 20px',
     maxWidth: '850px',
     margin: 'auto',
     borderRadius: '10px',
@@ -22,7 +22,7 @@ const styles = {
     flexDirection: 'column',
   },
   label: {
-    fontSize: '16px',
+    fontSize: '15px',
     color: '#333',
     marginBottom: '5px',
     fontWeight: 'bold',
@@ -31,7 +31,7 @@ const styles = {
     padding: '5px',
     border: '2px solid #cccccc',
     borderRadius: '5px',
-    fontSize: '16px',
+    fontSize: '15px',
   },
   button: {
     backgroundColor: '#222222',
@@ -40,36 +40,54 @@ const styles = {
     padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '18px',
+    fontSize: '14px',
     gridColumn: 'span 2',
     textAlign: 'center',
+  },
+  addButton: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '14px',
+    textAlign: 'center',
+    gridColumn: 'span 2',
+    justifySelf: 'center',
+    marginTop: '2px'
   },
   buttonHover: {
     backgroundColor: '#000000',
   },
   totalPrice: {
-    fontSize: '20px',
+    fontSize: '15px',
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
-    margin: '20px 0',
+    // margin: '20px 0',
+  },
+  productTitle: {
+    gridColumn: 'span 2',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    color: '#333',
+    // marginBottom: '10px',
   },
 };
 
 const DiamondSelection = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [color, setColor] = useState('');
-  const [cut, setCut] = useState('');
-  const [clarity, setClarity] = useState('');
-  const [origin, setOrigin] = useState('');
-  const [carat, setCaratWeight] = useState('');
+  const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '' }]);
   const [totalPrice, setTotalPrice] = useState('0.00');
   const userInfo = useSelector((state) => state.userReducer.userInfo);
 
   useEffect(() => {
     const fetchPrice = async () => {
-      try {
+      let calculatedTotalPrice = 0;
+      for (const item of diamondItems) {
+        const { color, cut, clarity, carat, origin } = item;
         if (cut && carat && clarity && color && origin) {
           const caratValue = parseFloat(carat);
           if (isNaN(caratValue)) {
@@ -78,73 +96,68 @@ const DiamondSelection = () => {
             return;
           }
 
-          const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, origin);
-          console.log('API response:', res.data); // Debug log
+          try {
+            const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, origin);
+            if (res.data && res.data.metadata) {
+              const priceData = res.data.metadata.find((data) => (
+                data.cut === cut &&
+                data.carat === caratValue &&
+                data.clarity === clarity &&
+                data.color === color &&
+                data.origin === origin
+              ));
 
-          if (res.data && res.data.metadata) {
-            const priceData = res.data.metadata.find((data) => (
-              data.cut === cut &&
-              data.carat === caratValue &&
-              data.clarity === clarity &&
-              data.color === color &&
-              data.origin === origin
-            ));
-
-            console.log('Matching price data:', priceData); // Debug log
-
-            if (priceData) {
-              setTotalPrice(priceData.gemBuyPrice.toFixed(2).toString());
-              console.log('Total price set to:', priceData.gemBuyPrice.toString()); // Debug log
+              if (priceData) {
+                calculatedTotalPrice += priceData.gemBuyPrice;
+              }
             } else {
-              console.warn('No matching price data found');
-              setTotalPrice('0.00');
+              console.warn('Invalid response structure', res.data);
+              setTotalPrice('Invalid response structure');
             }
-          } else {
-            console.warn('Invalid response structure', res.data);
-            setTotalPrice('Invalid response structure');
+          } catch (err) {
+            console.error('Error fetching price:', err);
+            setTotalPrice('Error fetching price');
           }
         }
-      } catch (err) {
-        console.error('Error fetching price:', err);
-        setTotalPrice('Error fetching price');
       }
+      setTotalPrice(calculatedTotalPrice.toFixed(2));
     };
 
     fetchPrice();
-  }, [cut, carat, clarity, color, origin]);
+  }, [diamondItems]);
+
+  const handleAddItem = () => {
+    setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '' }]);
+  };
+
+  const handleDiamondItemChange = (index, field, value) => {
+    const newDiamondItems = [...diamondItems];
+    newDiamondItems[index][field] = value;
+    setDiamondItems(newDiamondItems);
+  };
 
   const handleSubmit = () => {
-    if (!name || !phone || !color || !cut || !clarity || !origin || !carat) {
+    if (!name || !phone || diamondItems.some(item => !item.color || !item.cut || !item.clarity || !item.carat || !item.origin)) {
       alert('Please fill in all the fields.');
       return;
     }
 
-    const caratValue = parseFloat(carat);
-    if (isNaN(caratValue)) {
-      alert('Please enter a valid carat weight.');
-      return;
-    }
-
-    const list = [
-      {
-        origin: origin,
-        color: color,
-        clarity: clarity,
-        cut: cut,
-        carat: caratValue,
-      }
-    ];
+    const list = diamondItems.map(item => ({
+      color: item.color,
+      cut: item.cut,
+      clarity: item.clarity,
+      carat: parseFloat(item.carat),
+      origin: item.origin,
+    }));
 
     const purchaseData = {
       staffId: userInfo.id,
       customerName: name,
       phone: phone,
       list: list,
-      totalPrice: parseFloat(totalPrice), // Ensure totalPrice is a number
-      productStore: false, // Assuming the productStore is true
+      totalPrice: parseFloat(totalPrice),
+      productStore: false,
     };
-
-    console.log('Submitting purchase data:', purchaseData);
 
     adornicaServ
       .postPurchaseOrderCode(purchaseData)
@@ -169,65 +182,72 @@ const DiamondSelection = () => {
           <label style={styles.label}>Phone:</label>
           <input type="text" style={styles.input} value={phone} onChange={(e) => setPhone(e.target.value)} />
         </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Color:</label>
-          <select style={styles.input} value={color} onChange={(e) => setColor(e.target.value)}>
-            <option value=""></option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-            <option value="G">G</option>
-            <option value="H">H</option>
-            <option value="I">I</option>
-            <option value="J">J</option>
-            <option value="K">K</option>
-            <option value="L">L</option>
-            <option value="M">M</option>
-          </select>
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Cut:</label>
-          <select style={styles.input} value={cut} onChange={(e) => setCut(e.target.value)}>
-            <option value=""></option>
-            <option value="EX">EX</option>
-            <option value="G">G</option>
-            <option value="F">F</option>
-            <option value="P">P</option>
-          </select>
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Clarity:</label>
-          <select style={styles.input} value={clarity} onChange={(e) => setClarity(e.target.value)}>
-            <option value=""></option>
-            <option value="FL">FL</option>
-            <option value="IF">IF</option>
-            <option value="VVS1">VVS1</option>
-            <option value="VVS2">VVS2</option>
-            <option value="VS1">VS1</option>
-            <option value="VS2">VS2</option>
-            <option value="SI1">SI1</option>
-            <option value="SI2">SI2</option>
-            <option value="I1">I1</option>
-            <option value="I2">I2</option>
-            <option value="I3">I3</option>
-          </select>
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Carat Weight:</label>
-          <input
-            type="number"
-            style={styles.input}
-            value={carat}
-            onChange={(e) => setCaratWeight(e.target.value)}
-          />
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Origin:</label>
-          <select style={styles.input} value={origin} onChange={(e) => setOrigin(e.target.value)}>
-            <option value=""></option>
-            <option value="NATURAL">NATURAL</option>
-          </select>
-        </div>
+        {diamondItems.map((item, index) => (
+          <React.Fragment key={index}>
+            <div style={styles.productTitle}>Diamond {index + 1}</div>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Color:</label>
+              <select style={styles.input} value={item.color} onChange={(e) => handleDiamondItemChange(index, 'color', e.target.value)}>
+                <option value=""></option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="H">H</option>
+                <option value="I">I</option>
+                <option value="J">J</option>
+                <option value="K">K</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+              </select>
+            </div>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Cut:</label>
+              <select style={styles.input} value={item.cut} onChange={(e) => handleDiamondItemChange(index, 'cut', e.target.value)}>
+                <option value=""></option>
+                <option value="EX">EX</option>
+                <option value="G">G</option>
+                <option value="F">F</option>
+                <option value="P">P</option>
+              </select>
+            </div>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Clarity:</label>
+              <select style={styles.input} value={item.clarity} onChange={(e) => handleDiamondItemChange(index, 'clarity', e.target.value)}>
+                <option value=""></option>
+                <option value="FL">FL</option>
+                <option value="IF">IF</option>
+                <option value="VVS1">VVS1</option>
+                <option value="VVS2">VVS2</option>
+                <option value="VS1">VS1</option>
+                <option value="VS2">VS2</option>
+                <option value="SI1">SI1</option>
+                <option value="SI2">SI2</option>
+                <option value="I1">I1</option>
+                <option value="I2">I2</option>
+                <option value="I3">I3</option>
+              </select>
+            </div>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Carat Weight:</label>
+              <input type="number" style={styles.input} value={item.carat} onChange={(e) => handleDiamondItemChange(index, 'carat', e.target.value)} />
+            </div>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Origin:</label>
+              <select style={styles.input} value={item.origin} onChange={(e) => handleDiamondItemChange(index, 'origin', e.target.value)}>
+                <option value=""></option>
+                <option value="NATURAL">NATURAL</option>
+              </select>
+            </div>
+          </React.Fragment>
+        ))}
+        <button
+          type="button"
+          style={styles.addButton}
+          onClick={handleAddItem}
+        >
+          ADD DIAMOND
+        </button>
         <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
         <button
           onClick={handleSubmit}

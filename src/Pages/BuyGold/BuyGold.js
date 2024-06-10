@@ -54,7 +54,7 @@ const styles = {
     backgroundColor: '#4CAF50',
     color: 'white',
     border: 'none',
-    padding: '10px 20px',
+    padding: '5px 10px',
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '14px',
