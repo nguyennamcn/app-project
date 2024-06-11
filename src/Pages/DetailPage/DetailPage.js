@@ -63,8 +63,8 @@ export default function DetailPage() {
             size: selectedSize,
             sizeId: selectedId,
             quantity,
-            price: product.productionCost,
-            totalPrice: quantity * product.productionCost
+            price: product.totalPrice,
+            totalPrice: quantity * product.totalPrice
         };
         console.log(item);
         // Get existing cart items from local storage
@@ -149,7 +149,7 @@ export default function DetailPage() {
                             </button>
                         </NavLink>
                     </div>
-                    <p className="product-price">Price of the product: <span className="price-amount">{product.productionCost} $</span></p>
+                    <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} $</span></p>
                     <div className="product-description">
                         <p className="description-title">Description</p>
                         <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
