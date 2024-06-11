@@ -162,6 +162,7 @@ const CartPage = () => {
             <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
             <hr />
             <div>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order detail</h1>
                 <div style={{
                     display: "flex",
                     justifyContent: "space-around",
