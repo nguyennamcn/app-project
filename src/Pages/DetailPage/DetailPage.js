@@ -63,8 +63,8 @@ export default function DetailPage() {
             size: selectedSize,
             sizeId: selectedId,
             quantity,
-            price: product.productionCost,
-            totalPrice: quantity * product.productionCost
+            price: product.totalPrice,
+            totalPrice: quantity * product.totalPrice
         };
         console.log(item);
         // Get existing cart items from local storage
@@ -149,7 +149,7 @@ export default function DetailPage() {
                             </button>
                         </NavLink>
                     </div>
-                    <p className="product-price">Price of the product: <span className="price-amount">{product.productionCost} $</span></p>
+                    <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} $</span></p>
                     <div className="product-description">
                         <p className="description-title">Description</p>
                         <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
@@ -168,19 +168,19 @@ export default function DetailPage() {
                                     </button>
                                 ))}
                             </div>
-                            {/* {selectedSize !== null && (
+                            {selectedSize !== null && (
                                 <p className="available-stock">Available Stock for Size: {selectedProduct?.diameter}</p>
-                            )} */}
+                            )}
                         </div>
                        
                     </div>
                      <div className="product-quantity">
-                            {/* <p className="quantity-title">Quantity</p>
+                            <p className="quantity-title">Quantity</p>
                             <div className="quantity-controls">
                                 <button className="quantity-button" onClick={() => handleQuantityChange(-1)}>-</button>
                                 <input type="text" value={quantity} className="quantity-input" readOnly />
                                 <button className="quantity-button" onClick={() => handleQuantityChange(1)}>+</button>
-                            </div> */}
+                            </div>
                         </div>
                         <NavLink to='/homePage'>
                         <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Card, List } from 'antd';
+import { Card } from 'antd';
 import './JewelryCss.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 
 const { Meta } = Card;
 
 export default function JewelryPage() {
   const [products, setProducts] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -19,6 +22,41 @@ export default function JewelryPage() {
         console.log(err);
       });
   }, []);
+
+  const handleAddToCart = (productCode) => {
+    const product = products.find(p => p.productCode === productCode);
+    const item = {
+      productId: product.id,
+      productCode: product.productCode,
+      name: product.productName,
+      size: selectedSize,
+      sizeId: selectedId,
+      quantity: quantity,
+      price: product.productPrice,
+      totalPrice: quantity * product.productPrice,
+    };
+    console.log(item);
+
+    // Get existing cart items from local storage
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    // Check if the item is already in the cart
+    const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
+
+    if (existingItemIndex > -1) {
+      // Update the quantity if the item exists
+      cartItems[existingItemIndex].quantity += 1;
+      cartItems[existingItemIndex].totalPrice += item.price;
+    } else {
+      // Add new item to the cart
+      cartItems.push(item);
+    }
+
+    // Save updated cart items to local storage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    alert('Added to cart');
+  };
 
   return (
     <div>
@@ -44,23 +82,26 @@ export default function JewelryPage() {
           </svg>
         </div>
       </div>
-      <div className="jewelry-container">
+      <div className="product-container">
         {products.map((sp) => (
           <div className="product-card-container" key={sp.productCode}>
-            <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-              <Card
-                hoverable
-                bodyStyle={{ padding: '8px' }}
-                style={{ width: '100%', textAlign: 'center', borderRadius: '10px' }}
-                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '120px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
-              >
-                <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
-                <div className="product-info">
-                  <h1>{sp.productCode}</h1>
-                  <h2>{sp.productPrice}$</h2>
-                </div>
-              </Card>
-            </NavLink>
+            <Card            
+              bodyStyle={{ padding: '8px' }}
+              style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
+              cover={<img style={{ padding: '10px', maxWidth: '100%', height: '146px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
+            >
+              <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
+              <div className="product-info">
+                <h1>{sp.productCode}</h1>
+                <h2>{sp.productPrice}$</h2>
+              </div>
+              <div className="overlay">
+                <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
+                  <button className="overlay-button">View</button>
+                </NavLink>
+                <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add to Cart</button>
+              </div>
+            </Card>
           </div>
         ))}
       </div>
