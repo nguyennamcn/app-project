@@ -108,9 +108,8 @@ const PurchasePage = () => {
   });
 
   const [products] = useState([
-    { name: 'Italy Ring 10003', quantity: 1, price: 2643.23 },
-    { name: '18K Gold Necklace 13043', quantity: 1, price: 4442.50 },
-    { name: 'Disney 14K Gold Bracelet 00133', quantity: 1, price: 2990.20 },
+    { name: 'Gold Bars', quantity: 1, price: 340 },
+    { name: '24K Gold', quantity: 1, price: 290 },
   ]);
 
   const handleDetailChange = (e) => {
@@ -181,3 +180,5 @@ const PurchasePage = () => {
 };
 
 export default PurchasePage;
+
+

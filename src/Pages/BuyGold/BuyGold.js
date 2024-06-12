@@ -17,7 +17,7 @@ const styles = {
   form: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '15px'
+    gap: '5px'
   },
   formGroup: {
     display: 'flex',
@@ -196,3 +196,5 @@ const GoldSelection = () => {
 };
 
 export default GoldSelection;
+
+
