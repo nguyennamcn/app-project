@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const styles = {
   container: {
@@ -249,17 +250,17 @@ const DiamondSelection = () => {
           ADD DIAMOND
         </button>
         <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
-        <button
-          onClick={handleSubmit}
-          style={styles.button}
-          onMouseEnter={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
-          onMouseLeave={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
+        <NavLink to="/billbuyng" style={styles.button}
+          onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
+          onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
         >
           PURCHASE
-        </button>
+        </NavLink>
       </div>
     </div>
   );
 };
 
 export default DiamondSelection;
+
+
