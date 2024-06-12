@@ -154,34 +154,6 @@ export default function DetailPage() {
                         <p className="description-title">Description</p>
                         <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
                     </div>
-                    <div className="product-size-quantity">
-                        <div className="product-size">
-                            <p className="size-title">Size</p>
-                            <div className="size-buttons">
-                                {product.sizeProducts?.map((sp) => (
-                                    <button
-                                        key={sp.id}
-                                        className={`size-button ${selectedSize === sp.size ? 'selected' : ''}`}
-                                        onClick={() => handleSizeClick(sp.size)}
-                                    >
-                                        {sp.size}
-                                    </button>
-                                ))}
-                            </div>
-                            {selectedSize !== null && (
-                                <p className="available-stock">Available Stock for Size: {selectedProduct?.diameter}</p>
-                            )}
-                        </div>
-                       
-                    </div>
-                     <div className="product-quantity">
-                            <p className="quantity-title">Quantity</p>
-                            <div className="quantity-controls">
-                                <button className="quantity-button" onClick={() => handleQuantityChange(-1)}>-</button>
-                                <input type="text" value={quantity} className="quantity-input" readOnly />
-                                <button className="quantity-button" onClick={() => handleQuantityChange(1)}>+</button>
-                            </div>
-                        </div>
                         <NavLink to='/homePage'>
                         <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
                             ADD

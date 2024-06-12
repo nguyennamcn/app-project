@@ -6,10 +6,12 @@ import { NavLink } from 'react-router-dom';
 // Define styles as objects
 const styles = {
   container: {
+    maxHeight: '70vh', // Adjust this value as needed
+    overflowY: 'auto', // Add this line to enable vertical scrolling
     background: '#F7F0B6',
-    padding: '30px',
+    padding: '20px',
     maxWidth: '900px',
-    margin: '10px auto',
+    margin: '0px auto',
     borderRadius: '10px',
     boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
     fontFamily: 'Arial, sans-serif',
@@ -155,14 +157,6 @@ const GoldSelection = () => {
   return (
     <div style={styles.container}>
       <form style={styles.form} onSubmit={handleSubmit}>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Name:</label>
-          <input type="text" style={styles.input} value={name} onChange={e => setName(e.target.value)} />
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Phone:</label>
-          <input type="text" style={styles.input} value={phone} onChange={e => setPhone(e.target.value)} />
-        </div>
         {goldItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.formGroup} ref={index === goldItems.length - 1 ? newItemRef : null}>

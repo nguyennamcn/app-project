@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 const styles = {
   container: {
     background: '#7FDBF8',
-    padding: '10px 20px',
-    maxWidth: '850px',
+    padding: '20px 20px',
+    maxWidth: '900px',
     margin: 'auto',
     borderRadius: '10px',
     boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
@@ -175,14 +175,6 @@ const DiamondSelection = () => {
   return (
     <div style={styles.container}>
       <div style={styles.form}>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Name:</label>
-          <input type="text" style={styles.input} value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Phone:</label>
-          <input type="text" style={styles.input} value={phone} onChange={(e) => setPhone(e.target.value)} />
-        </div>
         {diamondItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.productTitle}>Diamond {index + 1}</div>
@@ -262,5 +254,3 @@ const DiamondSelection = () => {
 };
 
 export default DiamondSelection;
-
-
