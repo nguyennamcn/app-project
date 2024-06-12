@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { ProductContext } from '../../contexts/ProductContext'; // Cập nhật đường dẫn đúng
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { ProductContext } from '../../contexts/ProductContext'; 
 
-// Define styles as objects
+
 const styles = {
   container: {
     background: '#F7F0B6',
@@ -65,24 +64,34 @@ const styles = {
     justifySelf: 'center',
     marginTop: '2px'
   },
+  buttonGroup: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gridColumn: 'span 2',
+  },
+  backButton: {
+    backgroundColor: '#222222',
+    color: 'white',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '14px',
+  },
   totalPrice: {
     fontSize: '20px',
     fontWeight: 'bold',
-    gridColumn: 'span 2',
-    textAlign: 'center',
-    margin: '20px 0'
   }
 };
 
-const GoldSelection = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+const AddMoreGold = () => {
   const [goldItems, setGoldItems] = useState([{ goldType: '', weight: '' }]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
   const newItemRef = useRef(null);
   const navigate = useNavigate();
-  const { addProduct } = useContext(ProductContext);
+  const { products, addProduct } = useContext(ProductContext);
 
   const userInfo = useSelector((state) => state.userReducer.userInfo);
 
@@ -108,16 +117,12 @@ const GoldSelection = () => {
   }, [goldItems, goldPrices]);
 
   const handleAddItem = () => {
-    if (goldItems.length >= 2) {
-      navigate('/addMoreGold'); 
-    } else {
-      setGoldItems([...goldItems, { goldType: '', weight: '' }]);
-      setTimeout(() => {
-        if (newItemRef.current) {
-          newItemRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100); 
-    }
+    setGoldItems([...goldItems, { goldType: '', weight: '' }]);
+    setTimeout(() => {
+      if (newItemRef.current) {
+        newItemRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100); // Delay to ensure the new element is rendered
   };
 
   const handleGoldTypeChange = (index, value) => {
@@ -135,20 +140,37 @@ const GoldSelection = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     goldItems.forEach(item => addProduct(item));
-    navigate('/addMoreGold');
+
+    const list = [...products, ...goldItems].map(item => ({
+      name: item.goldType,
+      weight: parseFloat(item.weight),
+      origin: 'Unknown',
+      price: goldPrices.find(gold => gold.materialName === item.goldType)?.materialBuyPrice * parseFloat(item.weight) || 0
+    }));
+
+    const formData = {
+      staffId: userInfo.id,
+      customerName: '', // Add customer details if needed
+      phone: '', // Add phone number if needed
+      list,
+      totalPrice: totalPrice,
+      productStore: true
+    };
+
+    try {
+      const response = await adornicaServ.postPurchaseOrderCode(formData);
+      console.log('Order sent successfully:', response.data);
+      alert('Order sent successfully');
+    } catch (error) {
+      console.error('There was an error sending the order:', error);
+      alert('Failed to send order. Please check your input data.');
+    }
   };
 
   return (
     <div style={styles.container}>
+        
       <form style={styles.form} onSubmit={handleSubmit}>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Name:</label>
-          <input type="text" style={styles.input} value={name} onChange={e => setName(e.target.value)} />
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Phone:</label>
-          <input type="text" style={styles.input} value={phone} onChange={e => setPhone(e.target.value)} />
-        </div>
         {goldItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.formGroup} ref={index === goldItems.length - 1 ? newItemRef : null}>
@@ -167,15 +189,15 @@ const GoldSelection = () => {
           </React.Fragment>
         ))}
         <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>ADD GOLD</button>
-        <div style={styles.totalPrice}>
-          Total price: {totalPrice} $
+        <div style={styles.buttonGroup}>
+          <button type="button" style={styles.backButton} onClick={() => navigate('/buyProduct')}>
+            BACK
+          </button>
+          <div></div>
+          <div style={styles.totalPrice}>
+            Total price: {totalPrice} $
+          </div>
         </div>
-        {/* <button type="submit" style={styles.button}
-          onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-          onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-        >
-          NEXT 
-        </button> */}
         <NavLink to="/billbuyng" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
@@ -187,4 +209,4 @@ const GoldSelection = () => {
   );
 };
 
-export default GoldSelection;
+export default AddMoreGold;
