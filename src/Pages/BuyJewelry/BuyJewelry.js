@@ -6,8 +6,10 @@ import { NavLink } from 'react-router-dom';
 // Define styles as objects
 const styles = {
   container: {
+    maxHeight: '70vh', // Adjust this value as needed
+    overflowY: 'auto', // Add this line to enable vertical scrolling
     background: '#AFBEF9',
-    padding: '30px',
+    padding: '20px',
     maxWidth: '900px',
     margin: '0px auto',
     borderRadius: '10px',
@@ -24,7 +26,7 @@ const styles = {
     flexDirection: 'column'
   },
   label: {
-    fontSize: '12px',
+    fontSize: '15px',
     color: '#333',
     marginBottom: '0px',
     fontWeight: 'bold',
@@ -64,14 +66,14 @@ const styles = {
     marginTop: '10px'
   },
   totalPrice: {
-    fontSize: '16px',
+    fontSize: '18px',
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
     margin: '0px 0'
   },
   jewelryLabel: {
-    fontSize: '14px',
+    fontSize: '18px',
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
@@ -200,14 +202,6 @@ const JewelrySelection = () => {
   return (
     <div style={styles.container}>
       <form style={styles.form} onSubmit={handleSubmit}>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Name:</label>
-          <input type="text" style={styles.input} value={name} onChange={e => setName(e.target.value)} />
-        </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>Phone:</label>
-          <input type="text" style={styles.input} value={phone} onChange={e => setPhone(e.target.value)} />
-        </div>
         {jewelryItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.jewelryLabel}>Jewelry {index + 1}</div>
