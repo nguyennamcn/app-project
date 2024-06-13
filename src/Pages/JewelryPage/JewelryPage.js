@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
+import { Card, Modal } from 'antd';
 import './JewelryCss.css';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 
 const { Meta } = Card;
@@ -11,6 +11,8 @@ export default function JewelryPage() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -22,6 +24,12 @@ export default function JewelryPage() {
         console.log(err);
       });
   }, []);
+
+  const showModal = (message) => {
+    setModalMessage(message);
+    setIsModalVisible(true);
+    //setTimeout(() => setIsModalVisible(false), 1000);
+  };
 
   const handleAddToCart = (productCode) => {
     const product = products.find(p => p.productCode === productCode);
@@ -44,18 +52,14 @@ export default function JewelryPage() {
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
 
     if (existingItemIndex > -1) {
-      // Update the quantity if the item exists
-      cartItems[existingItemIndex].quantity += 1;
-      cartItems[existingItemIndex].totalPrice += item.price;
+      showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {
       // Add new item to the cart
       cartItems.push(item);
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      // Save updated cart items to local storage
+      showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
     }
-
-    // Save updated cart items to local storage
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-    alert('Added to cart');
   };
 
   return (
@@ -85,7 +89,7 @@ export default function JewelryPage() {
       <div className="product-container">
         {products.map((sp) => (
           <div className="product-card-container" key={sp.productCode}>
-            <Card            
+            <Card
               bodyStyle={{ padding: '8px' }}
               style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
               cover={<img style={{ padding: '10px', maxWidth: '100%', height: '146px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
@@ -105,6 +109,15 @@ export default function JewelryPage() {
           </div>
         ))}
       </div>
+      <Modal
+        title="Notification"
+        visible={isModalVisible}
+        footer={null}
+        onCancel={() => setIsModalVisible(false)}
+        className="custom-modal"
+      >
+        <div>{modalMessage}</div>
+      </Modal>
     </div>
   );
 }

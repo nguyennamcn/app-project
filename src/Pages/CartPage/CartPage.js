@@ -138,9 +138,9 @@ const CartPage = () => {
             key: 'quantity',
             render: (text, record) => (
                 <div>
-                    <Button onClick={() => handleQuantityChange(record.productCode, record.size, -1)}>-</Button>
+                    {/* <Button onClick={() => handleQuantityChange(record.productCode, record.size, -1)}>-</Button> */}
                     <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-                    <Button onClick={() => handleQuantityChange(record.productCode, record.size, 1)}>+</Button>
+                    {/* <Button onClick={() => handleQuantityChange(record.productCode, record.size, 1)}>+</Button> */}
                 </div>
             ),
         },
@@ -155,11 +155,21 @@ const CartPage = () => {
             key: 'totalPrice',
             render: (text, record) => <span>{record.totalPrice}</span>,
         },
+        {
+            title: 'Delete',
+            dataIndex: 'delete',
+            key: 'delete',
+            render: (text, record) => (
+                <div>
+                    <Button onClick={() => handleQuantityChange(record.productCode, record.size, -1)}>Delete</Button>
+                </div>
+            ),
+        },
     ];
 
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
+            <Table style={{minHeight:'230px'}} dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
             <hr />
             <div>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order detail</h1>

@@ -7,10 +7,12 @@ export default function DetailPage() {
     const [product, setProduct] = useState({});
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedId, setSelectedId] = useState(null);
-    const [mainImageSrc, setMainImageSrc] = useState("https://cdn.photoroom.com/v1/assets-cached.jpg?path=backgrounds_v3/white/Photoroom_white_background_extremely_fine_texture_only_white_co_d4046f3b-0a21-404a-891e-3f8d37c5aa94.jpg");
+    const [mainImageSrc, setMainImageSrc] = useState();
     const [quantity, setQuantity] = useState(1);
     const { productCode } = useParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     useEffect(() => {
         adornicaServ.getDetailProduct(productCode)
@@ -23,23 +25,22 @@ export default function DetailPage() {
             });
     }, [productCode]);
 
-    const handleSizeClick = (size) => {
-        const selectedProduct = product.sizeProducts.find(sp => sp.size === size);
-        setSelectedSize(size);
-        setSelectedId(selectedProduct ? selectedProduct.id : null);
-        setQuantity(1); // Reset quantity when a new size is selected
-    };
+    useEffect(() => {
+        if (product && product.productAsset && product.productAsset.img1) {
+          setMainImageSrc(product.productAsset.img1);
+        }
+      }, [product]);
+      
+
+    // const handleSizeClick = (size) => {
+    //     const selectedProduct = product.sizeProducts.find(sp => sp.size === size);
+    //     setSelectedSize(size);
+    //     setSelectedId(selectedProduct ? selectedProduct.id : null);
+    //     setQuantity(1); // Reset quantity when a new size is selected
+    // };
 
     const handleImageClick = (newSrc) => {
         setMainImageSrc(newSrc);
-    };
-
-    const handleQuantityChange = (change) => {
-        setQuantity(prevQuantity => {
-            const newQuantity = prevQuantity + change;
-            const availableStock = selectedProduct ? selectedProduct.diameter : Infinity;
-            return newQuantity > 0 && newQuantity <= availableStock ? newQuantity : prevQuantity;
-        });
     };
 
     const showModal = () => {
@@ -54,8 +55,14 @@ export default function DetailPage() {
         setIsModalOpen(false);
     };
 
+    const showModalnotify = (message) => {
+        setModalMessage(message);
+        setIsModalVisible(true);
+        //setTimeout(() => setIsModalVisible(false), 1000);
+      };
+
     const handleAddToCart = () => {
-        const selectedProduct = product.sizeProducts.find(sp => sp.size === selectedSize);
+        
         const item = {
             productId: product.id,
             productCode: product.productCode,
@@ -71,24 +78,19 @@ export default function DetailPage() {
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
         // Check if the item is already in the cart
-        const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
+       const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
 
-        if (existingItemIndex > -1) {
-            // Update the quantity if the item exists
-            cartItems[existingItemIndex].quantity += item.quantity;
-            cartItems[existingItemIndex].totalPrice += item.totalPrice;
-        } else {
-            // Add new item to the cart
-            cartItems.push(item);
-        }
-
-        // Save updated cart items to local storage
+       if (existingItemIndex > -1) {
+        showModalnotify(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
+      } else {
+        // Add new item to the cart
+        cartItems.push(item);
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-        alert('Added to cart');
+        // Save updated cart items to local storage
+        showModalnotify(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+      }
+       
     };
-
-    const selectedProduct = selectedSize ? product.sizeProducts?.find(sp => sp.size === selectedSize) : null;
 
     return (
         <div className="detail-page">
@@ -154,7 +156,7 @@ export default function DetailPage() {
                         <p className="description-title">Description</p>
                         <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
                     </div>
-                        <NavLink to='/homePage'>
+                        <NavLink to=''>
                         <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
                             ADD
                         </button>
@@ -171,6 +173,16 @@ export default function DetailPage() {
                     </div>
                 ))}
             </Modal>
+
+            <Modal
+        title="Notification"
+        visible={isModalVisible}
+        footer={null}
+        onCancel={() => setIsModalVisible(false)}
+        className="custom-modal"
+      >
+        <div>{modalMessage}</div>
+      </Modal>
             <style jsx>{`
                 .detail-page {
                     display: flex;
