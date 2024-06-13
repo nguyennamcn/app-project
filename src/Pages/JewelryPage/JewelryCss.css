@@ -1,3 +1,51 @@
+/* Modal style */
+.custom-modal .ant-modal-content {
+  border-radius: 10px;
+  text-align: center;
+
+  height: 300px;
+}
+
+.custom-modal .ant-modal-header {
+  border-bottom: none;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+
+}
+
+.custom-modal .ant-modal-title {
+  font-size: 30px;
+}
+
+.custom-modal .ant-modal-body {
+  padding: 16px;
+  font-size: 16px;
+}
+
+.custom-modal .ant-modal-footer {
+  display: none;
+}
+
+.notice__content{
+
+}
+
+.notice__content h1{
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+.check__icon{
+  color: #22c37d;
+  font-size: 80px;
+}
+
+.error__icon{
+  color: #e60a0a;
+  font-size: 80px;
+}
+
 /* Overlay Styles */
 .product-card-container {
     position: relative;
