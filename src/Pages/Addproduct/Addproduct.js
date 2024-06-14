@@ -5,7 +5,7 @@ function AddProduct() {
   const [newProduct, setNewProduct] = useState({
     productName: '',
     productId: '',
-    productImage: null,
+    productImages: [],
     productGem: '',
     productionCost: '',
     productGender: '',
@@ -22,7 +22,7 @@ function AddProduct() {
   };
 
   const handleImageUpload = (e) => {
-    setNewProduct({ ...newProduct, productImage: e.target.files[0] });
+    setNewProduct({ ...newProduct, productImages: Array.from(e.target.files) });
   };
 
   const handleFormSubmit = (e) => {
@@ -41,15 +41,11 @@ function AddProduct() {
                 <label>Product Name:</label>
                 <input type="text" name="productName" value={newProduct.productName} onChange={handleInputChange} />
               </div>
-              <div className="form-group">
-                <label>Product ID:</label>
-                <input type="text" name="productId" value={newProduct.productId} onChange={handleInputChange} />
-              </div>
             </div>
             <div className="form-row">
               <div className="form-group">
-                <label>Product Image:</label>
-                <input type="file" name="productImage" onChange={handleImageUpload} />
+                <label>Product Images:</label>
+                <input type="file" name="productImages" multiple onChange={handleImageUpload} />
               </div>
             </div>
             <div className="form-row">
@@ -75,21 +71,23 @@ function AddProduct() {
             <div className="form-row">
               <div className="form-group">
                 <label>Material:</label>
-                <input type="text" name="productMaterial" value={newProduct.productMaterial} onChange={handleInputChange} />
+                <select name="productMaterial" value={newProduct.productMaterial} onChange={handleInputChange}>
+                  <option value="">Select Material</option>
+                  <option value="Gold">Gold</option>
+                  <option value="Silver">Silver</option>
+                  <option value="Platinum">Platinum</option>
+                  <option value="Titanium">Titanium</option>
+                </select>
               </div>
               <div className="form-group">
                 <label>Category:</label>
-                <input type="text" name="productCategory" value={newProduct.productCategory} onChange={handleInputChange} />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label>Adding Day:</label>
-                <input type="date" name="addingDay" value={newProduct.addingDay} onChange={handleInputChange} />
-              </div>
-              <div className="form-group">
-                <label>Quantity:</label>
-                <input type="text" name="productQuantity" value={newProduct.productQuantity} onChange={handleInputChange} />
+                <select name="productCategory" value={newProduct.productCategory} onChange={handleInputChange}>
+                  <option value="">Select Category</option>
+                  <option value="Necklace">Necklace</option>
+                  <option value="Ring">Ring</option>
+                  <option value="Bracelet">Bracelet</option>
+                  <option value="Earrings">Earrings</option>
+                </select>
               </div>
             </div>
             <button className="add-button" type="submit">Add Product</button>
