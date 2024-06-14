@@ -65,6 +65,19 @@ const styles = {
     justifySelf: 'center',
     marginTop: '10px'
   },
+  deleteButton: {
+    backgroundColor: '#FF6347',
+    color: 'white',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '10px',
+    textAlign: 'center',
+    position: 'absolute',
+    top: '5px',
+    right: '5px'
+  },
   totalPrice: {
     fontSize: '18px',
     fontWeight: 'bold',
@@ -77,7 +90,8 @@ const styles = {
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
-    marginTop: '2px'
+    marginTop: '2px',
+    position: 'relative'
   }
 };
 
@@ -160,6 +174,11 @@ const JewelrySelection = () => {
     }, 100); // Delay to ensure the new element is rendered
   };
 
+  const handleDeleteItem = (index) => {
+    const updatedItems = jewelryItems.filter((_, i) => i !== index);
+    setJewelryItems(updatedItems);
+  };
+
   const handleInputChange = (index, field, value) => {
     const updatedItems = jewelryItems.map((item, i) =>
       i === index ? { ...item, [field]: value } : item
@@ -204,7 +223,10 @@ const JewelrySelection = () => {
       <form style={styles.form} onSubmit={handleSubmit}>
         {jewelryItems.map((item, index) => (
           <React.Fragment key={index}>
-            <div style={styles.jewelryLabel}>Jewelry {index + 1}</div>
+            <div style={styles.jewelryLabel}>
+              Jewelry {index + 1}
+              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+            </div>
             <div style={styles.formGroup} ref={index === jewelryItems.length - 1 ? newItemRef : null}>
               <label style={styles.label}>Gold type:</label>
               <select style={styles.input} value={item.goldType} onChange={e => handleInputChange(index, 'goldType', e.target.value)}>
@@ -320,5 +342,3 @@ const JewelrySelection = () => {
 };
 
 export default JewelrySelection;
-
-

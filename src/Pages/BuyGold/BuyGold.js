@@ -19,11 +19,12 @@ const styles = {
   form: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '5px'
+    gap: '20px' // Increased gap for better spacing
   },
   formGroup: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    flex: 1
   },
   label: {
     fontSize: '16px',
@@ -35,7 +36,8 @@ const styles = {
     padding: '10px',
     border: '2px solid #cccccc',
     borderRadius: '5px',
-    fontSize: '16px'
+    fontSize: '16px',
+    width: '100%' // Ensure input takes full width
   },
   button: {
     backgroundColor: '#222222',
@@ -47,7 +49,7 @@ const styles = {
     fontSize: '18px',
     gridColumn: 'span 2',
     textAlign: 'center',
-    textDecoration: 'none', // Add this line
+    textDecoration: 'none',
   },
   buttonHover: {
     backgroundColor: '#000000'
@@ -56,14 +58,24 @@ const styles = {
     backgroundColor: '#4CAF50',
     color: 'white',
     border: 'none',
-    padding: '5px 10px',
+    padding: '10px 20px', // Increased padding for better look
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '14px',
+    fontSize: '16px', // Increased font size for better readability
     textAlign: 'center',
     gridColumn: 'span 2',
     justifySelf: 'center',
-    marginTop: '2px'
+    marginTop: '20px' // Increased margin for better spacing
+  },
+  deleteButton: {
+    backgroundColor: '#FF6347',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    marginLeft: '10px',
   },
   totalPrice: {
     fontSize: '20px',
@@ -112,6 +124,11 @@ const GoldSelection = () => {
         newItemRef.current.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100); // Delay to ensure the new element is rendered
+  };
+
+  const handleDeleteItem = (index) => {
+    const updatedItems = goldItems.filter((_, i) => i !== index);
+    setGoldItems(updatedItems);
   };
 
   const handleGoldTypeChange = (index, value) => {
@@ -170,7 +187,10 @@ const GoldSelection = () => {
             </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Weight (gram):</label>
-              <input type="number" style={styles.input} value={item.weight} onChange={e => handleWeightChange(index, e.target.value)} />
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <input type="number" style={styles.input} value={item.weight} onChange={e => handleWeightChange(index, e.target.value)} />
+                <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+              </div>
             </div>
           </React.Fragment>
         ))}
@@ -190,5 +210,3 @@ const GoldSelection = () => {
 };
 
 export default GoldSelection;
-
-
