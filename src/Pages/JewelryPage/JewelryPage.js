@@ -34,11 +34,10 @@ export default function JewelryPage() {
   const handleAddToCart = (productCode) => {
     const product = products.find(p => p.productCode === productCode);
     const item = {
-      productId: product.id,
+      productId: product.productId,
       productCode: product.productCode,
       name: product.productName,
-      size: selectedSize,
-      sizeId: selectedId,
+      size: product.size,
       quantity: quantity,
       price: product.productPrice,
       totalPrice: quantity * product.productPrice,
@@ -49,7 +48,7 @@ export default function JewelryPage() {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
     // Check if the item is already in the cart
-    const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
+    const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if (existingItemIndex > -1) {
       showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);

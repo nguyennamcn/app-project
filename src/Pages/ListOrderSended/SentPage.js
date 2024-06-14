@@ -1,14 +1,29 @@
-import { Table, Button } from 'antd';
+import { Table, Button, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 
 const columns = (handleView, handleDelete) => [
     {
-        title: 'Order Key',
-        dataIndex: 'orderKey',
-        key: 'orderKey',
+        title: 'Order code',
+        dataIndex: 'orderCode',
+        key: 'orderCode',
+    },
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
+        title: 'Phone',
+        dataIndex: 'phone',
+        key: 'phone',
+    },
+    {
+        title: 'Total',
+        dataIndex: 'totalPrice',
+        key: 'totalPrice',
     },
     {
         title: 'Action',
@@ -16,19 +31,19 @@ const columns = (handleView, handleDelete) => [
         width: 180,
         render: (_, record) => (
             <div style={{ width: '50%', display: 'flex' }}>
-                <NavLink to={`/detailOrderSended/${record.orderKey}`}>
-                <Button
-                    style={{ marginRight: '14px' }}
-                    type="primary"
-                    onClick={() => handleView(record.orderKey)}
-                >
-                    View
-                </Button>
+                <NavLink to={`/detailOrderSended/${record.orderCode}`}>
+                    <Button
+                        style={{ marginRight: '14px' }}
+                        type="primary"
+                        onClick={() => handleView(record.orderCode)}
+                    >
+                        View
+                    </Button>
                 </NavLink>
                 <Button 
                     type="primary" 
                     danger 
-                    onClick={() => handleDelete(record.orderKey)}
+                    onClick={() => handleDelete(record.orderCode)}
                 >
                     Cancel
                 </Button>
@@ -37,17 +52,25 @@ const columns = (handleView, handleDelete) => [
     },
 ];
 
-
-
 export default function SentPage(){
     const [dataSource, setDataSource] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
+
+    let userInfo = useSelector((state) => {
+        return state.userReducer.userInfo;
+    });
 
     useEffect(() => {
-        adornicaServ.getListOrder()
+        adornicaServ.getListOrderByStaffID(userInfo.id)
             .then((res) => {
-                const orders = res.data.metadata.map((orderKey, index) => ({
+                const orders = res.data.metadata.map((order, index) => ({
                     key: index,
-                    orderKey: orderKey,
+                    orderCode: order.orderCode,
+                    phone: order.phone,
+                    name: order.name,
+                    totalPrice: order.totalPrice,
                 }));
                 setDataSource(orders);
             })
@@ -56,20 +79,29 @@ export default function SentPage(){
             });
     }, []);
 
+    const showModal = (message, orderCode = null) => {
+        setModalMessage(message);
+        setOrderCodeToDelete(orderCode);
+        setIsModalVisible(true);
+    };
+
     const handleDelete = (key) => {
-        // Make API request to delete the order
-        adornicaServ.deletePreOrder(key)
+        showModal("Do you really want to cancel this order?", key);
+    };
+
+    const confirmDelete = () => {
+        adornicaServ.deletePreOrder(orderCodeToDelete)
             .then(() => {
-                // If deletion is successful, update the dataSource state by filtering out the deleted order
-                const newDataSource = dataSource.filter((item) => item.orderKey !== key);
+                const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
+                showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product was deleted!</h1></div>);
             })
             .catch((err) => {
                 console.log("Error deleting order:", err);
-                // Handle error if deletion fails
             });
+        setIsModalVisible(false);
     };
-    
+
     const handleView = (key) => {
         adornicaServ.getListOrderDetail(key)
             .then((res) => {
@@ -94,6 +126,38 @@ export default function SentPage(){
                     pagination={{className:'custom__pagination', pageSize: 4 }}
                 />
             </div>
+            <Modal
+                title="Notification"
+                visible={isModalVisible}
+                footer={null}
+                onCancel={() => setIsModalVisible(false)}
+                className="custom-modal"
+            >
+                {orderCodeToDelete ? (
+                    <div>
+                        <p style={{fontSize:'20px', marginBottom:'50px'}}>{modalMessage}</p>
+                        <div style={{ textAlign: 'center' }}>
+                            <Button 
+                                onClick={() => setIsModalVisible(false)} 
+                                style={{ marginRight: '40px' }}
+                                size='large'
+                            >
+                                No
+                            </Button>
+                            <Button 
+                                type="primary" 
+                                danger 
+                                onClick={confirmDelete}
+                                size='large'
+                            >
+                                Yes
+                            </Button>
+                        </div>
+                    </div>
+                ) : (
+                    <div>{modalMessage}</div>
+                )}
+            </Modal>
         </div>
     );
 }

@@ -27,17 +27,9 @@ export default function DetailPage() {
 
     useEffect(() => {
         if (product && product.productAsset && product.productAsset.img1) {
-          setMainImageSrc(product.productAsset.img1);
+            setMainImageSrc(product.productAsset.img1);
         }
-      }, [product]);
-      
-
-    // const handleSizeClick = (size) => {
-    //     const selectedProduct = product.sizeProducts.find(sp => sp.size === size);
-    //     setSelectedSize(size);
-    //     setSelectedId(selectedProduct ? selectedProduct.id : null);
-    //     setQuantity(1); // Reset quantity when a new size is selected
-    // };
+    }, [product]);
 
     const handleImageClick = (newSrc) => {
         setMainImageSrc(newSrc);
@@ -58,17 +50,14 @@ export default function DetailPage() {
     const showModalnotify = (message) => {
         setModalMessage(message);
         setIsModalVisible(true);
-        //setTimeout(() => setIsModalVisible(false), 1000);
-      };
+    };
 
     const handleAddToCart = () => {
-        
         const item = {
             productId: product.id,
             productCode: product.productCode,
             name: product.productName,
-            size: selectedSize,
-            sizeId: selectedId,
+            size: product.size,
             quantity,
             price: product.totalPrice,
             totalPrice: quantity * product.totalPrice
@@ -78,18 +67,17 @@ export default function DetailPage() {
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
         // Check if the item is already in the cart
-       const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode && cartItem.size === item.size);
+        const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
-       if (existingItemIndex > -1) {
-        showModalnotify(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
-      } else {
-        // Add new item to the cart
-        cartItems.push(item);
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        // Save updated cart items to local storage
-        showModalnotify(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
-      }
-       
+        if (existingItemIndex > -1) {
+            showModalnotify(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark"></i><h1>Product was added !</h1></div>);
+        } else {
+            // Add new item to the cart
+            cartItems.push(item);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            // Save updated cart items to local storage
+            showModalnotify(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Product added successfully !</h1></div>);
+        }
     };
 
     return (
@@ -130,19 +118,28 @@ export default function DetailPage() {
                                 <div>ID: {product.id}</div>
                                 <div>Gender: {product.gender}</div>
                                 <div>Category: {product.category}</div>
+                                 <div>Size: {product.size}</div>
                             </div>
                             <div style={{ fontSize: '15px' }}>
                                 {product.materials?.map((mt, index) => (
                                     <div key={index}>
-                                        <h1>{mt.name}</h1>
+                                        <h1>Material: {mt.name}</h1>
                                     </div>
                                 ))}
-                                <div style={{ cursor: 'pointer', color: 'blue' }} onClick={showModal}>Gem:</div>
+
+                                {product.gem?.map((sp, index) => (
+                                    <div key={index}>
+                                        <h1 style={{ marginTop: '5px' }}>Diamond: {sp.gemName}</h1>
+                                        <h1 style={{ marginTop: '5px' }}>Clarity: {sp.clarity}</h1>
+                                        <h1 style={{ marginTop: '5px' }}>Color: {sp.color}</h1>
+                                        <h1 style={{ marginTop: '5px' }}>Carat: {sp.carat} ct</h1>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="info-section" style={{position: 'absolute', right:'8%', top:'9%'}}>
+                <div className="info-section" style={{ position: 'absolute', right: '8%', top: '9%' }}>
                     <div className="product-header">
                         <p className="product-name">{product.productName}</p>
                         <NavLink to='/homePage'>
@@ -156,33 +153,22 @@ export default function DetailPage() {
                         <p className="description-title">Description</p>
                         <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
                     </div>
-                        <NavLink to=''>
+                    <NavLink to=''>
                         <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
                             ADD
                         </button>
                     </NavLink>
                 </div>
             </div>
-            <Modal title="Gem Detail" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                {product.gem?.map((sp, index) => (
-                    <div key={index}>
-                        <h1 style={{ marginTop: '5px' }}>Name: {sp.gemName}</h1>
-                        <h1 style={{ marginTop: '5px' }}>Clarity: {sp.clarity}</h1>
-                        <h1 style={{ marginTop: '5px' }}>Color: {sp.color}</h1>
-                        <h1 style={{ marginTop: '5px' }}>Carat: {sp.weight}</h1>
-                    </div>
-                ))}
-            </Modal>
-
             <Modal
-        title="Notification"
-        visible={isModalVisible}
-        footer={null}
-        onCancel={() => setIsModalVisible(false)}
-        className="custom-modal"
-      >
-        <div>{modalMessage}</div>
-      </Modal>
+                title="Notification"
+                visible={isModalVisible}
+                footer={null}
+                onCancel={() => setIsModalVisible(false)}
+                className="custom-modal"
+            >
+                <div>{modalMessage}</div>
+            </Modal>
             <style jsx>{`
                 .detail-page {
                     display: flex;

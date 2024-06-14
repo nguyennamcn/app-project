@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, Modal } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
@@ -10,6 +10,8 @@ const CartPage = () => {
     const [timeoutId, setTimeoutId] = useState(null);
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     // Handle input change for customer name
     const handleInputChange = (event) => {
@@ -55,20 +57,26 @@ const CartPage = () => {
         setTotalQuantity(totalQty);
         const totalPrice = dataSource.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
         setTotalAllPrice(totalPrice);
-    
+
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
-    
+
         const newTimeoutId = setTimeout(() => {
             setDataSource([]);
             localStorage.removeItem('cartItems');
         }, 3600000); // Clear cart after 1 hour
-    
+
         setTimeoutId(newTimeoutId);
-    
+
         return () => clearTimeout(newTimeoutId);
     }, [dataSource]);
+
+    const showModal = (message) => {
+        setModalMessage(message);
+        setIsModalVisible(true);
+        //setTimeout(() => setIsModalVisible(false), 1000);
+    };
 
     // Handle quantity change for cart items
     const handleQuantityChange = (productCode, size, delta) => {
@@ -89,36 +97,49 @@ const CartPage = () => {
         localStorage.setItem('cartItems', JSON.stringify(newDataSource));
     };
 
+    const generateOrderCode = () => {
+        return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    };
     // Handle sending the order
     const handleSendOrder = () => {
+        if (!customerPhone || !customerName || dataSource.length === 0) {
+            showModal(
+                <div className='notice__content'>
+                    <i className="error__icon fa-solid fa-circle-xmark" ></i>
+                    <h1>Failed to send order. Please check your input data.</h1>
+                </div>
+            );
+            return;
+        }
+
         const orderList = dataSource.map(item => ({
-            productCode: item.productCode,
             productId: item.productId,
-            productName: item.name || "Unknown Product", 
-            sizeId: item.sizeId,
-            quantity: item.quantity,
             price: item.price,
         }));
-        console.log(orderList)
+
+
         const orderData = {
+            orderCode: generateOrderCode(),  // Replace with actual order code logic if available
             staffId: userInfo.id,
-            customer: customerName,
             phone: customerPhone,
+            name: customerName,
             orderList,
             totalPrice: totalAllPrice
         };
-    
+
         adornicaServ.postOrder(orderData)
             .then(response => {
                 setDataSource([]);
                 localStorage.removeItem('cartItems');
-                alert('Order sent successfully');
+
+                showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
             })
             .catch(error => {
                 console.error("There was an error sending the order:", error);
-                alert('Failed to send order. Please check your input data.');
+                showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Failed to send order. Please check your input data.</h1></div>);
             });
     };
+
 
     // Define table columns
     const columns = [
@@ -127,22 +148,16 @@ const CartPage = () => {
             dataIndex: 'name',
             key: 'name',
         },
+
         {
-            title: 'Size',
-            dataIndex: 'size',
-            key: 'size',
-        },
-        {
-            title: 'Quantity',
-            dataIndex: 'quantity',
-            key: 'quantity',
-            render: (text, record) => (
-                <div>
-                    {/* <Button onClick={() => handleQuantityChange(record.productCode, record.size, -1)}>-</Button> */}
-                    <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-                    {/* <Button onClick={() => handleQuantityChange(record.productCode, record.size, 1)}>+</Button> */}
-                </div>
-            ),
+            title: 'Product Code',
+            dataIndex: 'productCode',
+            key: 'productCode',
+            // render: (text, record) => (
+            //     <div>
+            //                           <span style={{ margin: '0 10px' }}>{record.quantity}</span>
+            //       </div>
+            // ),
         },
         {
             title: 'Price',
@@ -169,7 +184,7 @@ const CartPage = () => {
 
     return (
         <div>
-            <Table style={{minHeight:'230px'}} dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
+            <Table style={{ minHeight: '230px' }} dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
             <hr />
             <div>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order detail</h1>
@@ -225,6 +240,15 @@ const CartPage = () => {
                     color: 'white'
                 }}>Send order</button>
             </div>
+            <Modal
+                title="Notification"
+                visible={isModalVisible}
+                footer={null}
+                onCancel={() => setIsModalVisible(false)}
+                className="custom-modal"
+            >
+                <div>{modalMessage}</div>
+            </Modal>
         </div>
     );
 };

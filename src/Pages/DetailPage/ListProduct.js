@@ -49,12 +49,12 @@ export default function ListProduct({ product }) {
                     >
                         Sent
                     </span>
-                    <span
+                    {/* <span
                         className={`button-nor ${isActive === 'History' ? 'active' : ''}`}
                         onClick={() => handleClick('History')}
                     >
                         History
-                    </span>
+                    </span> */}
                 </div>
                 <hr style={{ zIndex: '2', color: 'black' }} />
             </div>
@@ -64,7 +64,7 @@ export default function ListProduct({ product }) {
                 {isActive === 'Diamond' && <DiamondPage />}
                 {isActive === 'Cart' && <CartPage />}       
                 {isActive === 'Sent' && <SentPage />}   
-                {isActive === 'History' && <History />}    
+                {/* {isActive === 'History' && <History />}     */}
             </div>
         </div>
     );
