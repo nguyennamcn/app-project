@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 // Define styles as objects
 const pageStyles = {
@@ -93,6 +94,21 @@ const pageStyles = {
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '15px',
+    transition: 'background-color 0.3s',
+    textDecoration: 'none',
+    textAlign: 'center',
+  },
+  backButton: {
+    backgroundColor: '#cccccc',
+    color: 'black',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '15px',
+    transition: 'background-color 0.3s',
+    textDecoration: 'none',
+    textAlign: 'center',
   },
 };
 
@@ -122,6 +138,14 @@ const PurchasePage = () => {
 
   const totalItems = products.reduce((sum, product) => sum + product.quantity, 0);
   const totalPrice = products.reduce((sum, product) => sum + (product.price * product.quantity), 0).toFixed(2);
+
+  const handleMouseDown = (e) => {
+    e.target.style.backgroundColor = '#888888';
+  };
+
+  const handleMouseUp = (e) => {
+    e.target.style.backgroundColor = '';
+  };
 
   return (
     <div style={pageStyles.container}>
@@ -172,13 +196,25 @@ const PurchasePage = () => {
         </div>
       </div>
       
-      <div style={{ gridColumn: 'span 2', textAlign: 'center' }}>
-        <button style={pageStyles.finishButton}>Finish</button>
+      <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between' }}>
+        <NavLink
+          to="/buyProduct"
+          style={pageStyles.backButton}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+        >
+          Back
+        </NavLink>
+        <NavLink
+          style={pageStyles.finishButton}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+        >
+          Finish
+        </NavLink>
       </div>
     </div>
   );
 };
 
 export default PurchasePage;
-
-
