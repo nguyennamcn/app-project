@@ -5,9 +5,39 @@ import { NavLink } from 'react-router-dom';
 
 const columns = (handleView, handleDelete, handleUpdate) => [
     {
-        title: 'Order Key',
-        dataIndex: 'orderKey',
-        key: 'orderKey',
+        title: 'Order ID',
+        dataIndex: 'orderId',
+        key: 'orderId',
+    },
+    {
+        title: 'Staff name',
+        dataIndex: 'salesStaffName',
+        key: 'salesStaffName',
+    },
+    {
+        title: 'orderCode',
+        dataIndex: 'orderCode',
+        key: 'orderCode',
+    },
+    {
+        title: 'totalPrice',
+        dataIndex: 'totalPrice',
+        key: 'totalPrice',
+    },
+    {
+        title: 'dateOrder',
+        dataIndex: 'dateOrder',
+        key: 'dateOrder',
+    },
+    {
+        title: 'paymentMethod',
+        dataIndex: 'paymentMethod',
+        key: 'paymentMethod',
+    },
+    {
+        title: 'deliveryStatus',
+        dataIndex: 'deliveryStatus',
+        key: 'deliveryStatus',
     },
     {
         title: 'Action',
@@ -18,15 +48,15 @@ const columns = (handleView, handleDelete, handleUpdate) => [
                 <Button
                     style={{ marginRight: '14px' }}
                     type="primary"
-                    onClick={() => handleView(record.orderKey)}
+                    onClick={() => handleView(record.orderCode)}
                 >
-                    <NavLink to={`/cashierOrderDetail/${record.orderKey}`}>View</NavLink>
+                    <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>View</NavLink>
                 </Button>
                 <Button 
                     style={{ marginRight: '14px' }}
                     type="primary" 
                     danger 
-                    onClick={() => handleDelete(record.orderKey)}
+                    onClick={() => handleDelete(record.orderCode)}
                 >
                     Delete
                 </Button>
@@ -35,7 +65,7 @@ const columns = (handleView, handleDelete, handleUpdate) => [
                     type="primary" 
                     style={{backgroundColor:'#74FF33'}}
                 >
-                    <NavLink to={`/cashierUpdateOrder/${record.orderKey}`}>Update</NavLink>
+                    <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>Update</NavLink>
                 </Button>
                 
             </div>
@@ -47,11 +77,17 @@ export default function ListOrderPage() {
     const [dataSource, setDataSource] = useState([]);
 
     useEffect(() => {
-        adornicaServ.getListOrder()
+        adornicaServ.getHistoryOrders()
             .then((res) => {
-                const orders = res.data.metadata.map((orderKey, index) => ({
+                const orders = res.data.metadata.map((order, index) => ({
                     key: index,
-                    orderKey: orderKey,
+                    salesStaffName: order.salesStaffName,
+                    orderId: order.orderId,
+                    orderCode: order.orderCode,
+                    totalPrice: order.totalPrice,
+                    dateOrder: order.dateOrder,
+                    paymentMethod: order.paymentMethod,
+                    deliveryStatus: order.deliveryStatus,
                 }));
                 setDataSource(orders);
             })
@@ -65,7 +101,7 @@ export default function ListOrderPage() {
         adornicaServ.deletePreOrder(key)
             .then(() => {
                 // If deletion is successful, update the dataSource state by filtering out the deleted order
-                const newDataSource = dataSource.filter((item) => item.orderKey !== key);
+                const newDataSource = dataSource.filter((item) => item.orderCode !== key);
                 setDataSource(newDataSource);
             })
             .catch((err) => {
