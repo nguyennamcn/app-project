@@ -1,0 +1,124 @@
+.add-diamond-container {
+    display: flex;
+    height: calc(70vh); 
+    margin-top: 30px;
+    /* overflow-y: auto; */
+    max-height: 80vh;
+  }
+  
+  .add-diamond-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .add-diamond-form {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-diamond-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    /* margin-bottom: 15px; */
+    color: #333;
+  }
+  
+  .add-diamond-form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .add-diamond-form-group {
+    flex: 1;
+    margin-right: 15px;
+    /* margin-bottom: 0px; */
+    font-size: 13px;
+  }
+  
+  .add-diamond-form-group:last-child {
+    margin-right: 0;
+  }
+  
+  .add-diamond-form-group label {
+    display: block;
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .add-diamond-form-group input[type="text"],
+  .add-diamond-form-group input[type="date"],
+  .add-diamond-form-group input[type="file"],
+  .add-diamond-form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .add-diamond-form-footer {
+    display: flex;
+    justify-content: space-between;
+    /* margin-top: 3px; */
+  }
+  
+  .add-diamond-back-button {
+    padding: 8px 16px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .add-diamond-back-button:hover {
+    background: #e0e0e0;
+  }
+  
+  .add-diamond-add-button {
+    padding: 8px 16px;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  
+  .add-diamond-add-button:hover {
+    background: #0056b3;
+  }
+  
+  .custom-modal .ant-modal-content {
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .custom-modal .ant-modal-header {
+    border-bottom: none;
+  }
+  
+  .custom-modal .ant-modal-footer {
+    border-top: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+  

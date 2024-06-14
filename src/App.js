@@ -27,9 +27,10 @@ import ManageGold from './Pages/ManageProduct/ManageGold';
 import ManageDiamond from './Pages/ManageProduct/ManageDiamond';
 import ManageJewelry from './Pages/ManageProduct/ManageJewelry';
 import GoldPrice from './Pages/GoldPrice/GoldPrice';
-import UpdateProduct from './Pages/Update Product/UpdateProduct';
-import AddProduct from './Pages/Addproduct/Addproduct';
 import BillBuying from './Pages/BillBuying/BillBuying';
+import AddJewelry from './Pages/Addproduct/AddJewelry';
+import AddGold from './Pages/Addproduct/AddGold';
+import AddDiamond from './Pages/Addproduct/AddDiamonds';
 
 function App() {
   return (
@@ -59,8 +60,9 @@ function App() {
           <Route path='/manageDiamond' element={<Layout Component={ManageDiamond} />} />
           <Route path='/manageJewelry' element={<Layout Component={ManageJewelry} />} />
           <Route path='/goldprice' element={<Layout Component={GoldPrice} />} />
-          <Route path='/updateproduct' element={<Layout Component={UpdateProduct} />} />
-          <Route path='/addproduct' element={<Layout Component={AddProduct} />} />
+          <Route path='/adddiamond' element={<Layout Component={AddDiamond} />} />
+          <Route path='/addjewelry' element={<Layout Component={AddJewelry} />} />
+          <Route path='/addgold' element={<Layout Component={AddGold} />} />
           <Route path='/billbuyng' element={<Layout Component={BillBuying} />} />
         </Routes>
       </BrowserRouter>
