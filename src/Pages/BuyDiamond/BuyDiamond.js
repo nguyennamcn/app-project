@@ -60,6 +60,19 @@ const styles = {
     justifySelf: 'center',
     marginTop: '2px'
   },
+  deleteButton: {
+    backgroundColor: '#FF6347',
+    color: 'white',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '12px',
+    textAlign: 'center',
+    position: 'absolute',
+    top: '5px',
+    right: '5px'
+  },
   buttonHover: {
     backgroundColor: '#000000',
   },
@@ -68,14 +81,13 @@ const styles = {
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
-    // margin: '20px 0',
   },
   productTitle: {
     gridColumn: 'span 2',
     fontSize: '15px',
     fontWeight: 'bold',
     color: '#333',
-    // marginBottom: '10px',
+    position: 'relative',
   },
 };
 
@@ -133,6 +145,11 @@ const DiamondSelection = () => {
     setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '' }]);
   };
 
+  const handleDeleteItem = (index) => {
+    const updatedItems = diamondItems.filter((_, i) => i !== index);
+    setDiamondItems(updatedItems);
+  };
+
   const handleDiamondItemChange = (index, field, value) => {
     const newDiamondItems = [...diamondItems];
     newDiamondItems[index][field] = value;
@@ -179,7 +196,10 @@ const DiamondSelection = () => {
       <div style={styles.form}>
         {diamondItems.map((item, index) => (
           <React.Fragment key={index}>
-            <div style={styles.productTitle}>Diamond {index + 1}</div>
+            <div style={styles.productTitle}>
+              Diamond {index + 1}
+              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+            </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Color:</label>
               <select style={styles.input} value={item.color} onChange={(e) => handleDiamondItemChange(index, 'color', e.target.value)}>
@@ -247,6 +267,7 @@ const DiamondSelection = () => {
         <NavLink to="/billbuyng" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
+          onClick={handleSubmit}
         >
           PURCHASE
         </NavLink>
