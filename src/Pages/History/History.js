@@ -142,7 +142,6 @@ const BuyHistory = () => {
         <thead>
           <tr>
             <th style={styles.tableHeader}>ID</th>
-            <th style={styles.tableHeader}>Sales Staff</th>
             <th style={styles.tableHeader}>Order Code</th>
             <th style={styles.tableHeader}>Total Price</th>
             <th style={styles.tableHeader}>Order Date</th>

@@ -17,9 +17,9 @@ export default function ListOrderPage() {
     useEffect(() => {
         adornicaServ.getListOrderDetail(orderKey)
             .then((res) => {
-                const orderList = res.data.metadata.orderList.map(item => ({
+                const orderList = res.data.metadata.list.map(item => ({
                     ...item,
-                    totalPrice: item.quantity * item.price
+                    totalPrice:  item.price
                 }));
                 setProducts(orderList);
                 console.log(res.data.metadata);
@@ -41,25 +41,14 @@ export default function ListOrderPage() {
             key: 'productName',
         },
         {
-            title: 'Quantity',
-            dataIndex: 'quantity',
-            key: 'quantity',
-            render: (text, record) => (
-                <div>
-                     <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-                 </div>
-            ),
+            title: 'Product Code',
+            dataIndex: 'productCode',
+            key: 'productCode',
         },
         {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
-        },
-        {
-            title: 'Total Price',
-            dataIndex: 'totalPrice',
-            key: 'totalPrice',
-            render: (text, record) => <span>{record.quantity * record.price}</span>,
         },
     ];
 

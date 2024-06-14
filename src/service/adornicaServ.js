@@ -24,15 +24,15 @@ export const adornicaServ = {
 
     postOrder: (orderData) => {
         console.log(orderData)
-        return https.post(`/api/v1/orders/pre-order-products`, orderData);
+        return https.post(`/api/v1/orders/order`, orderData);
     },
 
-    getListOrder: () => {
-        return https.get(`/api/v1/orders/key-pre-order`);
+    getListOrderByStaffID: (staffID) => {
+        return https.get(`/api/v1/orders/order/${staffID}`);
     },
 
     getListOrderDetail: (orderKey) => {
-        return https.get(`/api/v1/orders/pre-order-product/${orderKey}`);
+        return https.get(`/api/v1/orders/order/detail/${orderKey}`);
     },
 
     getPhoneCustomer: (phone) => {
@@ -63,7 +63,7 @@ export const adornicaServ = {
     },
 
     deletePreOrder: (OrderCode) => {
-        return https.delete(`/api/v1/orders/pre-order/${OrderCode}`);
+        return https.delete(`/api/v1/orders/order/delete/${OrderCode}`);
     },
 
     
