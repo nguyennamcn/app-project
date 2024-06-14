@@ -5,7 +5,7 @@ function UpdateProduct() {
   const [product, setProduct] = useState({
     name: '',
     id: '',
-    image: null,
+    images: [],
     gem: '',
     productionCost: '',
     gender: '',
@@ -22,7 +22,7 @@ function UpdateProduct() {
   };
 
   const handleImageChange = (e) => {
-    setProduct({ ...product, image: e.target.files[0] });
+    setProduct({ ...product, images: Array.from(e.target.files) });
   };
 
   const handleSubmit = (e) => {
@@ -38,18 +38,16 @@ function UpdateProduct() {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
-                <label>Name:</label>
+                <label>Product Name:</label>
                 <input type="text" name="name" value={product.name} onChange={handleChange} />
               </div>
               <div className="form-group">
-                <label>ID:</label>
-                <input type="text" name="id" value={product.id} onChange={handleChange} />
               </div>
             </div>
             <div className="form-row">
               <div className="form-group">
                 <label>Images:</label>
-                <input type="file" name="image" onChange={handleImageChange} />
+                <input type="file" name="images" multiple onChange={handleImageChange} />
               </div>
             </div>
             <div className="form-row">
@@ -75,23 +73,26 @@ function UpdateProduct() {
             <div className="form-row">
               <div className="form-group">
                 <label>Material:</label>
-                <input type="text" name="material" value={product.material} onChange={handleChange} />
+                <select name="material" value={product.material} onChange={handleChange}>
+                  <option value="">Select Material</option>
+                  <option value="Gold">Gold</option>
+                  <option value="Silver">Silver</option>
+                  <option value="Platinum">Platinum</option>
+                  <option value="Titanium">Titanium</option>
+                </select>
               </div>
               <div className="form-group">
                 <label>Category:</label>
-                <input type="text" name="category" value={product.category} onChange={handleChange} />
+                <select name="category" value={product.category} onChange={handleChange}>
+                  <option value="">Select Category</option>
+                  <option value="Necklace">Necklace</option>
+                  <option value="Ring">Ring</option>
+                  <option value="Bracelet">Bracelet</option>
+                  <option value="Earrings">Earrings</option>
+                </select>
               </div>
             </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label>Updating day:</label>
-                <input type="date" name="updatingDay" value={product.updatingDay} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>Quantity:</label>
-                <input type="text" name="quantity" value={product.quantity} onChange={handleChange} />
-              </div>
-            </div>
+            
             <button className="update-button" type="submit">Update</button>
           </form>
         </div>

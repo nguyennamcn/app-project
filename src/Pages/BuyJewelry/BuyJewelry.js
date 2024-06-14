@@ -35,7 +35,7 @@ const styles = {
     padding: '8px',
     border: '2px solid #cccccc',
     borderRadius: '5px',
-    fontSize: '12px'
+    fontSize: '17px'
   },
   button: {
     backgroundColor: '#222222',

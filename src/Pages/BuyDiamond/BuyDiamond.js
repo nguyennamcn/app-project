@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 
 const styles = {
   container: {
+    maxHeight: '70vh', // Adjust this value as needed
+    overflowY: 'auto', // Add this line to enable vertical scrolling
     background: '#7FDBF8',
     padding: '20px 20px',
     maxWidth: '900px',
@@ -32,7 +34,7 @@ const styles = {
     padding: '5px',
     border: '2px solid #cccccc',
     borderRadius: '5px',
-    fontSize: '15px',
+    fontSize: '20px',
   },
   button: {
     backgroundColor: '#222222',
