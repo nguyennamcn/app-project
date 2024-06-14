@@ -99,7 +99,7 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
-    padding: '8px 16px',
+    padding: '7px 16px',
     cursor: 'pointer',
     marginLeft: 'auto'
   },
