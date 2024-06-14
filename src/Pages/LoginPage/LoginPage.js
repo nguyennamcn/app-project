@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Form, Input, message } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, Form, Input, message, Modal } from 'antd';
 import { userService } from '../../service/userService';
 import { localService } from '../../service/localService';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -12,6 +12,17 @@ import "./login.css"
 const LoginPage = () => {
   let dispatch = useDispatch();
   let navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+
+  const showModal = (title, message) => {
+    setModalTitle(title);
+    setModalMessage(message);
+    setIsModalVisible(true);
+    setTimeout(() => setIsModalVisible(false), 2000);
+  };
+
   //redux thường
   const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -31,7 +42,12 @@ const LoginPage = () => {
         console.log(res);
       })
       .catch((err) => {
-        message.error("login failed");
+        // Extract message and code from error response
+        const errorMetadata = err.response?.data?.metadata;
+        const errorMessage = errorMetadata?.message || "An error occurred";
+        const errorCode = errorMetadata?.code || "Unknown error code";
+        showModal("Login Failed",<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1 style={{color:'red'}}>Error: {errorMessage} (Code: {errorCode})</h1></div>);
+
         console.log(err);
       })
   };
@@ -105,6 +121,15 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
+      <Modal
+        title={modalTitle}
+        visible={isModalVisible}
+        footer={null}
+        onCancel={() => setIsModalVisible(false)}
+        className="custom-modal"
+      >
+        <div>{modalMessage}</div>
+      </Modal>
     </div>  
       );
 }
