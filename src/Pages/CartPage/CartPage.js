@@ -191,7 +191,7 @@ const CartPage = () => {
                 <div style={{
                     display: "flex",
                     justifyContent: "space-around",
-                    fontSize: '20px',
+                    fontSize: '24px',
                 }}>
                     <div style={{ marginTop: '0%' }}>
                         <p>Quantity: {totalQuantity}</p>

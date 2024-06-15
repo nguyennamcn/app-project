@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
+
+import React from 'react'
+import { useState, useEffect } from 'react'
 import { Card, Modal } from 'antd';
 import { NavLink } from 'react-router-dom';
-import './DiamondPage.css';
+import './DiamondPage.css'
 import { adornicaServ } from '../../service/adornicaServ';
 const { Meta } = Card;
 
 export default function DiamondPage() {
+
+  const data = Array.from({ length: 51 }).map((_, i) => ({
+    title: `Title aaaaaaa aaaaaaaaaaaaa aaaaaaaaa aaaaa${i}`,
+    code: `Code ${i}`,
+    cost: `Cost ${i}`,
+    img: 'https://trangsuc.doji.vn/Upload/dong-bo/kim-cuong-vien/kim-cuong-vien.jpg',
+  }));
 
   const [products, setProducts] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -13,7 +22,6 @@ export default function DiamondPage() {
   const [quantity, setQuantity] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     adornicaServ.getListDiamond()
@@ -29,6 +37,7 @@ export default function DiamondPage() {
   const showModal = (message) => {
     setModalMessage(message);
     setIsModalVisible(true);
+    //setTimeout(() => setIsModalVisible(false), 1000);
   };
 
   const handleAddToCart = (productCode) => {
@@ -52,26 +61,19 @@ export default function DiamondPage() {
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode );
 
     if (existingItemIndex > -1) {
-      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
+      showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {
       // Add new item to the cart
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       // Save updated cart items to local storage
-      showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+      showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
     }
   };
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const filteredProducts = products.filter(product => 
-    product.productCode.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
-    <div>
+
+    <div >
       <div className='filter' style={{
         display: 'flex',
         marginTop: '-6px',
@@ -137,13 +139,7 @@ export default function DiamondPage() {
           border: 'solid black 1px',
           borderRadius: '20px',
         }}>
-          <input 
-            type='text' 
-            placeholder='Search by product code...' 
-            value={searchTerm} 
-            onChange={handleSearch} 
-            style={{ outline: 'none', margin: '-4px 0 -4px 8px' }}
-          />
+          <input type='text' placeholder='Search...' style={{ outline: 'none', margin: '-4px 0 -4px 8px' }}></input>
           <svg style={{ marginRight: '10px' }} xmlns="http://www.w3.org/2000/svg" maxWidth="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
           </svg>
@@ -152,7 +148,7 @@ export default function DiamondPage() {
       </div>
 
       <div className="product-container">
-        {filteredProducts.map((sp) => (
+        {products.map((sp) => (
           <div className="product-card-container" key={sp.productCode}>
             <Card
               bodyStyle={{ padding: '8px' }}
@@ -184,5 +180,5 @@ export default function DiamondPage() {
         <div>{modalMessage}</div>
       </Modal>
     </div>
-  );
+  )
 }

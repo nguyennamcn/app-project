@@ -13,7 +13,6 @@ export default function JewelryPage() {
   const [quantity, setQuantity] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -52,23 +51,15 @@ export default function JewelryPage() {
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if (existingItemIndex > -1) {
-      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
+      showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {
       // Add new item to the cart
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       // Save updated cart items to local storage
-      showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+      showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
     }
   };
-
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const filteredProducts = products.filter(product =>
-    product.productCode.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div>
@@ -88,19 +79,14 @@ export default function JewelryPage() {
         </div>
 
         <div className='search__input'>
-          <input
-            type='text'
-            placeholder='Search by product code...'
-            value={searchTerm}
-            onChange={handleSearch}
-          />
+          <input type='text' placeholder='Search...' />
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
           </svg>
         </div>
       </div>
       <div className="product-container">
-        {filteredProducts.map((sp) => (
+        {products.map((sp) => (
           <div className="product-card-container" key={sp.productCode}>
             <Card
               bodyStyle={{ padding: '8px' }}
