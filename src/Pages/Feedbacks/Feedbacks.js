@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 function Feedback() {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(3);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
@@ -10,6 +11,15 @@ function Feedback() {
 
   const handleRatingChange = (rating) => {
     setRating(rating);
+  };
+
+  const handleSubmit = () => {
+    setIsModalOpen(true);
+    // Here you can also add functionality to handle the form submission
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -34,9 +44,21 @@ function Feedback() {
           ))}
         </div>
         <div style={styles.submitContainer}>
-          <button style={styles.submitButton}>Submit Review</button>
+          <button style={styles.submitButton} onClick={handleSubmit}>
+            Submit Review
+          </button>
         </div>
       </div>
+      {isModalOpen && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modal}>
+            <p>Submit Successful</p>
+            <button style={styles.closeButton} onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -89,6 +111,31 @@ const styles = {
     backgroundColor: 'green',
     fontSize: '20px',
     color: 'white',
+  },
+  modalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modal: {
+    backgroundColor: 'white',
+    padding: '20px',
+    borderRadius: '10px',
+    textAlign: 'center',
+  },
+  closeButton: {
+    marginTop: '10px',
+    padding: '10px 20px',
+    backgroundColor: 'red',
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
   },
   '@media (max-width: 768px)': {
     textarea: {
