@@ -29,7 +29,6 @@ const JewelryInventoryPage = () => {
 
   const handleUpdate = (jewelryId) => {
     const updatedItem = jewelry.find(item => item.id === jewelryId);
-    // Cập nhật thông tin sản phẩm trong cơ sở dữ liệu nếu cần
     console.log('Updated Jewelry:', updatedItem);
   };
 
@@ -46,7 +45,7 @@ const JewelryInventoryPage = () => {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.title}>JEWELRY INVENTORY</h1>
-        <NavLink to="/addjewelry" style={styles.addButton}>ADD PRODUCT</NavLink>
+        <NavLink to="/add-jewelry" style={styles.addButton}>ADD PRODUCT</NavLink>
       </header>
       <table style={styles.table}>
         <thead>
@@ -214,5 +213,3 @@ const styles = {
 };
 
 export default JewelryInventoryPage;
-
-
