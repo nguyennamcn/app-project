@@ -51,7 +51,7 @@ export default function ManageDiamond() {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.title}>DIAMOND INVENTORY</h1>
-        <NavLink to="/adddiamond" style={styles.addButton}>ADD DIAMOND</NavLink>
+        <NavLink to="/add-diamond" style={styles.addButton}>ADD DIAMOND</NavLink>
       </header>
       <table style={styles.table}>
         <thead>
@@ -221,5 +221,3 @@ const styles = {
     cursor: 'pointer'
   }
 };
-
-
