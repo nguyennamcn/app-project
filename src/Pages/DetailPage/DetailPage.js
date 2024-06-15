@@ -123,16 +123,16 @@ export default function DetailPage() {
                             <div style={{ fontSize: '15px' }}>
                                 {product.materials?.map((mt, index) => (
                                     <div key={index}>
-                                        <h1>Material: {mt.name}</h1>
+                                        <div>Material: {mt.name}</div>
                                     </div>
                                 ))}
 
                                 {product.gem?.map((sp, index) => (
                                     <div key={index}>
-                                        <h1 style={{ marginTop: '5px' }}>Diamond: {sp.gemName}</h1>
-                                        <h1 style={{ marginTop: '5px' }}>Clarity: {sp.clarity}</h1>
-                                        <h1 style={{ marginTop: '5px' }}>Color: {sp.color}</h1>
-                                        <h1 style={{ marginTop: '5px' }}>Carat: {sp.carat} ct</h1>
+                                        <div style={{ marginTop: '5px' }}>Diamond: {sp.gemName}</div>
+                                        <div style={{ marginTop: '5px' }}>Clarity: {sp.clarity}</div>
+                                        <div style={{ marginTop: '5px' }}>Color: {sp.color}</div>
+                                        <div style={{ marginTop: '5px' }}>Carat: {sp.carat} ct</div>
                                     </div>
                                 ))}
                             </div>
@@ -341,7 +341,7 @@ export default function DetailPage() {
                 }
 
                 .product-information {
-                    margin-top: 20px;
+                    margin-top: 7px;
                 }
 
                 @media (max-width: 768px) {

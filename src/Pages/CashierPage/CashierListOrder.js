@@ -38,6 +38,11 @@ const columns = (handleView, handleDelete, handleUpdate) => [
         key: 'dateOrder',
     },
     {
+        title: 'Payment method',
+        dataIndex: 'paymentMethod',
+        key: 'paymentMethod',
+    },
+    {
         title: 'Delivery Status',
         dataIndex: 'deliveryStatus',
         key: 'deliveryStatus',
@@ -48,31 +53,36 @@ const columns = (handleView, handleDelete, handleUpdate) => [
         width: 180,
         render: (_, record) => {
             const isSuccess = record.deliveryStatus.toLowerCase() === 'success';
+
+            const isPaid = record.paymentMethod.toLowerCase() === ('cash' || 'banking') ;
             return (
                 <div style={{ width: '50%', display: 'flex' }}>
+                    <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>
                     <Button
                         style={{ marginRight: '14px' }}
                         type="primary"
                         onClick={() => handleView(record.orderCode)}
                     >
-                        <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>View</NavLink>
+                        View
                     </Button>
+                    </NavLink>
                     <Button 
                         style={{ marginRight: '14px' }}
                         type="primary" 
                         danger 
                         onClick={() => handleDelete(record.orderCode)}
-                        disabled={isSuccess}
+                        disabled={isSuccess || isPaid}
                     >
                         Delete
                     </Button>
+                    <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>
                     <Button 
                         type="primary" 
-                        style={{ backgroundColor: '#74FF33' }}
-                        disabled={isSuccess}
+                        disabled={isSuccess || isPaid}
                     >
-                        <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>Update</NavLink>
+                        Update
                     </Button>
+                    </NavLink>
                 </div>
             );
         }
