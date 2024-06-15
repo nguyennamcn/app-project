@@ -31,6 +31,9 @@ import BillBuying from './Pages/BillBuying/BillBuying';
 import AddJewelry from './Pages/Addproduct/AddJewelry';
 import AddGold from './Pages/Addproduct/AddGold';
 import AddDiamond from './Pages/Addproduct/AddDiamonds';
+import Employee from './Pages/Employees/Employee';
+import AddEmployee from './Pages/Employees/AddEmployee';
+import ViewEmployee from './Pages/Employees/AddEmployee';
 
 function App() {
   return (
@@ -59,11 +62,17 @@ function App() {
           <Route path='/manageGold' element={<Layout Component={ManageGold} />} />
           <Route path='/manageDiamond' element={<Layout Component={ManageDiamond} />} />
           <Route path='/manageJewelry' element={<Layout Component={ManageJewelry} />} />
-          <Route path='/goldprice' element={<Layout Component={GoldPrice} />} />
-          <Route path='/adddiamond' element={<Layout Component={AddDiamond} />} />
-          <Route path='/addjewelry' element={<Layout Component={AddJewelry} />} />
-          <Route path='/addgold' element={<Layout Component={AddGold} />} />
-          <Route path='/billbuyng' element={<Layout Component={BillBuying} />} />
+          <Route path='/gold-price' element={<Layout Component={GoldPrice} />} />
+          <Route path='/add-diamond' element={<Layout Component={AddDiamond} />} />
+          <Route path='/add-jewelry' element={<Layout Component={AddJewelry} />} />
+          <Route path='/add-gold' element={<Layout Component={AddGold} />} />
+          <Route path='/bill-buying' element={<Layout Component={BillBuying} />} />
+          <Route path='/employee' element={<Layout Component={Employee} />} />
+          <Route path='/add-employee' element={<Layout Component={AddEmployee} />} />
+          <Route path='/view-employee' element={<Layout Component={ViewEmployee} />} />
+          <Route path="/view-employee/:id" component={ViewEmployee} />
+
+
         </Routes>
       </BrowserRouter>
     </div>

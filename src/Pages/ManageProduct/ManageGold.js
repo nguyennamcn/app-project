@@ -50,7 +50,7 @@ export default function ManageGold() {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.title}>GOLD</h1>
-        <NavLink to="/addgold" style={styles.addButton}>ADD GOLD</NavLink>
+        <NavLink to="/add-gold" style={styles.addButton}>ADD GOLD</NavLink>
       </header>
       <table style={styles.table}>
         <thead>
