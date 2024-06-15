@@ -77,10 +77,13 @@ export default function ListOrderPage() {
             orderCode: orderKey,
             address: customerAddress,
             name: customerName,
+            dateOfBirth: customerBirthday,
             paymentMethod: paymentMethod,
-            mount: (totalPrice - (totalPrice * discount / 100)),
+            amount: totalPrice - (totalPrice * discount / 100),
             customerPhone: customerPhone,
         };
+
+        console.log('Order Data:', orderData);
 
         if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod) {
             console.error('Missing required fields');
@@ -185,7 +188,7 @@ export default function ListOrderPage() {
                             htmlType='submit'
                             onClick={handleSubmit}
                             style={{ padding: '0 60px', marginLeft: '30px' }}
-                            disabled={deliveryStatus === 'SUCCESS'} // Disable button if deliveryStatus is success
+                            disabled={deliveryStatus === 'SUCCESS' || paymentMethodDone !== 'NONE'} // Disable button if deliveryStatus is success
                         >Paid</Button>
                     </div>
                 </div>
