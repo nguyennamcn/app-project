@@ -49,9 +49,9 @@ export const adornicaServ = {
         return https.post(`/api/v1/purchases/validate-order`, data);
     },
     
-    postSummit: (orderData) => {
+    postPaidSummit: (orderData) => {
         console.log(orderData)
-        return https.post(`/api/v1/orders/order-product`, orderData);
+        return https.post(`/api/v1/orders/payment`, orderData);
     },
 
     postCustomerPhone: (phoneData) => {

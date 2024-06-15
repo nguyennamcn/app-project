@@ -11,21 +11,31 @@ export default function ListOrderPage() {
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
     const [customerAddress, setCustomerAddress] = useState('');
-    const [customerBirthday, setCustomerBirthday] = useState(null); // Change to null to work with DatePicker
+    const [customerBirthday, setCustomerBirthday] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState('CASH');
+    const [datesale, setDateSale] = useState('');
     const [discount, setDiscount] = useState(10);
     const [totalPrice, setTotalPrice] = useState(0);
     const { orderKey } = useParams();
     const navigate = useNavigate();
     const [customer, setCustomer] = useState(null);
+    const [deliveryStatus, setDeliveryStatus] = useState(''); // Add state for delivery status
 
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     console.log(userInfo);
 
+    const convertMillisecondsToDateString = (milliseconds) => {
+        const date = new Date(milliseconds);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
     useEffect(() => {
         adornicaServ.getListOrderDetail(orderKey)
             .then((res) => {
-                console.log(res.data.metadata)
+                console.log(res.data.metadata);
                 const orderList = res.data.metadata?.list?.map(item => ({
                     ...item,
                     totalPrice: item.price
@@ -37,13 +47,16 @@ export default function ListOrderPage() {
                 setCustomerPhone(customerData.customerPhone || '');
                 setCustomerAddress(customerData.address || '');
                 setCustomerBirthday(customerData.dateOfBirth ? moment(customerData.dateOfBirth).valueOf() : null);
+                setDateSale(customerData.dateSell ? convertMillisecondsToDateString(customerData.dateSell) : '');
+                setPaymentMethod(customerData.paymentMethod || '');
+                setDeliveryStatus(customerData.deliveryStatus || '');
             })
             .catch((err) => {
                 console.log(err);
             });
     }, [orderKey]);
 
-    console.log(products)
+    console.log(products);
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => total + product.totalPrice, 0);
         setTotalPrice(calculatedTotalPrice);
@@ -75,14 +88,14 @@ export default function ListOrderPage() {
             totalPrice: totalPrice - (totalPrice * discount / 100)
         };
 
-        adornicaServ.postSummit(orderData)
+        adornicaServ.postPaidSummit(orderData)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
                 navigate('/homePage');
             })
             .catch((err) => {
                 console.log('Error submitting order:', err.response);
-                // alert(err.response.data.metadata.message)
+                alert(err.response.data.metadata.message)
             });
     };
 
@@ -121,15 +134,37 @@ export default function ListOrderPage() {
                         height: '400px',
                         padding: '0',
                     }}>
-                        <label>Name: {customerName}</label>
-                        <label>Phone: {customerPhone}</label>
-                        <label>Address<input style={{ marginLeft: '9.6%' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
-                        <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
-                        <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display: 'inline-block' }} type="text">{currentDate}</h1></label>
-                        <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-                            <option value='CASH'>Cash</option>
-                            <option value='BANKING'>Banking</option>
-                        </select></label>
+                        {deliveryStatus === 'PENDING' ? (
+                            <>
+                                <label>Name: <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
+                                <label>Phone: <input type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
+                                <label>Address<input style={{ marginLeft: '9.6%' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
+                                <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
+
+                            </>
+                        ) : (
+                            <>
+                                <label>Name: {customerName}</label>
+                                <label>Phone: {customerPhone}</label>
+                            </>
+                        )}
+
+                        {deliveryStatus === 'PENDING' ? (
+                            <>
+                                <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display: 'inline-block' }} type="text">{currentDate}</h1></label>
+                                <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+                                    <option value='CASH'>Cash</option>
+                                    <option value='BANKING'>Banking</option>
+                                </select></label>
+                            </>
+                        ) : (
+                            <>
+                                <label>Date of sale: </label>
+                                <label>Payment methods: {paymentMethod}</label>
+                                <label>Delivery status: {deliveryStatus}</label>
+                            </>
+                        )}
+
                     </div>
 
                     <div className="product__table col-sm-6" style={{
@@ -159,6 +194,7 @@ export default function ListOrderPage() {
                             htmlType='submit'
                             onClick={handleSubmit}
                             style={{ padding: '0 60px', marginLeft: '30px' }}
+                            disabled={deliveryStatus === 'SUCCESS'} // Disable button if deliveryStatus is success
                         >Paid</Button>
                     </div>
                 </div>

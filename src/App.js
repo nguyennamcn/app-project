@@ -31,6 +31,7 @@ import BillBuying from './Pages/BillBuying/BillBuying';
 import AddJewelry from './Pages/Addproduct/AddJewelry';
 import AddGold from './Pages/Addproduct/AddGold';
 import AddDiamond from './Pages/Addproduct/AddDiamonds';
+import History from './Pages/History/History';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path='/addjewelry' element={<Layout Component={AddJewelry} />} />
           <Route path='/addgold' element={<Layout Component={AddGold} />} />
           <Route path='/billbuyng' element={<Layout Component={BillBuying} />} />
+          <Route path='/history' element={<Layout Component={History} />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -75,7 +75,7 @@ const CartPage = () => {
     const showModal = (message) => {
         setModalMessage(message);
         setIsModalVisible(true);
-        //setTimeout(() => setIsModalVisible(false), 1000);
+        setTimeout(() => setIsModalVisible(false), 2000);
     };
 
     // Handle quantity change for cart items
@@ -102,13 +102,25 @@ const CartPage = () => {
     };
     // Handle sending the order
     const handleSendOrder = () => {
-        if (!customerPhone || !customerName || dataSource.length === 0) {
+        if (dataSource.length === 0) {
             showModal(
                 <div className='notice__content'>
                     <i className="error__icon fa-solid fa-circle-xmark" ></i>
-                    <h1>Failed to send order. Please check your input data.</h1>
+                    <h1>Cart is empty. Please add product !</h1>
                 </div>
             );
+        
+            return;
+        }
+
+        if (!customerPhone || !customerName) {
+            showModal(
+                <div className='notice__content'>
+                    <i className="error__icon fa-solid fa-circle-xmark" ></i>
+                    <h1>Failed to send order. Please enter phone and name.</h1>
+                </div>
+            );
+        
             return;
         }
 
@@ -132,7 +144,7 @@ const CartPage = () => {
                 setDataSource([]);
                 localStorage.removeItem('cartItems');
 
-                showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+                showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Send order successfully !</h1></div>);
             })
             .catch(error => {
                 console.error("There was an error sending the order:", error);
@@ -198,6 +210,22 @@ const CartPage = () => {
                         <p>Total Price: {totalAllPrice}</p>
                     </div>
                     <div style={{ marginTop: '0%', width: '20%' }}>
+                    <p>Phone:
+                            <input
+                                style={{
+                                    border: '1px solid black',
+                                    borderRadius: '10px',
+                                    background: '#C7CCD0',
+                                    color: 'black',
+                                    marginLeft: '1%',
+                                    marginTop: '10px'
+                                }}
+                                type="text"
+                                placeholder='Phone'
+                                value={customerPhone}
+                                onChange={handleInputChange1}
+                            />
+                        </p>
                         <p>Customer:
                             <input
                                 style={{
@@ -212,22 +240,6 @@ const CartPage = () => {
                                 placeholder='Customer'
                                 value={customerName}
                                 onChange={handleInputChange}
-                            />
-                        </p>
-                        <p>Phone:
-                            <input
-                                style={{
-                                    border: '1px solid black',
-                                    borderRadius: '10px',
-                                    background: '#C7CCD0',
-                                    color: 'black',
-                                    marginLeft: '1%',
-                                    marginTop: '10px'
-                                }}
-                                type="text"
-                                placeholder='Phone'
-                                value={customerPhone}
-                                onChange={handleInputChange1}
                             />
                         </p>
                     </div>
