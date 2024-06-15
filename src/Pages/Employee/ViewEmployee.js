@@ -38,7 +38,7 @@ function ViewEmployee() {
 
   return (
     <div className="profile-container">
-      <h1 className="profile-title">Profile</h1>
+      <h1 className="profile-title">Profile of Name</h1>
       <div className="profile-card">
         <div className="profile-header">
           <div className="profile-image">
