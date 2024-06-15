@@ -30,11 +30,6 @@ const columns = (handleView, handleDelete, handleUpdate) => [
         key: 'dateOrder',
     },
     {
-        title: 'paymentMethod',
-        dataIndex: 'paymentMethod',
-        key: 'paymentMethod',
-    },
-    {
         title: 'deliveryStatus',
         dataIndex: 'deliveryStatus',
         key: 'deliveryStatus',

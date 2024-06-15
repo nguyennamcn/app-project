@@ -25,16 +25,16 @@ export default function ListOrderPage() {
     useEffect(() => {
         adornicaServ.getListOrderDetail(orderKey)
             .then((res) => {
-                const orderList = res.data.metadata.orderList.map(item => ({
+                console.log(res.data.metadata)
+                const orderList = res.data.metadata?.list?.map(item => ({
                     ...item,
-                    totalPrice: item.quantity * item.price
-                }));
+                    totalPrice: item.price
+                })) || [];
                 setProducts(orderList);
-                console.log(res.data.metadata);
-                const customerData = res.data.metadata;
+                const customerData = res.data.metadata || {};
                 setCustomer(customerData);
-                setCustomerName(customerData.customer || '');
-                setCustomerPhone(customerData.phone || '');
+                setCustomerName(customerData.customerName || '');
+                setCustomerPhone(customerData.customerPhone || '');
                 setCustomerAddress(customerData.address || '');
                 setCustomerBirthday(customerData.dateOfBirth ? moment(customerData.dateOfBirth).valueOf() : null);
             })
@@ -43,28 +43,11 @@ export default function ListOrderPage() {
             });
     }, [orderKey]);
 
+    console.log(products)
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => total + product.totalPrice, 0);
         setTotalPrice(calculatedTotalPrice);
     }, [products]);
-
-    const handleQuantityChange = (key, change) => {
-        setProducts(prevProducts => {
-            return prevProducts.map(item => {
-                if (item.productId === key) {
-                    const newQuantity = item.quantity + change;
-                    if (newQuantity > 0) {
-                        return {
-                            ...item,
-                            quantity: newQuantity,
-                            totalPrice: newQuantity * item.price
-                        };
-                    }
-                }
-                return item;
-            }).filter(item => item.quantity > 0);
-        });
-    };
 
     const generateRandomKey = () => {
         return 'order_' + Math.random().toString(36).substr(2, 9);
@@ -85,6 +68,7 @@ export default function ListOrderPage() {
                 productId: product.productId,
                 sizeId: product.sizeId,
                 quantity: product.quantity,
+                productCode: product.productCode
             })),
             paymentMethod: paymentMethod,
             discount: discount,
@@ -109,25 +93,14 @@ export default function ListOrderPage() {
             key: 'productName',
         },
         {
-            title: 'Quantity',
-            dataIndex: 'quantity',
-            key: 'quantity',
-            render: (text, record) => (
-                <div>
-                    <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-                </div>
-            ),
+            title: 'Product Code',
+            dataIndex: 'productCode',
+            key: 'productCode',
         },
         {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
-        },
-        {
-            title: 'Total Price',
-            dataIndex: 'totalPrice',
-            key: 'totalPrice',
-            render: (text, record) => <span>{record.quantity * record.price}</span>,
         },
     ];
 

@@ -32,6 +32,7 @@ export const adornicaServ = {
     },
 
     getListOrderDetail: (orderKey) => {
+        console.log(orderKey)
         return https.get(`/api/v1/orders/order/detail/${orderKey}`);
     },
 
