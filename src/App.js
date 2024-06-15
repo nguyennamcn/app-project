@@ -64,7 +64,7 @@ function App() {
           <Route path='/adddiamond' element={<Layout Component={AddDiamond} />} />
           <Route path='/addjewelry' element={<Layout Component={AddJewelry} />} />
           <Route path='/addgold' element={<Layout Component={AddGold} />} />
-          <Route path='/billbuyng' element={<Layout Component={BillBuying} />} />
+          <Route path='/bill-buying' element={<Layout Component={BillBuying} />} />
           <Route path='/history' element={<Layout Component={History} />} />
         </Routes>
       </BrowserRouter>
