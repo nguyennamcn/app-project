@@ -70,7 +70,7 @@ export default function NavSide() {
             Order list
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        <NavLink to='/profile' 
           style={{
             width : '50%',
             display : 'flex',

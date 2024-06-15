@@ -34,6 +34,8 @@ import AddDiamond from './Pages/Addproduct/AddDiamonds';
 import Employee from './Pages/Employee/Employee';
 import AddEmployee from './Pages/Employee/AddEmployee';
 import ViewEmployee from './Pages/Employee/ViewEmployee';
+import EditEmployee from './Pages/Employee/EditEmployee';
+import Profile from './Pages/Profile/Profile';
 
 function App() {
   return (
@@ -71,6 +73,8 @@ function App() {
           <Route path='/add-employee' element={<Layout Component={AddEmployee} />} />
           <Route path='/view-employee' element={<Layout Component={ViewEmployee} />} />
           <Route path='/view-employee/:id' element={<Layout Component={ViewEmployee} />} />
+          <Route path='/edit-employee' element={<Layout Component={EditEmployee} />} />
+          <Route path='/profile' element={<Layout Component={Profile} />} />
 
 
         </Routes>
