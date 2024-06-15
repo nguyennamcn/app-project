@@ -3,6 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 
+const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+};
+
 const columns = (handleView, handleDelete, handleUpdate) => [
     {
         title: 'Order ID',
@@ -15,22 +23,22 @@ const columns = (handleView, handleDelete, handleUpdate) => [
         key: 'salesStaffName',
     },
     {
-        title: 'orderCode',
+        title: 'Order Code',
         dataIndex: 'orderCode',
         key: 'orderCode',
     },
     {
-        title: 'totalPrice',
+        title: 'Total Price',
         dataIndex: 'totalPrice',
         key: 'totalPrice',
     },
     {
-        title: 'dateOrder',
+        title: 'Date Order',
         dataIndex: 'dateOrder',
         key: 'dateOrder',
     },
     {
-        title: 'deliveryStatus',
+        title: 'Delivery Status',
         dataIndex: 'deliveryStatus',
         key: 'deliveryStatus',
     },
@@ -38,33 +46,36 @@ const columns = (handleView, handleDelete, handleUpdate) => [
         title: 'Action',
         key: 'action',
         width: 180,
-        render: (_, record) => (
-            <div style={{ width: '50%', display: 'flex' }}>
-                <Button
-                    style={{ marginRight: '14px' }}
-                    type="primary"
-                    onClick={() => handleView(record.orderCode)}
-                >
-                    <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>View</NavLink>
-                </Button>
-                <Button 
-                    style={{ marginRight: '14px' }}
-                    type="primary" 
-                    danger 
-                    onClick={() => handleDelete(record.orderCode)}
-                >
-                    Delete
-                </Button>
-
-                <Button 
-                    type="primary" 
-                    style={{backgroundColor:'#74FF33'}}
-                >
-                    <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>Update</NavLink>
-                </Button>
-                
-            </div>
-        ),
+        render: (_, record) => {
+            const isSuccess = record.deliveryStatus.toLowerCase() === 'success';
+            return (
+                <div style={{ width: '50%', display: 'flex' }}>
+                    <Button
+                        style={{ marginRight: '14px' }}
+                        type="primary"
+                        onClick={() => handleView(record.orderCode)}
+                    >
+                        <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>View</NavLink>
+                    </Button>
+                    <Button 
+                        style={{ marginRight: '14px' }}
+                        type="primary" 
+                        danger 
+                        onClick={() => handleDelete(record.orderCode)}
+                        disabled={isSuccess}
+                    >
+                        Delete
+                    </Button>
+                    <Button 
+                        type="primary" 
+                        style={{ backgroundColor: '#74FF33' }}
+                        disabled={isSuccess}
+                    >
+                        <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>Update</NavLink>
+                    </Button>
+                </div>
+            );
+        }
     },
 ];
 
@@ -80,7 +91,7 @@ export default function ListOrderPage() {
                     orderId: order.orderId,
                     orderCode: order.orderCode,
                     totalPrice: order.totalPrice,
-                    dateOrder: order.dateOrder,
+                    dateOrder: formatDate(order.dateOrder),
                     paymentMethod: order.paymentMethod,
                     deliveryStatus: order.deliveryStatus,
                 }));
@@ -118,7 +129,7 @@ export default function ListOrderPage() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>List Order</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order List</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div>
@@ -126,7 +137,7 @@ export default function ListOrderPage() {
                     style={{ margin: '30px 60px 0 60px' }}
                     dataSource={dataSource}
                     columns={columns(handleView, handleDelete)}
-                    pagination={{className:'custom__pagination' ,pageSize: 5 }}
+                    pagination={{ className: 'custom__pagination', pageSize: 5 }}
                 />
             </div>
         </div>

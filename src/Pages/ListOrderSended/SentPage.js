@@ -11,15 +11,25 @@ const columns = (handleView, handleDelete) => [
         key: 'orderCode',
     },
     {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
         title: 'Phone',
         dataIndex: 'phone',
         key: 'phone',
     },
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+    },    
+    {
+        title: 'Delivery status',
+        dataIndex: 'deliveryStatus',
+        key: 'deliveryStatus',
+    },    
+    {
+        title: 'Payment method',
+        dataIndex: 'paymentMethod',
+        key: 'paymentMethod',
+    },    
     {
         title: 'Total',
         dataIndex: 'totalPrice',
@@ -44,6 +54,7 @@ const columns = (handleView, handleDelete) => [
                     type="primary" 
                     danger 
                     onClick={() => handleDelete(record.orderCode)}
+                    disabled={record.deliveryStatus === 'SUCCESS'}
                 >
                     Cancel
                 </Button>
@@ -52,15 +63,13 @@ const columns = (handleView, handleDelete) => [
     },
 ];
 
-export default function SentPage(){
+export default function SentPage() {
     const [dataSource, setDataSource] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
 
-    let userInfo = useSelector((state) => {
-        return state.userReducer.userInfo;
-    });
+    let userInfo = useSelector((state) => state.userReducer.userInfo);
 
     useEffect(() => {
         adornicaServ.getListOrderByStaffID(userInfo.id)
@@ -68,6 +77,8 @@ export default function SentPage(){
                 const orders = res.data.metadata.map((order, index) => ({
                     key: index,
                     orderCode: order.orderCode,
+                    deliveryStatus: order.deliveryStatus,
+                    paymentMethod: order.paymentMethod,
                     phone: order.phone,
                     name: order.name,
                     totalPrice: order.totalPrice,
@@ -77,7 +88,7 @@ export default function SentPage(){
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [userInfo.id]);
 
     const showModal = (message, orderCode = null) => {
         setModalMessage(message);
@@ -94,7 +105,7 @@ export default function SentPage(){
             .then(() => {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
-                showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product was deleted!</h1></div>);
+                showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Order was deleted!</h1></div>);
             })
             .catch((err) => {
                 console.log("Error deleting order:", err);
@@ -112,7 +123,7 @@ export default function SentPage(){
             });
     };
 
-    return(
+    return (
         <div>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>List order sended</h1>
@@ -123,7 +134,7 @@ export default function SentPage(){
                     style={{ margin: '30px 60px 0 60px' }}
                     dataSource={dataSource}
                     columns={columns(handleView, handleDelete)}
-                    pagination={{className:'custom__pagination', pageSize: 4 }}
+                    pagination={{ className: 'custom__pagination', pageSize: 4 }}
                 />
             </div>
             <Modal
@@ -135,7 +146,7 @@ export default function SentPage(){
             >
                 {orderCodeToDelete ? (
                     <div>
-                        <p style={{fontSize:'20px', marginBottom:'50px'}}>{modalMessage}</p>
+                        <p style={{ fontSize: '20px', marginBottom: '50px' }}>{modalMessage}</p>
                         <div style={{ textAlign: 'center' }}>
                             <Button 
                                 onClick={() => setIsModalVisible(false)} 
