@@ -1,0 +1,58 @@
+.employee-list-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.employee-list-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.add-employee-list-button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  float: right;
+  margin-bottom: 10px;
+}
+
+.employee-list-search-input {
+  padding: 10px;
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.employee-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-list-table th, .employee-list-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.employee-list-view-button {
+  background-color: green;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.employee-list-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.employee-list-status.online {
+  background-color: green;
+}
+
+.employee-list-status.offline {
+  background-color: gray;
+}
