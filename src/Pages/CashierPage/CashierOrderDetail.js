@@ -13,13 +13,15 @@ export default function ListOrderPage() {
     const [customerAddress, setCustomerAddress] = useState('');
     const [customerBirthday, setCustomerBirthday] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState('CASH');
+    const [paymentMethodDone, setPaymentMethodDone] = useState('');
     const [datesale, setDateSale] = useState('');
     const [discount, setDiscount] = useState(10);
     const [totalPrice, setTotalPrice] = useState(0);
     const { orderKey } = useParams();
     const navigate = useNavigate();
     const [customer, setCustomer] = useState(null);
-    const [deliveryStatus, setDeliveryStatus] = useState(''); // Add state for delivery status
+    const [deliveryStatus, setDeliveryStatus] = useState('');
+    const [orderId, setOderId] = useState('');
 
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     console.log(userInfo);
@@ -48,8 +50,9 @@ export default function ListOrderPage() {
                 setCustomerAddress(customerData.address || '');
                 setCustomerBirthday(customerData.dateOfBirth ? moment(customerData.dateOfBirth).valueOf() : null);
                 setDateSale(customerData.dateSell ? convertMillisecondsToDateString(customerData.dateSell) : '');
-                setPaymentMethod(customerData.paymentMethod || '');
+                setPaymentMethodDone(customerData.paymentMethod || '');
                 setDeliveryStatus(customerData.deliveryStatus || '');
+                setOderId(customerData.orderId || '');
             })
             .catch((err) => {
                 console.log(err);
@@ -70,23 +73,19 @@ export default function ListOrderPage() {
         const randomOrderKey = generateRandomKey();
 
         const orderData = {
-            keyProOrder: orderKey,
-            orderCode: randomOrderKey,
-            staffId: userInfo.id,
-            phone: customerPhone,
-            name: customerName,
+            orderId: orderId,
+            orderCode: orderKey,
             address: customerAddress,
-            dateOfBirth: customerBirthday ? customerBirthday : '',
-            orderList: products.map(product => ({
-                productId: product.productId,
-                sizeId: product.sizeId,
-                quantity: product.quantity,
-                productCode: product.productCode
-            })),
+            name: customerName,
             paymentMethod: paymentMethod,
-            discount: discount,
-            totalPrice: totalPrice - (totalPrice * discount / 100)
+            mount: (totalPrice - (totalPrice * discount / 100)),
+            customerPhone: customerPhone,
         };
+
+        if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod) {
+            console.error('Missing required fields');
+            return;
+        }
 
         adornicaServ.postPaidSummit(orderData)
             .then((res) => {
@@ -94,8 +93,8 @@ export default function ListOrderPage() {
                 navigate('/homePage');
             })
             .catch((err) => {
-                console.log('Error submitting order:', err.response);
-                alert(err.response.data.metadata.message)
+                console.error('Error submitting order:', err.response || err);
+                alert('Error submitting order. Please check the server logs for more details.');
             });
     };
 
@@ -134,33 +133,25 @@ export default function ListOrderPage() {
                         height: '400px',
                         padding: '0',
                     }}>
-                        {deliveryStatus === 'PENDING' ? (
+                        {paymentMethodDone === 'NONE' ? (
                             <>
                                 <label>Name: <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
                                 <label>Phone: <input type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
                                 <label>Address<input style={{ marginLeft: '9.6%' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
                                 <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
-
+                                <label>Date of sale:<div style={{ marginLeft: '2.4%', display: 'inline-block' }} type="text">{currentDate}</div></label>
+                                <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+                                    <option value='CASH'>Cash</option>
+                                    <option value='BANKING'>Banking</option>
+                                </select></label>
+                                <label >Delivery status: {deliveryStatus}</label>
                             </>
                         ) : (
                             <>
                                 <label>Name: {customerName}</label>
                                 <label>Phone: {customerPhone}</label>
-                            </>
-                        )}
-
-                        {deliveryStatus === 'PENDING' ? (
-                            <>
-                                <label>Date of sale:<h1 style={{ marginLeft: '2.4%', display: 'inline-block' }} type="text">{currentDate}</h1></label>
-                                <label>Payment methods<select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-                                    <option value='CASH'>Cash</option>
-                                    <option value='BANKING'>Banking</option>
-                                </select></label>
-                            </>
-                        ) : (
-                            <>
                                 <label>Date of sale: </label>
-                                <label>Payment methods: {paymentMethod}</label>
+                                <label>Payment methods: {paymentMethodDone}</label>
                                 <label>Delivery status: {deliveryStatus}</label>
                             </>
                         )}
