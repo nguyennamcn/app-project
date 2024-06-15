@@ -38,7 +38,7 @@ export default function NavSide() {
             Inventory
           </p>
         </NavLink>
-        <NavLink to='/employee' 
+        <NavLink to='/login' 
           style={{
             width : '50%',
             display : 'flex',
@@ -86,7 +86,7 @@ export default function NavSide() {
             Profile
           </p>
         </NavLink>
-        <NavLink to='/gold-price' 
+        <NavLink to='/goldprice' 
           style={{
             width : '50%',
             display : 'flex',

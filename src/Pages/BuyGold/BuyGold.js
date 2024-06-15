@@ -198,7 +198,7 @@ const GoldSelection = () => {
         <div style={styles.totalPrice}>
           Total price: {totalPrice} $
         </div>
-        <NavLink to="/bill-buying" style={styles.button}
+        <NavLink to="/billbuyng" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
         >
