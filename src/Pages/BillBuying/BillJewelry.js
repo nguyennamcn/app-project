@@ -232,7 +232,7 @@ const BillJewelry = () => {
     setProducts(savedProducts);
   }, []);
   const handlePrintClick = () => {
-    window.print();
+    // window.print();
   };
 
   return (

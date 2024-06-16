@@ -227,7 +227,7 @@ const BillGold = () => {
   }, []);
 
   const handlePrintClick = () => {
-    window.print();
+    // window.print();
   };
 
   return (

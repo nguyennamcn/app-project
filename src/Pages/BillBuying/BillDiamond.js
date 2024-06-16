@@ -228,7 +228,7 @@ const BillDiamond = () => {
   }, []);
 
   const handlePrintClick = () => {
-    window.print();
+    // window.print();
   };
 
   return (
