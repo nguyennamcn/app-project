@@ -32,71 +32,71 @@ const columns = (handleView, handleDelete, handleUpdate) => [
         dataIndex: 'totalPrice',
         key: 'totalPrice',
     },
-    {
-        title: 'Date Order',
-        dataIndex: 'dateOrder',
-        key: 'dateOrder',
-    },
-    {
-        title: 'Payment method',
-        dataIndex: 'paymentMethod',
-        key: 'paymentMethod',
-    },
-    {
-        title: 'Delivery Status',
-        dataIndex: 'deliveryStatus',
-        key: 'deliveryStatus',
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        width: 180,
-        render: (_, record) => {
-            const isSuccess = record.deliveryStatus.toLowerCase() === 'success';
+    // {
+    //     title: 'Date Order',
+    //     dataIndex: 'dateOrder',
+    //     key: 'dateOrder',
+    // },
+    // {
+    //     title: 'Payment method',
+    //     dataIndex: 'paymentMethod',
+    //     key: 'paymentMethod',
+    // },
+    // {
+    //     title: 'Delivery Status',
+    //     dataIndex: 'deliveryStatus',
+    //     key: 'deliveryStatus',
+    // },
+    // {
+    //     title: 'Action',
+    //     key: 'action',
+    //     width: 180,
+    //     render: (_, record) => {
+    //         const isSuccess = record.deliveryStatus.toLowerCase() === 'success';
 
-            const isPaid = record.paymentMethod.toLowerCase() === ('cash' || 'banking') ;
-            return (
-                <div style={{ width: '50%', display: 'flex' }}>
-                    <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>
-                    <Button
-                        style={{ marginRight: '14px' }}
-                        type="primary"
-                        onClick={() => handleView(record.orderCode)}
-                    >
-                        View
-                    </Button>
-                    </NavLink>
-                    <Button 
-                        style={{ marginRight: '14px' }}
-                        type="primary" 
-                        danger 
-                        onClick={() => handleDelete(record.orderCode)}
-                        disabled={isSuccess || isPaid}
-                    >
-                        Delete
-                    </Button>
-                    <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>
-                    <Button 
-                        type="primary" 
-                        disabled={isSuccess || isPaid}
-                    >
-                        Update
-                    </Button>
-                    </NavLink>
-                </div>
-            );
-        }
-    },
+    //         const isPaid = record.paymentMethod.toLowerCase() === ('cash' || 'banking') ;
+    //         return (
+    //             <div style={{ width: '50%', display: 'flex' }}>
+    //                 <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>
+    //                 <Button
+    //                     style={{ marginRight: '14px' }}
+    //                     type="primary"
+    //                     onClick={() => handleView(record.orderCode)}
+    //                 >
+    //                     View
+    //                 </Button>
+    //                 </NavLink>
+    //                 <Button 
+    //                     style={{ marginRight: '14px' }}
+    //                     type="primary" 
+    //                     danger 
+    //                     onClick={() => handleDelete(record.orderCode)}
+    //                     disabled={isSuccess || isPaid}
+    //                 >
+    //                     Delete
+    //                 </Button>
+    //                 <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>
+    //                 <Button 
+    //                     type="primary" 
+    //                     disabled={isSuccess || isPaid}
+    //                 >
+    //                     Update
+    //                 </Button>
+    //                 </NavLink>
+    //             </div>
+    //         );
+    //     }
+    // },
 ];
 
-export default function JewelryOrder() {
+export default function PurchaseOrder() {
     const [dataSource, setDataSource] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
 
     useEffect(() => {
-        adornicaServ.getHistoryOrders()
+        adornicaServ.getPurchaseHistoryOrders()
             .then((res) => {
                 const orders = res.data.metadata.map((order, index) => ({
                     key: index,
