@@ -105,7 +105,32 @@ export const adornicaServ = {
         console.log(staffId)
         return https.get(`/api/v1/users/staff/{id}?id=${staffId}`);
     },
-    getProfile: () => {
-        return https.get(`/api/v1/users/profile`);
+
+    getViewStaff: (id) => {
+        console.log(id)
+        return https.get(`/api/v1/users/profile/${id}`);
+    },
+    getProfile: (id) => {
+        console.log(id)
+        return https.get(`/api/v1/users/profile/${id}`);
+    },
+
+    updateRole: (data) => {
+        return https.put(`/api/v1/users/staff/change-role`, data);
+    },
+
+    delectAccount: (id) => {
+        console.log(id)
+        return https.delete(`/api/v1/users/delete/${id}`);
+    },
+
+    postImg: (id) => {
+        console.log(id)
+        return https.post(`/api/v1/users/update-avatar/${id}`);
+    },
+
+    postUserUpdate: (data) => {
+        console.log(data)
+        return https.post(`/api/v1/users/update`, data);
     },
 }

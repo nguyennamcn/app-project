@@ -141,11 +141,11 @@ const BillJewelry = () => {
   const totalItems = products.reduce((sum, product) => sum + 1, 0);
 
   const calculateTotalPrice = () => {
-    let totalPrice = 0;
+    let totalPrice = '';
     products.forEach(product => {
-      totalPrice  += product.materialBuyPrice;
+      totalPrice  += product.total;
     });
-    return totalPrice.toFixed(2);
+    return totalPrice;
   };
 
   const handleMouseDown = (e) => {
@@ -168,14 +168,12 @@ const BillJewelry = () => {
       phone: customerDetails.phone,
       list: products.map(product => ({
         name: product.goldType,
-        materialId: 0, // You need to provide a material ID
         weight: parseFloat(product.weight),
-        origin: "your_origin_here", // You need to provide the origin
-        color: "your_color_here", // You need to provide the color
-        clarity: "your_clarity_here", // You need to provide the clarity
-        cut: "your_cut_here", // You need to provide the cut
-        carat: 0, // You need to provide the carat
-        price: parseFloat(product.materialBuyPrice)
+        color: product.color, // You need to provide the color
+        clarity: product.clarity, // You need to provide the clarity
+        cut: product.cut, // You need to provide the cut
+        carat: product.carat, // You need to provide the carat
+        price: parseFloat(product.total)
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
       productStore: false
@@ -234,25 +232,23 @@ const BillJewelry = () => {
           <div style={pageStyles.tableHeader}>
             <span>Gold type</span>
             <span>Weight</span>
-            <span>Gold price</span>
             <span>Cut</span>
             <span>Carat</span>
             <span>Color</span>
             <span>Clarity</span>
             <span>Origin</span>
-            <span>Gem price</span>
+            <span>Total</span>
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
               <span>{product.goldType}</span>
               <span>{product.weight}</span>
-              <span>{product.materialBuyPrice}$</span>
               <span>{product.cut}</span>
               <span>{product.carat}</span>
               <span>{product.color}</span>
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
-              <span>{product.gemBuyPrice + '$'}</span>
+              <span>{product.total + '$'}</span>
             </div>
           ))}
         </div>
