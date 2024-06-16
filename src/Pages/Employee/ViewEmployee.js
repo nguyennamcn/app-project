@@ -18,6 +18,13 @@ function ViewEmployee() {
       });
   }, [staffId]);
   const handleDelete = () => {
+    adornicaServ.delectAccount(staffId)
+      .then((res) => {
+        console.log('Employee deleted', res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log('Employee deleted');
   };
 
@@ -79,7 +86,7 @@ function ViewEmployee() {
           <NavLink to="/employee">
             <button className="back-button">Back</button>
           </NavLink>
-          <NavLink to="/employee">
+          <NavLink >
             <button className="delete-button" onClick={handleDelete}>Delete</button>
           </NavLink>
         </div>

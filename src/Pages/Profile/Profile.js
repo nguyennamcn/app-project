@@ -5,25 +5,17 @@ import { Input, Button, Select, DatePicker } from 'antd';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import './Profile.css';
+import { useSelector } from 'react-redux';
 
-const { Option } = Select;
 
-// const initialEmployee = {
-//   id: '001',
-//   name: 'Nguyen Tan Thanh',
-//   email: 'thanhntse171854@fpt.edu.vn',
-//   gender: 'Male',
-//   birthday: '2001-11-09',
-//   role: 'Manager',
-//   phone: '0908911035',
-//   storeAddress: '6224 Richmond Ave., Houston, US',
-//   avatar: null
-// };
 
 export default function EditEmployee() {
+
+  let userInfo = useSelector((state) => state.userReducer.userInfo);
+  
   const [profile, setProfile] = useState([]);
   useEffect(() => {
-    adornicaServ. getProfile()
+    adornicaServ. getProfile(userInfo.id)
       .then((res) => {
         console.log(res.data.metadata);
         setProfile(res.data.metadata);
@@ -59,6 +51,22 @@ export default function EditEmployee() {
   };
 
   const handleSubmit = () => {
+    const data = {
+      email: profile.email,
+      phone: profile.phone,
+      name: profile.name,
+      gender: profile.gender,
+      birthday: profile.birthday,
+      address: profile.address
+    }
+    adornicaServ.postUserUpdate(data)
+      .then((res) => {
+        console.log('Role updated:', res);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log('Form data:', profile);
   };
 

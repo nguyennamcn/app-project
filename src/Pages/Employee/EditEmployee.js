@@ -11,9 +11,9 @@ const { Option } = Select;
 export default function EditEmployee() {
   const [form, setForm] = useState();
   const [employee, setEmployee] = useState();
-  const { staffId } = useParams();
+  const { id } = useParams();
   useEffect(() => {
-    adornicaServ.getViewEmployee(staffId)
+    adornicaServ.getViewStaff(id)
       .then((res) => {
         console.log(res.data.metadata);
         setEmployee(res.data.metadata);
@@ -21,7 +21,7 @@ export default function EditEmployee() {
       .catch((err) => {
         console.log(err);
       });
-  }, [staffId]);
+  }, [id]);
   
   const handleChange = (e) => {
     setForm({
@@ -32,14 +32,16 @@ export default function EditEmployee() {
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
+    console.log(file)
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setForm({ ...form, avatar: reader.result });
+        setEmployee({ ...employee, avatar: reader.result });
       };
       reader.readAsDataURL(file);
     }
   };
+
 
   const handleDateChange = (date, dateString) => {
     setForm({
@@ -56,9 +58,38 @@ export default function EditEmployee() {
   };
 
   const handleSubmit = () => {
-    console.log('Form data:', form);
+    const data = {
+      id: employee.id,
+      roles: [form.role]
+    };
+
+    // const dataImg = {
+    //   id : employee.id,
+    //   file : 
+    // }
+    
+    adornicaServ.postImg(id)
+      .then((res) => {
+        console.log('Img updated:', res);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+
+    adornicaServ.updateRole(data)
+      .then((res) => {
+        console.log('Role updated:', res);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log('Form data:', data);
   };
 
+  console.log(employee)
   return (
     <div className="edit-container">
       <h1 className="edit-title">Edit Employee</h1>
@@ -66,11 +97,11 @@ export default function EditEmployee() {
         <div className="edit-header">
           <div className="edit-image">
             <label htmlFor="avatar-upload" className="edit-placeholder">
-              {/* {form.avatar ? (
-                <img src="{form.avatar}" alt="Avatar" className="avatar" />
+              {employee?.avatar ? (
+                <img src={employee.avatar} alt="Avatar" className="avatar" />
               ) : (
                 '+'
-              )} */}
+              )}
             </label>
             <input
               id="avatar-upload"
@@ -80,17 +111,11 @@ export default function EditEmployee() {
             />
           </div>
           <div className="edit-info">
-            <Input className="input-field" placeholder="Full Name" name="name" onChange={handleChange} />
-            <Input className="input-field" placeholder="Phone number" name="phone"  onChange={handleChange} />
-            <Input className="input-field" placeholder="Email" name="email"  onChange={handleChange} />
-            <DatePicker
-              className="input-field"
-              placeholder="Birthday"
-              // value={moment(form.birthday)}
-              onChange={handleDateChange}
-              format="YYYY-MM-DD"
-              style={{ width: '100%' }}
-            />
+            <h1 style={{fontSize: '14px'}}>Name : {employee?.name}</h1>
+            <h1 style={{fontSize: '14px'}}>Address : {employee?.address}</h1>
+            <h1 style={{fontSize: '14px'}}>Phone : {employee?.phone}</h1>
+            <h1 style={{fontSize: '14px'}}>Email : {employee?.email}</h1>
+            <h1 style={{fontSize: '14px'}}>Role : {employee?.roleUser}</h1>
           </div>
         </div>
         <hr />
@@ -99,8 +124,9 @@ export default function EditEmployee() {
           <div className="role-group-edit">
             <h3>Role:</h3>
             <Radio.Group name="role" onChange={handleChange} style={{ marginLeft: '10px' }}>
-              <Radio value="Staff">Staff</Radio>
-              <Radio value="Manager">Manager</Radio>
+              <Radio value="ROLE_SALES_STAFF">Staff</Radio>
+              <Radio value="ROLE_MANAGER">Manager</Radio>
+              <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
             </Radio.Group>
           </div>
           <div className="store-select-edit">
@@ -113,11 +139,11 @@ export default function EditEmployee() {
         </div>
         <hr />
         <div className="edit-actions">
-          <NavLink to="/view-employee">
+          <NavLink to="/employee">
             <Button className="nav-button">Back</Button>
           </NavLink>
 
-          <NavLink to="/view-employee">
+          <NavLink>
           <Button type="primary" className="nav-button" onClick={handleSubmit}>Save</Button>
           </NavLink>
         </div>
