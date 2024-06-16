@@ -63,6 +63,10 @@ export const adornicaServ = {
         return https.post(`/api/v1/purchases/create`, purchaseOrderCode);
     },
 
+    deletePurchaseOrder: (OrderCode) => {
+        return https.delete(`/api/v1/purchases/order/${OrderCode}`);
+    },
+
     deletePreOrder: (OrderCode) => {
         return https.delete(`/api/v1/orders/order/delete/${OrderCode}`);
     },
@@ -72,6 +76,9 @@ export const adornicaServ = {
         return https.put(`/api/v1/orders/order/update`, orderData);
     },
 
+    getDetailPurchase: (OrderCode) => {
+        return https.get(`/api/v1/orders/order/detail/${OrderCode}`);
+    },
 
     getHistoryOrders: () => {
         return https.get(`/api/v1/orders/order/history`);

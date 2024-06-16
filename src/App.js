@@ -42,11 +42,12 @@ import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
 import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
 import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
 import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
-import ListOrderType from './Pages/PurchaseOrderList/listOrderType';
+
 
 import { useSelector } from 'react-redux';
 import BillDiamond from './Pages/BillBuying/BillDiamond';
 import BillJewelry from './Pages/BillBuying/BillJewelry';
+import PurchaseDetail from './Pages/PurchaseOrderList/purchaseDetail';
 
 function App() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -61,7 +62,6 @@ function App() {
             <>
               <Route path="/feedbacks" element={<Layout Component={Feedbacks} />} />
               <Route path="/homePage" element={<Layout Component={ListProduct} />} />
-              <Route path="/purchaseOrderList" element={<Layout Component={ListOrderType} />} />
               <Route path="/detail/:productCode" element={<Layout Component={DetailPage} />} />
               <Route path="/buyProduct" element={<Layout Component={BuyListProduct} />} />
               <Route path="/cashierListOrder" element={<Layout Component={CashierListOrder} />} />
@@ -84,6 +84,7 @@ function App() {
               <Route path="/bill-gold" element={<Layout Component={BillGold} />} />
               <Route path="/bill-diamond" element={<Layout Component={BillDiamond} />} />
               <Route path="/bill-jewelry" element={<Layout Component={BillJewelry} />} />
+              <Route path="/payment-bill/:orderKey" element={<Layout Component={PurchaseDetail} />} />
               <Route path="/employee" element={<Layout Component={Employee} />} />
               <Route path="/add-employee" element={<Layout Component={AddEmployee} />} />
               <Route path="/view-employee" element={<Layout Component={ViewEmployee} />} />
