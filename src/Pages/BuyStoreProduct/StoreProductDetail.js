@@ -18,8 +18,9 @@ export default function StoreProductDetail() {
             .then((res) => {
                 const orderDetail = res.data.metadata;
                 setSp(orderDetail);
+                console.log(orderDetail);
                 setProducts(orderDetail.list);
-                const calculatedTotalPrice = orderDetail.list.reduce((sum, product) => sum + product.price * product.quantity, 0);
+                const calculatedTotalPrice = orderDetail.list.reduce((sum, product) => sum + (product.price || 0), 0);
                 setTotalPrice(calculatedTotalPrice);
             })
             .catch((err) => {
@@ -27,17 +28,23 @@ export default function StoreProductDetail() {
             });
     }, [orderCode]);
 
+    const generateRandomOrderCode = () => {
+        return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = {
             staffId: userInfo.id,
+            purchaseOrderCode: generateRandomOrderCode(),
             customerName: sp?.customerName,
             phone: sp?.customerPhone,
             list: products.map(product => ({
                 name: product.productName,
-                productCode: product.productCode
+                productCode: product.productCode,
+                price: product.price
             })),
-            totalPrice: totalPrice - (totalPrice * discount / 100),
+            totalPrice: totalPrice,
             productStore: true
         };
 
@@ -67,30 +74,24 @@ export default function StoreProductDetail() {
             key: 'productName',
         },
         {
-            title: 'Quantity',
-            dataIndex: 'quantity',
-            key: 'quantity',
-            render: (text, record) => (
-                <div>
-                    <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-                </div>
-            ),
+            title: 'Product Code',
+            dataIndex: 'productCode',
+            key: 'productCode',
         },
         {
-            title: 'Size',
-            dataIndex: 'size',
-            key: 'size',
+            title: 'Price',
+            dataIndex: 'price',
+            key: 'price',
+            render: (text) => `$${text}`,
         },
     ];
 
-    const totalQuantity = products.reduce((sum, product) => sum + product.quantity, 0);
-
-    const dateSellFormatted = new Date(sp?.dateSell).toLocaleDateString();
+    const dateSellFormatted = sp?.dateSell ? new Date(sp.dateSell).toLocaleDateString() : '';
 
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order Code</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order Code: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div className="container">
@@ -125,7 +126,7 @@ export default function StoreProductDetail() {
                             <div className='col-sm-6'>
                                 <div className="col-sm-12">
                                     <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                        Total items:<span style={{ marginLeft: '4%' }}>{totalQuantity}</span>
+                                        Total items:<span style={{ marginLeft: '4%' }}>{sp?.list ? sp.list.length : 0}</span>
                                     </h1>
                                 </div>
                                 <div className="col-sm-12">
