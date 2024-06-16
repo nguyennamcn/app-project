@@ -2,8 +2,12 @@ import Header from '../Components/Header/Header'
 import React from 'react'
 import Footer from '../Components/Footer/Footer'
 import NavSide from '../Components/NavSide/NavSide'
+import { useSelector } from 'react-redux';
 
 export default function ({ Component }) {
+    let userInfo = useSelector((state) => {
+        return state.userReducer.userInfo;
+      });
     return (
         <div className='min-h-screen h-full flex flex-col space-y-10'>
             <Header />
