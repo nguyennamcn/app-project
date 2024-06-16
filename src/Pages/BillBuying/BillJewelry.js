@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { NavLink, useLocation } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
-Modal.setAppElement('#root'); 
+Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
@@ -62,6 +62,13 @@ const pageStyles = {
     borderBottom: '1px solid #333',
     paddingBottom: '5px',
     textAlign: 'center',
+  },
+  buttonWrapper: {
+    gridColumn: 'span 2',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    gap: '10px',
+    width: '100%',
   },
   tableRow: {
     display: 'grid',
@@ -124,8 +131,6 @@ const pageStyles = {
     transition: 'background-color 0.3s',
     textDecoration: 'none',
     textAlign: 'center',
-    // marginLeft: '10px',
-    marginTop:'20px',
   },
   modal: {
     content: {
@@ -137,7 +142,16 @@ const pageStyles = {
       margin: 'auto',
       textAlign: 'center',
       color: 'white',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
+  },
+  modalButtonWrapper: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '20px',
   },
 };
 
@@ -184,7 +198,8 @@ const BillJewelry = () => {
 
   const generateRandomOrderCode = () => {
     return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
-};
+  };
+
   const handleFinishClick = () => {
     // Prepare data to send
     const purchaseData = {
@@ -206,18 +221,18 @@ const BillJewelry = () => {
     };
 
     adornicaServ
-    .postPurchaseOrderCode(purchaseData)
-    .then((res) => {
-      console.log('Order submitted successfully:', res.data);
-    })
-    .catch((err) => {
-      console.error('Error submitting order:', err.response);
-      alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
-    });
-  
+      .postPurchaseOrderCode(purchaseData)
+      .then((res) => {
+        console.log('Order submitted successfully:', res.data);
+      })
+      .catch((err) => {
+        console.error('Error submitting order:', err.response);
+        alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
+      });
+
     // Send the purchase data to the server or do whatever you need to do with it
     console.log("Purchase data:", purchaseData);
-  
+
     // Show modal
     setModalIsOpen(true);
   };
@@ -231,6 +246,7 @@ const BillJewelry = () => {
     const savedProducts = JSON.parse(localStorage.getItem('jewelryData')) || [];
     setProducts(savedProducts);
   }, []);
+
   const handlePrintClick = () => {
     // window.print();
   };
@@ -288,25 +304,27 @@ const BillJewelry = () => {
         <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}$</div>
       </div>
 
-      <button
-        style={pageStyles.finishButton}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onClick={handleFinishClick}
-      >
-        FINISH
-      </button>
+      <div style={pageStyles.buttonWrapper}>
+        <NavLink to="/buyProduct" exact>
+          <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
+        </NavLink>
 
-      <NavLink to="/buyProduct" exact>
-        <button style={pageStyles.backButton}>BACK</button>
-      </NavLink>
+        <button
+          style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onClick={handleFinishClick}
+        >
+          FINISH
+        </button>
+      </div>
       
-      <button
+      {/* <button
         style={pageStyles.printButton}
         onClick={handlePrintClick}
       >
         PRINT
-      </button>
+      </button> */}
 
       <Modal
         isOpen={modalIsOpen}
@@ -316,9 +334,13 @@ const BillJewelry = () => {
       >
         <h2>Successfully</h2>
         <p>Thank you for your purchase!</p>
-        <NavLink to="/buyProduct" exact>
-          <button style={pageStyles.backButton}>BACK</button>
-        </NavLink>
+        <div style={pageStyles.modalButtonWrapper}>
+          <NavLink to="/buyProduct" exact>
+            <button style={pageStyles.backButton}>BACK</button>
+          </NavLink>
+
+          <button style={pageStyles.printButton} onClick={handlePrintClick}>PRINT</button>
+        </div>
       </Modal>
     </div>
   );
