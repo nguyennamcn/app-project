@@ -54,7 +54,7 @@ const columns = (handleView, handleDelete) => [
                     type="primary" 
                     danger 
                     onClick={() => handleDelete(record.orderCode)}
-                    disabled={record.deliveryStatus === 'SUCCESS' || record.paymentMethod !== 'NONE'}
+                    disabled={record.deliveryStatus === 'SUCCESS'}
                 >
                     Cancel
                 </Button>

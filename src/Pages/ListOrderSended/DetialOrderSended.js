@@ -24,7 +24,7 @@ export default function ListOrderPage() {
         return `${day}/${month}/${year}`;
     };
 
-    const fetchOrderDetails = () => {
+    useEffect(() => {
         adornicaServ.getListOrderDetail(orderKey)
             .then((res) => {
                 const orderList = res.data.metadata.list.map(item => ({
@@ -44,10 +44,6 @@ export default function ListOrderPage() {
             .catch((err) => {
                 console.log(err);
             });
-    };
-
-    useEffect(() => {
-        fetchOrderDetails();
     }, [orderKey]);
 
     useEffect(() => {
@@ -62,12 +58,11 @@ export default function ListOrderPage() {
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
                 alert("Submit success");
-                setDeliveryStatus('SUCCESS'); // Update the delivery status to trigger a rerender
-                fetchOrderDetails(); // Refetch order details after updating the status
+                // Toggle the refresh state to re-fetch orders
             })
             .catch((err) => {
                 console.log('Error submitting order:', err.response); // Log error details
-                // alert(err.response.data.metadata.message)
+                // alert( err.response.data.metadata.message)
             });
     };
 
