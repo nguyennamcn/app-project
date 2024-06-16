@@ -144,4 +144,9 @@ export const adornicaServ = {
         console.log(data)
         return https.post(`/api/v1/users/update`, data);
     },
+
+    postExport: (orderKey) => {
+        console.log(orderKey)
+        return https.post(`/api/v1/orders/export-pdf/${orderKey}`);
+    },
 }
