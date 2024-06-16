@@ -15,7 +15,7 @@ export default function ListOrderPage() {
     const [paymentMethod, setPaymentMethod] = useState('CASH');
     const [paymentMethodDone, setPaymentMethodDone] = useState('');
     const [datesale, setDateSale] = useState('');
-    const [discount, setDiscount] = useState(10);
+    const [discount, setDiscount] = useState();
     const [totalPrice, setTotalPrice] = useState(0);
     const { orderKey } = useParams();
     const navigate = useNavigate();
@@ -46,6 +46,7 @@ export default function ListOrderPage() {
                 })) || [];
                 setProducts(orderList);
                 const customerData = res.data.metadata || {};
+                console.log(customerData)
                 setCustomer(customerData);
                 setCustomerName(customerData.customerName || '');
                 setCustomerPhone(customerData.customerPhone || '');
@@ -55,12 +56,12 @@ export default function ListOrderPage() {
                 setPaymentMethodDone(customerData.paymentMethod || '');
                 setDeliveryStatus(customerData.deliveryStatus || '');
                 setOderId(customerData.orderId || '');
+                setDiscount(customerData.discount|| '');
             })
             .catch((err) => {
                 console.log(err);
             });
     }, [orderKey]);
-
     console.log(products);
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => total + product.totalPrice, 0);
@@ -142,7 +143,7 @@ export default function ListOrderPage() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div className="container">
@@ -171,7 +172,7 @@ export default function ListOrderPage() {
                             <>
                                 <label>Name: {customerName}</label>
                                 <label>Phone: {customerPhone}</label>
-                                <label>Date of sale: </label>
+                                <label>Date of sale:<div style={{ marginLeft: '2.4%', display: 'inline-block' }} type="text">{currentDate}</div></label>
                                 <label>Payment methods: {paymentMethodDone}</label>
                                 <label>Delivery status: {deliveryStatus}</label>
                             </>

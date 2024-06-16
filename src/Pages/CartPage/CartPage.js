@@ -10,6 +10,7 @@ const CartPage = () => {
     const [timeoutId, setTimeoutId] = useState(null);
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
+    const [discount, setDiscount] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
@@ -39,6 +40,7 @@ const CartPage = () => {
                 .then(response => {
                     if (response.data) {
                         setCustomerName(response.data.metadata.name);
+                        setDiscount(response.data.metadata.percentDiscount);
                         console.log(response)
                     } else {
                         setCustomerName('');
@@ -124,7 +126,8 @@ const CartPage = () => {
             phone: customerPhone,
             name: customerName,
             orderList,
-            totalPrice: totalAllPrice
+            totalPrice: totalAllPrice,
+            discount: discount,
         };
 
         adornicaServ.postOrder(orderData)
@@ -196,6 +199,7 @@ const CartPage = () => {
                     <div style={{ marginTop: '0%' }}>
                         <p>Quantity: {totalQuantity}</p>
                         <p>Total Price: {totalAllPrice}</p>
+                        <p>Discount: {discount}%</p>
                     </div>
                     <div style={{ marginTop: '0%', width: '20%' }}>
                         <p>Customer:
