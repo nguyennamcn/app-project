@@ -38,6 +38,15 @@ import EditEmployee from './Pages/Employee/EditEmployee';
 import Profile from './Pages/Profile/Profile';
 import CustomerDetails from './Pages/Customer/Customer';
 import DashBoard from './Pages/DashBoard/DashBoard';
+import Policy from './Pages/Header/Policy';
+import Service from './Pages/Header/Service';
+import Shop from './Pages/Header/Shop';
+import AboutSystem from './Pages/Header/AboutSystem';
+import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
+import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
+import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
+import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
+
 
 function App() {
   return (
@@ -79,6 +88,15 @@ function App() {
           <Route path='/profile' element={<Layout Component={Profile} />} />
           <Route path='/customer' element={<Layout Component={CustomerDetails} />} />
           <Route path='/dashboard' element={<Layout Component={DashBoard} />} />
+          <Route path='/policy' element={<Policy />} />
+          <Route path='/service' element={<Service />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='/about-system' element={<AboutSystem />} />
+          <Route path='/policy-login' element={<PolicyLogin />} />
+          <Route path='/service-login' element={<ServiceLogin />} />
+          <Route path='/shop-login' element={<ShopLogin />} />
+          <Route path='/about-system-login' element={<AboutSystemLogin />} />
+
         </Routes>
       </BrowserRouter>
     </div>
