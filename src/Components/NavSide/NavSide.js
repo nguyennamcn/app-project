@@ -134,7 +134,7 @@ export default function NavSide() {
           Customer
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        <NavLink to='/dashboard' 
           style={{
             width : '50%',
             display : 'flex',
