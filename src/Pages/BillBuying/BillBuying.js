@@ -145,7 +145,7 @@ const PurchasePage = () => {
   };
 
   const handleMouseUp = (e) => {
-    e.target.style.backgroundColor = '';
+    e.target.style.backgroundColor = '#4CAF50';
   };
 
   const handleFinishClick = () => {
