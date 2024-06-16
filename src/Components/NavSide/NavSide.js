@@ -102,7 +102,7 @@ export default function NavSide() {
             Gold price
           </p>
         </NavLink>
-        <NavLink to='/login' 
+        {/* <NavLink to='/login' 
           style={{
             width : '50%',
             display : 'flex',
@@ -117,7 +117,7 @@ export default function NavSide() {
           }}>
             Applications
           </p>
-        </NavLink>
+        </NavLink> */}
         <NavLink to='/customer' 
           style={{
             width : '50%',
