@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Employee.css';
+import { adornicaServ } from '../../service/adornicaServ';
 
-const employees = [
-  { id: 1, name: 'Nguyen Tan Thanh', gender: 'Male', email: 'thanhntse171854@fpt.edu.vn', status: true },
-  { id: 2, name: 'Nguyen Quoc Nam', gender: 'Male', email: 'namnqse171784@fpt.edu.vn', status: false },
-  { id: 3, name: 'Duong Ngoc Thinh', gender: 'Male', email: 'thinhndse171879@fpt.edu.vn', status: true },
-  { id: 4, name: 'To Hoang Trung Hieu', gender: 'Male', email: 'hieuthtse171800@fpt.edu.vn', status: false },
-  { id: 5, name: 'Nguyen Danh Thang', gender: 'Male', email: 'thangndse171886@fpt.edu.vn', status: true },
-];
-
-function EmployeeList() {
+export default function EmployeeList() {
+  const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    adornicaServ.getEmployee()
+      .then((res) => {
+        console.log(res.data.metadata);
+        setEmployees(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -29,7 +34,7 @@ function EmployeeList() {
       </NavLink>
       <input 
         type="text" 
-        placeholder="search..." 
+        placeholder="search by name" 
         className="employee-list-search-input" 
         value={searchTerm} 
         onChange={handleSearch} 
@@ -37,10 +42,10 @@ function EmployeeList() {
       <table className="employee-list-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Email</th>
             <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Role User</th>
             <th>Status</th>
             <th></th>
           </tr>
@@ -48,10 +53,10 @@ function EmployeeList() {
         <tbody>
           {filteredEmployees.map(employee => (
             <tr key={employee.id}>
+              <td>{employee.staffId}</td>
               <td>{employee.name}</td>
-              <td>{employee.gender}</td>
-              <td>{employee.email}</td>
-              <td>{String(employee.id).padStart(3, '0')}</td>
+              <td>{employee.phone}</td>
+              <td>{employee.roles}</td>
               <td>
                 <span className={`employee-list-status ${employee.status ? 'online' : 'offline'}`}></span>
               </td>
@@ -67,5 +72,3 @@ function EmployeeList() {
     </div>
   );
 }
-
-export default EmployeeList;
