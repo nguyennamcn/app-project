@@ -124,6 +124,52 @@ const JewelrySelection = () => {
       });
   }, []);
 
+  const handleInputChange = async (index, field, value) => {
+    const updatedItems = jewelryItems.map((item, i) =>
+      i === index ? { ...item, [field]: value } : item
+    );
+    setJewelryItems(updatedItems);
+  
+    if (field === 'goldType' && value !== 'None') {
+      // Fetch and update gold price for the selected item
+      const selectedGold = goldPrices.find(gold => gold.materialName === value);
+      if (selectedGold) {
+        const updatedItem = { ...updatedItems[index], materialBuyPrice: selectedGold.materialBuyPrice };
+        updatedItems[index] = updatedItem;
+        setJewelryItems(updatedItems);
+      }
+    }
+  
+    if (field === 'diamond' && value !== 'None') {
+      // Fetch and update diamond price for the selected item
+      const { carat, clarity, color, cut } = updatedItems[index];
+      if (carat && clarity && color && cut) {
+        const caratValue = parseFloat(carat);
+        if (!isNaN(caratValue)) {
+          try {
+            const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, value);
+            if (res.data && res.data.metadata) {
+              const priceData = res.data.metadata.find((data) => (
+                data.cut === cut &&
+                data.carat === caratValue &&
+                data.clarity === clarity &&
+                data.color === color &&
+                data.origin === value
+              ));
+              if (priceData) {
+                const updatedItem = { ...updatedItems[index], gemBuyPrice: priceData.gemBuyPrice };
+                updatedItems[index] = updatedItem;
+                setJewelryItems(updatedItems);
+              }
+            }
+          } catch (err) {
+            console.error('Error fetching diamond price:', err);
+          }
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     const calculateTotalPrice = async () => {
       let total = 0;
@@ -180,12 +226,12 @@ const JewelrySelection = () => {
     setJewelryItems(updatedItems);
   };
 
-  const handleInputChange = (index, field, value) => {
-    const updatedItems = jewelryItems.map((item, i) =>
-      i === index ? { ...item, [field]: value } : item
-    );
-    setJewelryItems(updatedItems);
-  };
+  // const handleInputChange = (index, field, value) => {
+  //   const updatedItems = jewelryItems.map((item, i) =>
+  //     i === index ? { ...item, [field]: value } : item
+  //   );
+  //   setJewelryItems(updatedItems);
+  // };
 
   const handleSubmit = () => {
     const jewelryData = jewelryItems.map(item => ({
