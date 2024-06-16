@@ -5,6 +5,7 @@ import BuyJewelry from './BuyJewelry';
 import BuyGold from '../BuyGold/BuyGold';
 import BuyDiamond from '../BuyDiamond/BuyDiamond';
 import StoreSelection from '../BuyStoreProduct/BuyStoreProduct';
+import PurchaseOrder from '../PurchaseOrderList/purchaseOrders';
 
 export default function BuyListProduct({ product }) {
     const [isActive, setIsActive] = useState('Jewelry');
@@ -42,6 +43,12 @@ export default function BuyListProduct({ product }) {
                     >
                         StoreSelection
                     </span>
+                    <span
+                        className={`button-nor ${isActive === 'History' ? 'active' : ''}`}
+                        onClick={() => handleClick('History')}
+                    >
+                        History
+                    </span>
 
                 </div>
                 <hr style={{ zIndex: '2', color: 'black' }} />
@@ -51,6 +58,7 @@ export default function BuyListProduct({ product }) {
                 {isActive === 'Gold' && <BuyGold />}
                 {isActive === 'Diamond' && <BuyDiamond />}
                 {isActive === 'StoreSelection' && <StoreSelection />}
+                {isActive === 'History' && <PurchaseOrder />}
             </div>
         </div>
     );

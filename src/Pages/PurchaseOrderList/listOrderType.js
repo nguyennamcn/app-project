@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import './listOrderType.css';
 import CartPage from '../CartPage/CartPage';      // Import the CartPage component
-import DiamondOrder from '../PurchaseOrderList/diamondOrder';
-import GoldOrder from '../PurchaseOrderList/goldOrder';
-import JewelryOrder from '../PurchaseOrderList/jewelryOrder';
-import SentPage from '../ListOrderSended/SentPage';
-import History from '../History/History';
+import PurchaseOrder from './purchaseOrders';
+
 
 export default function ListOrderType({ product }) {
-    const [isActive, setIsActive] = useState('Jewelry');
+    const [isActive, setIsActive] = useState('Purchase');
 
     const handleClick = (tab) => {
         setIsActive(tab);
@@ -20,18 +17,18 @@ export default function ListOrderType({ product }) {
             <div>
                 <div className='list-product'>
                     <span
-                        className={`button-nor ${isActive === 'Jewelry' ? 'active' : ''}`}
-                        onClick={() => handleClick('Jewelry')}
+                        className={`button-nor ${isActive === 'Purchase' ? 'active' : ''}`}
+                        onClick={() => handleClick('Purchase')}
                     >
-                        Jewelry
+                        Purchase
                     </span>
                     <span
-                        className={`button-nor ${isActive === 'Gold' ? 'active' : ''}`}
-                        onClick={() => handleClick('Gold')}
+                        className={`button-nor ${isActive === 'Sell' ? 'active' : ''}`}
+                        onClick={() => handleClick('Sell')}
                     >
-                        Gold
+                        Sell
                     </span>
-                    <span
+                    {/* <span
                         className={`button-nor ${isActive === 'Diamond' ? 'active' : ''}`}
                         onClick={() => handleClick('Diamond')}
                     >
@@ -48,7 +45,7 @@ export default function ListOrderType({ product }) {
                         onClick={() => handleClick('Sent')}
                     >
                         Sent
-                    </span>
+                    </span> */}
                     {/* <span
                         className={`button-nor ${isActive === 'History' ? 'active' : ''}`}
                         onClick={() => handleClick('History')}
@@ -59,9 +56,7 @@ export default function ListOrderType({ product }) {
                 <hr style={{ zIndex: '2', color: 'black' }} />
             </div>
             <div style={{ padding: '20px' }}>
-                {isActive === 'Jewelry' && <JewelryOrder />}
-                {isActive === 'Gold' && <GoldOrder />}
-                {isActive === 'Diamond' && <DiamondOrder />}
+                {isActive === 'Purchase' && <PurchaseOrder />}
                 {/* {isActive === 'Cart' && <CartPage />}       
                 {isActive === 'Sent' && <SentPage />}    */}
             </div>

@@ -77,6 +77,10 @@ export const adornicaServ = {
         return https.get(`/api/v1/orders/order/history`);
     },
 
+    getPurchaseHistoryOrders: () => {
+        return https.get(`/api/v1/purchases/all`);
+    },
+
     getPriceMaterial: () => {
         return https.get(`/api/v1/prices/materials`);
     },
