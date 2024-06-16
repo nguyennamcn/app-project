@@ -191,13 +191,12 @@ const JewelrySelection = () => {
     const jewelryData = jewelryItems.map(item => ({
       goldType: item.goldType,
       weight: item.weight,
-      materialBuyPrice: item.weight * item.materialBuyPrice,
       cut: item.cut,
       carat: item.carat,
       clarity: item.clarity,
       color: item.color,
       origin: item.origin,
-      gemBuyPrice: 1 * item.gemBuyPrice,
+      total: totalPrice
     }));
 
     localStorage.setItem('jewelryData', JSON.stringify(jewelryData));
