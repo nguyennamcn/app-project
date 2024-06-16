@@ -8,9 +8,7 @@ import TestPage from './Pages/TestPage/TestPage';
 import ListProduct from './Pages/DetailPage/ListProduct';
 import AdminPage from './Pages/AdminPage/AdminPage';
 import Feedbacks from './Pages/Feedbacks/Feedbacks';
-import JewelryPage from './Pages/JewelryPage/JewelryPage';
 import DetailPage from './Pages/DetailPage/DetailPage';
-import BuyProductPage from './Pages/BuyJewelry/BuyJewelry'
 import BuyListProduct from './Pages/BuyJewelry/BuyListProduct';
 import CashierListOrder from './Pages/CashierPage/CashierListOrder';
 import CashierOrderDetail from './Pages/CashierPage/CashierOrderDetail';
@@ -36,7 +34,6 @@ import EditEmployee from './Pages/Employee/EditEmployee';
 import Profile from './Pages/Profile/Profile';
 import CustomerDetails from './Pages/Customer/Customer';
 import DashBoard from './Pages/DashBoard/DashBoard';
-import BillGold from './Pages/BillBuying/BillGold';
 
 function App() {
   return (
@@ -78,6 +75,15 @@ function App() {
           <Route path='/profile' element={<Layout Component={Profile} />} />
           <Route path='/customer' element={<Layout Component={CustomerDetails} />} />
           <Route path='/dashboard' element={<Layout Component={DashBoard} />} />
+          <Route path='/policy' element={<Policy />} />
+          <Route path='/service' element={<Service />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='/about-system' element={<AboutSystem />} />
+          <Route path='/policy-login' element={<PolicyLogin />} />
+          <Route path='/service-login' element={<ServiceLogin />} />
+          <Route path='/shop-login' element={<ShopLogin />} />
+          <Route path='/about-system-login' element={<AboutSystemLogin />} />
+
         </Routes>
       </BrowserRouter>
     </div>
