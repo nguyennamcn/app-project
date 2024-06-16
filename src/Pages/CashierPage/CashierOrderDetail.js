@@ -100,20 +100,21 @@ export default function ListOrderPage() {
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>
                         <h1>Paid successfully !</h1>
+                        <Button onClick={handlePrint}>Print</Button>
                     </div>
                 );
-    
-                // Navigate after modal timeout
-                setTimeout(() => {
-                    navigate('/homePage');
-                }, 1000);
             })
             .catch((err) => {
                 console.error('Error submitting order:', err.response || err);
                 alert('Error submitting order. Please check the server logs for more details.');
             });
     };
-    
+
+    const handlePrint = () => {
+        // Your print logic here
+        // window.print();
+        navigate('/homePage');
+    };
 
     const columns = [
         {
@@ -137,7 +138,6 @@ export default function ListOrderPage() {
     const showModal = (message) => {
         setModalMessage(message);
         setIsModalVisible(true);
-        setTimeout(() => setIsModalVisible(false), 1000);
     };
 
     return (
