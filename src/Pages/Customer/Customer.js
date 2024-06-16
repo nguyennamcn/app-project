@@ -52,6 +52,8 @@ export default function CustomerDetails() {
 
 const styles = {
   container: {
+    maxHeight: '70vh', 
+    overflowY: 'auto',
     margin: '20px auto',
     fontFamily: 'Arial, sans-serif',
     maxWidth: '1000px',

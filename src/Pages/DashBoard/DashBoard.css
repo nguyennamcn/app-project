@@ -30,22 +30,27 @@
   
   .feedback-card {
     background-color: #b19cd9;
+    width: 30%;
   }
   
   .employees-card {
     background-color: #ff6961;
+    width: 30%;
   }
   
   .customers-card {
     background-color: #77dd77;
+    width: 30%;
   }
   
   .products-purchased-card {
     background-color: #cfcfc4;
+    width: 30%;
   }
   
   .products-sold-card {
     background-color: #ffb347;
+    width: 30%;
   }
   
 
