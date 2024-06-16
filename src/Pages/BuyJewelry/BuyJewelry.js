@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink, useNavigate} from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 // Define styles as objects
 const styles = {
@@ -109,6 +109,7 @@ const JewelrySelection = () => {
   }]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
+  const [formValid, setFormValid] = useState(false); // Track form validation state
   const newItemRef = useRef(null);
   const navigate = useNavigate();
 
@@ -129,7 +130,8 @@ const JewelrySelection = () => {
       i === index ? { ...item, [field]: value } : item
     );
     setJewelryItems(updatedItems);
-  
+    validateForm();
+
     if (field === 'goldType' && value !== 'None') {
       // Fetch and update gold price for the selected item
       const selectedGold = goldPrices.find(gold => gold.materialName === value);
@@ -139,7 +141,7 @@ const JewelrySelection = () => {
         setJewelryItems(updatedItems);
       }
     }
-  
+
     if (field === 'diamond' && value !== 'None') {
       // Fetch and update diamond price for the selected item
       const { carat, clarity, color, cut } = updatedItems[index];
@@ -224,16 +226,24 @@ const JewelrySelection = () => {
   const handleDeleteItem = (index) => {
     const updatedItems = jewelryItems.filter((_, i) => i !== index);
     setJewelryItems(updatedItems);
+    validateForm();
   };
 
-  // const handleInputChange = (index, field, value) => {
-  //   const updatedItems = jewelryItems.map((item, i) =>
-  //     i === index ? { ...item, [field]: value } : item
-  //   );
-  //   setJewelryItems(updatedItems);
-  // };
+  const validateForm = () => {
+    const isFormValid = name && phone && jewelryItems.every(item => 
+      item.goldType && item.weight && (!item.diamond || (item.diamond && item.carat && item.color && item.clarity && item.cut))
+    );
+    setFormValid(isFormValid);
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formValid) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+
     const jewelryData = jewelryItems.map(item => ({
       goldType: item.goldType,
       weight: item.weight,
@@ -270,12 +280,12 @@ const JewelrySelection = () => {
             </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Weight (gram):</label>
-              <input 
-                type="number" 
-                style={styles.input} 
-                value={item.weight} 
-                onChange={e => handleInputChange(index, 'weight', e.target.value)} 
-                disabled={item.goldType === 'None'} 
+              <input
+                type="number"
+                style={styles.input}
+                value={item.weight}
+                onChange={e => handleInputChange(index, 'weight', e.target.value)}
+                disabled={item.goldType === 'None'}
               />
             </div>
             <div style={styles.formGroup}>
@@ -361,16 +371,16 @@ const JewelrySelection = () => {
         <div style={styles.totalPrice}>
           Total price: {totalPrice} $
         </div>
-        <NavLink to="/bill-jewelry" style={styles.button}
-          onMouseEnter={(e) => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-          onMouseLeave={(e) => e.target.style.backgroundColor = styles.button.backgroundColor}
-          onClick={handleSubmit}
+        <button
+          type="submit"
+          style={{ ...styles.button, ...(formValid ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
+          disabled={!formValid}
         >
           PURCHASE
-        </NavLink>
+        </button>
       </form>
     </div>
   );
 };
 
-export default JewelrySelection; 
+export default JewelrySelection;

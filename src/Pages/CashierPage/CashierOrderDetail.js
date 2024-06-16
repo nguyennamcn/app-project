@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Input, Select, DatePicker } from 'antd';
+import { Button, Table, Input, Select, DatePicker, Modal } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import './CashierOrderDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -22,6 +22,8 @@ export default function ListOrderPage() {
     const [customer, setCustomer] = useState(null);
     const [deliveryStatus, setDeliveryStatus] = useState('');
     const [orderId, setOderId] = useState('');
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     console.log(userInfo);
@@ -71,7 +73,7 @@ export default function ListOrderPage() {
 
     const handleSubmit = () => {
         const randomOrderKey = generateRandomKey();
-
+    
         const orderData = {
             orderId: orderId,
             orderCode: orderKey,
@@ -82,24 +84,35 @@ export default function ListOrderPage() {
             amount: totalPrice,
             customerPhone: customerPhone,
         };
-
+    
         console.log('Order Data:', orderData);
-
+    
         if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod) {
             console.error('Missing required fields');
             return;
         }
-
+    
         adornicaServ.postPaidSummit(orderData)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
-                navigate('/homePage');
+                showModal(
+                    <div className='notice__content'>
+                        <i className="check__icon fa-solid fa-circle-check"></i>
+                        <h1>Paid successfully !</h1>
+                    </div>
+                );
+    
+                // Navigate after modal timeout
+                setTimeout(() => {
+                    navigate('/homePage');
+                }, 1000);
             })
             .catch((err) => {
                 console.error('Error submitting order:', err.response || err);
                 alert('Error submitting order. Please check the server logs for more details.');
             });
     };
+    
 
     const columns = [
         {
@@ -120,6 +133,11 @@ export default function ListOrderPage() {
     ];
 
     const currentDate = moment().format('DD/MM/YYYY');
+    const showModal = (message) => {
+        setModalMessage(message);
+        setIsModalVisible(true);
+        setTimeout(() => setIsModalVisible(false), 1000);
+    };
 
     return (
         <div>
@@ -201,6 +219,15 @@ export default function ListOrderPage() {
                     top: '21%',
                     right: '43.5%',
                 }}></div>
+                <Modal
+                title="Notification"
+                visible={isModalVisible}
+                footer={null}
+                onCancel={() => setIsModalVisible(false)}
+                className="custom-modal"
+            >
+                <div>{modalMessage}</div>
+            </Modal>
             </div>
         </div>
     );

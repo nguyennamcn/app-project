@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 // Define styles as objects
 const styles = {
@@ -91,6 +90,7 @@ const GoldSelection = () => {
   const [goldItems, setGoldItems] = useState([{ goldType: '', weight: '' }]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
+  const [formValid, setFormValid] = useState(false); // Track form validation state
   const newItemRef = useRef(null);
 
   const navigate = useNavigate(); // Get the navigate function
@@ -114,6 +114,7 @@ const GoldSelection = () => {
       }
     });
     setTotalPrice(calculatedTotalPrice.toFixed(2));
+    validateForm(); // Validate form whenever goldItems or goldPrices change
   }, [goldItems, goldPrices]);
 
   const handleAddItem = () => {
@@ -128,6 +129,7 @@ const GoldSelection = () => {
   const handleDeleteItem = (index) => {
     const updatedItems = goldItems.filter((_, i) => i !== index);
     setGoldItems(updatedItems);
+    validateForm(); // Validate form whenever an item is deleted
   };
 
   const handleGoldTypeChange = (index, value) => {
@@ -139,30 +141,48 @@ const GoldSelection = () => {
         goldType: value,
         materialBuyPrice: selectedGold.materialBuyPrice // Add materialBuyPrice here
       };
-      setGoldItems(newGoldItems);
+    } else {
+      newGoldItems[index] = {
+        ...newGoldItems[index],
+        goldType: value,
+        materialBuyPrice: null
+      };
     }
+    setGoldItems(newGoldItems);
+    validateForm(); // Validate form whenever a gold type is changed
   };
 
   const handleWeightChange = (index, value) => {
     const newGoldItems = [...goldItems];
     newGoldItems[index].weight = value;
     setGoldItems(newGoldItems);
+    validateForm(); // Validate form whenever a weight is changed
+  };
+
+  const validateForm = () => {
+    const isFormValid = goldItems.every(item => item.goldType && item.weight);
+    setFormValid(isFormValid);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
 
-  // Extract gold type, weight, and materialBuyPrice from goldItems array
-  const goldData = goldItems.map(item => ({
-    goldType: item.goldType,
-    weight: item.weight,
-    materialBuyPrice: item.weight * item.materialBuyPrice // Include materialBuyPrice here
-  }));
+    if (!formValid) {
+      alert('Please fill out all required fields.');
+      return;
+    }
 
-  // Save gold data to local storage
-  localStorage.setItem('goldData', JSON.stringify(goldData));
+    // Extract gold type, weight, and materialBuyPrice from goldItems array
+    const goldData = goldItems.map(item => ({
+      goldType: item.goldType,
+      weight: item.weight,
+      materialBuyPrice: item.weight * item.materialBuyPrice // Include materialBuyPrice here
+    }));
 
-  navigate('/bill-gold');
+    // Save gold data to local storage
+    localStorage.setItem('goldData', JSON.stringify(goldData));
+
+    navigate('/bill-gold');
   };
 
   return (
@@ -192,9 +212,10 @@ const GoldSelection = () => {
         <div style={styles.totalPrice}>
           Total price: {totalPrice} $
         </div>
-        <button type="submit" style={styles.button}
-          onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-          onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
+        <button
+          type="submit"
+          style={{ ...styles.button, ...(formValid ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
+          disabled={!formValid}
         >
           PURCHASE
         </button>

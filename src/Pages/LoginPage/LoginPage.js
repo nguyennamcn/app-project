@@ -43,7 +43,7 @@ const LoginPage = () => {
       })
       .catch((err) => {
         // Extract message and code from error response
-        const errorMetadata = err.response?.data?.metadata;
+        const errorMetadata = err.response.data.metadata;
         const errorMessage = errorMetadata?.message || "An error occurred";
         const errorCode = errorMetadata?.code || "Unknown error code";
         showModal("Login Failed",<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1 style={{color:'red'}}>Error: {errorMessage} (Code: {errorCode})</h1></div>);
