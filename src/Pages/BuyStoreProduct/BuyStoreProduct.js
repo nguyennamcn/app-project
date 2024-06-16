@@ -43,7 +43,13 @@ const styles = {
     cursor: 'pointer',
     fontSize: '18px',
     gridColumn: 'span 2',
-    textAlign: 'center'
+    textAlign: 'center',
+    opacity: 0.5,
+    pointerEvents: 'none'
+  },
+  buttonEnabled: {
+    opacity: 1,
+    pointerEvents: 'auto'
   },
   buttonHover: {
     backgroundColor: '#000000'
@@ -57,7 +63,9 @@ const StoreSelection = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleSendOrder();
+    if (phone && ordercode) {
+      handleSendOrder();
+    }
   };
 
   const handleSendOrder = () => {
@@ -72,12 +80,15 @@ const StoreSelection = () => {
       .then(response => {
         console.log("Order sent successfully:", response.data);
         alert('Order sent successfully');
+        navigate(`/storeProductDetail/${ordercode}`);
       })
       .catch(error => {
         console.error("There was an error sending the order:", error);
         alert('Failed to send order. Please check your input data.');
       });
   };
+
+  const isFormValid = phone && ordercode;
 
   return (
     <div style={styles.container}>
@@ -90,12 +101,15 @@ const StoreSelection = () => {
           <label style={styles.label}>Order code:</label>
           <input style={styles.input} type="text" value={ordercode} onChange={e => setOrdercode(e.target.value)} />
         </div>
-        <NavLink to={`/storeProductDetail/${ordercode}`}>
-          <button type="submit" style={styles.button}
-            onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-            onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-          >Check</button>
-        </NavLink>
+        <button type="submit"
+          style={{
+            ...styles.button,
+            ...(isFormValid ? styles.buttonEnabled : {})
+          }}
+          onMouseEnter={e => e.target.style.backgroundColor = isFormValid ? styles.buttonHover.backgroundColor : styles.button.backgroundColor}
+          onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
+          disabled={!isFormValid}
+        >Check</button>
       </form>
     </div>
   );
