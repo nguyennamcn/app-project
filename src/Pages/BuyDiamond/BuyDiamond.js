@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const styles = {
   container: {
@@ -92,11 +92,9 @@ const styles = {
 };
 
 const DiamondSelection = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
   const [totalPrice, setTotalPrice] = useState('0.00');
-  const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const [formValid, setFormValid] = useState(false); // Track form validation state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -109,6 +107,7 @@ const DiamondSelection = () => {
     };
 
     calculateTotalPrice();
+    validateForm(); // Validate form whenever diamondItems change
   }, [diamondItems]);
 
   const handleAddItem = () => {
@@ -118,6 +117,7 @@ const DiamondSelection = () => {
   const handleDeleteItem = (index) => {
     const updatedItems = diamondItems.filter((_, i) => i !== index);
     setDiamondItems(updatedItems);
+    validateForm(); // Validate form whenever an item is deleted
   };
 
   const fetchPrice = async (index) => {
@@ -161,16 +161,31 @@ const DiamondSelection = () => {
     newDiamondItems[index][field] = value;
     setDiamondItems(newDiamondItems);
     fetchPrice(index);
+    validateForm(); // Validate form whenever a field changes
   };
 
-  const handleSubmit = () => {
+  const validateForm = () => {
+    const isFormValid = diamondItems.every(item =>
+      item.color && item.cut && item.clarity && item.carat && item.origin
+    );
+    setFormValid(isFormValid);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    if (!formValid) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+
     const diamondData = diamondItems.map(item => ({
       cut: item.cut,
       carat: item.carat,
       clarity: item.clarity,
       color: item.color,
       origin: item.origin,
-      gemBuyPrice: 1 * item.gemBuyPrice,
+      gemBuyPrice: parseFloat(item.gemBuyPrice),
     }));
 
     localStorage.setItem('gemData', JSON.stringify(diamondData));
@@ -179,7 +194,7 @@ const DiamondSelection = () => {
 
   return (
     <div style={styles.container}>
-      <div style={styles.form}>
+      <form style={styles.form} onSubmit={handleSubmit}>
         {diamondItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.productTitle}>
@@ -250,14 +265,14 @@ const DiamondSelection = () => {
           ADD DIAMOND
         </button>
         <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
-        <NavLink to="/bill-diamond" style={styles.button}
-          onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-          onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-          onClick={handleSubmit}
+        <button
+          type="submit"
+          style={{ ...styles.button, ...(formValid ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
+          disabled={!formValid}
         >
           PURCHASE
-        </NavLink>
-      </div>
+        </button>
+      </form>
     </div>
   );
 };
