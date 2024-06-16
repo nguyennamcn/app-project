@@ -3,6 +3,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+
 // Define styles as objects
 const styles = {
   container: {
@@ -134,8 +135,15 @@ const GoldSelection = () => {
 
   const handleGoldTypeChange = (index, value) => {
     const newGoldItems = [...goldItems];
-    newGoldItems[index].goldType = value;
-    setGoldItems(newGoldItems);
+    const selectedGold = goldPrices.find(gold => gold.materialName === value);
+    if (selectedGold) {
+      newGoldItems[index] = {
+        ...newGoldItems[index],
+        goldType: value,
+        materialBuyPrice: selectedGold.materialBuyPrice // Add materialBuyPrice here
+      };
+      setGoldItems(newGoldItems);
+    }
   };
 
   const handleWeightChange = (index, value) => {
@@ -145,32 +153,19 @@ const GoldSelection = () => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const list = goldItems.map(item => ({
-      name: item.goldType,
-      weight: parseFloat(item.weight),
-      origin: 'Unknown',
-      price: goldPrices.find(gold => gold.materialName === item.goldType)?.materialBuyPrice * parseFloat(item.weight) || 0
-    }));
+    event.preventDefault(); // Prevent default form submission behavior
 
-    const formData = {
-      staffId: userInfo.id,
-      customerName: name,
-      phone: phone,
-      list,
-      totalPrice: totalPrice,
-      productStore: true
-    };
+  // Extract gold type, weight, and materialBuyPrice from goldItems array
+  const goldData = goldItems.map(item => ({
+    goldType: item.goldType,
+    weight: item.weight,
+    materialBuyPrice: item.weight * item.materialBuyPrice // Include materialBuyPrice here
+  }));
 
-    try {
-      const response = await adornicaServ.postPurchaseOrderCode(formData);
-      console.log('Order sent successfully:', response.data);
-      alert('Order sent successfully');
-      navigate('/purchasePage', { state: { formData } }); // Navigate to PurchasePage with state
-    } catch (error) {
-      console.error('There was an error sending the order:', error);
-      alert('Failed to send order. Please check your input data.');
-    }
+  // Save gold data to local storage
+  localStorage.setItem('goldData', JSON.stringify(goldData));
+
+  navigate('/bill-buying');
   };
 
   return (
