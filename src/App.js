@@ -43,6 +43,8 @@ import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
 import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
 import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
 import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
+import BillDiamond from './Pages/BillBuying/BillDiamond';
+import BillJewelry from './Pages/BillBuying/BillJewelry';
 
 function App() {
   return (
@@ -76,6 +78,8 @@ function App() {
           <Route path='/add-jewelry' element={<Layout Component={AddJewelry} />} />
           <Route path='/add-gold' element={<Layout Component={AddGold} />} />
           <Route path='/bill-gold' element={<Layout Component={BillGold} />} />
+          <Route path='/bill-diamond' element={<Layout Component={BillDiamond} />} />
+          <Route path='/bill-jewelry' element={<Layout Component={BillJewelry} />} />
           <Route path='/employee' element={<Layout Component={Employee} />} />
           <Route path='/add-employee' element={<Layout Component={AddEmployee} />} />
           <Route path='/view-employee' element={<Layout Component={ViewEmployee} />} />
