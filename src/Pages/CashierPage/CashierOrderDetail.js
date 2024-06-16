@@ -79,7 +79,7 @@ export default function ListOrderPage() {
             name: customerName,
             dateOfBirth: customerBirthday,
             paymentMethod: paymentMethod,
-            amount: totalPrice - (totalPrice * discount / 100),
+            amount: totalPrice,
             customerPhone: customerPhone,
         };
 
