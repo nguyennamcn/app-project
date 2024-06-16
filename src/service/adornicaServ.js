@@ -110,8 +110,9 @@ export const adornicaServ = {
         console.log(id)
         return https.get(`/api/v1/users/profile/${id}`);
     },
-    getProfile: () => {
-        return https.get(`/api/v1/users/profile`);
+    getProfile: (id) => {
+        console.log(id)
+        return https.get(`/api/v1/users/profile/${id}`);
     },
 
     updateRole: (data) => {
@@ -126,5 +127,10 @@ export const adornicaServ = {
     postImg: (id) => {
         console.log(id)
         return https.post(`/api/v1/users/update-avatar/${id}`);
+    },
+
+    postUserUpdate: (data) => {
+        console.log(data)
+        return https.post(`/api/v1/users/update`, data);
     },
 }
