@@ -143,9 +143,9 @@ const BillDiamond = () => {
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     products.forEach(product => {
-      totalPrice  += product.materialBuyPrice;
+      totalPrice  += product.gemBuyPrice;
     });
-    return totalPrice.toFixed(2);
+    return parseFloat(totalPrice).toFixed(2);
   };
 
   const handleMouseDown = (e) => {
@@ -167,15 +167,15 @@ const BillDiamond = () => {
       customerName: customerDetails.name,
       phone: customerDetails.phone,
       list: products.map(product => ({
-        name: product.goldType,
+        //name: product.goldType,
         // materialId: 0, // You need to provide a material ID
-        weight: parseFloat(product.weight),
-        // origin: "your_origin_here", // You need to provide the origin
-        // color: "your_color_here", // You need to provide the color
-        // clarity: "your_clarity_here", // You need to provide the clarity
-        // cut: "your_cut_here", // You need to provide the cut
-        // carat: 0, // You need to provide the carat
-        price: parseFloat(product.materialBuyPrice)
+        //weight: parseFloat(product.weight),
+        origin: product.origin, // You need to provide the origin
+        color: product.color, // You need to provide the color
+        clarity: product.clarity, // You need to provide the clarity
+        cut: product.cut, // You need to provide the cut
+        carat: product.carat, // You need to provide the carat
+        price: parseFloat(product.gemBuyPrice)
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
       productStore: false
@@ -204,7 +204,7 @@ const BillDiamond = () => {
 
   useEffect(() => {
     // Retrieve data from local storage
-    const savedProducts = JSON.parse(localStorage.getItem('goldData')) || [];
+    const savedProducts = JSON.parse(localStorage.getItem('gemData')) || [];
     setProducts(savedProducts);
   }, []);
 
@@ -232,15 +232,21 @@ const BillDiamond = () => {
       <div>
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
-            <span>Product</span>
-            <span>Weight</span>
+            <span>Cut</span>
+            <span>Carat</span>
+            <span>Color</span>
+            <span>Clarity</span>
+            <span>Origin</span>
             <span>Price</span>
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
-              <span>{product.goldType}</span>
-              <span>{product.weight}</span>
-              <span>{product.materialBuyPrice}$</span>
+              <span>{product.cut}</span>
+              <span>{product.carat}</span>
+              <span>{product.color}</span>
+              <span>{product.clarity}</span>
+              <span>{product.origin}</span>
+              <span>{product.gemBuyPrice + '$'}</span>
             </div>
           ))}
         </div>
