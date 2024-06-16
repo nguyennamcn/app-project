@@ -128,7 +128,7 @@ const pageStyles = {
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
-      maxHeight: '200px',
+      maxHeight: '100px',
       margin: 'auto',
       textAlign: 'center',
       color: 'white',
@@ -307,7 +307,7 @@ const BillGold = () => {
           onClick={handleFinishClick}
           disabled={isFinishButtonDisabled}
         >
-          FINISH
+          CREATE
         </button>
       </div>
 
@@ -318,7 +318,7 @@ const BillGold = () => {
         style={pageStyles.modal}
       >
         <h2>Successfully</h2>
-        <p>Thank you for your purchase!</p>
+        {/* <p>Thank you for your purchase!</p>
         <div style={pageStyles.modalButtonWrapper}>
           <NavLink to="/buyProduct" exact>
             <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
@@ -327,7 +327,7 @@ const BillGold = () => {
           <button style={{ ...pageStyles.button, ...pageStyles.printButton }} onClick={handlePrintClick}>
             PRINT
           </button>
-        </div>
+        </div> */}
       </Modal>
     </div>
   );
