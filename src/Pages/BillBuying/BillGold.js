@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { NavLink, useLocation } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
-Modal.setAppElement('#root'); 
+Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
@@ -113,6 +113,19 @@ const pageStyles = {
     textDecoration: 'none',
     textAlign: 'center',
   },
+  printButton: {
+    backgroundColor: '#ADD8E6',
+    color: 'black',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '15px',
+    transition: 'background-color 0.3s',
+    textDecoration: 'none',
+    textAlign: 'center',
+    // marginLeft: '10px',
+  },
 };
 
 const BillGold = () => {
@@ -143,7 +156,7 @@ const BillGold = () => {
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     products.forEach(product => {
-      totalPrice  += product.materialBuyPrice;
+      totalPrice += product.materialBuyPrice;
     });
     return totalPrice.toFixed(2);
   };
@@ -158,23 +171,17 @@ const BillGold = () => {
 
   const generateRandomOrderCode = () => {
     return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
-};
+  };
+
   const handleFinishClick = () => {
-    // Prepare data to send
     const purchaseData = {
-      purchaseOrderCode: generateRandomOrderCode(), // You need to provide a purchase order code
-      staffId: userInfo.id, // Set to the staff ID you want to associate with the purchase
+      purchaseOrderCode: generateRandomOrderCode(),
+      staffId: userInfo.id,
       customerName: customerDetails.name,
       phone: customerDetails.phone,
       list: products.map(product => ({
         name: product.goldType,
-        // materialId: 0, // You need to provide a material ID
         weight: parseFloat(product.weight),
-        // origin: "your_origin_here", // You need to provide the origin
-        // color: "your_color_here", // You need to provide the color
-        // clarity: "your_clarity_here", // You need to provide the clarity
-        // cut: "your_cut_here", // You need to provide the cut
-        // carat: 0, // You need to provide the carat
         price: parseFloat(product.materialBuyPrice)
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
@@ -182,19 +189,16 @@ const BillGold = () => {
     };
 
     adornicaServ
-    .postPurchaseOrderCode(purchaseData)
-    .then((res) => {
-      console.log('Order submitted successfully:', res.data);
-    })
-    .catch((err) => {
-      console.error('Error submitting order:', err.response);
-      alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
-    });
-  
-    // Send the purchase data to the server or do whatever you need to do with it
+      .postPurchaseOrderCode(purchaseData)
+      .then((res) => {
+        console.log('Order submitted successfully:', res.data);
+      })
+      .catch((err) => {
+        console.error('Error submitting order:', err.response);
+        alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
+      });
+
     console.log("Purchase data:", purchaseData);
-  
-    // Show modal
     setModalIsOpen(true);
   };
 
@@ -203,10 +207,13 @@ const BillGold = () => {
   };
 
   useEffect(() => {
-    // Retrieve data from local storage
     const savedProducts = JSON.parse(localStorage.getItem('goldData')) || [];
     setProducts(savedProducts);
   }, []);
+
+  const handlePrintClick = () => {
+    // window.print();
+  };
 
   return (
     <div style={pageStyles.container}>
@@ -259,6 +266,17 @@ const BillGold = () => {
       >
         FINISH
       </button>
+      
+      <NavLink to="/buyProduct" exact>
+        <button style={pageStyles.backButton}>BACK</button>
+      </NavLink>
+      
+      <button
+        style={pageStyles.printButton}
+        onClick={handlePrintClick}
+      >
+        PRINT
+      </button>
 
       <Modal
         isOpen={modalIsOpen}
@@ -269,7 +287,7 @@ const BillGold = () => {
         <h2>Payment success</h2>
         <p>Thank you for your purchase!</p>
         <NavLink to="/buyProduct" exact>
-          <button style={pageStyles.backButton}>Back</button>
+          <button style={pageStyles.backButton}>BACK</button>
         </NavLink>
       </Modal>
     </div>

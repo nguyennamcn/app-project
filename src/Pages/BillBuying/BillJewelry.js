@@ -57,7 +57,7 @@ const pageStyles = {
   },
   tableHeader: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr',
+    gridTemplateColumns: 'repeat(8, 1fr)',
     fontWeight: 'bold',
     borderBottom: '1px solid #333',
     paddingBottom: '5px',
@@ -65,14 +65,14 @@ const pageStyles = {
   },
   tableRow: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr',
+    gridTemplateColumns: 'repeat(8, 1fr)',
     paddingTop: '5px',
     paddingBottom: '5px',
     textAlign: 'center',
   },
   tableFooter: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr',
+    gridTemplateColumns: 'repeat(8, 1fr)',
     fontWeight: 'bold',
     borderTop: '1px solid #333',
     paddingTop: '5px',
@@ -112,6 +112,19 @@ const pageStyles = {
     transition: 'background-color 0.3s',
     textDecoration: 'none',
     textAlign: 'center',
+  },
+  printButton: {
+    backgroundColor: '#ADD8E6',
+    color: 'black',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '15px',
+    transition: 'background-color 0.3s',
+    textDecoration: 'none',
+    textAlign: 'center',
+    // marginLeft: '10px',
   },
 };
 
@@ -205,6 +218,9 @@ const BillJewelry = () => {
     const savedProducts = JSON.parse(localStorage.getItem('jewelryData')) || [];
     setProducts(savedProducts);
   }, []);
+  const handlePrintClick = () => {
+    // window.print();
+  };
 
   return (
     <div style={pageStyles.container}>
@@ -268,6 +284,17 @@ const BillJewelry = () => {
         FINISH
       </button>
 
+      <NavLink to="/buyProduct" exact>
+        <button style={pageStyles.backButton}>BACK</button>
+      </NavLink>
+      
+      <button
+        style={pageStyles.printButton}
+        onClick={handlePrintClick}
+      >
+        PRINT
+      </button>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -277,7 +304,7 @@ const BillJewelry = () => {
         <h2>Payment success</h2>
         <p>Thank you for your purchase!</p>
         <NavLink to="/buyProduct" exact>
-          <button style={pageStyles.backButton}>Back</button>
+          <button style={pageStyles.backButton}>BACK</button>
         </NavLink>
       </Modal>
     </div>
