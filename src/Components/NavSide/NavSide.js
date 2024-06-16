@@ -2,8 +2,14 @@ import React from 'react'
 import './NavSide.css'
 import { NavLink } from 'react-router-dom'
 import { Flex } from 'antd'
+import { useSelector } from 'react-redux';
 
 export default function NavSide() {
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+  const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+  const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+  const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
   return (
     <div className='navbar'>
         <NavLink to='/homePage' 
@@ -38,7 +44,8 @@ export default function NavSide() {
             Inventory
           </p>
         </NavLink>
-        <NavLink to='/employee' 
+        {isAdmin || isManager  ? (
+          <NavLink to='/employee' 
           style={{
             width : '50%',
             display : 'flex',
@@ -54,7 +61,9 @@ export default function NavSide() {
             Employees
           </p>
         </NavLink>
-        <NavLink to='/cashierListOrder' 
+        ): null }
+        {!isStaff && (
+          <NavLink to='/cashierListOrder' 
           style={{
             width : '50%',
             display : 'flex',
@@ -70,6 +79,7 @@ export default function NavSide() {
             Order list
           </p>
         </NavLink>
+        )}
         <NavLink to='/profile' 
           style={{
             width : '50%',
