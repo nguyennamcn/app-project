@@ -29,7 +29,7 @@ export default function StoreProductDetail() {
     }, [orderCode]);
 
     const generateRandomOrderCode = () => {
-        return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
+        return 'SP' + Math.random().toString(36).substring(2, 10).toUpperCase();
     };
 
     const handleSubmit = async (event) => {

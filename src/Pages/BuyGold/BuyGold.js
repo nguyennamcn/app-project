@@ -88,14 +88,11 @@ const styles = {
 };
 
 const GoldSelection = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [goldItems, setGoldItems] = useState([{ goldType: '', weight: '' }]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
   const newItemRef = useRef(null);
 
-  const userInfo = useSelector((state) => state.userReducer.userInfo);
   const navigate = useNavigate(); // Get the navigate function
 
   useEffect(() => {
@@ -165,7 +162,7 @@ const GoldSelection = () => {
   // Save gold data to local storage
   localStorage.setItem('goldData', JSON.stringify(goldData));
 
-  navigate('/bill-buying');
+  navigate('/bill-gold');
   };
 
   return (

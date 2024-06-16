@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import Modal from 'react-modal';
 import { NavLink, useLocation } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
+import { useSelector } from 'react-redux';
 
 Modal.setAppElement('#root'); 
 
@@ -114,7 +115,8 @@ const pageStyles = {
   },
 };
 
-const PurchasePage = () => {
+const BillGold = () => {
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
   const location = useLocation();
   const { formData } = location.state || {}; // Retrieve the state data
 
@@ -122,7 +124,6 @@ const PurchasePage = () => {
     name: formData?.customerName || '',
     phone: formData?.phone || '',
     address: '',
-    birthday: '',
     paymentMethod: 'Cash'
   });
 
@@ -155,34 +156,35 @@ const PurchasePage = () => {
     e.target.style.backgroundColor = '#4CAF50';
   };
 
+  const generateRandomOrderCode = () => {
+    return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
+};
   const handleFinishClick = () => {
     // Prepare data to send
     const purchaseData = {
-      purchaseOrderCode: "your_code_here", // You need to provide a purchase order code
-      staffId: 0, // Set to the staff ID you want to associate with the purchase
+      purchaseOrderCode: generateRandomOrderCode(), // You need to provide a purchase order code
+      staffId: userInfo.id, // Set to the staff ID you want to associate with the purchase
       customerName: customerDetails.name,
       phone: customerDetails.phone,
       list: products.map(product => ({
         name: product.goldType,
-        productCode: "your_product_code_here", // You need to provide a product code
-        materialId: 0, // You need to provide a material ID
+        // materialId: 0, // You need to provide a material ID
         weight: parseFloat(product.weight),
-        origin: "your_origin_here", // You need to provide the origin
-        color: "your_color_here", // You need to provide the color
-        clarity: "your_clarity_here", // You need to provide the clarity
-        cut: "your_cut_here", // You need to provide the cut
-        carat: 0, // You need to provide the carat
+        // origin: "your_origin_here", // You need to provide the origin
+        // color: "your_color_here", // You need to provide the color
+        // clarity: "your_clarity_here", // You need to provide the clarity
+        // cut: "your_cut_here", // You need to provide the cut
+        // carat: 0, // You need to provide the carat
         price: parseFloat(product.materialBuyPrice)
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
-      productStore: true
+      productStore: false
     };
 
     adornicaServ
     .postPurchaseOrderCode(purchaseData)
     .then((res) => {
       console.log('Order submitted successfully:', res.data);
-      alert('Order submitted successfully');
     })
     .catch((err) => {
       console.error('Error submitting order:', err.response);
@@ -219,13 +221,11 @@ const PurchasePage = () => {
         <label style={pageStyles.detailLabel}>Address:</label>
         <input type="text" style={pageStyles.detailInput} name="address" value={customerDetails.address} onChange={handleDetailChange} />
 
-        <label style={pageStyles.detailLabel}>Birthday:</label>
-        <input type="text" style={pageStyles.detailInput} name="birthday" value={customerDetails.birthday} onChange={handleDetailChange} />
 
         <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select style={pageStyles.paymentSelect} name="paymentMethod" value={customerDetails.paymentMethod} onChange={handleDetailChange}>
           <option value="Cash">Cash</option>
-          <option value="Card">Card</option>
+          <option value="Card">Banking</option>
         </select>
       </div>
 
@@ -276,4 +276,4 @@ const PurchasePage = () => {
   );
 };
 
-export default PurchasePage;
+export default BillGold;
