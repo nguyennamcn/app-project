@@ -96,8 +96,8 @@ const pageStyles = {
     width: '100%',
   },
   button: {
-    height: '40px', // Set a fixed height
-    width: '100px', // Set a fixed width
+    height: '40px',
+    width: '100px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -143,193 +143,175 @@ const pageStyles = {
 };
 
 const PurchaseDetail = () => {
-  const userInfo = useSelector((state) => state.userReducer.userInfo);
-  const location = useLocation();
-  const { formData } = location.state || {}; // Retrieve the state data
-
-  const [customerDetails, setCustomerDetails] = useState({
-    name: formData?.customerName || '',
-    phone: formData?.phone || '',
-    address: '',
-    paymentMethod: 'Cash',
-  });
-
-  const [products, setProducts] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const handleDetailChange = (e) => {
-    const { name, value } = e.target;
-    setCustomerDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
-  };
-
-  const totalItems = products.reduce((sum, product) => sum + 1, 0);
-
-  const calculateTotalPrice = () => {
-    let totalPrice = 0;
-    products.forEach((product) => {
-      totalPrice += product.materialBuyPrice;
+    const [customerDetails, setCustomerDetails] = useState({
+      name: '',
+      phone: '',
+      address: '',
+      paymentMethod: 'Cash',
     });
-    return totalPrice.toFixed(2);
-  };
-
-  const handleMouseDown = (e) => {
-    e.target.style.backgroundColor = '#888888';
-  };
-
-  const handleMouseUp = (e) => {
-    e.target.style.backgroundColor = '#4CAF50';
-  };
-
-  const generateRandomOrderCode = () => {
-    return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
-  };
-
-  const handleFinishClick = () => {
-    const purchaseData = {
-      purchaseOrderCode: generateRandomOrderCode(),
-      staffId: userInfo.id,
-      customerName: customerDetails.name,
-      phone: customerDetails.phone,
-      list: products.map((product) => ({
-        name: product.goldType,
-        weight: parseFloat(product.weight),
-        price: parseFloat(product.materialBuyPrice),
-      })),
-      totalPrice: parseFloat(calculateTotalPrice()),
-      productStore: false,
+    const [products, setProducts] = useState([]);
+    const [totalItems, setTotalItems] = useState(0);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [isFinishButtonDisabled, setIsFinishButtonDisabled] = useState(false);
+    const location = useLocation();
+  
+    const handleDetailChange = (event) => {
+      const { name, value } = event.target;
+      setCustomerDetails((prevDetails) => ({
+        ...prevDetails,
+        [name]: value,
+      }));
     };
-
-    adornicaServ
-      .postPurchaseOrderCode(purchaseData)
-      .then((res) => {
-        console.log('Order submitted successfully:', res.data);
-      })
-      .catch((err) => {
-        console.error('Error submitting order:', err.response);
-        alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
-      });
-
-    console.log('Purchase data:', purchaseData);
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-  useEffect(() => {
-    
-  }, []);
-
-  const handlePrintClick = () => {
-    // window.print();
-  };
-
-  const isFinishButtonDisabled = !customerDetails.name || !customerDetails.phone || !customerDetails.address;
-
-  return (
-    <div style={pageStyles.container}>
-      <div style={pageStyles.header}>Purchase</div>
-      <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Name:</label>
-        {/* <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="name"
-          value={customerDetails.name}
-          onChange={handleDetailChange}
-        /> */}
-
-        <label style={pageStyles.detailLabel}>Phone:</label>
-        {/* <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="phone"
-          value={customerDetails.phone}
-          onChange={handleDetailChange}
-        /> */}
-
-        <label style={pageStyles.detailLabel}>Address:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="address"
-          value={customerDetails.address}
-          onChange={handleDetailChange}
-        />
-
-        <label style={pageStyles.detailLabel}>Payment methods:</label>
-        {/* <select
-          style={pageStyles.paymentSelect}
-          name="paymentMethod"
-          value={customerDetails.paymentMethod}
-          onChange={handleDetailChange}
-        >
-          <option value="Cash">Cash</option>
-          <option value="Card">Banking</option>
-        </select> */}
-      </div>
-
-      <div>
-        <div style={pageStyles.productTable}>
-          <div style={pageStyles.tableHeader}>
-            <span>Product</span>
-            <span>Weight</span>
-            <span>Price</span>
-          </div>
-          {products.map((product, index) => (
-            <div key={index} style={pageStyles.tableRow}>
-              <span>{product.goldType}</span>
-              <span>{product.weight}</span>
-              <span>{product.materialBuyPrice}$</span>
+  
+    const calculateTotalPrice = () => {
+      return products.reduce((total, product) => total + product.price, 0).toFixed(2);
+    };
+  
+    const handleFinishClick = () => {
+      setModalIsOpen(true);
+    };
+  
+    const closeModal = () => {
+      setModalIsOpen(false);
+    };
+  
+    const handlePrintClick = () => {
+      window.print();
+    };
+  
+    const handleMouseDown = () => {
+      setIsFinishButtonDisabled(true);
+    };
+  
+    const handleMouseUp = () => {
+      setIsFinishButtonDisabled(false);
+    };
+  
+    useEffect(() => {
+      const orderCode = new URLSearchParams(location.search).get('orderCode');
+      if (orderCode) {
+        adornicaServ.getDetailPurchase(orderCode).then((response) => {
+          const data = response.data.metadata;
+          setCustomerDetails({
+            name: data.customerName,
+            phone: data.customerPhone,
+            address: '', // Assuming address is not available in metadata
+            paymentMethod: data.paymentMethod,
+          });
+          setProducts(data.list);
+          setTotalItems(data.list.length);
+        });
+      }
+    }, [location]);
+  
+    return (
+      <div style={pageStyles.container}>
+        <div style={pageStyles.header}>Purchase</div>
+        <div style={pageStyles.customerDetails}>
+          <label style={pageStyles.detailLabel}>Name:</label>
+          <input
+            type="text"
+            style={pageStyles.detailInput}
+            name="name"
+            value={customerDetails.name}
+            onChange={handleDetailChange}
+          />
+  
+          <label style={pageStyles.detailLabel}>Phone:</label>
+          <input
+            type="text"
+            style={pageStyles.detailInput}
+            name="phone"
+            value={customerDetails.phone}
+            onChange={handleDetailChange}
+          />
+  
+          <label style={pageStyles.detailLabel}>Address:</label>
+          <input
+            type="text"
+            style={pageStyles.detailInput}
+            name="address"
+            value={customerDetails.address}
+            onChange={handleDetailChange}
+          />
+  
+          <label style={pageStyles.detailLabel}>Payment methods:</label>
+          <select
+            style={pageStyles.paymentSelect}
+            name="paymentMethod"
+            value={customerDetails.paymentMethod}
+            onChange={handleDetailChange}
+          >
+            <option value="Cash">Cash</option>
+            <option value="Card">Banking</option>
+          </select>
+        </div>
+  
+        <div>
+          <div style={pageStyles.productTable}>
+            <div style={pageStyles.tableHeader}>
+              <span>Product ID</span>
+              <span>Product Code</span>
+              <span>Price</span>
             </div>
-          ))}
+            {products.map((product, index) => (
+              <div key={index} style={pageStyles.tableRow}>
+                <span>{product.productId}</span>
+                <span>{product.productCode}</span>
+                <span>${product.price}</span>
+              </div>
+            ))}
+            <div style={pageStyles.tableFooter}>
+              <span>Total</span>
+              <span>{totalItems} items</span>
+              <span>${calculateTotalPrice()}</span>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div style={pageStyles.summary}>
-        <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}$</div>
-      </div>
-      <div style={pageStyles.buttonWrapper}>
-        <NavLink to="/buyProduct" exact>
-          <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
-        </NavLink>
-
-        <button
-          style={{ ...pageStyles.button, ...pageStyles.finishButton }}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onClick={handleFinishClick}
-          disabled={isFinishButtonDisabled}
+  
+        <div style={pageStyles.footerInfo}>
+          <div style={pageStyles.buttonWrapper}>
+            <NavLink to="/previous-page" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+            <button
+              onClick={handleFinishClick}
+              style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              disabled={isFinishButtonDisabled}
+            >
+              Finish
+            </button>
+            <button
+              onClick={handlePrintClick}
+              style={{ ...pageStyles.button, ...pageStyles.printButton }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+            >
+              Print
+            </button>
+          </div>
+        </div>
+  
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={pageStyles.modal}
         >
-          FINISH
-        </button>
+          <h2>Order Completed!</h2>
+          <p>Your order has been successfully submitted.</p>
+          <div style={pageStyles.modalButtonWrapper}>
+            <button
+              onClick={closeModal}
+              style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+            >
+              OK
+            </button>
+          </div>
+        </Modal>
       </div>
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Confirmation Modal"
-        style={pageStyles.modal}
-      >
-        <h2>Successfully</h2>
-        <p>Thank you for your purchase!</p>
-        <div style={pageStyles.modalButtonWrapper}>
-          <NavLink to="/buyProduct" exact>
-            <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
-          </NavLink>
-
-          <button style={{ ...pageStyles.button, ...pageStyles.printButton }} onClick={handlePrintClick}>
-            PRINT
-          </button>
-        </div>
-      </Modal>
-    </div>
-  );
-};
-
-export default PurchaseDetail;
+    );
+  };
+  
+  export default PurchaseDetail;
