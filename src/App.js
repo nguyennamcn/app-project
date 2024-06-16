@@ -42,7 +42,10 @@ import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
 import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
 import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
 import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
+
 import { useSelector } from 'react-redux';
+import BillDiamond from './Pages/BillBuying/BillDiamond';
+import BillJewelry from './Pages/BillBuying/BillJewelry';
 
 function App() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -51,6 +54,7 @@ function App() {
     <div className="min-h-screen">
       <BrowserRouter>
         <Routes>
+
           <Route path="/" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
           {userInfo ? (

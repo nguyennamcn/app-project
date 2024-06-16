@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const styles = {
   container: {
@@ -58,7 +58,7 @@ const styles = {
     textAlign: 'center',
     gridColumn: 'span 2',
     justifySelf: 'center',
-    marginTop: '2px'
+    marginTop: '2px',
   },
   deleteButton: {
     backgroundColor: '#FF6347',
@@ -71,7 +71,7 @@ const styles = {
     textAlign: 'center',
     position: 'absolute',
     top: '5px',
-    right: '5px'
+    right: '5px',
   },
   buttonHover: {
     backgroundColor: '#000000',
@@ -94,55 +94,25 @@ const styles = {
 const DiamondSelection = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '' }]);
+  const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
   const [totalPrice, setTotalPrice] = useState('0.00');
   const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPrice = async () => {
-      let calculatedTotalPrice = 0;
-      for (const item of diamondItems) {
-        const { color, cut, clarity, carat, origin } = item;
-        if (cut && carat && clarity && color && origin) {
-          const caratValue = parseFloat(carat);
-          if (isNaN(caratValue)) {
-            console.warn('Invalid carat value');
-            setTotalPrice('Invalid carat value');
-            return;
-          }
-
-          try {
-            const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, origin);
-            if (res.data && res.data.metadata) {
-              const priceData = res.data.metadata.find((data) => (
-                data.cut === cut &&
-                data.carat === caratValue &&
-                data.clarity === clarity &&
-                data.color === color &&
-                data.origin === origin
-              ));
-
-              if (priceData) {
-                calculatedTotalPrice += priceData.gemBuyPrice;
-              }
-            } else {
-              console.warn('Invalid response structure', res.data);
-              setTotalPrice('Invalid response structure');
-            }
-          } catch (err) {
-            console.error('Error fetching price:', err);
-            setTotalPrice('Error fetching price');
-          }
-        }
-      }
+    const calculateTotalPrice = () => {
+      const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
+        const price = parseFloat(item.gemBuyPrice) || 0;
+        return acc + price;
+      }, 0);
       setTotalPrice(calculatedTotalPrice.toFixed(2));
     };
 
-    fetchPrice();
+    calculateTotalPrice();
   }, [diamondItems]);
 
   const handleAddItem = () => {
-    setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '' }]);
+    setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
   };
 
   const handleDeleteItem = (index) => {
@@ -150,45 +120,61 @@ const DiamondSelection = () => {
     setDiamondItems(updatedItems);
   };
 
+  const fetchPrice = async (index) => {
+    const item = diamondItems[index];
+    const { color, cut, clarity, carat, origin } = item;
+
+    if (cut && carat && clarity && color && origin) {
+      const caratValue = parseFloat(carat);
+      if (isNaN(caratValue)) {
+        console.warn('Invalid carat value');
+        return;
+      }
+
+      try {
+        const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, origin);
+        if (res.data && res.data.metadata) {
+          const priceData = res.data.metadata.find((data) => (
+            data.cut === cut &&
+            data.carat === caratValue &&
+            data.clarity === clarity &&
+            data.color === color &&
+            data.origin === origin
+          ));
+
+          if (priceData) {
+            const updatedItems = [...diamondItems];
+            updatedItems[index].gemBuyPrice = priceData.gemBuyPrice.toFixed(2);
+            setDiamondItems(updatedItems);
+          }
+        } else {
+          console.warn('Invalid response structure', res.data);
+        }
+      } catch (err) {
+        console.error('Error fetching price:', err);
+      }
+    }
+  };
+
   const handleDiamondItemChange = (index, field, value) => {
     const newDiamondItems = [...diamondItems];
     newDiamondItems[index][field] = value;
     setDiamondItems(newDiamondItems);
+    fetchPrice(index);
   };
 
   const handleSubmit = () => {
-    if (!name || !phone || diamondItems.some(item => !item.color || !item.cut || !item.clarity || !item.carat || !item.origin)) {
-      // alert('Please fill in all the fields.');
-      return;
-    }
-
-    const list = diamondItems.map(item => ({
-      color: item.color,
+    const diamondData = diamondItems.map(item => ({
       cut: item.cut,
+      carat: item.carat,
       clarity: item.clarity,
-      carat: parseFloat(item.carat),
+      color: item.color,
       origin: item.origin,
+      gemBuyPrice: 1 * item.gemBuyPrice,
     }));
 
-    const purchaseData = {
-      staffId: userInfo.id,
-      customerName: name,
-      phone: phone,
-      list: list,
-      totalPrice: parseFloat(totalPrice),
-      productStore: false,
-    };
-
-    adornicaServ
-      .postPurchaseOrderCode(purchaseData)
-      .then((res) => {
-        console.log('Order submitted successfully:', res.data);
-        alert('Order submitted successfully');
-      })
-      .catch((err) => {
-        console.error('Error submitting order:', err.response);
-        alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
-      });
+    localStorage.setItem('gemData', JSON.stringify(diamondData));
+    navigate('/bill-diamond');
   };
 
   return (
@@ -264,7 +250,7 @@ const DiamondSelection = () => {
           ADD DIAMOND
         </button>
         <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
-        <NavLink to="/bill-buying" style={styles.button}
+        <NavLink to="/bill-diamond" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
           onClick={handleSubmit}
