@@ -42,6 +42,7 @@ import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
 import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
 import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
 import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
+import ListOrderType from './Pages/PurchaseOrderList/listOrderType';
 
 import { useSelector } from 'react-redux';
 import BillDiamond from './Pages/BillBuying/BillDiamond';
@@ -54,12 +55,13 @@ function App() {
     <div className="min-h-screen">
       <BrowserRouter>
         <Routes>
-
           <Route path="/*" element={<LoginPage />} />
+
           {userInfo ? (
             <>
               <Route path="/feedbacks" element={<Layout Component={Feedbacks} />} />
               <Route path="/homePage" element={<Layout Component={ListProduct} />} />
+              <Route path="/purchaseOrderList" element={<Layout Component={ListOrderType} />} />
               <Route path="/detail/:productCode" element={<Layout Component={DetailPage} />} />
               <Route path="/buyProduct" element={<Layout Component={BuyListProduct} />} />
               <Route path="/cashierListOrder" element={<Layout Component={CashierListOrder} />} />

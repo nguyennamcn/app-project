@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Input, Select } from 'antd';
+import { Button, Table, Input, Select, Modal } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import './DetailOrderStatus.css';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
@@ -15,6 +15,8 @@ export default function ListOrderPage() {
     const [totalPrice, setTotalPrice] = useState(0);
     const { orderKey } = useParams();
     const navigate = useNavigate();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const convertMillisecondsToDateString = (milliseconds) => {
         const date = new Date(milliseconds);
@@ -61,13 +63,21 @@ export default function ListOrderPage() {
         adornicaServ.postUpdateDeliveryOrder(orderID)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
-                alert("Submit success");
+                showModal(
+                    <div className='notice__content'>
+                        <i className="check__icon fa-solid fa-circle-check"></i>
+                        <h1>Delivery successfully !</h1>
+                    </div>
+                );
                 setDeliveryStatus('SUCCESS'); // Update the delivery status to trigger a rerender
                 fetchOrderDetails(); // Refetch order details after updating the status
             })
             .catch((err) => {
-                console.log('Error submitting order:', err.response); // Log error details
-                // alert(err.response.data.metadata.message)
+                console.log('Error submitting order:', err.response.data.metadata); 
+                const errorMetadata = err.response.data.metadata;
+                const errorMessage = errorMetadata.message || "An error occurred";
+                const errorCode = errorMetadata.code || "Unknown error code";
+                showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1 style={{color:'red'}}>Error: {errorMessage} (Code: {errorCode})</h1></div>);
             });
     };
 
@@ -88,6 +98,12 @@ export default function ListOrderPage() {
             key: 'price',
         },
     ];
+
+    const showModal = (message) => {
+        setModalMessage(message);
+        setIsModalVisible(true);
+        setTimeout(() => setIsModalVisible(false), 2000);
+    };
 
     const isDeliverySuccessful = deliveryStatus.toLowerCase() === 'success';
     const isNotPaymented = paymentMethod.toLowerCase() === 'none';
@@ -145,6 +161,15 @@ export default function ListOrderPage() {
                     </div>
                 </div>
             </div>
+            <Modal
+                title="Notification"
+                visible={isModalVisible}
+                footer={null}
+                onCancel={() => setIsModalVisible(false)}
+                className="custom-modal"
+            >
+                <div>{modalMessage}</div>
+            </Modal>
         </div>
     );
 }
