@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { adornicaServ } from '../../service/adornicaServ';
+
 import { Input, Button, Select, DatePicker } from 'antd';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
@@ -6,24 +8,34 @@ import './Profile.css';
 
 const { Option } = Select;
 
-const initialEmployee = {
-  id: '001',
-  name: 'Nguyen Tan Thanh',
-  email: 'thanhntse171854@fpt.edu.vn',
-  gender: 'Male',
-  birthday: '2001-11-09',
-  role: 'Manager',
-  phone: '0908911035',
-  storeAddress: '6224 Richmond Ave., Houston, US',
-  avatar: null
-};
+// const initialEmployee = {
+//   id: '001',
+//   name: 'Nguyen Tan Thanh',
+//   email: 'thanhntse171854@fpt.edu.vn',
+//   gender: 'Male',
+//   birthday: '2001-11-09',
+//   role: 'Manager',
+//   phone: '0908911035',
+//   storeAddress: '6224 Richmond Ave., Houston, US',
+//   avatar: null
+// };
 
 export default function EditEmployee() {
-  const [form, setForm] = useState(initialEmployee);
+  const [profile, setProfile] = useState([]);
+  useEffect(() => {
+    adornicaServ. getProfile()
+      .then((res) => {
+        console.log(res.data.metadata);
+        setProfile(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
+    setProfile({
+      ...profile,
       [e.target.name]: e.target.value
     });
   };
@@ -33,21 +45,21 @@ export default function EditEmployee() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setForm({ ...form, avatar: reader.result });
+        setProfile({ ...profile, avatar: reader.result });
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleDateChange = (date, dateString) => {
-    setForm({
-      ...form,
+    setProfile({
+      ...profile,
       birthday: dateString
     });
   };
 
   const handleSubmit = () => {
-    console.log('Form data:', form);
+    console.log('Form data:', profile);
   };
 
   return (
@@ -57,8 +69,8 @@ export default function EditEmployee() {
         <div className="profile-header">
           <div className="profile-image">
             <label htmlFor="avatar-upload" className="profile-placeholder">
-              {form.avatar ? (
-                <img src={form.avatar} alt="Avatar" className="avatar" />
+              {profile.avatar ? (
+                <img src={profile.avatar} alt="Avatar" className="avatar" />
               ) : (
                 '+'
               )}
@@ -71,13 +83,15 @@ export default function EditEmployee() {
             />
           </div>
           <div className="profile-info">
-            <Input className="input-field" placeholder="Full Name" name="name" value={form.name} onChange={handleChange} />
-            <Input className="input-field" placeholder="Phone number" name="phone" value={form.phone} onChange={handleChange} />
-            <Input className="input-field" placeholder="Email" name="email" value={form.email} onChange={handleChange} />
+            <Input className="input-field" placeholder="Full Name" name="name" value={profile.name} onChange={handleChange} />
+            <Input className="input-field" placeholder="Phone number" name="phone" value={profile.phone} onChange={handleChange} />
+            <Input className="input-field" placeholder="Email" name="email" value={profile.email} onChange={handleChange} />
+            <Input className="input-field" placeholder="Gender" name="gender" value={profile.gender} onChange={handleChange} />
+            <Input className="input-field" placeholder="Address" name="address" value={profile.address} onChange={handleChange} />
             <DatePicker
               className="input-field"
               placeholder="Birthday"
-              value={moment(form.birthday)}
+              value={moment(profile.birthday)}
               onChange={handleDateChange}
               format="YYYY-MM-DD"
               style={{ width: '100%' }}
@@ -90,16 +104,9 @@ export default function EditEmployee() {
           <div className="work-info-row">
             <div className="work-info-item">
               <h3>Role:</h3>
-              <Input className="input-field" value={form.role} disabled />
+              <Input className="input-field" value={profile.roleUser} disabled />
             </div>
           </div>
-          <div className="work-info-item">
-              <h3>Store address:</h3>
-              <Select value={form.storeAddress} style={{ width: '100%' }} disabled>
-                <Option value="6224 Richmond Ave., Houston, US">6224 Richmond Ave., Houston, US</Option>
-                {/* Add more store options here */}
-              </Select>
-            </div>
         </div>
         <hr />
         <div className="profile-actions">

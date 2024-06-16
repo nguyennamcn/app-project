@@ -101,4 +101,7 @@ export const adornicaServ = {
     getEmployee: () => {
         return https.get(`/api/v1/users/staff`);
     },
+    getProfile: () => {
+        return https.get(`/api/v1/users/profile`);
+    },
 }

@@ -217,7 +217,7 @@ const PurchasePage = () => {
       >
         <h2>Payment success</h2>
         <p>Thank you for your purchase!</p>
-        <NavLink to="/gold-selection" exact>
+        <NavLink to="/buyProduct" exact>
           <button style={pageStyles.backButton}>Back</button>
         </NavLink>
       </Modal>
