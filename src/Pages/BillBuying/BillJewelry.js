@@ -181,11 +181,11 @@ const BillJewelry = () => {
   const totalItems = products.reduce((sum, product) => sum + 1, 0);
 
   const calculateTotalPrice = () => {
-    let totalPrice = '';
+    let totalPrice = 0;
     products.forEach(product => {
-      totalPrice  += product.total;
+      totalPrice += product.total;
     });
-    return totalPrice;
+    return totalPrice.toFixed(2);
   };
 
   const handleMouseDown = (e) => {
@@ -251,6 +251,8 @@ const BillJewelry = () => {
     // window.print();
   };
 
+  const isFinishButtonDisabled = !customerDetails.name || !customerDetails.phone || !customerDetails.address;
+
   return (
     <div style={pageStyles.container}>
       <div style={pageStyles.header}>Purchase</div>
@@ -306,25 +308,19 @@ const BillJewelry = () => {
 
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>
-          <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
+          <button style={pageStyles.backButton}>BACK</button>
         </NavLink>
 
         <button
-          style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+          style={pageStyles.finishButton}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onClick={handleFinishClick}
+          disabled={isFinishButtonDisabled}
         >
           FINISH
         </button>
       </div>
-      
-      {/* <button
-        style={pageStyles.printButton}
-        onClick={handlePrintClick}
-      >
-        PRINT
-      </button> */}
 
       <Modal
         isOpen={modalIsOpen}

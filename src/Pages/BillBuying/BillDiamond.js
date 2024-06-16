@@ -232,6 +232,8 @@ const BillDiamond = () => {
     // window.print();
   };
 
+  const isFinishButtonDisabled = !customerDetails.name || !customerDetails.phone || !customerDetails.address;
+
   return (
     <div style={pageStyles.container}>
       <div style={pageStyles.header}>Purchase</div>
@@ -313,6 +315,7 @@ const BillDiamond = () => {
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onClick={handleFinishClick}
+          disabled={isFinishButtonDisabled}
         >
           FINISH
         </button>
