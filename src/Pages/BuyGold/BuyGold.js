@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 // Define styles as objects
 const styles = {
@@ -95,6 +95,7 @@ const GoldSelection = () => {
   const newItemRef = useRef(null);
 
   const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const navigate = useNavigate(); // Get the navigate function
 
   useEffect(() => {
     adornicaServ.getPriceMaterial()
@@ -123,7 +124,7 @@ const GoldSelection = () => {
       if (newItemRef.current) {
         newItemRef.current.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100); // Delay to ensure the new element is rendered
+    }, 100);
   };
 
   const handleDeleteItem = (index) => {
@@ -165,6 +166,7 @@ const GoldSelection = () => {
       const response = await adornicaServ.postPurchaseOrderCode(formData);
       console.log('Order sent successfully:', response.data);
       alert('Order sent successfully');
+      navigate('/purchasePage', { state: { formData } }); // Navigate to PurchasePage with state
     } catch (error) {
       console.error('There was an error sending the order:', error);
       alert('Failed to send order. Please check your input data.');
@@ -198,12 +200,12 @@ const GoldSelection = () => {
         <div style={styles.totalPrice}>
           Total price: {totalPrice} $
         </div>
-        <NavLink to="/bill-buying" style={styles.button}
+        <button type="submit" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
         >
           PURCHASE
-        </NavLink>
+        </button>
       </form>
     </div>
   );

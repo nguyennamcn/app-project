@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 Modal.setAppElement('#root'); 
 
@@ -114,19 +114,18 @@ const pageStyles = {
 };
 
 const PurchasePage = () => {
+  const location = useLocation();
+  const { formData } = location.state || {}; // Retrieve the state data
+
   const [customerDetails, setCustomerDetails] = useState({
-    name: '',
-    phone: '',
+    name: formData?.customerName || '',
+    phone: formData?.phone || '',
     address: '',
     birthday: '',
     paymentMethod: 'Cash'
   });
 
-  const [products] = useState([
-    { name: 'Gold Bars', quantity: 1, price: 340 },
-    { name: '24K Gold', quantity: 1, price: 290 },
-  ]);
-
+  const [products] = useState(formData?.list || []);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleDetailChange = (e) => {
@@ -137,8 +136,8 @@ const PurchasePage = () => {
     }));
   };
 
-  const totalItems = products.reduce((sum, product) => sum + product.quantity, 0);
-  const totalPrice = products.reduce((sum, product) => sum + (product.price * product.quantity), 0).toFixed(2);
+  const totalItems = products.reduce((sum, product) => sum + 1, 0);
+  const totalPrice = formData?.totalPrice || 0;
 
   const handleMouseDown = (e) => {
     e.target.style.backgroundColor = '#888888';
@@ -162,91 +161,65 @@ const PurchasePage = () => {
       <div style={pageStyles.customerDetails}>
         <label style={pageStyles.detailLabel}>Name:</label>
         <input type="text" style={pageStyles.detailInput} name="name" value={customerDetails.name} onChange={handleDetailChange} />
-        
+
         <label style={pageStyles.detailLabel}>Phone:</label>
         <input type="text" style={pageStyles.detailInput} name="phone" value={customerDetails.phone} onChange={handleDetailChange} />
-        
+
         <label style={pageStyles.detailLabel}>Address:</label>
         <input type="text" style={pageStyles.detailInput} name="address" value={customerDetails.address} onChange={handleDetailChange} />
-        
+
         <label style={pageStyles.detailLabel}>Birthday:</label>
         <input type="text" style={pageStyles.detailInput} name="birthday" value={customerDetails.birthday} onChange={handleDetailChange} />
-        
+
         <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select style={pageStyles.paymentSelect} name="paymentMethod" value={customerDetails.paymentMethod} onChange={handleDetailChange}>
           <option value="Cash">Cash</option>
           <option value="Card">Card</option>
         </select>
       </div>
-      
+
       <div>
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
             <span>Product</span>
-            <span>Quantity</span>
+            <span>Weight</span>
             <span>Price</span>
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
               <span>{product.name}</span>
-              <span>{product.quantity}</span>
-              <span>{(product.price * product.quantity).toFixed(2)}$</span>
+              <span>{product.weight}</span>
+              <span>{product.price.toFixed(2)}$</span>
             </div>
           ))}
-          <div style={pageStyles.tableFooter}>
-            <span>Total items:</span>
-            <span>{totalItems}</span>
-            <span>{totalPrice}$</span>
-          </div>
-        </div>
-        <div style={pageStyles.footerInfo}>
-          By staff: To Hoang Trung Hieu <br />
-          Staff ID: 0001
         </div>
       </div>
-      
-      <div style={{ gridColumn: 'span 2', display: 'flex', justifyContent: 'space-between' }}>
-        <NavLink
-          to="/buyProduct"
-          style={pageStyles.backButton}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-        >
-          Back
-        </NavLink>
-        <button
-          style={pageStyles.finishButton}
-          onClick={handleFinishClick}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-        >
-          Finish
-        </button>
+
+      <div style={pageStyles.summary}>
+        <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
+        <div style={pageStyles.totalPrice}>Total price: {totalPrice.toFixed(2)}$</div>
       </div>
+
+      <button
+        style={pageStyles.finishButton}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onClick={handleFinishClick}
+      >
+        FINISH
+      </button>
 
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={{
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.75)',
-          },
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            padding: '20px',
-            borderRadius: '10px',
-            width: '300px',
-            textAlign: 'center',
-          },
-        }}
+        contentLabel="Confirmation Modal"
+        style={pageStyles.modal}
       >
-        <h2>Finish Successfully</h2>
-        <button onClick={closeModal} style={{ marginTop: '20px', padding: '10px 20px', borderRadius: '5px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}>Close</button>
+        <h2>Payment success</h2>
+        <p>Thank you for your purchase!</p>
+        <NavLink to="/gold-selection" exact>
+          <button style={pageStyles.backButton}>Back</button>
+        </NavLink>
       </Modal>
     </div>
   );

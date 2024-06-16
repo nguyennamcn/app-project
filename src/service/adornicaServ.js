@@ -7,7 +7,7 @@ export const adornicaServ = {
 
     getOrderDetail: (orderCode) => {
         console.log(orderCode)
-        return https.get(`/api/v1/orders/order-detail/${orderCode}`);
+        return https.get(`/api/v1/orders/order/detail/${orderCode}`);
     },
 
     getListGold: () => {
