@@ -1,0 +1,52 @@
+.dashboard-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .card-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .card {
+    width: 200px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .feedback-card {
+    background-color: #b19cd9;
+  }
+  
+  .employees-card {
+    background-color: #ff6961;
+  }
+  
+  .customers-card {
+    background-color: #77dd77;
+  }
+  
+  .products-purchased-card {
+    background-color: #cfcfc4;
+  }
+  
+  .products-sold-card {
+    background-color: #ffb347;
+  }
+  
+
+  
