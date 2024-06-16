@@ -28,7 +28,8 @@ export default function NavSide() {
             Home
           </p>
         </NavLink>
-        <NavLink to='/inventory' 
+        {isManager && (
+          <NavLink to='/inventory' 
           style={{
             width : '50%',
             display : 'flex',
@@ -44,6 +45,7 @@ export default function NavSide() {
             Inventory
           </p>
         </NavLink>
+        )}
         {isAdmin || isManager  ? (
           <NavLink to='/employee' 
           style={{

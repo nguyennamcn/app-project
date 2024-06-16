@@ -55,8 +55,7 @@ function App() {
       <BrowserRouter>
         <Routes>
 
-          <Route path="/" element={<LoginPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/*" element={<LoginPage />} />
           {userInfo ? (
             <>
               <Route path="/feedbacks" element={<Layout Component={Feedbacks} />} />
