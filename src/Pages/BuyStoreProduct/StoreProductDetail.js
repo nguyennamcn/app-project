@@ -44,7 +44,7 @@ export default function StoreProductDetail() {
                 productCode: product.productCode,
                 price: product.price
             })),
-            totalPrice: totalPrice,
+            totalPrice: totalPrice * 0.7,
             productStore: true
         };
 

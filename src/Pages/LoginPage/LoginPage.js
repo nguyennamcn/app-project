@@ -36,7 +36,7 @@ const LoginPage = () => {
         ));
         // chuyển hướng user tới trang chủ
         if(res.data.metadata.role != 'admin')
-          navigate("/homePage");
+          navigate("/");
         else
           navigate('/adminPage');
         console.log(res);
