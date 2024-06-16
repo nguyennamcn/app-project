@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate} from 'react-router-dom';
 
 // Define styles as objects
 const styles = {
@@ -110,6 +110,7 @@ const JewelrySelection = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
   const newItemRef = useRef(null);
+  const navigate = useNavigate();
 
   const userInfo = useSelector((state) => state.userReducer.userInfo);
 
@@ -186,36 +187,21 @@ const JewelrySelection = () => {
     setJewelryItems(updatedItems);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const list = jewelryItems.map(item => ({
-      name: 'Jewelry',
-      weight: parseFloat(item.weight),
-      color: item.color,
-      clarity: item.clarity,
-      origin: item.diamond,
+  const handleSubmit = () => {
+    const jewelryData = jewelryItems.map(item => ({
+      goldType: item.goldType,
+      weight: item.weight,
+      materialBuyPrice: item.weight * item.materialBuyPrice,
       cut: item.cut,
       carat: item.carat,
-      price: goldPrices.find(gold => gold.materialName === item.goldType)?.materialBuyPrice * parseFloat(item.weight) || 0
+      clarity: item.clarity,
+      color: item.color,
+      origin: item.origin,
+      gemBuyPrice: 1 * item.gemBuyPrice,
     }));
 
-    const formData = {
-      staffId: userInfo.id,
-      customerName: name,
-      phone: phone,
-      list,
-      totalPrice: totalPrice,
-      productStore: true
-    };
-
-    try {
-      const response = await adornicaServ.postPurchaseOrderCode(formData);
-      console.log('Order sent successfully:', response.data);
-      alert('Order sent successfully');
-    } catch (error) {
-      console.error('There was an error sending the order:', error);
-      alert('Failed to send order. Please check your input data.');
-    }
+    localStorage.setItem('jewelryData', JSON.stringify(jewelryData));
+    navigate('/bill-jewelry');
   };
 
   return (
@@ -330,9 +316,10 @@ const JewelrySelection = () => {
         <div style={styles.totalPrice}>
           Total price: {totalPrice} $
         </div>
-        <NavLink to="/bill-buying" style={styles.button}
+        <NavLink to="/bill-jewelry" style={styles.button}
           onMouseEnter={(e) => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={(e) => e.target.style.backgroundColor = styles.button.backgroundColor}
+          onClick={handleSubmit}
         >
           PURCHASE
         </NavLink>
@@ -341,4 +328,4 @@ const JewelrySelection = () => {
   );
 };
 
-export default JewelrySelection;
+export default JewelrySelection; 

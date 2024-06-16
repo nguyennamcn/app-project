@@ -168,13 +168,13 @@ const BillJewelry = () => {
       phone: customerDetails.phone,
       list: products.map(product => ({
         name: product.goldType,
-        // materialId: 0, // You need to provide a material ID
+        materialId: 0, // You need to provide a material ID
         weight: parseFloat(product.weight),
-        // origin: "your_origin_here", // You need to provide the origin
-        // color: "your_color_here", // You need to provide the color
-        // clarity: "your_clarity_here", // You need to provide the clarity
-        // cut: "your_cut_here", // You need to provide the cut
-        // carat: 0, // You need to provide the carat
+        origin: "your_origin_here", // You need to provide the origin
+        color: "your_color_here", // You need to provide the color
+        clarity: "your_clarity_here", // You need to provide the clarity
+        cut: "your_cut_here", // You need to provide the cut
+        carat: 0, // You need to provide the carat
         price: parseFloat(product.materialBuyPrice)
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
@@ -204,7 +204,7 @@ const BillJewelry = () => {
 
   useEffect(() => {
     // Retrieve data from local storage
-    const savedProducts = JSON.parse(localStorage.getItem('goldData')) || [];
+    const savedProducts = JSON.parse(localStorage.getItem('jewelryData')) || [];
     setProducts(savedProducts);
   }, []);
 
@@ -232,15 +232,27 @@ const BillJewelry = () => {
       <div>
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
-            <span>Product</span>
+            <span>Gold type</span>
             <span>Weight</span>
-            <span>Price</span>
+            <span>Gold price</span>
+            <span>Cut</span>
+            <span>Carat</span>
+            <span>Color</span>
+            <span>Clarity</span>
+            <span>Origin</span>
+            <span>Gem price</span>
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
               <span>{product.goldType}</span>
               <span>{product.weight}</span>
               <span>{product.materialBuyPrice}$</span>
+              <span>{product.cut}</span>
+              <span>{product.carat}</span>
+              <span>{product.color}</span>
+              <span>{product.clarity}</span>
+              <span>{product.origin}</span>
+              <span>{product.gemBuyPrice + '$'}</span>
             </div>
           ))}
         </div>
