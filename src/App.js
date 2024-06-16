@@ -1,8 +1,7 @@
-
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NotFoundPage from './Pages/NotFoundPage/NotFoundPage'
-import Layout from './Layout/Layout'
+import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
+import Layout from './Layout/Layout';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import TestPage from './Pages/TestPage/TestPage';
 import ListProduct from './Pages/DetailPage/ListProduct';
@@ -43,60 +42,63 @@ import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
 import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
 import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
 import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
+
+import { useSelector } from 'react-redux';
 import BillDiamond from './Pages/BillBuying/BillDiamond';
 import BillJewelry from './Pages/BillBuying/BillJewelry';
 
 function App() {
+  let userInfo = useSelector((state) => state.userReducer.userInfo);
+
   return (
     <div className="min-h-screen">
-
-       <BrowserRouter>
+      <BrowserRouter>
         <Routes>
-          <Route path='/' element={<LoginPage />} />
-          <Route path='/adminPage' element={<AdminPage />} />
-          <Route path='*' element={<NotFoundPage />} />
-          <Route path='/test' element={<Layout Component={TestPage} />} />
-          <Route path='/feedbacks' element={<Layout Component={Feedbacks} />} />
-          <Route path='/homePage' element={<Layout Component={ListProduct} />} />
-          <Route path='/detail/:productCode' element={<Layout Component={DetailPage} />} />
-          <Route path='/buyProduct' element={<Layout Component={BuyListProduct} />} />
-          <Route path='/cashierListOrder' element={<Layout Component={CashierListOrder} />} />
-          <Route path='/cashierOrderDetail/:orderKey' element={<Layout Component={CashierOrderDetail} />} />
-          <Route path='/CartPage' element={<Layout Component={CartPage} />} />
-          <Route path='/detailOrderSended/:orderKey' element={<Layout Component={DetailOrderSended} />} />
-          <Route path='/listOrderSent' element={<Layout Component={SentPagee} />} />
-          <Route path='/storeProductDetail/:orderCode' element={<Layout Component={StoreProductDetail} />} />
-          <Route path='/cashierDelivered' element={<Layout Component={CashierDelivered} />} />
-          <Route path='/buyDetail' element={<Layout Component={BuyDetail} />} />
-          <Route path='/cashierUpdateOrder/:orderKey' element={<Layout Component={CashierUpdateOrder} />} />
-          <Route path='/inventory' element={<Layout Component={Inventory} />} />
-          <Route path='/manageGold' element={<Layout Component={ManageGold} />} />
-          <Route path='/manageDiamond' element={<Layout Component={ManageDiamond} />} />
-          <Route path='/manageJewelry' element={<Layout Component={ManageJewelry} />} />
-          <Route path='/gold-price' element={<Layout Component={GoldPrice} />} />
-          <Route path='/add-diamond' element={<Layout Component={AddDiamond} />} />
-          <Route path='/add-jewelry' element={<Layout Component={AddJewelry} />} />
-          <Route path='/add-gold' element={<Layout Component={AddGold} />} />
-          <Route path='/bill-gold' element={<Layout Component={BillGold} />} />
-          <Route path='/bill-diamond' element={<Layout Component={BillDiamond} />} />
-          <Route path='/bill-jewelry' element={<Layout Component={BillJewelry} />} />
-          <Route path='/employee' element={<Layout Component={Employee} />} />
-          <Route path='/add-employee' element={<Layout Component={AddEmployee} />} />
-          <Route path='/view-employee' element={<Layout Component={ViewEmployee} />} />
-          <Route path='/view-employee/:id' element={<Layout Component={ViewEmployee} />} />
-          <Route path='/edit-employee' element={<Layout Component={EditEmployee} />} />
-          <Route path='/profile' element={<Layout Component={Profile} />} />
-          <Route path='/customer' element={<Layout Component={CustomerDetails} />} />
-          <Route path='/dashboard' element={<Layout Component={DashBoard} />} />
-          <Route path='/policy' element={<Policy />} />
-          <Route path='/service' element={<Service />} />
-          <Route path='/shop' element={<Shop />} />
-          <Route path='/about-system' element={<AboutSystem />} />
-          <Route path='/policy-login' element={<PolicyLogin />} />
-          <Route path='/service-login' element={<ServiceLogin />} />
-          <Route path='/shop-login' element={<ShopLogin />} />
-          <Route path='/about-system-login' element={<AboutSystemLogin />} />
 
+          <Route path="/" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+          {userInfo ? (
+            <>
+              <Route path="/feedbacks" element={<Layout Component={Feedbacks} />} />
+              <Route path="/homePage" element={<Layout Component={ListProduct} />} />
+              <Route path="/detail/:productCode" element={<Layout Component={DetailPage} />} />
+              <Route path="/buyProduct" element={<Layout Component={BuyListProduct} />} />
+              <Route path="/cashierListOrder" element={<Layout Component={CashierListOrder} />} />
+              <Route path="/cashierOrderDetail/:orderKey" element={<Layout Component={CashierOrderDetail} />} />
+              <Route path="/CartPage" element={<Layout Component={CartPage} />} />
+              <Route path="/detailOrderSended/:orderKey" element={<Layout Component={DetailOrderSended} />} />
+              <Route path="/listOrderSent" element={<Layout Component={SentPagee} />} />
+              <Route path="/storeProductDetail/:orderCode" element={<Layout Component={StoreProductDetail} />} />
+              <Route path="/cashierDelivered" element={<Layout Component={CashierDelivered} />} />
+              <Route path="/buyDetail" element={<Layout Component={BuyDetail} />} />
+              <Route path="/cashierUpdateOrder/:orderKey" element={<Layout Component={CashierUpdateOrder} />} />
+              <Route path="/inventory" element={<Layout Component={Inventory} />} />
+              <Route path="/manageGold" element={<Layout Component={ManageGold} />} />
+              <Route path="/manageDiamond" element={<Layout Component={ManageDiamond} />} />
+              <Route path="/manageJewelry" element={<Layout Component={ManageJewelry} />} />
+              <Route path="/gold-price" element={<Layout Component={GoldPrice} />} />
+              <Route path="/add-diamond" element={<Layout Component={AddDiamond} />} />
+              <Route path="/add-jewelry" element={<Layout Component={AddJewelry} />} />
+              <Route path="/add-gold" element={<Layout Component={AddGold} />} />
+              <Route path="/bill-gold" element={<Layout Component={BillGold} />} />
+              <Route path="/employee" element={<Layout Component={Employee} />} />
+              <Route path="/add-employee" element={<Layout Component={AddEmployee} />} />
+              <Route path="/view-employee" element={<Layout Component={ViewEmployee} />} />
+              <Route path="/view-employee/:staffId" element={<Layout Component={ViewEmployee} />} />
+              <Route path="/edit-employee/:id" element={<Layout Component={EditEmployee} />} />
+              <Route path="/profile" element={<Layout Component={Profile} />} />
+              <Route path="/customer" element={<Layout Component={CustomerDetails} />} />
+              <Route path="/dashboard" element={<Layout Component={DashBoard} />} />
+              <Route path="/policy" element={<Layout Component={Policy} />} />
+              <Route path="/service" element={<Layout Component={Service} />} />
+              <Route path="/shop" element={<Layout Component={Shop} />} />
+              <Route path="/about-system" element={<Layout Component={AboutSystem} />} />
+              <Route path="/policy-login" element={<Layout Component={PolicyLogin} />} />
+              <Route path="/service-login" element={<Layout Component={ServiceLogin} />} />
+              <Route path="/shop-login" element={<Layout Component={ShopLogin} />} />
+              <Route path="/about-system-login" element={<Layout Component={AboutSystemLogin} />} />
+            </>
+          ) : null}
         </Routes>
       </BrowserRouter>
     </div>

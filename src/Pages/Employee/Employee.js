@@ -61,7 +61,7 @@ export default function EmployeeList() {
                 <span className={`employee-list-status ${employee.status ? 'online' : 'offline'}`}></span>
               </td>
               <td>
-                <NavLink to={`/view-employee/${employee.id}`}>
+                <NavLink to={`/view-employee/${employee.staffId}`}>
                   <button className="employee-list-view-button">View</button>
                 </NavLink>
               </td>

@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Button, Radio, Select, DatePicker } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import moment from 'moment';
 import './EditEmployee.css';
+import { adornicaServ } from '../../service/adornicaServ';
 
 const { Option } = Select;
 
-const initialEmployee = {
-  id: '001',
-  name: 'Nguyen Tan Thanh',
-  email: 'thanhntse171854@fpt.edu.vn',
-  gender: 'Male',
-  birthday: '2001-11-09',
-  role: 'Manager',
-  phone: '0908911035',
-  storeAddress: '6224 Richmond Ave., Houston, US',
-  avatar: null
-};
 
 export default function EditEmployee() {
-  const [form, setForm] = useState(initialEmployee);
-
+  const [form, setForm] = useState();
+  const [employee, setEmployee] = useState();
+  const { staffId } = useParams();
+  useEffect(() => {
+    adornicaServ.getViewEmployee(staffId)
+      .then((res) => {
+        console.log(res.data.metadata);
+        setEmployee(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [staffId]);
+  
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -64,11 +66,11 @@ export default function EditEmployee() {
         <div className="edit-header">
           <div className="edit-image">
             <label htmlFor="avatar-upload" className="edit-placeholder">
-              {form.avatar ? (
-                <img src={form.avatar} alt="Avatar" className="avatar" />
+              {/* {form.avatar ? (
+                <img src="{form.avatar}" alt="Avatar" className="avatar" />
               ) : (
                 '+'
-              )}
+              )} */}
             </label>
             <input
               id="avatar-upload"
@@ -78,13 +80,13 @@ export default function EditEmployee() {
             />
           </div>
           <div className="edit-info">
-            <Input className="input-field" placeholder="Full Name" name="name" value={form.name} onChange={handleChange} />
-            <Input className="input-field" placeholder="Phone number" name="phone" value={form.phone} onChange={handleChange} />
-            <Input className="input-field" placeholder="Email" name="email" value={form.email} onChange={handleChange} />
+            <Input className="input-field" placeholder="Full Name" name="name" onChange={handleChange} />
+            <Input className="input-field" placeholder="Phone number" name="phone"  onChange={handleChange} />
+            <Input className="input-field" placeholder="Email" name="email"  onChange={handleChange} />
             <DatePicker
               className="input-field"
               placeholder="Birthday"
-              value={moment(form.birthday)}
+              // value={moment(form.birthday)}
               onChange={handleDateChange}
               format="YYYY-MM-DD"
               style={{ width: '100%' }}
@@ -96,14 +98,14 @@ export default function EditEmployee() {
           <h3>Work Information</h3>
           <div className="role-group-edit">
             <h3>Role:</h3>
-            <Radio.Group name="role" value={form.role} onChange={handleChange} style={{ marginLeft: '10px' }}>
+            <Radio.Group name="role" onChange={handleChange} style={{ marginLeft: '10px' }}>
               <Radio value="Staff">Staff</Radio>
               <Radio value="Manager">Manager</Radio>
             </Radio.Group>
           </div>
           <div className="store-select-edit">
             <h3>Store address:</h3>
-            <Select value={form.storeAddress} onChange={handleSelectChange} style={{ width: '100%', marginLeft: '10px' }}>
+            <Select  onChange={handleSelectChange} style={{ width: '100%', marginLeft: '10px' }}>
               <Option value="6224 Richmond Ave., Houston, US">6224 Richmond Ave., Houston, US</Option>
               {/* Add more store options here */}
             </Select>

@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import './ViewEmployee.css';
-
-const initialEmployee = {
-  id: '001',
-  name: 'Nguyen Tan Thanh',
-  email: 'thanhntse171854@fpt.edu.vn',
-  gender: 'Male',
-  age: 34,
-  role: 'Sale staff',
-  phone: '0908911035',
-  storeAddress: '6224 Richmond Ave., Houston, US',
-  status: true,
-  statusText: 'Working',
-  avatar: null
-};
+import { adornicaServ } from '../../service/adornicaServ';
 
 function ViewEmployee() {
-  const [employee, setEmployee] = useState(initialEmployee);
+  const [employee, setEmployee] = useState();
+  const { staffId } = useParams();
 
+  useEffect(() => {
+    adornicaServ.getViewEmployee(staffId)
+      .then((res) => {
+        console.log(res.data.metadata);
+        setEmployee(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [staffId]);
   const handleDelete = () => {
-    // Logic to delete the employee
-    // For example, you can send a request to your server to delete the employee
     console.log('Employee deleted');
   };
 
@@ -38,12 +34,12 @@ function ViewEmployee() {
 
   return (
     <div className="profile-container">
-      <h1 className="profile-title">Profile of Name</h1>
+      <h1 className="profile-title">Profile of {employee?.name}</h1>
       <div className="profile-card">
         <div className="profile-header">
           <div className="profile-image">
             <label htmlFor="avatar-upload" className="profile-placeholder">
-              {employee.avatar ? (
+              {employee?.avatar ? (
                 <img src={employee.avatar} alt="Avatar" className="avatar" />
               ) : (
                 '+'
@@ -57,26 +53,26 @@ function ViewEmployee() {
             />
           </div>
           <div className="profile-info">
-            <h2>{employee.name}</h2>
-            <p>ID: {employee.id}</p>
-            <p>{employee.email}</p>
-            <p>{employee.gender}, {employee.age}</p>
+            <h2>{employee?.name}</h2>
+            <p>ID: {employee?.id}</p>
+            <p>{employee?.phone}</p>
+            <p>{employee?.roles}</p>
             <div className="profile-status">
-              <span className={`status-indicator ${employee.status ? 'online' : 'offline'}`}></span>
-              <span className="status-text">{employee.statusText}</span>
+              <span className={`status-indicator ${employee?.status ? 'online' : 'offline'}`}></span>
+              <span className="status-text">{employee?.status ? 'Online' : 'Offline'}</span>
             </div>
           </div>
           <div className="edit-button">
-            <NavLink to="/edit-employee">
+            <NavLink to={`/edit-employee/${employee?.id}`}>
               <button>Edit</button>
             </NavLink>
           </div>
         </div>
         <hr />
         <div className="profile-details">
-          <p><strong>Role:</strong> {employee.role}</p>
-          <p><strong>Phone:</strong> {employee.phone}</p>
-          <p><strong>Store address:</strong> {employee.storeAddress}</p>
+          <p><strong>Role:</strong> {employee?.roleUser}</p>
+          <p><strong>Phone:</strong> {employee?.phone}</p>
+          <p><strong>Store address:</strong> {employee?.address}</p>
           <p><strong>Other information ...</strong></p>
         </div>
         <div className="profile-actions">
