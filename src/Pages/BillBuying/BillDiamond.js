@@ -317,7 +317,7 @@ const BillDiamond = () => {
           onClick={handleFinishClick}
           disabled={isFinishButtonDisabled}
         >
-          FINISH
+          CREATE
         </button>
       </div>
 
