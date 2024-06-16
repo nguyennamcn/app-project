@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import Modal from 'react-modal';
 import { NavLink } from 'react-router-dom';
 
-// Define styles as objects
+Modal.setAppElement('#root'); 
+
 const pageStyles = {
   container: {
     background: '#FFFFFF',
@@ -113,8 +114,6 @@ const pageStyles = {
 };
 
 const PurchasePage = () => {
-  // const userInfo = useSelector((state) => state.userReducer.userInfo);
-  
   const [customerDetails, setCustomerDetails] = useState({
     name: '',
     phone: '',
@@ -127,6 +126,8 @@ const PurchasePage = () => {
     { name: 'Gold Bars', quantity: 1, price: 340 },
     { name: '24K Gold', quantity: 1, price: 290 },
   ]);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleDetailChange = (e) => {
     const { name, value } = e.target;
@@ -145,6 +146,14 @@ const PurchasePage = () => {
 
   const handleMouseUp = (e) => {
     e.target.style.backgroundColor = '';
+  };
+
+  const handleFinishClick = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   return (
@@ -205,14 +214,40 @@ const PurchasePage = () => {
         >
           Back
         </NavLink>
-        <NavLink
+        <button
           style={pageStyles.finishButton}
+          onClick={handleFinishClick}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
         >
           Finish
-        </NavLink>
+        </button>
       </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          },
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            padding: '20px',
+            borderRadius: '10px',
+            width: '300px',
+            textAlign: 'center',
+          },
+        }}
+      >
+        <h2>Finish Successfully</h2>
+        <button onClick={closeModal} style={{ marginTop: '20px', padding: '10px 20px', borderRadius: '5px', backgroundColor: '#4CAF50', color: 'white', border: 'none', cursor: 'pointer' }}>Close</button>
+      </Modal>
     </div>
   );
 };
