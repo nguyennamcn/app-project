@@ -36,6 +36,8 @@ import AddEmployee from './Pages/Employee/AddEmployee';
 import ViewEmployee from './Pages/Employee/ViewEmployee';
 import EditEmployee from './Pages/Employee/EditEmployee';
 import Profile from './Pages/Profile/Profile';
+import CustomerDetails from './Pages/Customer/Customer';
+import DashBoard from './Pages/DashBoard/DashBoard';
 
 function App() {
   return (
@@ -75,8 +77,8 @@ function App() {
           <Route path='/view-employee/:id' element={<Layout Component={ViewEmployee} />} />
           <Route path='/edit-employee' element={<Layout Component={EditEmployee} />} />
           <Route path='/profile' element={<Layout Component={Profile} />} />
-
-
+          <Route path='/customer' element={<Layout Component={CustomerDetails} />} />
+          <Route path='/dashboard' element={<Layout Component={DashBoard} />} />
         </Routes>
       </BrowserRouter>
     </div>

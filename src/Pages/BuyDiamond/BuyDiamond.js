@@ -158,7 +158,7 @@ const DiamondSelection = () => {
 
   const handleSubmit = () => {
     if (!name || !phone || diamondItems.some(item => !item.color || !item.cut || !item.clarity || !item.carat || !item.origin)) {
-      alert('Please fill in all the fields.');
+      // alert('Please fill in all the fields.');
       return;
     }
 
