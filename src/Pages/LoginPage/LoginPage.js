@@ -66,10 +66,10 @@ const LoginPage = () => {
           </div>
         </div>
         <div class="header__login__right">
-          <a style={{textDecoration: 'none'}} href="#">Service</a>
-          <a style={{textDecoration: 'none'}} href="#">Policy</a>
-          <a style={{textDecoration: 'none'}} href="#">Shop</a>
-          <a style={{textDecoration: 'none'}} href="#">About system</a>
+          <NavLink style={{ textDecoration: 'none' }} to="/service-login">Service</NavLink>
+          <NavLink style={{ textDecoration: 'none' }} to="/policy-login">Policy</NavLink>
+          <NavLink style={{ textDecoration: 'none' }} to="/shop-login">Shop</NavLink>
+          <NavLink style={{ textDecoration: 'none' }} to="/about-system-login">About system</NavLink>
         </div>
       </div>
       <div class="login-form container">
