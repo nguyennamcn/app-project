@@ -47,46 +47,36 @@ const columns = (handleView, handleDelete, handleUpdate) => [
     //     dataIndex: 'deliveryStatus',
     //     key: 'deliveryStatus',
     // },
-    // {
-    //     title: 'Action',
-    //     key: 'action',
-    //     width: 180,
-    //     render: (_, record) => {
-    //         const isSuccess = record.deliveryStatus.toLowerCase() === 'success';
+    {
+        title: 'Action',
+        key: 'action',
+        width: 180,
+        render: (_, record) => {
+            return (
+                <div style={{ width: '50%', display: 'flex' }}>
+                    <NavLink to={`/payment-bill/${record.orderCode}`}>
+                    <Button
+                        style={{ marginRight: '14px' }}
+                        type="primary"
+                        onClick={() => handleView(record.orderCode)}
+                    >
+                        View
+                    </Button>
+                    </NavLink>
 
-    //         const isPaid = record.paymentMethod.toLowerCase() === ('cash' || 'banking') ;
-    //         return (
-    //             <div style={{ width: '50%', display: 'flex' }}>
-    //                 <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>
-    //                 <Button
-    //                     style={{ marginRight: '14px' }}
-    //                     type="primary"
-    //                     onClick={() => handleView(record.orderCode)}
-    //                 >
-    //                     View
-    //                 </Button>
-    //                 </NavLink>
-    //                 <Button 
-    //                     style={{ marginRight: '14px' }}
-    //                     type="primary" 
-    //                     danger 
-    //                     onClick={() => handleDelete(record.orderCode)}
-    //                     disabled={isSuccess || isPaid}
-    //                 >
-    //                     Delete
-    //                 </Button>
-    //                 <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>
-    //                 <Button 
-    //                     type="primary" 
-    //                     disabled={isSuccess || isPaid}
-    //                 >
-    //                     Update
-    //                 </Button>
-    //                 </NavLink>
-    //             </div>
-    //         );
-    //     }
-    // },
+                    <Button 
+                        style={{ marginRight: '14px' }}
+                        type="primary" 
+                        danger 
+                        onClick={() => handleDelete(record.orderCode)}
+                    >
+                        Delete
+                    </Button>
+            
+                </div>
+            );
+        }
+    },
 ];
 
 export default function PurchaseOrder() {
@@ -122,7 +112,7 @@ export default function PurchaseOrder() {
     };
 
     const confirmDelete = () => {
-        adornicaServ.deletePreOrder(orderCodeToDelete)
+        adornicaServ.deletePurchaseOrder(orderCodeToDelete)
             .then(() => {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
