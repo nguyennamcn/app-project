@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { NavLink, useLocation } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
-Modal.setAppElement('#root'); 
+Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
@@ -57,7 +57,7 @@ const pageStyles = {
   },
   tableHeader: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr',
+    gridTemplateColumns: 'repeat(6, 1fr)',
     fontWeight: 'bold',
     borderBottom: '1px solid #333',
     paddingBottom: '5px',
@@ -65,14 +65,14 @@ const pageStyles = {
   },
   tableRow: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr',
+    gridTemplateColumns: 'repeat(6, 1fr)',
     paddingTop: '5px',
     paddingBottom: '5px',
     textAlign: 'center',
   },
   tableFooter: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr 1fr',
+    gridTemplateColumns: 'repeat(6, 1fr)',
     fontWeight: 'bold',
     borderTop: '1px solid #333',
     paddingTop: '5px',
@@ -112,6 +112,19 @@ const pageStyles = {
     transition: 'background-color 0.3s',
     textDecoration: 'none',
     textAlign: 'center',
+  },
+  printButton: {
+    backgroundColor: '#ADD8E6',
+    color: 'black',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '15px',
+    transition: 'background-color 0.3s',
+    textDecoration: 'none',
+    textAlign: 'center',
+    // marginLeft: '10px',
   },
 };
 
@@ -158,23 +171,20 @@ const BillDiamond = () => {
 
   const generateRandomOrderCode = () => {
     return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
-};
+  };
+
   const handleFinishClick = () => {
-    // Prepare data to send
     const purchaseData = {
-      purchaseOrderCode: generateRandomOrderCode(), // You need to provide a purchase order code
-      staffId: userInfo.id, // Set to the staff ID you want to associate with the purchase
+      purchaseOrderCode: generateRandomOrderCode(),
+      staffId: userInfo.id,
       customerName: customerDetails.name,
       phone: customerDetails.phone,
       list: products.map(product => ({
-        //name: product.goldType,
-        // materialId: 0, // You need to provide a material ID
-        //weight: parseFloat(product.weight),
-        origin: product.origin, // You need to provide the origin
-        color: product.color, // You need to provide the color
-        clarity: product.clarity, // You need to provide the clarity
-        cut: product.cut, // You need to provide the cut
-        carat: product.carat, // You need to provide the carat
+        origin: product.origin,
+        color: product.color,
+        clarity: product.clarity,
+        cut: product.cut,
+        carat: product.carat,
         price: parseFloat(product.gemBuyPrice)
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
@@ -182,19 +192,16 @@ const BillDiamond = () => {
     };
 
     adornicaServ
-    .postPurchaseOrderCode(purchaseData)
-    .then((res) => {
-      console.log('Order submitted successfully:', res.data);
-    })
-    .catch((err) => {
-      console.error('Error submitting order:', err.response);
-      alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
-    });
-  
-    // Send the purchase data to the server or do whatever you need to do with it
+      .postPurchaseOrderCode(purchaseData)
+      .then((res) => {
+        console.log('Order submitted successfully:', res.data);
+      })
+      .catch((err) => {
+        console.error('Error submitting order:', err.response);
+        alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
+      });
+
     console.log("Purchase data:", purchaseData);
-  
-    // Show modal
     setModalIsOpen(true);
   };
 
@@ -203,10 +210,13 @@ const BillDiamond = () => {
   };
 
   useEffect(() => {
-    // Retrieve data from local storage
     const savedProducts = JSON.parse(localStorage.getItem('gemData')) || [];
     setProducts(savedProducts);
   }, []);
+
+  const handlePrintClick = () => {
+    // window.print();
+  };
 
   return (
     <div style={pageStyles.container}>
@@ -220,7 +230,6 @@ const BillDiamond = () => {
 
         <label style={pageStyles.detailLabel}>Address:</label>
         <input type="text" style={pageStyles.detailInput} name="address" value={customerDetails.address} onChange={handleDetailChange} />
-
 
         <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select style={pageStyles.paymentSelect} name="paymentMethod" value={customerDetails.paymentMethod} onChange={handleDetailChange}>
@@ -265,6 +274,17 @@ const BillDiamond = () => {
       >
         FINISH
       </button>
+      
+      <NavLink to="/buyProduct" exact>
+        <button style={pageStyles.backButton}>BACK</button>
+      </NavLink>
+      
+      <button
+        style={pageStyles.printButton}
+        onClick={handlePrintClick}
+      >
+        PRINT
+      </button>
 
       <Modal
         isOpen={modalIsOpen}
@@ -275,7 +295,7 @@ const BillDiamond = () => {
         <h2>Payment success</h2>
         <p>Thank you for your purchase!</p>
         <NavLink to="/buyProduct" exact>
-          <button style={pageStyles.backButton}>Back</button>
+          <button style={pageStyles.backButton}>BACK</button>
         </NavLink>
       </Modal>
     </div>
