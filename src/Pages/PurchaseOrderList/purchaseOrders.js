@@ -128,8 +128,8 @@ export default function PurchaseOrder() {
         showModal("Do you really want to delete this order?", key);
     };
 
-    const handleView = (key) => {
-        adornicaServ.getListOrderDetail(key)
+    const handleView = (code) => {
+        adornicaServ.getListOrderPurchase(code)
             .then((res) => {
                 console.log(res.data); // Replace with navigation to detail page if needed
             })

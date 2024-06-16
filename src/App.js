@@ -84,7 +84,7 @@ function App() {
               <Route path="/bill-gold" element={<Layout Component={BillGold} />} />
               <Route path="/bill-diamond" element={<Layout Component={BillDiamond} />} />
               <Route path="/bill-jewelry" element={<Layout Component={BillJewelry} />} />
-              <Route path="/payment-bill/:orderKey" element={<Layout Component={PurchaseDetail} />} />
+              <Route path="/payment-bill/:orderCode" element={<Layout Component={PurchaseDetail} />} />
               <Route path="/employee" element={<Layout Component={Employee} />} />
               <Route path="/add-employee" element={<Layout Component={AddEmployee} />} />
               <Route path="/view-employee" element={<Layout Component={ViewEmployee} />} />

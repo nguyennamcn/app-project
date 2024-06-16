@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
@@ -143,175 +143,161 @@ const pageStyles = {
 };
 
 const PurchaseDetail = () => {
-    const [customerDetails, setCustomerDetails] = useState({
-      name: '',
-      phone: '',
-      address: '',
-      paymentMethod: 'Cash',
-    });
-    const [products, setProducts] = useState([]);
-    const [totalItems, setTotalItems] = useState(0);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [isFinishButtonDisabled, setIsFinishButtonDisabled] = useState(false);
-    const location = useLocation();
-  
-    const handleDetailChange = (event) => {
-      const { name, value } = event.target;
-      setCustomerDetails((prevDetails) => ({
-        ...prevDetails,
-        [name]: value,
-      }));
-    };
-  
-    const calculateTotalPrice = () => {
-      return products.reduce((total, product) => total + product.price, 0).toFixed(2);
-    };
-  
-    const handleFinishClick = () => {
-      setModalIsOpen(true);
-    };
-  
-    const closeModal = () => {
-      setModalIsOpen(false);
-    };
-  
-    const handlePrintClick = () => {
-      window.print();
-    };
-  
-    const handleMouseDown = () => {
-      setIsFinishButtonDisabled(true);
-    };
-  
-    const handleMouseUp = () => {
-      setIsFinishButtonDisabled(false);
-    };
-  
-    useEffect(() => {
-      const orderCode = new URLSearchParams(location.search).get('orderCode');
-      if (orderCode) {
-        adornicaServ.getDetailPurchase(orderCode).then((response) => {
-          const data = response.data.metadata;
-          setCustomerDetails({
-            name: data.customerName,
-            phone: data.customerPhone,
-            address: '', // Assuming address is not available in metadata
-            paymentMethod: data.paymentMethod,
-          });
-          setProducts(data.list);
-          setTotalItems(data.list.length);
-        });
-      }
-    }, [location]);
-  
-    return (
-      <div style={pageStyles.container}>
-        <div style={pageStyles.header}>Purchase</div>
-        <div style={pageStyles.customerDetails}>
-          <label style={pageStyles.detailLabel}>Name:</label>
-          <input
-            type="text"
-            style={pageStyles.detailInput}
-            name="name"
-            value={customerDetails.name}
-            onChange={handleDetailChange}
-          />
-  
-          <label style={pageStyles.detailLabel}>Phone:</label>
-          <input
-            type="text"
-            style={pageStyles.detailInput}
-            name="phone"
-            value={customerDetails.phone}
-            onChange={handleDetailChange}
-          />
-  
-          <label style={pageStyles.detailLabel}>Address:</label>
-          <input
-            type="text"
-            style={pageStyles.detailInput}
-            name="address"
-            value={customerDetails.address}
-            onChange={handleDetailChange}
-          />
-  
-          <label style={pageStyles.detailLabel}>Payment methods:</label>
-          <select
-            style={pageStyles.paymentSelect}
-            name="paymentMethod"
-            value={customerDetails.paymentMethod}
-            onChange={handleDetailChange}
-          >
-            <option value="Cash">Cash</option>
-            <option value="Card">Banking</option>
-          </select>
-        </div>
-  
-        <div>
-          <div style={pageStyles.productTable}>
-            <div style={pageStyles.tableHeader}>
-              <span>Product ID</span>
-              <span>Product Code</span>
-              <span>Price</span>
-            </div>
-            {products.map((product, index) => (
-              <div key={index} style={pageStyles.tableRow}>
-                <span>{product.productId}</span>
-                <span>{product.productCode}</span>
-                <span>${product.price}</span>
-              </div>
-            ))}
-            <div style={pageStyles.tableFooter}>
-              <span>Total</span>
-              <span>{totalItems} items</span>
-              <span>${calculateTotalPrice()}</span>
-            </div>
-          </div>
-        </div>
-  
-        <div style={pageStyles.footerInfo}>
-          <div style={pageStyles.buttonWrapper}>
-            <NavLink to="/previous-page" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
-            <button
-              onClick={handleFinishClick}
-              style={{ ...pageStyles.button, ...pageStyles.finishButton }}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              disabled={isFinishButtonDisabled}
-            >
-              Finish
-            </button>
-            <button
-              onClick={handlePrintClick}
-              style={{ ...pageStyles.button, ...pageStyles.printButton }}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-            >
-              Print
-            </button>
-          </div>
-        </div>
-  
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={pageStyles.modal}
-        >
-          <h2>Order Completed!</h2>
-          <p>Your order has been successfully submitted.</p>
-          <div style={pageStyles.modalButtonWrapper}>
-            <button
-              onClick={closeModal}
-              style={{ ...pageStyles.button, ...pageStyles.finishButton }}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-            >
-              OK
-            </button>
-          </div>
-        </Modal>
-      </div>
-    );
+  const [customerDetails, setCustomerDetails] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    paymentMethod: 'Cash',
+  });
+  const [products, setProducts] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isFinishButtonDisabled, setIsFinishButtonDisabled] = useState(false);
+  const { orderCode } = useParams();
+  const [sp, setSp] = useState();
+
+  const handleDetailChange = (event) => {
+    const { name, value } = event.target;
+    setCustomerDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
   };
-  
-  export default PurchaseDetail;
+
+  const calculateTotalPrice = () => {
+    return products.reduce((total, product) => total + product.price, 0).toFixed(2);
+  };
+
+  const handleFinishClick = () => {
+    const data = {
+      orderId: sp?.orderId,
+      orderCode: sp?.orderCode,
+      address: sp?.customerAddress,
+      name: sp?.customerName,
+      dateOfBirth: '',
+      paymentMethod: 'CASH',
+      amount: sp?.totalAmount,
+      customerPhone: sp?.customerPhone
+    };
+    adornicaServ.postPayment(data)
+      .then((res) => {
+        console.log('Order updated successfully:', res);
+      })
+      .catch((err) => {
+        console.error('Error updating order:', err.response); // Log error details
+      });
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handlePrintClick = () => {
+    window.print();
+  };
+
+  const handleMouseDown = () => {
+    setIsFinishButtonDisabled(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsFinishButtonDisabled(false);
+  };
+
+  useEffect(() => {
+    adornicaServ.getListOrderPurchase(orderCode)
+      .then((res) => {
+        console.log(res.data.metadata);
+        setSp(res.data.metadata)
+      })
+      .catch((err) => {
+        console.log(err);
+        // Handle errors as needed
+      });
+  }, [orderCode]);
+
+
+
+  return (
+    <div style={pageStyles.container}>
+      <div style={pageStyles.header}>Purchase</div>
+      <div style={pageStyles.customerDetails}>
+        <label style={pageStyles.detailLabel}>Name:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="name"
+          value={sp?.customerName}
+          onChange={handleDetailChange}
+        />
+
+        <label style={pageStyles.detailLabel}>Phone:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="phone"
+          value={sp?.customerPhone}
+          onChange={handleDetailChange}
+        />
+
+        <label style={pageStyles.detailLabel}>Address:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="address"
+          value={sp?.customerAddress}
+          onChange={handleDetailChange}
+        />
+
+      </div>
+      <div>
+        <h1>Order Code : {sp?.orderCode}</h1>
+        <h1>Order Code : {sp?.orderId}</h1>
+        <h1>Order Code : {sp?.totalAmount}</h1>
+      </div>
+
+      <div style={pageStyles.footerInfo}>
+        <div style={pageStyles.buttonWrapper}>
+          <NavLink to="/previous-page" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+          <button
+            onClick={handleFinishClick}
+            style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+          >
+            Finish
+          </button>
+          <button
+            onClick={handlePrintClick}
+            style={{ ...pageStyles.button, ...pageStyles.printButton }}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+          >
+            Print
+          </button>
+        </div>
+      </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={pageStyles.modal}
+      >
+        <h2>Order Completed!</h2>
+        <p>Your order has been successfully submitted.</p>
+        <div style={pageStyles.modalButtonWrapper}>
+          <button
+            onClick={closeModal}
+            style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+          >
+            OK
+          </button>
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+export default PurchaseDetail;
