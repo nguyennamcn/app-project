@@ -150,4 +150,14 @@ export const adornicaServ = {
         console.log(orderKey)
         return https.post(`/api/v1/orders/export-pdf/${orderKey}`);
     },
+
+    getListOrderPurchase: (orderCode) => {
+        console.log(orderCode)
+        return https.get(`/api/v1/purchases/${orderCode}`);
+    },
+
+    postPayment: (data) => {
+        console.log(data)
+        return https.post(`/api/v1/purchases/payment`, data);
+    },
 }
