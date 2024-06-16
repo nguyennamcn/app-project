@@ -77,6 +77,7 @@ export const adornicaServ = {
     },
 
     getDetailPurchase: (OrderCode) => {
+        console.log(OrderCode)
         return https.get(`/api/v1/orders/order/detail/${OrderCode}`);
     },
 
