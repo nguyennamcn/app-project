@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Define styles as objects
 const styles = {
@@ -96,8 +96,6 @@ const styles = {
 };
 
 const JewelrySelection = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [jewelryItems, setJewelryItems] = useState([{
     goldType: '',
     weight: '',
@@ -230,9 +228,10 @@ const JewelrySelection = () => {
   };
 
   const validateForm = () => {
-    const isFormValid = name && phone && jewelryItems.every(item => 
-      item.goldType && item.weight && (!item.diamond || (item.diamond && item.carat && item.color && item.clarity && item.cut))
+    const isFormValid = jewelryItems.every(item => 
+      item.goldType && item.weight && (!item.diamond || (item.diamond !== 'None' && item.carat && item.color && item.clarity && item.cut))
     );
+    console.log('Form valid:', isFormValid); // Debugging log
     setFormValid(isFormValid);
   };
 
@@ -270,7 +269,7 @@ const JewelrySelection = () => {
             </div>
             <div style={styles.formGroup} ref={index === jewelryItems.length - 1 ? newItemRef : null}>
               <label style={styles.label}>Gold type:</label>
-              <select style={styles.input} value={item.goldType} onChange={e => handleInputChange(index, 'goldType', e.target.value)}>
+              <select style={styles.input} value={item.goldType} onChange={e => handleInputChange(index, 'goldType', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
                 {goldPrices.map((gold) => (
@@ -286,11 +285,12 @@ const JewelrySelection = () => {
                 value={item.weight}
                 onChange={e => handleInputChange(index, 'weight', e.target.value)}
                 disabled={item.goldType === 'None'}
+                required
               />
             </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Diamond:</label>
-              <select style={styles.input} value={item.diamond} onChange={e => handleInputChange(index, 'diamond', e.target.value)}>
+              <select style={styles.input} value={item.diamond} onChange={e => handleInputChange(index, 'diamond', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
                 <option value="NATURAL">Natural</option>
@@ -305,6 +305,7 @@ const JewelrySelection = () => {
                 value={item.carat}
                 onChange={e => handleInputChange(index, 'carat', e.target.value)}
                 disabled={item.diamond === 'None'}
+                required={item.diamond !== 'None'}
               />
             </div>
             <div style={styles.formGroup}>
@@ -314,6 +315,7 @@ const JewelrySelection = () => {
                 value={item.color}
                 onChange={e => handleInputChange(index, 'color', e.target.value)}
                 disabled={item.diamond === 'None'}
+                required={item.diamond !== 'None'}
               >
                 <option value=''></option>
                 <option value='D'>D</option>
@@ -335,6 +337,7 @@ const JewelrySelection = () => {
                 value={item.clarity}
                 onChange={e => handleInputChange(index, 'clarity', e.target.value)}
                 disabled={item.diamond === 'None'}
+                required={item.diamond !== 'None'}
               >
                 <option value=''></option>
                 <option value='FL'>FL</option>
@@ -357,6 +360,7 @@ const JewelrySelection = () => {
                 value={item.cut}
                 onChange={e => handleInputChange(index, 'cut', e.target.value)}
                 disabled={item.diamond === 'None'}
+                required={item.diamond !== 'None'}
               >
                 <option value=""></option>
                 <option value="EX">EX</option>

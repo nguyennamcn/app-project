@@ -125,6 +125,19 @@ const pageStyles = {
     textDecoration: 'none',
     textAlign: 'center',
     // marginLeft: '10px',
+    marginTop:'20px',
+  },
+  modal: {
+    content: {
+      backgroundColor: '#4CAF50',
+      borderRadius: '10px',
+      padding: '20px',
+      maxWidth: '300px',
+      maxHeight: '200px',
+      margin: 'auto',
+      textAlign: 'center',
+      color: 'white',
+    },
   },
 };
 
@@ -219,7 +232,7 @@ const BillJewelry = () => {
     setProducts(savedProducts);
   }, []);
   const handlePrintClick = () => {
-    // window.print();
+    window.print();
   };
 
   return (
@@ -301,7 +314,7 @@ const BillJewelry = () => {
         contentLabel="Confirmation Modal"
         style={pageStyles.modal}
       >
-        <h2>Payment success</h2>
+        <h2>Successfully</h2>
         <p>Thank you for your purchase!</p>
         <NavLink to="/buyProduct" exact>
           <button style={pageStyles.backButton}>BACK</button>

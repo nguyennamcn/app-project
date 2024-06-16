@@ -112,6 +112,7 @@ const pageStyles = {
     transition: 'background-color 0.3s',
     textDecoration: 'none',
     textAlign: 'center',
+    marginTop:'20px',
   },
   printButton: {
     backgroundColor: '#ADD8E6',
@@ -126,7 +127,21 @@ const pageStyles = {
     textAlign: 'center',
     // marginLeft: '10px',
   },
+  modal: {
+    content: {
+      backgroundColor: '#4CAF50',
+      borderRadius: '10px',
+      padding: '20px',
+      maxWidth: '300px',
+      maxHeight: '200px',
+      margin: 'auto',
+      textAlign: 'center',
+      color: 'white',
+    },
+  },
 };
+
+
 
 const BillGold = () => {
   const userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -212,7 +227,7 @@ const BillGold = () => {
   }, []);
 
   const handlePrintClick = () => {
-    // window.print();
+    window.print();
   };
 
   return (
@@ -284,7 +299,7 @@ const BillGold = () => {
         contentLabel="Confirmation Modal"
         style={pageStyles.modal}
       >
-        <h2>Payment success</h2>
+          <h2>Successfully</h2>
         <p>Thank you for your purchase!</p>
         <NavLink to="/buyProduct" exact>
           <button style={pageStyles.backButton}>BACK</button>
