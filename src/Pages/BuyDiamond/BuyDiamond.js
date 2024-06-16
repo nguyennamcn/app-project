@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
+
+// Define styles as objects
 const styles = {
   container: {
     maxHeight: '70vh', // Adjust this value as needed
     overflowY: 'auto', // Add this line to enable vertical scrolling
-    background: '#7FDBF8',
-    padding: '20px 20px',
+    background: '#F7F0B6',
+    padding: '20px',
     maxWidth: '900px',
-    margin: 'auto',
+    margin: '0px auto',
     borderRadius: '10px',
     boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
     fontFamily: 'Arial, sans-serif',
@@ -18,23 +20,25 @@ const styles = {
   form: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '15px',
+    gap: '20px' // Increased gap for better spacing
   },
   formGroup: {
     display: 'flex',
     flexDirection: 'column',
+    flex: 1
   },
   label: {
-    fontSize: '15px',
+    fontSize: '16px',
     color: '#333',
     marginBottom: '5px',
     fontWeight: 'bold',
   },
   input: {
-    padding: '5px',
+    padding: '10px',
     border: '2px solid #cccccc',
     borderRadius: '5px',
-    fontSize: '20px',
+    fontSize: '16px',
+    width: '100%' // Ensure input takes full width
   },
   button: {
     backgroundColor: '#222222',
@@ -43,237 +47,163 @@ const styles = {
     padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '14px',
+    fontSize: '18px',
     gridColumn: 'span 2',
     textAlign: 'center',
+    textDecoration: 'none',
   },
-  addButton: {
+  buttonHover: {
+    backgroundColor: '#000000'
+  },
+  addButtonGold: {
     backgroundColor: '#4CAF50',
     color: 'white',
     border: 'none',
-    padding: '5px 10px',
+    padding: '10px 20px', // Increased padding for better look
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '14px',
+    fontSize: '16px', // Increased font size for better readability
     textAlign: 'center',
     gridColumn: 'span 2',
     justifySelf: 'center',
-    marginTop: '2px'
+    marginTop: '20px' // Increased margin for better spacing
   },
   deleteButton: {
     backgroundColor: '#FF6347',
     color: 'white',
     border: 'none',
-    padding: '5px 10px',
+    padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '12px',
-    textAlign: 'center',
-    position: 'absolute',
-    top: '5px',
-    right: '5px'
-  },
-  buttonHover: {
-    backgroundColor: '#000000',
+    fontSize: '16px',
+    marginLeft: '10px',
   },
   totalPrice: {
-    fontSize: '15px',
+    fontSize: '20px',
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
-  },
-  productTitle: {
-    gridColumn: 'span 2',
-    fontSize: '15px',
-    fontWeight: 'bold',
-    color: '#333',
-    position: 'relative',
-  },
+    margin: '20px 0'
+  }
 };
 
-const DiamondSelection = () => {
+const GoldSelection = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '' }]);
-  const [totalPrice, setTotalPrice] = useState('0.00');
+  const [goldItems, setGoldItems] = useState([{ goldType: '', weight: '' }]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [goldPrices, setGoldPrices] = useState([]);
+  const newItemRef = useRef(null);
+
   const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const navigate = useNavigate(); // Get the navigate function
 
   useEffect(() => {
-    const fetchPrice = async () => {
-      let calculatedTotalPrice = 0;
-      for (const item of diamondItems) {
-        const { color, cut, clarity, carat, origin } = item;
-        if (cut && carat && clarity && color && origin) {
-          const caratValue = parseFloat(carat);
-          if (isNaN(caratValue)) {
-            console.warn('Invalid carat value');
-            setTotalPrice('Invalid carat value');
-            return;
-          }
+    adornicaServ.getPriceMaterial()
+      .then((res) => {
+        setGoldPrices(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-          try {
-            const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, origin);
-            if (res.data && res.data.metadata) {
-              const priceData = res.data.metadata.find((data) => (
-                data.cut === cut &&
-                data.carat === caratValue &&
-                data.clarity === clarity &&
-                data.color === color &&
-                data.origin === origin
-              ));
-
-              if (priceData) {
-                calculatedTotalPrice += priceData.gemBuyPrice;
-              }
-            } else {
-              console.warn('Invalid response structure', res.data);
-              setTotalPrice('Invalid response structure');
-            }
-          } catch (err) {
-            console.error('Error fetching price:', err);
-            setTotalPrice('Error fetching price');
-          }
-        }
+  useEffect(() => {
+    let calculatedTotalPrice = 0;
+    goldItems.forEach(item => {
+      const selectedGold = goldPrices.find(gold => gold.materialName === item.goldType);
+      if (selectedGold) {
+        calculatedTotalPrice += selectedGold.materialBuyPrice * parseFloat(item.weight || 0);
       }
-      setTotalPrice(calculatedTotalPrice.toFixed(2));
-    };
-
-    fetchPrice();
-  }, [diamondItems]);
+    });
+    setTotalPrice(calculatedTotalPrice.toFixed(2));
+  }, [goldItems, goldPrices]);
 
   const handleAddItem = () => {
-    setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '' }]);
+    setGoldItems([...goldItems, { goldType: '', weight: '' }]);
+    setTimeout(() => {
+      if (newItemRef.current) {
+        newItemRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   const handleDeleteItem = (index) => {
-    const updatedItems = diamondItems.filter((_, i) => i !== index);
-    setDiamondItems(updatedItems);
+    const updatedItems = goldItems.filter((_, i) => i !== index);
+    setGoldItems(updatedItems);
   };
 
-  const handleDiamondItemChange = (index, field, value) => {
-    const newDiamondItems = [...diamondItems];
-    newDiamondItems[index][field] = value;
-    setDiamondItems(newDiamondItems);
-  };
-
-  const handleSubmit = () => {
-    if (!name || !phone || diamondItems.some(item => !item.color || !item.cut || !item.clarity || !item.carat || !item.origin)) {
-      // alert('Please fill in all the fields.');
-      return;
+  const handleGoldTypeChange = (index, value) => {
+    const newGoldItems = [...goldItems];
+    const selectedGold = goldPrices.find(gold => gold.materialName === value);
+    if (selectedGold) {
+      newGoldItems[index] = {
+        ...newGoldItems[index],
+        goldType: value,
+        materialBuyPrice: selectedGold.materialBuyPrice // Add materialBuyPrice here
+      };
+      setGoldItems(newGoldItems);
     }
+  };
 
-    const list = diamondItems.map(item => ({
-      color: item.color,
-      cut: item.cut,
-      clarity: item.clarity,
-      carat: parseFloat(item.carat),
-      origin: item.origin,
-    }));
+  const handleWeightChange = (index, value) => {
+    const newGoldItems = [...goldItems];
+    newGoldItems[index].weight = value;
+    setGoldItems(newGoldItems);
+  };
 
-    const purchaseData = {
-      staffId: userInfo.id,
-      customerName: name,
-      phone: phone,
-      list: list,
-      totalPrice: parseFloat(totalPrice),
-      productStore: false,
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
 
-    adornicaServ
-      .postPurchaseOrderCode(purchaseData)
-      .then((res) => {
-        console.log('Order submitted successfully:', res.data);
-        alert('Order submitted successfully');
-      })
-      .catch((err) => {
-        console.error('Error submitting order:', err.response);
-        alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
-      });
+  // Extract gold type, weight, and materialBuyPrice from goldItems array
+  const goldData = goldItems.map(item => ({
+    goldType: item.goldType,
+    weight: item.weight,
+    materialBuyPrice: item.weight * item.materialBuyPrice // Include materialBuyPrice here
+  }));
+
+  // Save gold data to local storage
+  localStorage.setItem('goldData', JSON.stringify(goldData));
+
+  navigate('/bill-buying');
   };
 
   return (
     <div style={styles.container}>
-      <div style={styles.form}>
-        {diamondItems.map((item, index) => (
+      <form style={styles.form} onSubmit={handleSubmit}>
+        {goldItems.map((item, index) => (
           <React.Fragment key={index}>
-            <div style={styles.productTitle}>
-              Diamond {index + 1}
-              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
-            </div>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Color:</label>
-              <select style={styles.input} value={item.color} onChange={(e) => handleDiamondItemChange(index, 'color', e.target.value)}>
+            <div style={styles.formGroup} ref={index === goldItems.length - 1 ? newItemRef : null}>
+              <label style={styles.label}>Gold type:</label>
+              <select style={styles.input} value={item.goldType} onChange={e => handleGoldTypeChange(index, e.target.value)}>
                 <option value=""></option>
-                <option value="D">D</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-                <option value="G">G</option>
-                <option value="H">H</option>
-                <option value="I">I</option>
-                <option value="J">J</option>
-                <option value="K">K</option>
-                <option value="L">L</option>
-                <option value="M">M</option>
+                {goldPrices.map((gold) => (
+                  <option key={gold.materialId} value={gold.materialName}>{gold.materialName}</option>
+                ))}
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Cut:</label>
-              <select style={styles.input} value={item.cut} onChange={(e) => handleDiamondItemChange(index, 'cut', e.target.value)}>
-                <option value=""></option>
-                <option value="EX">EX</option>
-                <option value="G">G</option>
-                <option value="F">F</option>
-                <option value="P">P</option>
-              </select>
-            </div>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Clarity:</label>
-              <select style={styles.input} value={item.clarity} onChange={(e) => handleDiamondItemChange(index, 'clarity', e.target.value)}>
-                <option value=""></option>
-                <option value="FL">FL</option>
-                <option value="IF">IF</option>
-                <option value="VVS1">VVS1</option>
-                <option value="VVS2">VVS2</option>
-                <option value="VS1">VS1</option>
-                <option value="VS2">VS2</option>
-                <option value="SI1">SI1</option>
-                <option value="SI2">SI2</option>
-                <option value="I1">I1</option>
-                <option value="I2">I2</option>
-                <option value="I3">I3</option>
-              </select>
-            </div>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Carat Weight:</label>
-              <input type="number" style={styles.input} value={item.carat} onChange={(e) => handleDiamondItemChange(index, 'carat', e.target.value)} />
-            </div>
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Origin:</label>
-              <select style={styles.input} value={item.origin} onChange={(e) => handleDiamondItemChange(index, 'origin', e.target.value)}>
-                <option value=""></option>
-                <option value="NATURAL">NATURAL</option>
-              </select>
+              <label style={styles.label}>Weight (gram):</label>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <input type="number" style={styles.input} value={item.weight} onChange={e => handleWeightChange(index, e.target.value)} />
+                <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+              </div>
             </div>
           </React.Fragment>
         ))}
-        <button
-          type="button"
-          style={styles.addButton}
-          onClick={handleAddItem}
-        >
-          ADD DIAMOND
-        </button>
-        <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
-        <NavLink to="/bill-buying" style={styles.button}
+        <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>ADD GOLD</button>
+        <div style={styles.totalPrice}>
+          Total price: {totalPrice} $
+        </div>
+        <button type="submit" style={styles.button}
           onMouseEnter={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-          onClick={handleSubmit}
         >
           PURCHASE
-        </NavLink>
-      </div>
+        </button>
+      </form>
     </div>
   );
 };
 
-export default DiamondSelection;
+export default GoldSelection;

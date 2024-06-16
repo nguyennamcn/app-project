@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Modal from 'react-modal';
 import { NavLink, useLocation } from 'react-router-dom';
+import { adornicaServ } from '../../service/adornicaServ';
 
 Modal.setAppElement('#root'); 
 
@@ -125,7 +126,7 @@ const PurchasePage = () => {
     paymentMethod: 'Cash'
   });
 
-  const [products] = useState(formData?.list || []);
+  const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleDetailChange = (e) => {
@@ -137,7 +138,14 @@ const PurchasePage = () => {
   };
 
   const totalItems = products.reduce((sum, product) => sum + 1, 0);
-  const totalPrice = formData?.totalPrice || 0;
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    products.forEach(product => {
+      totalPrice  += product.materialBuyPrice;
+    });
+    return totalPrice.toFixed(2);
+  };
 
   const handleMouseDown = (e) => {
     e.target.style.backgroundColor = '#888888';
@@ -148,12 +156,55 @@ const PurchasePage = () => {
   };
 
   const handleFinishClick = () => {
+    // Prepare data to send
+    const purchaseData = {
+      purchaseOrderCode: "your_code_here", // You need to provide a purchase order code
+      staffId: 0, // Set to the staff ID you want to associate with the purchase
+      customerName: customerDetails.name,
+      phone: customerDetails.phone,
+      list: products.map(product => ({
+        name: product.goldType,
+        productCode: "your_product_code_here", // You need to provide a product code
+        materialId: 0, // You need to provide a material ID
+        weight: parseFloat(product.weight),
+        origin: "your_origin_here", // You need to provide the origin
+        color: "your_color_here", // You need to provide the color
+        clarity: "your_clarity_here", // You need to provide the clarity
+        cut: "your_cut_here", // You need to provide the cut
+        carat: 0, // You need to provide the carat
+        price: parseFloat(product.materialBuyPrice)
+      })),
+      totalPrice: parseFloat(calculateTotalPrice()),
+      productStore: true
+    };
+
+    adornicaServ
+    .postPurchaseOrderCode(purchaseData)
+    .then((res) => {
+      console.log('Order submitted successfully:', res.data);
+      alert('Order submitted successfully');
+    })
+    .catch((err) => {
+      console.error('Error submitting order:', err.response);
+      alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
+    });
+  
+    // Send the purchase data to the server or do whatever you need to do with it
+    console.log("Purchase data:", purchaseData);
+  
+    // Show modal
     setModalIsOpen(true);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+  useEffect(() => {
+    // Retrieve data from local storage
+    const savedProducts = JSON.parse(localStorage.getItem('goldData')) || [];
+    setProducts(savedProducts);
+  }, []);
 
   return (
     <div style={pageStyles.container}>
@@ -187,9 +238,9 @@ const PurchasePage = () => {
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
-              <span>{product.name}</span>
+              <span>{product.goldType}</span>
               <span>{product.weight}</span>
-              <span>{product.price.toFixed(2)}$</span>
+              <span>{product.materialBuyPrice}$</span>
             </div>
           ))}
         </div>
@@ -197,7 +248,7 @@ const PurchasePage = () => {
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {totalPrice.toFixed(2)}$</div>
+        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}$</div>
       </div>
 
       <button
