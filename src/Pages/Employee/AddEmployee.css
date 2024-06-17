@@ -1,68 +1,68 @@
 .add-employee-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    max-width: 800px; /* Set a max width for the form container */
-    margin: 0 auto; /* Center the container horizontally */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
-    background-color: #fff; /* Optional: Set a background color */
-    border-radius: 10px; /* Optional: Set border radius */
-    padding: 40px; /* Add padding inside the container */
-    margin-top: 30px;
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center; /* Center the title */
-  }
-  
-  .form-section {
-    display: flex;
-    justify-content: space-between;
-    /* margin-bottom: 10px; */
-    gap: 15px; /* Add gap between the two columns */
-  }
-  
-  .form-group {
-    width: 100%; /* Set both form groups to take equal width */
-  }
-  
-  h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .input-group {
-    margin-bottom: 15px; /* Add margin between input groups */
-  }
-  
-  .input-field {
-    margin-bottom: 15px; /* Add margin between individual input fields */
-  }
-  
-  .store-role-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px; /* Add gap between store and role sections */
-  }
-  
-  .store-select, .role-group {
-    width: 48%; /* Ensure both elements take up equal width */
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .form-actions button {
-    width: 100%; /* Ensure buttons take up equal width */
-  }
-  
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  max-width: 800px; /* Set a max width for the form container */
+  margin: 0 auto; /* Center the container horizontally */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visibility */
+  background-color: #fff; /* Optional: Set a background color */
+  border-radius: 10px; /* Optional: Set border radius */
+  padding: 40px; /* Add padding inside the container */
+  margin-top: 30px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center; /* Center the title */
+}
+
+.form-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* Add gap between the two columns */
+}
+
+.form-group {
+  width: 100%; /* Set both form groups to take equal width */
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  margin-bottom: 15px; /* Add margin between input groups */
+}
+
+.input-field {
+  margin-bottom: 15px; /* Add margin between individual input fields */
+}
+
+.store-role-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px; /* Add gap between store and role sections */
+}
+
+.store-select, .role-group {
+  width: 48%; /* Ensure both elements take up equal width */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 20px; /* Add gap between the buttons */
+}
+
+.form-actions a, .form-actions button {
+  width: 100%; /* Ensure buttons take up equal width */
+  text-align: center; /* Center the text inside the buttons */
+}

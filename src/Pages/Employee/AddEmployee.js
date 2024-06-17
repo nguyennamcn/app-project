@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Input, Button, Radio, Select, DatePicker } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Input, Button, Radio, DatePicker, Modal } from 'antd';
+import { useNavigate, NavLink } from 'react-router-dom';
 import './AddEmployee.css';
 
-const { Option } = Select;
+const { confirm } = Modal;
 
-export default function AddEmployee() {
+const AddEmployee = () => {
   const [form, setForm] = useState({
     fullName: '',
     phoneNumber: '',
@@ -15,8 +15,9 @@ export default function AddEmployee() {
     password: '',
     confirmPassword: '',
     role: 'Manager',
-    store: '6224 Richmond Ave., Houston, US'
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({
@@ -25,10 +26,10 @@ export default function AddEmployee() {
     });
   };
 
-  const handleSelectChange = (value) => {
+  const handleGenderChange = (e) => {
     setForm({
       ...form,
-      store: value
+      gender: e.target.value
     });
   };
 
@@ -40,7 +41,35 @@ export default function AddEmployee() {
   };
 
   const handleSubmit = () => {
-    console.log('Form data:', form);
+    if (isFormValid()) {
+      showModal();
+    }
+  };
+
+  const isFormValid = () => {
+    return (
+      form.fullName &&
+      form.phoneNumber &&
+      form.gender &&
+      form.birthday &&
+      form.username &&
+      form.password &&
+      form.confirmPassword &&
+      form.password === form.confirmPassword
+    );
+  };
+
+  const showModal = () => {
+    confirm({
+      title: 'Add Successful',
+      content: 'Employee has been added successfully!',
+      onOk() {
+        navigate('/employee');
+      },
+      onCancel() {
+        console.log('Cancelled');
+      },
+    });
   };
 
   return (
@@ -49,42 +78,93 @@ export default function AddEmployee() {
       <div className="form-section">
         <div className="form-group">
           <h2>Personal information :</h2>
-          <Input className="input-field" placeholder="Full Name" name="fullName" value={form.fullName} onChange={handleChange} />
-          <Input className="input-field" placeholder="Phone number" name="phoneNumber" value={form.phoneNumber} onChange={handleChange} />
-          <Input className="input-field" placeholder="Gender" name="gender" value={form.gender} onChange={handleChange} />
-          <DatePicker className="input-field" placeholder="Birthday" onChange={handleDateChange} style={{ width: '100%' }} />
+          <Input
+            className="input-field"
+            placeholder="Full Name"
+            name="fullName"
+            value={form.fullName}
+            onChange={handleChange}
+          />
+          <Input
+            className="input-field"
+            placeholder="Phone number"
+            name="phoneNumber"
+            value={form.phoneNumber}
+            onChange={handleChange}
+          />
+          <div className="input-field">
+            <h3>Gender :</h3>
+            <Radio.Group
+              name="gender"
+              value={form.gender}
+              onChange={handleGenderChange}
+            >
+              <Radio value="Male">Male</Radio>
+              <Radio value="Female">Female</Radio>
+              <Radio value="Other">Other</Radio>
+            </Radio.Group>
+          </div>
+          <DatePicker
+            className="input-field"
+            placeholder="Birthday"
+            onChange={handleDateChange}
+            style={{ width: '100%' }}
+          />
         </div>
         <div className="form-group">
           <h2>Account :</h2>
-          <Input className="input-field" placeholder="Username" name="username" value={form.username} onChange={handleChange} />
-          <Input.Password className="input-field" placeholder="Password" name="password" value={form.password} onChange={handleChange} />
-          <Input.Password className="input-field" placeholder="Confirm Password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} />
+          <Input
+            className="input-field"
+            placeholder="Username"
+            name="username"
+            value={form.username}
+            onChange={handleChange}
+          />
+          <Input.Password
+            className="input-field"
+            placeholder="Password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+          />
+          <Input.Password
+            className="input-field"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            value={form.confirmPassword}
+            onChange={handleChange}
+          />
         </div>
       </div>
       <div className="store-role-section">
         <div className="role-group">
           <h3>Role :</h3>
-          <Radio.Group name="role" value={form.role} onChange={handleChange}>
+          <Radio.Group
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+          >
             <Radio value="Manager">Manager</Radio>
-            <Radio value="Employee">Employee</Radio>
+            <Radio value="Sale Staff">Sale Staff</Radio>
+            <Radio value="Cashier">Cashier</Radio>
           </Radio.Group>
-        </div>
-        <div className="store-select">
-          <h3>Store :</h3>
-          <Select defaultValue={form.store} onChange={handleSelectChange} style={{ width: '100%' }}>
-            <Option value="6224 Richmond Ave., Houston, US">6224 Richmond Ave., Houston, US</Option>
-            {/* Add more store options here */}
-          </Select>
         </div>
       </div>
       <div className="form-actions">
         <NavLink to="/employee">
           <Button className="nav-button">Back</Button>
         </NavLink>
-        <NavLink to="/employee">
-          <Button type="primary" className="nav-button" onClick={handleSubmit}>ADD</Button>
-        </NavLink>
+        <Button
+          type="primary"
+          className="nav-button"
+          onClick={handleSubmit}
+          disabled={!isFormValid()}
+        >
+          ADD
+        </Button>
       </div>
     </div>
   );
-}
+};
+
+export default AddEmployee;
