@@ -92,11 +92,11 @@ export default function DiamondPage() {
           </select>
 
           <select name='jewelry__size' id='size'>
-            <option value='size'>Size</option>
-            <option value='size'>4.3-4.9</option>
-            <option value='size'>5.0-5.9</option>
-            <option value='size'>6.0-6.9</option>
-            <option value='size'>7.0-7.9</option>
+            <option value='size'>Cut</option>
+            <option value='size'>EX</option>
+            <option value='size'>G</option>
+            <option value='size'>F</option>
+            <option value='size'>P</option>
           </select>
 
           <select name='jewelry__color' id='color'>
