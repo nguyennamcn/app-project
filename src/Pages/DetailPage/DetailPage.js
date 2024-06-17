@@ -315,11 +315,12 @@ export default function DetailPage() {
                 .add-to-cart-button {
                     background: red;
                     color: #fff;
-                    font-size: 20px;
-                    padding: 10px 50px;
+                    font-size: 16px; /* Reduced font size */
+                    padding: 5px 5px; /* Reduced padding */
                     border: none;
                     cursor: pointer;
-                    margin-top: 30px;
+                    margin-top: 10px;
+                    border-radius: 5px; /* Add border radius for smoother look */
                 }
 
                 .product-information {
