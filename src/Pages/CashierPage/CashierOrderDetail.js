@@ -25,7 +25,6 @@ export default function ListOrderPage() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [pdfUrl, setPdfUrl] = useState('');
-    
 
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     console.log(userInfo);
@@ -92,6 +91,7 @@ export default function ListOrderPage() {
 
         if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod) {
             console.error('Missing required fields');
+            alert('Please fill all the required fields');
             return;
         }
 
@@ -115,22 +115,16 @@ export default function ListOrderPage() {
     };
 
     const handleDownload = () => {
-        fetch(`/api/v1/orders/export-pdf/${orderKey}`, {
-            method: 'POST', // or 'POST', depending on your API
-            headers: {
-                'Content-Type': 'application/pdf', // Adjust headers as necessary
-                // Include any other headers your API requires
-            },
-        })
-            .then(response => response.blob())
-            .then(blob => {
-                const url = window.URL.createObjectURL(new Blob([blob]));
+        console.log(orderKey);
+        adornicaServ.postExport(orderKey)
+            .then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', 'filename.pdf'); // Change 'filename.pdf' to your preferred filename
+                link.setAttribute('download', `${orderKey}.pdf`);
                 document.body.appendChild(link);
                 link.click();
-                link.parentNode.removeChild(link);
+                document.body.removeChild(link);
             })
             .catch(error => console.error('Error fetching PDF:', error));
     };

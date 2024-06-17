@@ -148,8 +148,10 @@ export const adornicaServ = {
     },
 
     postExport: (orderKey) => {
-        console.log(orderKey)
-        return https.post(`/api/v1/orders/export-pdf/${orderKey}`);
+        console.log(orderKey);
+        return https.post(`/api/v1/orders/export-pdf/${orderKey}`, {}, {
+            responseType: 'blob'
+        });
     },
 
     getListOrderPurchase: (orderCode) => {
