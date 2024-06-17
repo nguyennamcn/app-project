@@ -6,7 +6,6 @@ import { adornicaServ } from '../../service/adornicaServ';
 const { Meta } = Card;
 
 export default function GoldPage() {
-
   const [products, setProducts] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
@@ -67,7 +66,8 @@ export default function GoldPage() {
   };
 
   const filteredProducts = products.filter(product => 
-    product.productCode.toLowerCase().includes(searchTerm.toLowerCase())
+    product.productCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -81,11 +81,12 @@ export default function GoldPage() {
         </div>
 
         <div className='search__input'>
-          <input 
-            type='text' 
-            placeholder='Search by product code...' 
-            value={searchTerm} 
-            onChange={handleSearch} 
+          <textarea
+            placeholder='Search by product code or name...'
+            value={searchTerm}
+            onChange={handleSearch}
+            rows={2}
+            style={{ width: '300px', height: '25px', resize: 'none' }}
           />
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -93,27 +94,33 @@ export default function GoldPage() {
         </div>
       </div>
       <div className="product-container">
-        {filteredProducts.map((sp) => (
-          <div className="product-card-container" key={sp.productCode}>
-            <Card
-              bodyStyle={{ padding: '8px' }}
-              style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
-              cover={<img style={{ padding: '10px', maxWidth: '100%', height: '146px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
-            >
-              <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
-              <div className="product-info">
-                <h1>{sp.productCode}</h1>
-                <h2>{sp.productPrice}$</h2>
-              </div>
-              <div className="overlay">
-                <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-                  <button className="overlay-button">View</button>
-                </NavLink>
-                <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add to Cart</button>
-              </div>
-            </Card>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((sp) => (
+            <div className="product-card-container" key={sp.productCode}>
+              <Card
+                bodyStyle={{ padding: '8px' }}
+                style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
+                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '146px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
+              >
+                <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
+                <div className="product-info">
+                  <h1>{sp.productCode}</h1>
+                  <h2>{sp.productPrice}$</h2>
+                </div>
+                <div className="overlay">
+                  <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
+                    <button className="overlay-button">View</button>
+                  </NavLink>
+                  <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add to Cart</button>
+                </div>
+              </Card>
+            </div>
+          ))
+        ) : (
+          <div className="no-products-message-container">
+            <div className="no-products-message">No products found matching your search criteria.</div>
           </div>
-        ))}
+        )}
       </div>
       <Modal
         title="Notification"
