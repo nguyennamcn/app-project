@@ -142,9 +142,9 @@ export const adornicaServ = {
         return https.post(`/api/v1/users/update-avatar/${id}`);
     },
 
-    postUserUpdate: (data) => {
-        console.log(data)
-        return https.post(`/api/v1/users/update`, data);
+    postUserUpdate: (id, data) => {
+        console.log(id, data)
+        return https.post(`/api/v1/users/update/${id}`, data);
     },
 
     postExport: (orderKey) => {

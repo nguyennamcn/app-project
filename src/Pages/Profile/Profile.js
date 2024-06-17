@@ -52,6 +52,7 @@ export default function EditEmployee() {
 
   const handleSubmit = () => {
     const data = {
+      id: userInfo.id,
       email: profile.email,
       phone: profile.phone,
       name: profile.name,
@@ -59,7 +60,7 @@ export default function EditEmployee() {
       birthday: profile.birthday,
       address: profile.address
     }
-    adornicaServ.postUserUpdate(data)
+    adornicaServ.postUserUpdate(userInfo.id, data)
       .then((res) => {
         console.log('Role updated:', res);
         window.location.reload();
