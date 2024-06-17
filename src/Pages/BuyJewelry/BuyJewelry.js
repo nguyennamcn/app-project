@@ -198,7 +198,7 @@ const JewelrySelection = () => {
           }
         }
       }
-      setTotalPrice(total.toFixed(2));
+      setTotalPrice(total); // Set total as a number
     };
 
     calculateTotalPrice();
@@ -373,7 +373,7 @@ const JewelrySelection = () => {
         ))}
         <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Add Jewelry</button>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice} $
+              Total price: {totalPrice} $
         </div>
         <button
           type="submit"
