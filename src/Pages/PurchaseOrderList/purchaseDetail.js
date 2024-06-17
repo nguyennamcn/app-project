@@ -258,7 +258,7 @@ const PurchaseDetail = () => {
 
       <div style={pageStyles.footerInfo}>
         <div style={pageStyles.buttonWrapper}>
-          <NavLink to="/previous-page" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+          <NavLink to="/buyProduct" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
           <button
             onClick={handleFinishClick}
             style={{ ...pageStyles.button, ...pageStyles.finishButton }}
