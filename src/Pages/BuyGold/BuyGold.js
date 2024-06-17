@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 // Define styles as objects
