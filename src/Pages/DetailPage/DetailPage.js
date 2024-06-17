@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { Modal } from 'antd';
-import { NavLink, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function DetailPage() {
     const [product, setProduct] = useState({});
-    const [selectedSize, setSelectedSize] = useState(null);
-    const [selectedId, setSelectedId] = useState(null);
     const [mainImageSrc, setMainImageSrc] = useState();
     const [quantity, setQuantity] = useState(1);
     const { productCode } = useParams();
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         adornicaServ.getDetailProduct(productCode)
@@ -33,18 +31,6 @@ export default function DetailPage() {
 
     const handleImageClick = (newSrc) => {
         setMainImageSrc(newSrc);
-    };
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     const showModalnotify = (message) => {
@@ -118,7 +104,7 @@ export default function DetailPage() {
                                 <div>ID: {product.id}</div>
                                 <div>Gender: {product.gender}</div>
                                 <div>Category: {product.category}</div>
-                                 <div>Size: {product.size}</div>
+                                <div>Size: {product.size}</div>
                             </div>
                             <div style={{ fontSize: '15px' }}>
                                 {product.materials?.map((mt, index) => (
@@ -142,22 +128,18 @@ export default function DetailPage() {
                 <div className="info-section" style={{ position: 'absolute', right: '8%', top: '9%' }}>
                     <div className="product-header">
                         <p className="product-name">{product.productName}</p>
-                        <NavLink to='/homePage'>
-                            <button className="close-button" type="button">
-                                X
-                            </button>
-                        </NavLink>
+                        <button className="close-button" type="button" onClick={() => navigate(-1)}>
+                            X
+                        </button>
                     </div>
                     <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} $</span></p>
                     <div className="product-description">
                         <p className="description-title">Description</p>
                         <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
                     </div>
-                    <NavLink to=''>
-                        <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
-                            ADD
-                        </button>
-                    </NavLink>
+                    <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
+                        ADD
+                    </button>
                 </div>
             </div>
             <Modal
@@ -333,11 +315,12 @@ export default function DetailPage() {
                 .add-to-cart-button {
                     background: red;
                     color: #fff;
-                    font-size: 20px;
-                    padding: 10px 50px;
+                    font-size: 16px; /* Reduced font size */
+                    padding: 5px 5px; /* Reduced padding */
                     border: none;
                     cursor: pointer;
-                    margin-top: 30px;
+                    margin-top: 10px;
+                    border-radius: 5px; /* Add border radius for smoother look */
                 }
 
                 .product-information {

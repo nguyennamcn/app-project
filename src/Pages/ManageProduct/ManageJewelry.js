@@ -18,15 +18,6 @@ const JewelryInventoryPage = () => {
     setJewelry(updatedJewelry);
   };
 
-  const handleInputChange = (e, jewelryId) => {
-    const { name, value } = e.target;
-    setJewelry(prevState =>
-      prevState.map(item =>
-        item.id === jewelryId ? { ...item, [name]: value } : item
-      )
-    );
-  };
-
   const handleUpdate = (jewelryId) => {
     const updatedItem = jewelry.find(item => item.id === jewelryId);
     console.log('Updated Jewelry:', updatedItem);
@@ -68,24 +59,8 @@ const JewelryInventoryPage = () => {
               <td style={styles.td}>{item.type}</td>
               <td style={styles.td}>{item.material}</td>
               <td style={styles.td}>{item.carat}</td>
-              <td style={styles.td}>
-                <input
-                  type="text"
-                  name="buyPrice"
-                  value={item.buyPrice}
-                  onChange={(e) => handleInputChange(e, item.id)}
-                  style={styles.input}
-                />
-              </td>
-              <td style={styles.td}>
-                <input
-                  type="text"
-                  name="sellPrice"
-                  value={item.sellPrice}
-                  onChange={(e) => handleInputChange(e, item.id)}
-                  style={styles.input}
-                />
-              </td>
+              <td style={styles.td}>{item.buyPrice}</td>
+              <td style={styles.td}>{item.sellPrice}</td>
               <td style={styles.td}>
                 <button
                   style={styles.updateButton}
@@ -139,7 +114,8 @@ const styles = {
     border: 'none',
     borderRadius: '4px',
     padding: '8px 16px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    textDecoration: 'none'
   },
   table: {
     width: '100%',

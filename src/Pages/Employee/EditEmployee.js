@@ -129,13 +129,6 @@ export default function EditEmployee() {
               <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
             </Radio.Group>
           </div>
-          <div className="store-select-edit">
-            <h3>Store address:</h3>
-            <Select  onChange={handleSelectChange} style={{ width: '100%', marginLeft: '10px' }}>
-              <Option value="6224 Richmond Ave., Houston, US">6224 Richmond Ave., Houston, US</Option>
-              {/* Add more store options here */}
-            </Select>
-          </div>
         </div>
         <hr />
         <div className="edit-actions">

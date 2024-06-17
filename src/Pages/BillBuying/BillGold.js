@@ -148,33 +148,38 @@ const BillGold = () => {
   const { formData } = location.state || {}; // Retrieve the state data
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('Cash');
   const [address, setAddress] = useState('');
-
-  const [customerDetails, setCustomerDetails] = useState({
-    name: formData?.customerName || '',
-    phone: formData?.phone || '',
-    address: '',
-    paymentMethod: 'Cash',
-  });
-
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const handleInputChange1 = (event) => {
-    setCustomerPhone(event.target.value);
-};
-const handleInputChange = (event) => {
-  setCustomerName(event.target.value);
-};
+  useEffect(() => {
+    if (customerPhone) {
+      adornicaServ.getPhoneCustomer(customerPhone)
+        .then(response => {
+          if (response.data) {
+            setCustomerName(response.data.metadata.name);
+            setAddress(response.data.metadata.address);
+            console.log(response)
+          } else {
+            setCustomerName('');
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching customer data:", error);
+          setCustomerName(''); // Clear the customer name if there's an error
+        });
+    }
+  }, [customerPhone]);
 
-const handleInputChange2 = (event) => {
-  setAddress(event.target.value);
-};
+  useEffect(() => {
+    const savedProducts = JSON.parse(localStorage.getItem('goldData')) || [];
+    setProducts(savedProducts);
+  }, []);
 
-const handleInputChange3 = (event) => {
-  setPaymentMethod(event.target.value);
-};
+  const handleInputChange = (setter) => (event) => {
+    setter(event.target.value);
+  };
 
   const totalItems = products.reduce((sum, product) => sum + 1, 0);
 
@@ -197,25 +202,6 @@ const handleInputChange3 = (event) => {
   const generateRandomOrderCode = () => {
     return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
   };
-
-  useEffect(() => {
-    if (customerPhone) {
-      adornicaServ.getPhoneCustomer(customerPhone)
-        .then(response => {
-          if (response.data) {
-            setCustomerName(response.data.metadata.name);
-            setAddress(response.data.metadata.address);
-            console.log(response)
-          } else {
-            setCustomerName('');
-          }
-        })
-        .catch(error => {
-          console.error("Error fetching customer data:", error);
-          setCustomerName(''); // Clear the customer name if there's an error
-        });
-    }
-  }, [customerPhone]);
 
   const handleFinishClick = () => {
     const purchaseData = {
@@ -251,16 +237,11 @@ const handleInputChange3 = (event) => {
     setModalIsOpen(false);
   };
 
-  useEffect(() => {
-    const savedProducts = JSON.parse(localStorage.getItem('goldData')) || [];
-    setProducts(savedProducts);
-  }, []);
-
   const handlePrintClick = () => {
     // window.print();
   };
 
-  const isFinishButtonDisabled = !customerDetails.name || !customerDetails.phone || !customerDetails.address;
+  const isFinishButtonDisabled = !customerName || !customerPhone || !address;
 
   return (
     <div style={pageStyles.container}>
@@ -272,7 +253,7 @@ const handleInputChange3 = (event) => {
           style={pageStyles.detailInput}
           name="name"
           value={customerName}
-          onChange={handleInputChange}
+          onChange={handleInputChange(setCustomerName)}
         />
 
         <label style={pageStyles.detailLabel}>Phone:</label>
@@ -281,7 +262,7 @@ const handleInputChange3 = (event) => {
           style={pageStyles.detailInput}
           name="phone"
           value={customerPhone}
-          onChange={handleInputChange1}
+          onChange={handleInputChange(setCustomerPhone)}
         />
 
         <label style={pageStyles.detailLabel}>Address:</label>
@@ -290,7 +271,7 @@ const handleInputChange3 = (event) => {
           style={pageStyles.detailInput}
           name="address"
           value={address}
-          onChange={handleInputChange2}
+          onChange={handleInputChange(setAddress)}
         />
 
         <label style={pageStyles.detailLabel}>Payment methods:</label>
@@ -298,7 +279,7 @@ const handleInputChange3 = (event) => {
           style={pageStyles.paymentSelect}
           name="paymentMethod"
           value={paymentMethod}
-          onChange={handleInputChange3}
+          onChange={handleInputChange(setPaymentMethod)}
         >
           <option value="Cash">Cash</option>
           <option value="Card">Banking</option>
@@ -332,11 +313,11 @@ const handleInputChange3 = (event) => {
         </NavLink>
 
         <button
-          style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+          style={{ ...pageStyles.button, ...pageStyles.finishButton, ...(isFinishButtonDisabled ? { backgroundColor: 'gray', cursor: 'not-allowed' } : {}) }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onClick={handleFinishClick}
-          // disabled={isFinishButtonDisabled}
+          disabled={isFinishButtonDisabled}
         >
           CREATE
         </button>
@@ -349,16 +330,6 @@ const handleInputChange3 = (event) => {
         style={pageStyles.modal}
       >
         <h2>Successfully</h2>
-        {/* <p>Thank you for your purchase!</p>
-        <div style={pageStyles.modalButtonWrapper}>
-          <NavLink to="/buyProduct" exact>
-            <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
-          </NavLink>
-
-          <button style={{ ...pageStyles.button, ...pageStyles.printButton }} onClick={handlePrintClick}>
-            PRINT
-          </button>
-        </div> */}
       </Modal>
     </div>
   );
