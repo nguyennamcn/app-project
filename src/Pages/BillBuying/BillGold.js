@@ -146,6 +146,10 @@ const BillGold = () => {
   const userInfo = useSelector((state) => state.userReducer.userInfo);
   const location = useLocation();
   const { formData } = location.state || {}; // Retrieve the state data
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [address, setAddress] = useState('');
 
   const [customerDetails, setCustomerDetails] = useState({
     name: formData?.customerName || '',
@@ -157,13 +161,20 @@ const BillGold = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const handleDetailChange = (e) => {
-    const { name, value } = e.target;
-    setCustomerDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
-  };
+  const handleInputChange1 = (event) => {
+    setCustomerPhone(event.target.value);
+};
+const handleInputChange = (event) => {
+  setCustomerName(event.target.value);
+};
+
+const handleInputChange2 = (event) => {
+  setAddress(event.target.value);
+};
+
+const handleInputChange3 = (event) => {
+  setPaymentMethod(event.target.value);
+};
 
   const totalItems = products.reduce((sum, product) => sum + 1, 0);
 
@@ -187,12 +198,32 @@ const BillGold = () => {
     return 'PO' + Math.random().toString(36).substring(2, 10).toUpperCase();
   };
 
+  useEffect(() => {
+    if (customerPhone) {
+      adornicaServ.getPhoneCustomer(customerPhone)
+        .then(response => {
+          if (response.data) {
+            setCustomerName(response.data.metadata.name);
+            setAddress(response.data.metadata.address);
+            console.log(response)
+          } else {
+            setCustomerName('');
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching customer data:", error);
+          setCustomerName(''); // Clear the customer name if there's an error
+        });
+    }
+  }, [customerPhone]);
+
   const handleFinishClick = () => {
     const purchaseData = {
       purchaseOrderCode: generateRandomOrderCode(),
       staffId: userInfo.id,
-      customerName: customerDetails.name,
-      phone: customerDetails.phone,
+      customerName: customerName,
+      phone: customerPhone,
+      address: address,
       list: products.map((product) => ({
         name: product.goldType,
         weight: parseFloat(product.weight),
@@ -240,8 +271,8 @@ const BillGold = () => {
           type="text"
           style={pageStyles.detailInput}
           name="name"
-          value={customerDetails.name}
-          onChange={handleDetailChange}
+          value={customerName}
+          onChange={handleInputChange}
         />
 
         <label style={pageStyles.detailLabel}>Phone:</label>
@@ -249,8 +280,8 @@ const BillGold = () => {
           type="text"
           style={pageStyles.detailInput}
           name="phone"
-          value={customerDetails.phone}
-          onChange={handleDetailChange}
+          value={customerPhone}
+          onChange={handleInputChange1}
         />
 
         <label style={pageStyles.detailLabel}>Address:</label>
@@ -258,16 +289,16 @@ const BillGold = () => {
           type="text"
           style={pageStyles.detailInput}
           name="address"
-          value={customerDetails.address}
-          onChange={handleDetailChange}
+          value={address}
+          onChange={handleInputChange2}
         />
 
         <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select
           style={pageStyles.paymentSelect}
           name="paymentMethod"
-          value={customerDetails.paymentMethod}
-          onChange={handleDetailChange}
+          value={paymentMethod}
+          onChange={handleInputChange3}
         >
           <option value="Cash">Cash</option>
           <option value="Card">Banking</option>
@@ -305,7 +336,7 @@ const BillGold = () => {
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onClick={handleFinishClick}
-          disabled={isFinishButtonDisabled}
+          // disabled={isFinishButtonDisabled}
         >
           CREATE
         </button>

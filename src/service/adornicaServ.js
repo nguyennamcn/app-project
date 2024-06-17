@@ -28,6 +28,7 @@ export const adornicaServ = {
     },
 
     getListOrderByStaffID: (staffID) => {
+        console.log(staffID)
         return https.get(`/api/v1/orders/order/${staffID}`);
     },
 
@@ -46,7 +47,7 @@ export const adornicaServ = {
           phone: phone,
           orderCode: orderCode
         };
-        return https.post(`/api/v1/purchases/validate-order`, data);
+        return https.post(`/api/v1/purchases/validate`, data);
     },
     
     postPaidSummit: (orderData) => {
