@@ -27,7 +27,6 @@ export default function JewelryPage() {
   const showModal = (message) => {
     setModalMessage(message);
     setIsModalVisible(true);
-    // setTimeout(() => setIsModalVisible(false), 1000);
   };
 
   const handleAddToCart = (productCode) => {
@@ -124,7 +123,9 @@ export default function JewelryPage() {
           ))
         ) : (
           <div className="no-products-message-container">
-            <div className="no-products-message">No products found matching your search criteria.</div>
+            {searchTerm ? (
+              <div className="no-products-message">No products found matching your search criteria.</div>
+            ) : null}
           </div>
         )}
       </div>

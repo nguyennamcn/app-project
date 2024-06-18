@@ -177,8 +177,10 @@ export default function DiamondPage() {
           ))
         ) : (
           <div className="no-products-message-container">
+            {searchTerm ? (
             <div className="no-products-message">No products found matching your search criteria.</div>
-          </div>
+          ) : null }
+            </div>
         )}
       </div>
       <Modal
