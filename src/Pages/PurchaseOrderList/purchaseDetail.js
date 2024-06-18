@@ -162,6 +162,21 @@ const PurchaseDetail = () => {
     }));
   };
 
+  const handleDownloadPDF = () => {
+    console.log(orderCode);
+    adornicaServ.postPurchaseExport(orderCode)
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${orderCode}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(error => console.error('Error fetching PDF:', error));
+};
+
   const calculateTotalPrice = () => {
     return products.reduce((total, product) => total + product.price, 0).toFixed(2);
   };
@@ -189,11 +204,6 @@ const PurchaseDetail = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
-  };
-
-  const handleDownloadPDF = () => {
-    // Thực hiện logic tải về file PDF ở đây
-    console.log('Download PDF');
   };
 
   useEffect(() => {

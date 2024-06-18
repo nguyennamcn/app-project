@@ -154,6 +154,13 @@ export const adornicaServ = {
         });
     },
 
+    postPurchaseExport: (orderKey) => {
+        console.log(orderKey);
+        return https.post(`/api/v1/purchases/export-pdf/${orderKey}`, {}, {
+            responseType: 'blob'
+        });
+    },
+
     getListOrderPurchase: (orderCode) => {
         console.log(orderCode)
         return https.get(`/api/v1/purchases/${orderCode}`);
