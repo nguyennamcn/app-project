@@ -98,16 +98,19 @@ export default function ListOrderPage() {
     useEffect(() => {
         adornicaServ.getHistoryOrders()
             .then((res) => {
-                const orders = res.data.metadata.map((order, index) => ({
-                    key: index,
-                    salesStaffName: order.salesStaffName,
-                    orderId: order.orderId,
-                    orderCode: order.orderCode,
-                    totalPrice: order.totalPrice,
-                    dateOrder: formatDate(order.dateOrder),
-                    paymentMethod: order.paymentMethod,
-                    deliveryStatus: order.deliveryStatus,
-                }));
+                const orders = res.data.metadata
+                    .map((order, index) => ({
+                        key: index,
+                        salesStaffName: order.salesStaffName,
+                        orderId: order.orderId,
+                        orderCode: order.orderCode,
+                        totalPrice: order.totalPrice,
+                        dateOrder: formatDate(order.dateOrder),
+                        paymentMethod: order.paymentMethod,
+                        deliveryStatus: order.deliveryStatus,
+                    }))
+                    .sort((a, b) => b.orderId - a.orderId); // Sắp xếp theo thứ tự giảm dần
+
                 setDataSource(orders);
             })
             .catch((err) => {
