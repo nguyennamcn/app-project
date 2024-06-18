@@ -28,7 +28,7 @@ export default function CustomerDetails() {
             <th style={styles.th}>Phone</th>
             <th style={styles.th}>Address</th>
             <th style={styles.th}>Birthday</th>
-            <th style={styles.th}>Discount</th>
+            <th style={styles.th}>Discount (%)</th>
             <th style={styles.th}>Purchased</th>
           </tr>
         </thead>
