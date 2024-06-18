@@ -65,7 +65,7 @@ export default function NavSide() {
         </NavLink>
         ): null }
         {!isStaff && (
-          <NavLink to='/cashierListOrder' 
+          <NavLink to='/historyOrder' 
           style={{
             width : '50%',
             display : 'flex',

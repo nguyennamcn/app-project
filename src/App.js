@@ -48,6 +48,7 @@ import { useSelector } from 'react-redux';
 import BillDiamond from './Pages/BillBuying/BillDiamond';
 import BillJewelry from './Pages/BillBuying/BillJewelry';
 import PurchaseDetail from './Pages/PurchaseOrderList/purchaseDetail';
+import HistoryOrder from './Pages/HistoryOrder/HistoryOrder';
 
 function App() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -101,6 +102,7 @@ function App() {
               <Route path="/service-login" element={<Layout Component={ServiceLogin} />} />
               <Route path="/shop-login" element={<Layout Component={ShopLogin} />} />
               <Route path="/about-system-login" element={<Layout Component={AboutSystemLogin} />} />
+              <Route path="/historyOrder" element={<Layout Component={HistoryOrder} />} />
             </>
           ) : null}
         </Routes>
