@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     adornicaServ.getDiamondPrice()
@@ -15,9 +17,6 @@ export default function ManageDiamond() {
         console.log(err);
       });
   }, []);
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
 
   const handleDelete = (diamondId) => {
     const updatedDiamonds = diamondManage.filter(diamond => diamond.gemId !== diamondId);
@@ -45,6 +44,12 @@ export default function ManageDiamond() {
 
   const changePage = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return date.toLocaleDateString('vi-VN', options);
   };
 
   return (
@@ -95,7 +100,7 @@ export default function ManageDiamond() {
                   style={styles.input}
                 />
               </td>
-              <td style={styles.td}>{diamond.effectDate}</td>
+              <td style={styles.td}>{formatDate(diamond.effectDate)}</td>
               <td style={styles.td}>
                 <button
                   style={styles.updateButton}
