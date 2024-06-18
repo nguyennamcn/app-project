@@ -1,7 +1,8 @@
-import { Table, Button, Modal } from 'antd';
+import { Table, Button, Modal, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
+import { SearchOutlined } from '@ant-design/icons';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -53,35 +54,34 @@ const columns = (handleView, handleDelete, handleUpdate) => [
         width: 180,
         render: (_, record) => {
             const isSuccess = record.deliveryStatus.toLowerCase() === 'success';
-
-            const isPaid = record.paymentMethod.toLowerCase() === ('cash' || 'banking') ;
+            const isPaid = record.paymentMethod.toLowerCase() === ('cash' || 'banking');
             return (
                 <div style={{ width: '50%', display: 'flex' }}>
                     <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>
+                        <Button
+                            style={{ marginRight: '14px' }}
+                            type="primary"
+                            onClick={() => handleView(record.orderCode)}
+                        >
+                            View
+                        </Button>
+                    </NavLink>
                     <Button
                         style={{ marginRight: '14px' }}
                         type="primary"
-                        onClick={() => handleView(record.orderCode)}
-                    >
-                        View
-                    </Button>
-                    </NavLink>
-                    <Button 
-                        style={{ marginRight: '14px' }}
-                        type="primary" 
-                        danger 
+                        danger
                         onClick={() => handleDelete(record.orderCode)}
                         disabled={isSuccess || isPaid}
                     >
                         Delete
                     </Button>
                     <NavLink to={`/cashierUpdateOrder/${record.orderCode}`}>
-                    <Button 
-                        type="primary" 
-                        disabled={isSuccess || isPaid}
-                    >
-                        Update
-                    </Button>
+                        <Button
+                            type="primary"
+                            disabled={isSuccess || isPaid}
+                        >
+                            Update
+                        </Button>
                     </NavLink>
                 </div>
             );
@@ -94,6 +94,8 @@ export default function ListOrderPage() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
+    const [searchText, setSearchText] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         adornicaServ.getHistoryOrders()
@@ -112,6 +114,7 @@ export default function ListOrderPage() {
                     .sort((a, b) => b.orderId - a.orderId); // Sắp xếp theo thứ tự giảm dần
 
                 setDataSource(orders);
+                setFilteredData(orders);
             })
             .catch((err) => {
                 console.log(err);
@@ -129,7 +132,8 @@ export default function ListOrderPage() {
             .then(() => {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
-                setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Order was deleted!</h1></div>);
+                setFilteredData(newDataSource);
+                setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Order was deleted!</h1></div>);
             })
             .catch((err) => {
                 console.log("Error deleting order:", err);
@@ -151,16 +155,34 @@ export default function ListOrderPage() {
             });
     };
 
+    const handleSearch = (e) => {
+        const { value } = e.target;
+        setSearchText(value);
+        const filtered = dataSource.filter((entry) =>
+            entry.salesStaffName.toLowerCase().includes(value.toLowerCase()) ||
+            entry.orderCode.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredData(filtered);
+    };
+
     return (
         <div>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '0px 0 6px 0' }}>Order List</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div>
+            <div style={{ margin: '20px 60px' }}>
+                <Input
+                    placeholder="Search by Staff name or Order Code"
+                    value={searchText}
+                    onChange={handleSearch}
+                    prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
+                    size="small"
+                    style={{ marginBottom: 20, width: '250px' }}
+                />
                 <Table
-                    style={{ margin: '8px 60px 0 60px' }}
-                    dataSource={dataSource}
+                    style={{ margin: '8px 0' }}
+                    dataSource={filteredData}
                     columns={columns(handleView, handleDelete)}
                     pagination={{ className: 'custom__pagination', pageSize: 4 }}
                 />
@@ -175,16 +197,16 @@ export default function ListOrderPage() {
                 <div>
                     <p style={{ fontSize: '20px', marginBottom: '50px' }}>{modalMessage}</p>
                     <div style={{ textAlign: 'center' }}>
-                        <Button 
-                            onClick={() => setModalVisible(false)} 
+                        <Button
+                            onClick={() => setModalVisible(false)}
                             style={{ marginRight: '40px' }}
                             size='large'
                         >
                             No
                         </Button>
-                        <Button 
-                            type="primary" 
-                            danger 
+                        <Button
+                            type="primary"
+                            danger
                             onClick={confirmDelete}
                             size='large'
                         >
