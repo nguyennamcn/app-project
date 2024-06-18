@@ -11,7 +11,9 @@ export default function EmployeeList() {
     adornicaServ.getEmployee()
       .then((res) => {
         console.log(res.data.metadata);
-        setEmployees(res.data.metadata);
+        // Sắp xếp nhân viên theo thứ tự tăng dần của ID
+        const sortedEmployees = res.data.metadata.sort((a, b) => a.staffId - b.staffId);
+        setEmployees(sortedEmployees);
       })
       .catch((err) => {
         console.log(err);
@@ -22,9 +24,12 @@ export default function EmployeeList() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredEmployees = employees.filter(employee =>
-    employee.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredEmployees = employees.filter(employee => {
+    const roles = Array.isArray(employee.roles) ? employee.roles.join(' ') : employee.roles;
+    return employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           employee.phone.includes(searchTerm) ||
+           roles.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="employee-list-container">
@@ -34,7 +39,7 @@ export default function EmployeeList() {
       </NavLink>
       <input 
         type="text" 
-        placeholder="search by name" 
+        placeholder="Search by name, phone or role" 
         className="employee-list-search-input" 
         value={searchTerm} 
         onChange={handleSearch} 
@@ -56,7 +61,7 @@ export default function EmployeeList() {
               <td>{employee.staffId}</td>
               <td>{employee.name}</td>
               <td>{employee.phone}</td>
-              <td>{employee.roles}</td>
+              <td>{Array.isArray(employee.roles) ? employee.roles.join(', ') : employee.roles}</td>
               <td>
                 <span className={`employee-list-status ${employee.status ? 'online' : 'offline'}`}></span>
               </td>
