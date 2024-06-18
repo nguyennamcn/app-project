@@ -50,6 +50,11 @@ export default function GoldPage() {
     // Check if the item is already in the cart
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode );
 
+    if(product.productPrice < 0){
+      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
+      return;
+    }
+
     if (existingItemIndex > -1) {
       showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {

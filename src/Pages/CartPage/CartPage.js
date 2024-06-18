@@ -77,7 +77,7 @@ const CartPage = () => {
     const showModal = (message) => {
         setModalMessage(message);
         setIsModalVisible(true);
-        //setTimeout(() => setIsModalVisible(false), 1000);
+        setTimeout(() => setIsModalVisible(false), 1000);
     };
 
     // Handle quantity change for cart items
