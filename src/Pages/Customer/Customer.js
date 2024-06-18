@@ -9,7 +9,9 @@ export default function CustomerDetails() {
     adornicaServ.getCustomerDetails() // Assuming this endpoint returns customer details
       .then((res) => {
         console.log(res.data.metadata);
-        setCustomerDetails(res.data.metadata);
+        // Sắp xếp khách hàng theo thứ tự giảm dần của ID
+        const sortedDetails = res.data.metadata.sort((a, b) => b.customerId - a.customerId);
+        setCustomerDetails(sortedDetails);
       })
       .catch((err) => {
         console.log(err);
