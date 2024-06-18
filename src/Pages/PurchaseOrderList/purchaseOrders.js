@@ -1,7 +1,8 @@
-import { Table, Button, Modal } from 'antd';
+import { Table, Button, Modal, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
+import { SearchOutlined } from '@ant-design/icons';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -63,7 +64,6 @@ const columns = (handleView, handleDelete) => [
                             View
                         </Button>
                     </NavLink>
-
                     <Button 
                         style={{ marginRight: '14px' }}
                         type="primary" 
@@ -83,6 +83,8 @@ export default function PurchaseOrder() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
+    const [searchText, setSearchText] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         adornicaServ.getPurchaseHistoryOrders()
@@ -101,6 +103,7 @@ export default function PurchaseOrder() {
                     .sort((a, b) => b.orderId - a.orderId); // Sắp xếp theo thứ tự giảm dần
 
                 setDataSource(orders);
+                setFilteredData(orders);
             })
             .catch((err) => {
                 console.log(err);
@@ -118,6 +121,7 @@ export default function PurchaseOrder() {
             .then(() => {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
+                setFilteredData(newDataSource);
                 setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Order was deleted!</h1></div>);
             })
             .catch((err) => {
@@ -140,16 +144,34 @@ export default function PurchaseOrder() {
             });
     };
 
+    const handleSearch = (e) => {
+        const { value } = e.target;
+        setSearchText(value);
+        const filtered = dataSource.filter((entry) =>
+            entry.salesStaffName.toLowerCase().includes(value.toLowerCase()) ||
+            entry.orderCode.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredData(filtered);
+    };
+
     return (
         <div>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '0px 0 6px 0' }}>Order List</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div>
+            <div style={{ margin: '20px 80px' }}>
+                <Input
+                    placeholder="Search by Staff name or Order Code"
+                    value={searchText}
+                    onChange={handleSearch}
+                    prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
+                    size="small"
+                    style={{ marginBottom: 20, width: '270px' }}
+                />
                 <Table
-                    style={{ margin: '8px 60px 0 60px' }}
-                    dataSource={dataSource}
+                    style={{ margin: '8px 0' }}
+                    dataSource={filteredData}
                     columns={columns(handleView, handleDelete)}
                     pagination={{ className: 'custom__pagination', pageSize: 5 }}
                 />
