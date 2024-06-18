@@ -3,6 +3,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 
 export default function CustomerDetails() {
   const [customerDetails, setCustomerDetails] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     adornicaServ.getCustomerDetails() // Assuming this endpoint returns customer details
@@ -17,9 +18,21 @@ export default function CustomerDetails() {
 
   const currentDate = new Date().toLocaleDateString();
 
+  const filteredDetails = customerDetails.filter(detail =>
+    detail.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    detail.phone.includes(searchTerm)
+  );
+
   return (
     <div style={styles.container}>
       <h2 style={styles.header}>CUSTOMER INFORMATION - {currentDate}</h2>
+      <input 
+        type="text"
+        placeholder="Search by Name or Phone"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={styles.searchBar}
+      />
       <table style={styles.table}>
         <thead>
           <tr>
@@ -33,7 +46,7 @@ export default function CustomerDetails() {
           </tr>
         </thead>
         <tbody>
-          {customerDetails.map((detail, index) => (
+          {filteredDetails.map((detail, index) => (
             <tr key={index} style={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
               <td style={styles.td}>{detail.customerId}</td>
               <td style={styles.td}>{detail.name}</td>
@@ -70,6 +83,14 @@ const styles = {
     fontSize: '24px',
     fontWeight: 'bold',
     borderRadius: '8px 8px 0 0',
+  },
+  searchBar: {
+    width: '100%',
+    padding: '10px',
+    marginBottom: '10px',
+    fontSize: '16px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
   },
   table: {
     width: '100%',
