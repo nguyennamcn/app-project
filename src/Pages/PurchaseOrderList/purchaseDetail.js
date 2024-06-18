@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { NavLink, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
-import { useSelector } from 'react-redux';
-
 
 Modal.setAppElement('#root');
 
@@ -164,6 +162,21 @@ const PurchaseDetail = () => {
     }));
   };
 
+  const handleDownloadPDF = () => {
+    console.log(orderCode);
+    adornicaServ.postPurchaseExport(orderCode)
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${orderCode}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(error => console.error('Error fetching PDF:', error));
+};
+
   const calculateTotalPrice = () => {
     return products.reduce((total, product) => total + product.price, 0).toFixed(2);
   };
@@ -191,33 +204,6 @@ const PurchaseDetail = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
-  };
-
-  const handlePrintClick = () => {
-    window.print();
-  };
-
-  const handleDownload = () => {
-    console.log(orderCode);
-    adornicaServ.postPurchaseExport(orderCode)
-        .then(response => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `${orderCode}.pdf`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        })
-        .catch(error => console.error('Error fetching PDF:', error));
-};
-
-  const handleMouseDown = () => {
-    setIsFinishButtonDisabled(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsFinishButtonDisabled(false);
   };
 
   useEffect(() => {
@@ -263,10 +249,10 @@ const PurchaseDetail = () => {
           onChange={handleDetailChange}
         />
       </div>
-      <div style={{marginLeft:'16%'}}>
-        <h1 style={{textAlign:'left'}}>Order Code : {sp?.orderCode}</h1>
-        <h1 style={{textAlign:'left'}}>Order ID : {sp?.orderId}</h1>
-        <h1 style={{textAlign:'left'}}>Total price : {sp?.totalAmount}</h1>
+      <div>
+        <h1>Order Code : {sp?.orderCode}</h1>
+        <h1>Order ID : {sp?.orderId}</h1>
+        <h1>Total Amount : {sp?.totalAmount}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>
@@ -277,14 +263,6 @@ const PurchaseDetail = () => {
             style={{ ...pageStyles.button, ...pageStyles.finishButton }}
           >
             Finish
-          </button>
-          <button
-            onClick={handleDownload}
-            style={{ ...pageStyles.button, ...pageStyles.printButton }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-          >
-            Download
           </button>
         </div>
       </div>
