@@ -53,20 +53,13 @@ function AddDiamond() {
                 <label>Product Name:</label>
                 <input type="text" name="productName" value={newProduct.productName} onChange={handleInputChange} />
               </div>
-            </div>
-            <div className="add-diamond-form-row">
-              <div className="add-diamond-form-group">
-                <label>Product Images:</label>
-                <input type="file" name="productImages" multiple onChange={handleImageUpload} />
-              </div>
-            </div>
-            <div className="add-diamond-form-row">
               <div className="add-diamond-form-group">
                 <label>Production Cost:</label>
                 <input type="text" name="productionCost" value={newProduct.productionCost} onChange={handleInputChange} />
               </div>
-              <div className="add-diamond-form-group">
-               
+            </div>
+            <div className="add-diamond-form-row">
+              <div className="add-diamond-form-group">     
               </div>
             </div>
             <div className="add-diamond-form-row">

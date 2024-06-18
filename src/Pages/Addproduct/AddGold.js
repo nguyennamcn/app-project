@@ -55,12 +55,12 @@ function AddProduct() {
                 <input type="text" name="productName" value={newProduct.productName} onChange={handleInputChange} />
               </div>
             </div> */}
-            <div className="add-gold-form-row">
+            {/* <div className="add-gold-form-row">
               <div className="add-gold-form-group">
                 <label>Product Images:</label>
                 <input type="file" name="productImages" multiple onChange={handleImageUpload} />
               </div>
-            </div>
+            </div> */}
             <div className="add-gold-form-row">
               <div className="add-gold-form-group">
                 <label>Gold Type:</label>
