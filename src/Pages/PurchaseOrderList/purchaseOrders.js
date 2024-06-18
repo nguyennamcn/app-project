@@ -11,7 +11,7 @@ const formatDate = (timestamp) => {
     return `${day}/${month}/${year}`;
 };
 
-const columns = (handleView, handleDelete, handleUpdate) => [
+const columns = (handleView, handleDelete) => [
     {
         title: 'Order ID',
         dataIndex: 'orderId',
@@ -55,13 +55,13 @@ const columns = (handleView, handleDelete, handleUpdate) => [
             return (
                 <div style={{ width: '50%', display: 'flex' }}>
                     <NavLink to={`/payment-bill/${record.orderCode}`}>
-                    <Button
-                        style={{ marginRight: '14px' }}
-                        type="primary"
-                        onClick={() => handleView(record.orderCode)}
-                    >
-                        View
-                    </Button>
+                        <Button
+                            style={{ marginRight: '14px' }}
+                            type="primary"
+                            onClick={() => handleView(record.orderCode)}
+                        >
+                            View
+                        </Button>
                     </NavLink>
 
                     <Button 
@@ -72,7 +72,6 @@ const columns = (handleView, handleDelete, handleUpdate) => [
                     >
                         Delete
                     </Button>
-            
                 </div>
             );
         }
@@ -88,16 +87,19 @@ export default function PurchaseOrder() {
     useEffect(() => {
         adornicaServ.getPurchaseHistoryOrders()
             .then((res) => {
-                const orders = res.data.metadata.map((order, index) => ({
-                    key: index,
-                    salesStaffName: order.salesStaffName,
-                    orderId: order.orderId,
-                    orderCode: order.orderCode,
-                    totalPrice: order.totalPrice,
-                    dateOrder: formatDate(order.dateOrder),
-                    paymentMethod: order.paymentMethod,
-                    deliveryStatus: order.deliveryStatus,
-                }));
+                const orders = res.data.metadata
+                    .map((order, index) => ({
+                        key: index,
+                        salesStaffName: order.salesStaffName,
+                        orderId: order.orderId,
+                        orderCode: order.orderCode,
+                        totalPrice: order.totalPrice,
+                        dateOrder: formatDate(order.dateOrder),
+                        paymentMethod: order.paymentMethod,
+                        deliveryStatus: order.deliveryStatus,
+                    }))
+                    .sort((a, b) => b.orderId - a.orderId); // Sắp xếp theo thứ tự giảm dần
+
                 setDataSource(orders);
             })
             .catch((err) => {
