@@ -25,6 +25,7 @@ export default function ListOrderPage() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [pdfUrl, setPdfUrl] = useState('');
+    const [paymentUpdated, setPaymentUpdated] = useState(false);
 
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     console.log(userInfo);
@@ -47,7 +48,7 @@ export default function ListOrderPage() {
                 })) || [];
                 setProducts(orderList);
                 const customerData = res.data.metadata || {};
-                console.log(customerData)
+                console.log(customerData);
                 setCustomer(customerData);
                 setCustomerName(customerData.customerName || '');
                 setCustomerPhone(customerData.customerPhone || '');
@@ -58,11 +59,14 @@ export default function ListOrderPage() {
                 setDeliveryStatus(customerData.deliveryStatus || '');
                 setOrderId(customerData.orderId || '');
                 setDiscount(customerData.discount || 0);
+                if (customerData.paymentMethod !== 'NONE') {
+                    setPaymentUpdated(true);
+                }
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, [orderKey]);
+    }, [orderKey, paymentUpdated]);
 
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => total + product.totalPrice, 0);
@@ -107,6 +111,35 @@ export default function ListOrderPage() {
                             onClick={handleDownload}>Download PDF</Button>
                     </div>
                 );
+
+                // Fetch the latest order details
+                adornicaServ.getListOrderDetail(orderKey)
+                    .then((res) => {
+                        console.log(res.data.metadata);
+                        const orderList = res.data.metadata?.list?.map(item => ({
+                            ...item,
+                            totalPrice: item.price
+                        })) || [];
+                        setProducts(orderList);
+                        const customerData = res.data.metadata || {};
+                        console.log(customerData);
+                        setCustomer(customerData);
+                        setCustomerName(customerData.customerName || '');
+                        setCustomerPhone(customerData.customerPhone || '');
+                        setCustomerAddress(customerData.address || '');
+                        setCustomerBirthday(customerData.dateOfBirth ? moment(customerData.dateOfBirth).valueOf() : null);
+                        setDateSale(customerData.dateSell ? convertMillisecondsToDateString(customerData.dateSell) : '');
+                        setPaymentMethodDone(customerData.paymentMethod || '');
+                        setDeliveryStatus(customerData.deliveryStatus || '');
+                        setOrderId(customerData.orderId || '');
+                        setDiscount(customerData.discount || 0);
+                        if (customerData.paymentMethod !== 'NONE') {
+                            setPaymentUpdated(true);
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             })
             .catch((err) => {
                 console.error('Error submitting order:', err.response || err);
@@ -169,12 +202,12 @@ export default function ListOrderPage() {
                             <>
                                 <label>Name: <input style={{width:'50%'}} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
                                 <label>Phone: <input style={{width:'50%'}} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
-                                <label>Address: <input style={{width:'90%'}} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
+                                <label>Address:<textarea style={{width:'90%', height:'64px', resize: 'none', border:'1px solid'}} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
                                 <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
                                 <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
                                 <label>Payment methods: <select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
                                     <option value='CASH'>Cash</option>
-                                    <option value='BANKING'>Banking</option>
+                                    {/* <option value='BANKING'>Banking</option> */}
                                 </select></label>
                                 <label>Delivery status: {deliveryStatus}</label>
                             </>
