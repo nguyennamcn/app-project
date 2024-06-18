@@ -159,7 +159,7 @@ export default function ListOrderPage() {
                     style={{ margin: '8px 60px 0 60px' }}
                     dataSource={dataSource}
                     columns={columns(handleView, handleDelete)}
-                    pagination={{ className: 'custom__pagination', pageSize: 5 }}
+                    pagination={{ className: 'custom__pagination', pageSize: 4 }}
                 />
             </div>
             <Modal
