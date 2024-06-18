@@ -40,7 +40,7 @@ export default function ListOrderPage() {
                 setDateSale(orderData.dateSell ? convertMillisecondsToDateString(orderData.dateSell) : '');
                 setPaymentMethod(orderData.paymentMethod || '');
                 setDeliveryStatus(orderData.deliveryStatus || '');
-
+                setDiscount(orderData.discount || 0);
                 console.log(res.data.metadata);
             })
             .catch((err) => {
