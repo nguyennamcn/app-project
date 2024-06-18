@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
-import { useSelector } from 'react-redux';
 
 Modal.setAppElement('#root');
 
@@ -118,20 +117,21 @@ const pageStyles = {
     color: 'black',
     marginRight: '0px',
   },
-  printButton: {
-    backgroundColor: '#ADD8E6',
-    color: 'black',
+  downloadButton: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: '2px solid black', // Thêm viền đen cho nút Download PDF
   },
   modal: {
     content: {
-      backgroundColor: '#4CAF50',
+      backgroundColor: 'white', // Nền màu trắng
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
       maxHeight: '200px',
       margin: 'auto',
       textAlign: 'center',
-      color: 'white',
+      color: 'black', // Chữ màu đen
     },
   },
   modalButtonWrapper: {
@@ -151,7 +151,6 @@ const PurchaseDetail = () => {
   });
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isFinishButtonDisabled, setIsFinishButtonDisabled] = useState(false);
   const { orderCode } = useParams();
   const [sp, setSp] = useState();
 
@@ -176,7 +175,7 @@ const PurchaseDetail = () => {
       dateOfBirth: '',
       paymentMethod: 'CASH',
       amount: sp?.totalAmount,
-      customerPhone: sp?.customerPhone
+      customerPhone: sp?.customerPhone,
     };
     adornicaServ.postPayment(data)
       .then((res) => {
@@ -192,31 +191,22 @@ const PurchaseDetail = () => {
     setModalIsOpen(false);
   };
 
-  const handlePrintClick = () => {
-    window.print();
-  };
-
-  const handleMouseDown = () => {
-    setIsFinishButtonDisabled(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsFinishButtonDisabled(false);
+  const handleDownloadPDF = () => {
+    // Thực hiện logic tải về file PDF ở đây
+    console.log('Download PDF');
   };
 
   useEffect(() => {
     adornicaServ.getListOrderPurchase(orderCode)
       .then((res) => {
         console.log(res.data.metadata);
-        setSp(res.data.metadata)
+        setSp(res.data.metadata);
       })
       .catch((err) => {
         console.log(err);
         // Handle errors as needed
       });
   }, [orderCode]);
-
-
 
   return (
     <div style={pageStyles.container}>
@@ -248,12 +238,11 @@ const PurchaseDetail = () => {
           value={sp?.customerAddress}
           onChange={handleDetailChange}
         />
-
       </div>
       <div>
         <h1>Order Code : {sp?.orderCode}</h1>
-        <h1>Order Code : {sp?.orderId}</h1>
-        <h1>Order Code : {sp?.totalAmount}</h1>
+        <h1>Order ID : {sp?.orderId}</h1>
+        <h1>Total Amount : {sp?.totalAmount}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>
@@ -262,18 +251,8 @@ const PurchaseDetail = () => {
           <button
             onClick={handleFinishClick}
             style={{ ...pageStyles.button, ...pageStyles.finishButton }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
           >
             Finish
-          </button>
-          <button
-            onClick={handlePrintClick}
-            style={{ ...pageStyles.button, ...pageStyles.printButton }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-          >
-            Print
           </button>
         </div>
       </div>
@@ -286,13 +265,12 @@ const PurchaseDetail = () => {
         <h2>Order Completed!</h2>
         <p>Your order has been successfully submitted.</p>
         <div style={pageStyles.modalButtonWrapper}>
+          <NavLink to="/buyProduct" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
           <button
-            onClick={closeModal}
-            style={{ ...pageStyles.button, ...pageStyles.finishButton }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
+            onClick={handleDownloadPDF}
+            style={{ ...pageStyles.button, ...pageStyles.downloadButton }}
           >
-            OK
+            Download PDF
           </button>
         </div>
       </Modal>
