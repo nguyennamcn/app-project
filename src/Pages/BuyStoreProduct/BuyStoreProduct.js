@@ -63,7 +63,7 @@ const StoreSelection = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (phone && ordercode) {
+    if (phone || ordercode) {
       handleSendOrder();
     }
   };
@@ -88,7 +88,7 @@ const StoreSelection = () => {
       });
   };
 
-  const isFormValid = phone && ordercode;
+  const isFormValid = phone || ordercode;
 
   return (
     <div style={styles.container}>

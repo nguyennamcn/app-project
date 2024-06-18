@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
@@ -119,20 +119,21 @@ const pageStyles = {
     color: 'black',
     marginRight: '0px',
   },
-  printButton: {
-    backgroundColor: '#ADD8E6',
-    color: 'black',
+  downloadButton: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: '2px solid black', // Thêm viền đen cho nút Download PDF
   },
   modal: {
     content: {
-      backgroundColor: '#4CAF50',
+      backgroundColor: 'white', // Nền màu trắng
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
       maxHeight: '200px',
       margin: 'auto',
       textAlign: 'center',
-      color: 'white',
+      color: 'black', // Chữ màu đen
     },
   },
   modalButtonWrapper: {
@@ -152,7 +153,6 @@ const PurchaseDetail = () => {
   });
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isFinishButtonDisabled, setIsFinishButtonDisabled] = useState(false);
   const { orderCode } = useParams();
   const [sp, setSp] = useState();
 
@@ -177,7 +177,7 @@ const PurchaseDetail = () => {
       dateOfBirth: '',
       paymentMethod: 'CASH',
       amount: sp?.totalAmount,
-      customerPhone: sp?.customerPhone
+      customerPhone: sp?.customerPhone,
     };
     adornicaServ.postPayment(data)
       .then((res) => {
@@ -224,15 +224,13 @@ const PurchaseDetail = () => {
     adornicaServ.getListOrderPurchase(orderCode)
       .then((res) => {
         console.log(res.data.metadata);
-        setSp(res.data.metadata)
+        setSp(res.data.metadata);
       })
       .catch((err) => {
         console.log(err);
         // Handle errors as needed
       });
   }, [orderCode]);
-
-
 
   return (
     <div style={pageStyles.container}>
@@ -264,7 +262,6 @@ const PurchaseDetail = () => {
           value={sp?.customerAddress}
           onChange={handleDetailChange}
         />
-
       </div>
       <div style={{marginLeft:'16%'}}>
         <h1 style={{textAlign:'left'}}>Order Code : {sp?.orderCode}</h1>
@@ -278,8 +275,6 @@ const PurchaseDetail = () => {
           <button
             onClick={handleFinishClick}
             style={{ ...pageStyles.button, ...pageStyles.finishButton }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
           >
             Finish
           </button>
@@ -302,13 +297,12 @@ const PurchaseDetail = () => {
         <h2>Order Completed!</h2>
         <p>Your order has been successfully submitted.</p>
         <div style={pageStyles.modalButtonWrapper}>
+          <NavLink to="/buyProduct" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
           <button
-            onClick={closeModal}
-            style={{ ...pageStyles.button, ...pageStyles.finishButton }}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
+            onClick={handleDownloadPDF}
+            style={{ ...pageStyles.button, ...pageStyles.downloadButton }}
           >
-            OK
+            Download PDF
           </button>
         </div>
       </Modal>
