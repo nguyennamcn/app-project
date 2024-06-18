@@ -158,18 +158,18 @@ export default function ListOrderPage() {
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div className="container">
-                <div className="row justify-content-md-center">
+            <div className="container" style={{margin:'15px 0px', width:'100%', minHeight:'400px'}}>
+                <div className="row justify-content-md-center" style={{width:'100%'}}>
                     <div className="customer__info col-sm-5" style={{
-                        marginRight: '10px',
+                        marginRight: '20px',
                         backgroundColor: 'white',
-                        padding: '0',
+                        
                     }}>
                         {paymentMethodDone === 'NONE' ? (
                             <>
-                                <label>Name: <input type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
-                                <label>Phone: <input type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
-                                <label>Address: <input style={{ marginLeft: '9.6%' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
+                                <label>Name: <input style={{width:'50%'}} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
+                                <label>Phone: <input style={{width:'50%'}} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
+                                <label>Address: <input style={{width:'90%'}} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
                                 <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
                                 <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
                                 <label>Payment methods: <select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
@@ -188,21 +188,22 @@ export default function ListOrderPage() {
                             </>
                         )}
                     </div>
-                    <div className="product__table col-sm-6" style={{
+                    <div className="product__table col-sm-5" style={{
                         marginLeft: '10px',
                         backgroundColor: 'white',
-                        padding: '0',
+                        padding:'0px 10px 0px 0px',
+                        minHeight:'380px'
                     }}>
-                        <Table style={{ margin: '20px 60px 0 60px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
-                        <div className="row">
+                        <Table style={{ margin: '20px 10px 0 20px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
+                        <div className="row" style={{position: 'absolute', bottom:'16px'}}>
                             <div className="col-sm-12">
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item: <span style={{ marginLeft: '4%' }}>{products.length}</span></h1>
+                                <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item: <span style={{ marginLeft: '4%' }}>{products.length}</span></h1>
                             </div>
                             <div className="col-sm-12">
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount: <span style={{ marginLeft: '4%' }}>{discount}%</span></h1>
+                                <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount: <span style={{ marginLeft: '4%' }}>{discount}%</span></h1>
                             </div>
                             <div className="col-sm-12">
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
+                                <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
                                     <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{totalPrice.toFixed(2)}$</span>
                                     <span style={{ marginLeft: '4%', color: 'orange' }}>{(totalPrice - (totalPrice * discount / 100)).toFixed(2)}$</span>
                                 </h1>
@@ -226,14 +227,7 @@ export default function ListOrderPage() {
                         >Paid</Button>
                     </div>
                 </div>
-                <div className="stick" style={{
-                    position: 'absolute',
-                    width: '1px',
-                    height: '55%',
-                    backgroundColor: 'black',
-                    top: '21%',
-                    right: '43.5%',
-                }}></div>
+
                 <Modal
                     title="Notification"
                     visible={isModalVisible}
