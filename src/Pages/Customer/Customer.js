@@ -41,13 +41,13 @@ export default function CustomerDetails() {
       <table style={styles.table}>
         <thead>
           <tr>
-            <th style={styles.th}>CustomerID</th>
+            <th style={styles.th}>ID</th>
             <th style={styles.th}>Name</th>
             <th style={styles.th}>Phone</th>
             <th style={styles.th}>Address</th>
             <th style={styles.th}>Birthday</th>
             <th style={styles.th}>Discount (%)</th>
-            <th style={styles.th}>Purchased</th>
+            <th style={styles.th}>Purchased ($)</th>
           </tr>
         </thead>
         <tbody>
