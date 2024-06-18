@@ -4,6 +4,7 @@ import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
+
 Modal.setAppElement('#root');
 
 const pageStyles = {
@@ -196,6 +197,21 @@ const PurchaseDetail = () => {
     window.print();
   };
 
+  const handleDownload = () => {
+    console.log(orderCode);
+    adornicaServ.postPurchaseExport(orderCode)
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${orderCode}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(error => console.error('Error fetching PDF:', error));
+};
+
   const handleMouseDown = () => {
     setIsFinishButtonDisabled(true);
   };
@@ -250,10 +266,10 @@ const PurchaseDetail = () => {
         />
 
       </div>
-      <div>
-        <h1>Order Code : {sp?.orderCode}</h1>
-        <h1>Order Code : {sp?.orderId}</h1>
-        <h1>Order Code : {sp?.totalAmount}</h1>
+      <div style={{marginLeft:'16%'}}>
+        <h1 style={{textAlign:'left'}}>Order Code : {sp?.orderCode}</h1>
+        <h1 style={{textAlign:'left'}}>Order ID : {sp?.orderId}</h1>
+        <h1 style={{textAlign:'left'}}>Total price : {sp?.totalAmount}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>
@@ -268,12 +284,12 @@ const PurchaseDetail = () => {
             Finish
           </button>
           <button
-            onClick={handlePrintClick}
+            onClick={handleDownload}
             style={{ ...pageStyles.button, ...pageStyles.printButton }}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
           >
-            Print
+            Download
           </button>
         </div>
       </div>

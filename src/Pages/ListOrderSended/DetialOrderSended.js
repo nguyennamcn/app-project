@@ -111,7 +111,7 @@ export default function ListOrderPage() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0', }}>Order</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0', }}>Order code: {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
             </div>
             <div className="container">

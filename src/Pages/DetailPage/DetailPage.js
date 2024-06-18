@@ -101,10 +101,10 @@ export default function DetailPage() {
                         <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
                         <div style={{ display: 'flex', marginTop: '5px' }}>
                             <div style={{ fontSize: '15px', marginRight: '150px' }}>
-                                <div>ID: {product.id}</div>
-                                <div>Gender: {product.gender}</div>
-                                <div>Category: {product.category}</div>
-                                <div>Size: {product.size}</div>
+                                <div style={{ marginTop: '5px' }}>ID: {product.id}</div>
+                                <div style={{ marginTop: '5px' }}>Gender: {product.gender}</div>
+                                <div style={{ marginTop: '5px' }}>Category: {product.category}</div>
+                                <div style={{ marginTop: '5px' }}>Size: {product.size}</div>
                             </div>
                             <div style={{ fontSize: '15px' }}>
                                 {product.materials?.map((mt, index) => (
@@ -324,7 +324,7 @@ export default function DetailPage() {
                 }
 
                 .product-information {
-                    margin-top: 7px;
+                    margin-top: 3px;
                 }
 
                 @media (max-width: 768px) {
