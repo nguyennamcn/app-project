@@ -23,6 +23,11 @@ export default function CustomerDetails() {
     detail.phone.includes(searchTerm)
   );
 
+  const formatBirthday = (date) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(date).toLocaleDateString('vi-VN', options);
+  };
+
   return (
     <div style={styles.container}>
       <h2 style={styles.header}>CUSTOMER INFORMATION - {currentDate}</h2>
@@ -52,7 +57,7 @@ export default function CustomerDetails() {
               <td style={styles.td}>{detail.name}</td>
               <td style={styles.td}>{detail.phone}</td>
               <td style={styles.td}>{detail.address}</td>
-              <td style={styles.td}>{detail.dateOfBirth}</td>
+              <td style={styles.td}>{formatBirthday(detail.dateOfBirth)}</td>
               <td style={styles.td}>{detail.percentDiscount}</td>
               <td style={styles.td}>{detail.totalAmountPurchased}</td>
             </tr>
