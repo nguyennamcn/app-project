@@ -46,6 +46,12 @@ export default function ManageGold() {
     setCurrentPage(pageNumber);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return date.toLocaleDateString('vi-VN', options);
+  };
+
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -86,7 +92,7 @@ export default function ManageGold() {
                   style={styles.input}
                 />
               </td>
-              <td style={styles.td}>{product.effectDate}</td>
+              <td style={styles.td}>{formatDate(product.effectDate)}</td>
               <td style={styles.td}>
                 <button
                   style={styles.updateButton}
