@@ -105,8 +105,10 @@
   margin-left: 8px;
   font-size: 16px;
   flex: 1;
-  width: 300px; /* Increased width */
-  height: 30px; /* Reduced height */
+  width: 300px;
+  /* Increased width */
+  height: 30px;
+  /* Reduced height */
   resize: none;
 }
 
@@ -128,6 +130,28 @@
   font-size: 24px;
   font-weight: bold;
   text-align: center;
+}
+
+/* Handle scroll */
+.product-container {
+  margin-top: 20px;
+  max-height: calc(78vh - 100px);
+  /* Adjust the value as needed */
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: darkgrey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:  rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
 }
 
 /* Responsive Styles */

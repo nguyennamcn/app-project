@@ -139,8 +139,8 @@ export default function DetailPage() {
                     </div>
                     <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} $</span></p>
                     <div className="product-description">
-                        <p className="description-title">Description</p>
-                        <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span>
+                        {/* <p className="description-title">Description</p>
+                        <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span> */}
                     </div>
                     <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
                         ADD
