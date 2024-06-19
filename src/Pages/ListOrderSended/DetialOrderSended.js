@@ -111,11 +111,11 @@ export default function ListOrderPage() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0', }}>Order code: {orderKey}</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 10px 0', }}>Order code: {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
             </div>
-            <div className="container">
-                <div className="row justify-content-md-center">
+            <div className="container" style={{boxShadow:'rgba(0, 0, 0, 0.24) 2px 2px', borderRadius:'10px'}}>
+                <div className="row justify-content-md-center" style={{backgroundColor:'white', padding:'6px', borderRadius:'10px',}}>
 
                     <div className='order__info col-sm-5'
                      style={{

@@ -137,9 +137,9 @@ export const adornicaServ = {
         return https.delete(`/api/v1/users/delete/${id}`);
     },
 
-    postImg: (id) => {
+    postImg: (id, avatar) => {
         console.log(id)
-        return https.post(`/api/v1/users/update-avatar/${id}`);
+        return https.post(`/api/v1/users/update-avatar/${id}`, {avatar},);
     },
 
     postUserUpdate: (id, data) => {

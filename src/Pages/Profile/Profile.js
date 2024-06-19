@@ -60,15 +60,23 @@ export default function EditEmployee() {
       birthday: profile.birthday,
       address: profile.address
     }
-    adornicaServ.postUserUpdate(userInfo.id, data)
+    
+    adornicaServ.postImg(userInfo.id, profile.avatar)
       .then((res) => {
-        console.log('Role updated:', res);
-        window.location.reload();
+        console.log('Avatar updated:', profile.avatar);
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log('Form data:', profile);
+
+    adornicaServ.postUserUpdate(userInfo.id, data)
+      .then((res) => {
+        console.log('Role updated:', data);
+        //window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

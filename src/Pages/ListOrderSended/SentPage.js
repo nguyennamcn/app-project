@@ -6,6 +6,11 @@ import { useSelector } from 'react-redux';
 
 const columns = (handleView, handleDelete) => [
     {
+        title: 'ID',
+        dataIndex: 'orderId',
+        key: 'orderId',
+    },
+    {
         title: 'Order code',
         dataIndex: 'orderCode',
         key: 'orderCode',
@@ -36,6 +41,16 @@ const columns = (handleView, handleDelete) => [
         key: 'totalPrice',
     },
     {
+        title: 'Discount',
+        dataIndex: 'discount',
+        key: 'discount',
+    },
+    {
+        title: 'Create at',
+        dataIndex: 'createAt',
+        key: 'createAt',
+    },
+    {
         title: 'Action',
         key: 'action',
         width: 180,
@@ -63,6 +78,21 @@ const columns = (handleView, handleDelete) => [
     },
 ];
 
+const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+};
+
+const checkDiscount = (discount) => {
+    if(discount === null){
+        discount = "NONE";
+    }
+    return discount;
+}
+
 export default function SentPage() {
     const [dataSource, setDataSource] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -74,16 +104,19 @@ export default function SentPage() {
     useEffect(() => {
         adornicaServ.getListOrderByStaffID(userInfo.id)
             .then((res) => {
-                const orders = res.data.metadata.map((order, index) => ({
-                    key: index,
+                const orders = res.data.metadata.data.map((order) => ({
+                    orderId: order.orderId,
                     orderCode: order.orderCode,
                     deliveryStatus: order.deliveryStatus,
                     paymentMethod: order.paymentMethod,
                     phone: order.phone,
                     name: order.name,
                     totalPrice: order.totalPrice,
+                    discount: checkDiscount(order.discount),
+                    createAt: formatDate(order.createAt),
                 }));
                 setDataSource(orders);
+                console.log(orders);
             })
             .catch((err) => {
                 console.log(err);
