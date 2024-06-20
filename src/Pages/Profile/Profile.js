@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
-
 import { Input, Button, Select, DatePicker } from 'antd';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import './Profile.css';
 import { useSelector } from 'react-redux';
 
-
-
 export default function EditEmployee() {
-
   let userInfo = useSelector((state) => state.userReducer.userInfo);
-  
+
   const [profile, setProfile] = useState([]);
+  const [fileAvatar, setFileAvtar] = useState();
   useEffect(() => {
-    adornicaServ. getProfile(userInfo.id)
+    adornicaServ.getProfile(userInfo.id)
       .then((res) => {
         console.log(res.data.metadata);
         setProfile(res.data.metadata);
@@ -28,25 +25,27 @@ export default function EditEmployee() {
   const handleChange = (e) => {
     setProfile({
       ...profile,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setFileAvtar(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfile({ ...profile, avatar: reader.result });
       };
       reader.readAsDataURL(file);
+
     }
   };
 
   const handleDateChange = (date, dateString) => {
     setProfile({
       ...profile,
-      birthday: dateString
+      birthday: dateString,
     });
   };
 
@@ -58,21 +57,22 @@ export default function EditEmployee() {
       name: profile.name,
       gender: profile.gender,
       birthday: profile.birthday,
-      address: profile.address
-    }
-    
-    adornicaServ.postImg(userInfo.id, profile.avatar)
-      .then((res) => {
-        console.log('Avatar updated:', profile.avatar);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      avatar: profile.avatar,
+      address: profile.address,
+    };
+
+    adornicaServ.postImg(userInfo.id, fileAvatar)
+        .then((res) => {
+          console.log('Avatar updated:', profile.avatar);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
     adornicaServ.postUserUpdate(userInfo.id, data)
       .then((res) => {
         console.log('Role updated:', data);
-        //window.location.reload();
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
