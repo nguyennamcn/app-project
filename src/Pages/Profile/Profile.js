@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
-import { Input, Button, Select, DatePicker } from 'antd';
+import { Input, Button, Select, DatePicker, Modal } from 'antd';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import './Profile.css';
@@ -11,6 +11,9 @@ export default function EditEmployee() {
 
   const [profile, setProfile] = useState([]);
   const [fileAvatar, setFileAvtar] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAvatarVisible, setIsAvatarVisible] = useState(false);
+
   useEffect(() => {
     adornicaServ.getProfile(userInfo.id)
       .then((res) => {
@@ -62,42 +65,50 @@ export default function EditEmployee() {
     };
 
     adornicaServ.postImg(userInfo.id, fileAvatar)
-        .then((res) => {
-          console.log('Avatar updated:', profile.avatar);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      .then((res) => {
+        console.log('Avatar updated:', profile.avatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     adornicaServ.postUserUpdate(userInfo.id, data)
       .then((res) => {
         console.log('Role updated:', data);
-        window.location.reload();
+        //window.location.reload();
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const showAvatar = () => {
+    setIsAvatarVisible(true);
+  };  
+
   return (
     <div className="profile-container">
       <h1 className="profile-title">Profile</h1>
       <div className="profile-card">
         <div className="profile-header">
-          <div className="profile-image">
-            <label htmlFor="avatar-upload" className="profile-placeholder">
+          <div className="profile-image" onClick={showModal}>
+            <label  className="profile-placeholder">
               {profile.avatar ? (
                 <img src={profile.avatar} alt="Avatar" className="avatar" />
               ) : (
                 '+'
               )}
             </label>
-            <input
+            {/* <input
               id="avatar-upload"
               type="file"
               style={{ display: 'none' }}
               onChange={handleAvatarChange}
-            />
+            /> */}
           </div>
           <div className="profile-info">
             <Input className="input-field" placeholder="Full Name" name="name" value={profile.name} onChange={handleChange} />
@@ -131,6 +142,46 @@ export default function EditEmployee() {
           <Button type="primary" className="nav-button" onClick={handleSubmit}>Save</Button>
         </div>
       </div>
+      <Modal
+        visible={isModalVisible}
+        footer={null}
+        mask={false}
+        closable={false}
+        onCancel={() => setIsModalVisible(false)}
+        className='modal__avatar'
+      >
+        <div className='modal__content' onClick={showAvatar} style={{marginTop:'2px' ,marginBottom:'4px'}}>
+          View avatar
+        </div>
+        <div className='modal__content'>
+        <label htmlFor="avatar-upload" className='change__avatar__modal'>Change avatar </label>
+          <input
+              id="avatar-upload"
+              type="file"
+              style={{ display: 'none',}}
+              onChange={handleAvatarChange}
+            />
+        </div>
+      </Modal>
+
+      <Modal
+        visible={isAvatarVisible}
+        footer={null}
+        mask={false}
+        closable={false}
+        onCancel={() => setIsAvatarVisible(false)}
+        className='show__avatar'
+      >
+        <div>
+        {profile.avatar ? (
+                <img src={profile.avatar} alt="Avatar" className="avatar" />
+              ) : (
+                '+'
+              )}
+        </div>
+
+      </Modal>
+      
     </div>
   );
 }
