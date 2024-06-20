@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
-import { Input, Button, Select, DatePicker, Modal } from 'antd';
+import { Input, Button, Select, DatePicker, Modal, notification } from 'antd';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import './Profile.css';
@@ -9,10 +9,11 @@ import { useSelector } from 'react-redux';
 export default function EditEmployee() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
 
-  const [profile, setProfile] = useState([]);
-  const [fileAvatar, setFileAvtar] = useState();
+  const [profile, setProfile] = useState({});
+  const [fileAvatar, setFileAvatar] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAvatarVisible, setIsAvatarVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     adornicaServ.getProfile(userInfo.id)
@@ -23,7 +24,7 @@ export default function EditEmployee() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userInfo.id]);
 
   const handleChange = (e) => {
     setProfile({
@@ -35,13 +36,12 @@ export default function EditEmployee() {
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setFileAvtar(file);
+      setFileAvatar(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfile({ ...profile, avatar: reader.result });
       };
       reader.readAsDataURL(file);
-
     }
   };
 
@@ -53,6 +53,7 @@ export default function EditEmployee() {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     const data = {
       id: userInfo.id,
       email: profile.email,
@@ -62,24 +63,34 @@ export default function EditEmployee() {
       birthday: profile.birthday,
       avatar: profile.avatar,
       address: profile.address,
+      roleUser: profile.roleUser
     };
 
     adornicaServ.postImg(userInfo.id, fileAvatar)
       .then((res) => {
-        console.log('Avatar updated:', profile.avatar);
+        console.log('Profile updated:', data);
+        notification.success({ message: 'Avatar updated successfully!' });
       })
       .catch((err) => {
         console.log(err);
+        //notification.error({ message: 'Error updating profile. Please try again.' });
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
-    adornicaServ.postUserUpdate(userInfo.id, data)
-      .then((res) => {
-        console.log('Role updated:', data);
-        //window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      return adornicaServ.postUserUpdate(userInfo.id, data)
+                .then((res) => {
+                  setProfile(data);
+                  notification.success({ message: 'Profile updated successfully!' });
+                })
+                .catch((err) => {
+                  console.log(err);
+                  notification.error({ message: 'Error updating profile. Please try again.' });
+                })
+                .finally(() => {
+                  setLoading(false);
+                });     
   };
 
   const showModal = () => {
@@ -96,19 +107,13 @@ export default function EditEmployee() {
       <div className="profile-card">
         <div className="profile-header">
           <div className="profile-image" onClick={showModal}>
-            <label  className="profile-placeholder">
+            <label className="profile-placeholder">
               {profile.avatar ? (
                 <img src={profile.avatar} alt="Avatar" className="avatar" />
               ) : (
                 '+'
               )}
             </label>
-            {/* <input
-              id="avatar-upload"
-              type="file"
-              style={{ display: 'none' }}
-              onChange={handleAvatarChange}
-            /> */}
           </div>
           <div className="profile-info">
             <Input className="input-field" placeholder="Full Name" name="name" value={profile.name} onChange={handleChange} />
@@ -119,7 +124,7 @@ export default function EditEmployee() {
             <DatePicker
               className="input-field"
               placeholder="Birthday"
-              value={moment(profile.birthday)}
+              value={profile.birthday ? moment(profile.birthday) : null}
               onChange={handleDateChange}
               format="YYYY-MM-DD"
               style={{ width: '100%' }}
@@ -138,8 +143,9 @@ export default function EditEmployee() {
         </div>
         <hr />
         <div className="profile-actions">
-          {/* <Button className="nav-button">Back</Button> */}
-          <Button type="primary" className="nav-button" onClick={handleSubmit}>Save</Button>
+          <Button type="primary" className="nav-button" onClick={handleSubmit} loading={loading}>
+            Save
+          </Button>
         </div>
       </div>
       <Modal
@@ -150,17 +156,17 @@ export default function EditEmployee() {
         onCancel={() => setIsModalVisible(false)}
         className='modal__avatar'
       >
-        <div className='modal__content' onClick={showAvatar} style={{marginTop:'2px' ,marginBottom:'4px'}}>
+        <div className='modal__content' onClick={showAvatar} style={{ marginTop: '2px', marginBottom: '4px' }}>
           View avatar
         </div>
         <div className='modal__content'>
-        <label htmlFor="avatar-upload" className='change__avatar__modal'>Change avatar </label>
+          <label htmlFor="avatar-upload" className='change__avatar__modal'>Change avatar </label>
           <input
-              id="avatar-upload"
-              type="file"
-              style={{ display: 'none',}}
-              onChange={handleAvatarChange}
-            />
+            id="avatar-upload"
+            type="file"
+            style={{ display: 'none' }}
+            onChange={handleAvatarChange}
+          />
         </div>
       </Modal>
 
@@ -173,15 +179,13 @@ export default function EditEmployee() {
         className='show__avatar'
       >
         <div>
-        {profile.avatar ? (
-                <img src={profile.avatar} alt="Avatar" className="avatar" />
-              ) : (
-                '+'
-              )}
+          {profile.avatar ? (
+            <img src={profile.avatar} alt="Avatar" className="avatar" />
+          ) : (
+            '+'
+          )}
         </div>
-
       </Modal>
-      
     </div>
   );
 }
