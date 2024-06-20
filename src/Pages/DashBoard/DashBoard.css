@@ -1,57 +1,77 @@
+/* DashBoard.css */
 .dashboard-container {
-    padding: 20px;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
-  
-  .card-row {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  .card {
-    width: 200px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  .feedback-card {
-    background-color: #b19cd9;
-    width: 30%;
-  }
-  
-  .employees-card {
-    background-color: #ff6961;
-    width: 30%;
-  }
-  
-  .customers-card {
-    background-color: #77dd77;
-    width: 30%;
-  }
-  
-  .products-purchased-card {
-    background-color: #cfcfc4;
-    width: 30%;
-  }
-  
-  .products-sold-card {
-    background-color: #ffb347;
-    width: 30%;
-  }
-  
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #20232a;
+  max-height: 80vh;
+  color: #ffffff;
+}
 
-  
+.stat-row {
+  margin-bottom: 10px;
+}
+
+.stat-card {
+  color: #ffffff;
+}
+
+.orders-sold-card {
+  background-color: #0088FE;
+}
+
+.repeat-orders-card {
+  background-color: #00C49F;
+}
+
+.top-employee-card {
+  background-color: #FFBB28;
+}
+
+.diamond-sold-card {
+  background-color: #FF8042;
+}
+
+.gold-sold-card {
+  background-color: #A569BD;
+}
+
+.jewelry-sold-card {
+  background-color: #DC7633;
+}
+
+.ant-card-head-title, .ant-statistic-title {
+  color: #ffffff;
+}
+
+.ant-statistic-content {
+  color: #ffffff;
+}
+
+.chart-container {
+  background-color: #282c34;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.traffic-chart {
+  width: 70%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+li span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 3px;
+}
