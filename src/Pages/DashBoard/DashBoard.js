@@ -1,41 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
+import React, { useState } from 'react';
+import { Card, Row, Col, Statistic } from 'antd';
+import TrafficChart from './TrafficChart';
 import './DashBoard.css';
-
-const { Meta } = Card;
 
 export default function DashBoard() {
   const [data, setData] = useState({
-    feedback: 230,
-    employees: 69,
-    customers: 239,
-    productsPurchased: 50,
-    productsSold: 250
+    ordersSold: 500,
+    repeatOrders: 150,
+    diamondSold: 200,
+    goldSold: 300,
+    jewelrySold: 100,
+    topEmployee: 'John Doe',
   });
 
   return (
     <div className="dashboard-container">
       <h1>DashBoard</h1>
-      <div className="card-container">
-        <div className="card-row">
-          <Card className="card feedback-card">
-            <Meta title={`${data.feedback} Total Feedback`} description={<button>More Information</button>} />
+      <Row gutter={16} className="stat-row">
+        <Col span={8}>
+          <Card className="stat-card orders-sold-card">
+            <Statistic title="Orders Sold" value={data.ordersSold} />
           </Card>
-          <Card className="card employees-card">
-            <Meta title={`${data.employees} Total Employees`} description={<button>More Information</button>} />
+        </Col>
+        <Col span={8}>
+          <Card className="stat-card repeat-orders-card">
+            <Statistic title="Repeat Orders" value={data.repeatOrders} />
           </Card>
-          <Card className="card customers-card">
-            <Meta title={`${data.customers} Total Customers`} description={<button>More Information</button>} />
+        </Col>
+        <Col span={8}>
+          <Card className="stat-card top-employee-card">
+            <Statistic title="Top Employee" value={data.topEmployee} />
           </Card>
-        </div>
-        <div className="card-row">
-          <Card className="card products-purchased-card">
-            <Meta title={`${data.productsPurchased} Total Products Purchased`} description={<button>More Information</button>} />
+        </Col>
+      </Row>
+      <Row gutter={16} className="stat-row">
+        <Col span={8}>
+          <Card className="stat-card diamond-sold-card">
+            <Statistic title="Diamonds Sold" value={data.diamondSold} />
           </Card>
-          <Card className="card products-sold-card">
-            <Meta title={`${data.productsSold} Total Products Sold`} description={<button>More Information</button>} />
+        </Col>
+        <Col span={8}>
+          <Card className="stat-card gold-sold-card">
+            <Statistic title="Gold Sold" value={data.goldSold} />
           </Card>
-        </div>
+        </Col>
+        <Col span={8}>
+          <Card className="stat-card jewelry-sold-card">
+            <Statistic title="Jewelry Sold" value={data.jewelrySold} />
+          </Card>
+        </Col>
+      </Row>
+      <div className="chart-container">
+        <h2>Sales Distribution</h2>
+        <TrafficChart data={data} />
       </div>
     </div>
   );
