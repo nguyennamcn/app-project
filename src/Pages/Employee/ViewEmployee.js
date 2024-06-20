@@ -65,8 +65,8 @@ function ViewEmployee() {
             <p>{employee?.phone}</p>
             <p>{employee?.roles}</p>
             <div className="profile-status">
-              <span className={`status-indicator ${employee?.status ? 'online' : 'offline'}`}></span>
-              <span className="status-text">{employee?.status ? 'Online' : 'Offline'}</span>
+              <span className={`status-indicator ${employee?.active ? 'online' : 'offline'}`}></span>
+              <span className="status-text">{employee?.active ? 'Online' : 'Offline'}</span>
             </div>
           </div>
           <div className="edit-button">

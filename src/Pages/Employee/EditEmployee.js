@@ -88,8 +88,6 @@ export default function EditEmployee() {
       });
     console.log('Form data:', data);
   };
-
-  console.log(employee)
   return (
     <div className="edit-container">
       <h1 className="edit-title">Edit Employee</h1>

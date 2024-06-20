@@ -63,7 +63,7 @@ export default function EmployeeList() {
               <td>{employee.phone}</td>
               <td>{Array.isArray(employee.roles) ? employee.roles.join(', ') : employee.roles}</td>
               <td>
-                <span className={`employee-list-status ${employee.status ? 'online' : 'offline'}`}></span>
+                <span className={`employee-list-status ${employee.active ? 'online' : 'offline'}`}></span>
               </td>
               <td>
                 <NavLink to={`/view-employee/${employee.staffId}`}>
