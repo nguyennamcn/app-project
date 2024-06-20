@@ -137,14 +137,19 @@ export const adornicaServ = {
         return https.delete(`/api/v1/users/delete/${id}`);
     },
 
-    postImg: (id, avatar) => {
-        console.log(id)
-        return https.post(`/api/v1/users/update-avatar/${id}`, {avatar},);
-    },
-
+    postImg: (id, file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+    
+        return https.put(`/api/v1/users/update-avatar/${id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      },
     postUserUpdate: (id, data) => {
         console.log(id, data)
-        return https.post(`/api/v1/users/update/${id}`, data);
+        return https.put(`/api/v1/users/update/${id}`, data);
     },
 
     postExport: (orderKey) => {
