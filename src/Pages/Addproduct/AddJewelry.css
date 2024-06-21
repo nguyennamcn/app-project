@@ -1,9 +1,9 @@
 .add-jewelry-container {
     display: flex;
-    height: calc(70vh); 
+    /* height: calc(70vh);  */
     margin-top: 30px;
     overflow-y: auto;
-    max-height: 80vh;
+    /* max-height: 80vh; */
   }
   
   .add-jewelry-content {
