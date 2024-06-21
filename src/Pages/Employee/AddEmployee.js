@@ -96,6 +96,12 @@ const AddEmployee = () => {
             value={form.phoneNumber}
             onChange={handleChange}
           />
+          <DatePicker
+            className="input-field"
+            placeholder="Birthday"
+            onChange={handleDateChange}
+            style={{ width: '100%' }}
+          />
           <Input
             className="input-field"
             placeholder="Address"
@@ -110,6 +116,7 @@ const AddEmployee = () => {
             value={form.email}
             onChange={handleChange}
           />
+
           <div className="input-field">
             <h3>Gender :</h3>
             <Radio.Group
@@ -121,14 +128,8 @@ const AddEmployee = () => {
               <Radio value="Female">Female</Radio>
             </Radio.Group>
           </div>
-          <DatePicker
-            className="input-field"
-            placeholder="Birthday"
-            onChange={handleDateChange}
-            style={{ width: '100%' }}
-          />
         </div>
-        <div className="form-group">
+         <div className="form-group">
           <h2>Account :</h2>
           <Input
             className="input-field"
@@ -151,19 +152,19 @@ const AddEmployee = () => {
             value={form.confirmPassword}
             onChange={handleChange}
           />
-        </div>
-      </div>
-      <div className="store-role-section">
-        <div className="role-group">
-          <h3>Role :</h3>
-          <Radio.Group
-            name="role"
-            value={form.role}
-            onChange={handleChange}
-          >
-            <Radio value="Sale Staff">Sale Staff</Radio>
-            <Radio value="Cashier">Cashier</Radio>
-          </Radio.Group>
+          <div className="store-role-section">
+                <div className="role-group">
+                  <h3>Role :</h3>
+                  <Radio.Group
+                    name="role"
+                    value={form.role}
+                    onChange={handleChange}
+                  >
+                    <Radio value="Sale Staff">Sale Staff</Radio>
+                    <Radio value="Cashier">Cashier</Radio>
+                  </Radio.Group>
+                </div>
+          </div>
         </div>
       </div>
       <div className="form-actions">

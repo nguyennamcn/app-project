@@ -13,6 +13,17 @@ export default function DashBoard() {
     topEmployee: 'John Doe',
   });
 
+  const salesData = [
+    { name: 'Diamonds Sold', value: data.diamondSold },
+    { name: 'Gold Sold', value: data.goldSold },
+    { name: 'Jewelry Sold', value: data.jewelrySold },
+  ];
+
+  const ordersData = [
+    { name: 'Orders Sold', value: data.ordersSold },
+    { name: 'Repeat Orders', value: data.repeatOrders },
+  ];
+
   return (
     <div className="dashboard-container">
       <h1>DashBoard</h1>
@@ -52,7 +63,7 @@ export default function DashBoard() {
       </Row>
       <div className="chart-container">
         <h2>Sales Distribution</h2>
-        <TrafficChart data={data} />
+        <TrafficChart salesData={salesData} ordersData={ordersData} />
       </div>
     </div>
   );
