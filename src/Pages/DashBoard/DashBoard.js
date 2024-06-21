@@ -1,52 +1,26 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Statistic } from 'antd';
-import TrafficChart from './TrafficChart';
 import RevenueChart from './RevenueChart';
 import MonthlyRevenueChart from './MonthlyRevenueChart';
 import './DashBoard.css';
 
 export default function DashBoard() {
   const [data, setData] = useState({
-    ordersSold: 500,
-    repeatOrders: 150,
-    diamondSold: 200,
-    goldSold: 300,
-    jewelrySold: 100,
-    topEmployee: 'John Doe',
-    dailyRevenue: [
-      { day: 'Monday', revenue: 500 },
-      { day: 'Tuesday', revenue: 700 },
-      { day: 'Wednesday', revenue: 300 },
-      { day: 'Thursday', revenue: 900 },
-      { day: 'Friday', revenue: 600 },
-      { day: 'Saturday', revenue: 800 },
-      { day: 'Sunday', revenue: 1000 },
-    ],
-    monthlyRevenue: [
-      { month: 'January', revenue: 5000 },
-      { month: 'February', revenue: 7000 },
-      { month: 'March', revenue: 8000 },
-      { month: 'April', revenue: 9000 },
-      { month: 'May', revenue: 6000 },
-      { month: 'June', revenue: 7000 },
-      { month: 'July', revenue: 8000 },
-      { month: 'August', revenue: 9000 },
-      { month: 'September', revenue: 6000 },
-      { month: 'October', revenue: 7000 },
-      { month: 'November', revenue: 8000 },
-      { month: 'December', revenue: 9000 },
-    ],
+    yesterday: 1200,
+    today: 1500,
+    thisMonth: 30000,
+    staffMostOrders: 'John Doe',
+    lastMonth: 28000,
   });
 
-  const salesData = [
-    { name: 'Diamonds Sold', value: data.diamondSold },
-    { name: 'Gold Sold', value: data.goldSold },
-    { name: 'Jewelry Sold', value: data.jewelrySold },
+  const dailyRevenueData = [
+    { day: 'Yesterday', revenue: data.yesterday },
+    { day: 'Today', revenue: data.today },
   ];
 
-  const ordersData = [
-    { name: 'Bill Orders', value: data.ordersSold },
-    { name: 'Purchase Orders', value: data.repeatOrders },
+  const monthlyRevenueData = [
+    { month: 'This Month', revenue: data.thisMonth },
+    { month: 'Last Month', revenue: data.lastMonth },
   ];
 
   return (
@@ -55,48 +29,39 @@ export default function DashBoard() {
       <Row gutter={16} className="stat-row">
         <Col span={8}>
           <Card className="stat-card orders-sold-card">
-            <Statistic title="Sell Orders " value={data.ordersSold} />
+            <Statistic title="Total Amount Yesterday" value={data.yesterday} />
           </Card>
         </Col>
         <Col span={8}>
           <Card className="stat-card repeat-orders-card">
-            <Statistic title="Purchase Orders" value={data.repeatOrders} />
+            <Statistic title="Total Amount Today" value={data.today} />
           </Card>
         </Col>
         <Col span={8}>
           <Card className="stat-card top-employee-card">
-            <Statistic title="Top Employee" value={data.topEmployee} />
+            <Statistic title="Staff with Most Orders" value={data.staffMostOrders} />
           </Card>
         </Col>
       </Row>
       <Row gutter={16} className="stat-row">
         <Col span={8}>
           <Card className="stat-card diamond-sold-card">
-            <Statistic title="Diamonds Sold" value={data.diamondSold} />
+            <Statistic title="Total Amount This Month" value={data.thisMonth} />
           </Card>
         </Col>
         <Col span={8}>
           <Card className="stat-card gold-sold-card">
-            <Statistic title="Gold Sold" value={data.goldSold} />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card className="stat-card jewelry-sold-card">
-            <Statistic title="Jewelry Sold" value={data.jewelrySold} />
+            <Statistic title="Total Amount Last Month" value={data.lastMonth} />
           </Card>
         </Col>
       </Row>
       <div className="chart-container">
-        <h2>Sales Distribution</h2>
-        <TrafficChart salesData={salesData} ordersData={ordersData} />
-      </div>
-      <div className="chart-container">
         <h2>Daily Revenue</h2>
-        <RevenueChart data={data.dailyRevenue} />
+        <RevenueChart data={dailyRevenueData} />
       </div>
       <div className="chart-container">
         <h2>Monthly Revenue</h2>
-        <MonthlyRevenueChart data={data.monthlyRevenue} />
+        <MonthlyRevenueChart data={monthlyRevenueData} />
       </div>
     </div>
   );
