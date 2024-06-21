@@ -16,7 +16,7 @@ export default function Header() {
   };
 
   let renderContent = () => {
-    let buttonCss = "px-5 py-2 border-2 border-black rounded";
+    //let buttonCss = "px-5 py-2 border-2 border-black rounded";
     return (
       <div id='header'>
         <div className="header__login">
@@ -71,7 +71,8 @@ export default function Header() {
                 logoutBtn={
                   <button
                     onClick={handleLogout}
-                    className={buttonCss}
+                    //className={buttonCss}
+                  style={{width:'120px',height:'32px',}}
                   >
                     Log out
                   </button>
