@@ -54,6 +54,22 @@
 }
 
 .edit-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-info .info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.edit-info .info-label {
+  width: 100px;
+  font-weight: bold;
+}
+
+.edit-info .info-value {
   flex: 1;
 }
 
@@ -84,3 +100,7 @@
   width: 100%;
 }
 
+
+.input-large {
+  width: 400px;
+}
