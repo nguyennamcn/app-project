@@ -175,4 +175,9 @@ export const adornicaServ = {
         console.log(data)
         return https.post(`/api/v1/purchases/payment`, data);
     },
+
+    postCreateProduct: (data) => {
+        console.log(data)
+        return https.post(`/api/v1/products/create`, data);
+    },
 }
