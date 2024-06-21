@@ -55,8 +55,8 @@ export default function DetailPage() {
         // Check if the item is already in the cart
         const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
-        if(product.productPrice < 0){
-            showModalnotify(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product is undefined !</h1></div>);
+        if(product.totalPrice < 1){
+            showModalnotify(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
             return;
           }
 

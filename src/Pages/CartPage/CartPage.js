@@ -135,7 +135,7 @@ const CartPage = () => {
                 setDataSource([]);
                 localStorage.removeItem('cartItems');
 
-                showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+                showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Order sent successfully !</h1></div>);
             })
             .catch(error => {
                 console.error("There was an error sending the order:", error);
