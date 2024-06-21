@@ -6,11 +6,11 @@ import './DashBoard.css';
 
 export default function DashBoard() {
   const [data, setData] = useState({
-    yesterday: 1200,
+    yesterday: 800,
     today: 1500,
     thisMonth: 30000,
     staffMostOrders: 'John Doe',
-    lastMonth: 28000,
+    lastMonth: 19700,
   });
 
   const dailyRevenueData = [
@@ -19,8 +19,8 @@ export default function DashBoard() {
   ];
 
   const monthlyRevenueData = [
-    { month: 'This Month', revenue: data.thisMonth },
     { month: 'Last Month', revenue: data.lastMonth },
+    { month: 'This Month', revenue: data.thisMonth },
   ];
 
   return (
@@ -45,15 +45,16 @@ export default function DashBoard() {
       </Row>
       <Row gutter={16} className="stat-row">
         <Col span={8}>
-          <Card className="stat-card diamond-sold-card">
-            <Statistic title="Total Amount This Month" value={data.thisMonth} />
-          </Card>
-        </Col>
-        <Col span={8}>
           <Card className="stat-card gold-sold-card">
             <Statistic title="Total Amount Last Month" value={data.lastMonth} />
           </Card>
         </Col>
+        <Col span={8}>
+          <Card className="stat-card diamond-sold-card">
+            <Statistic title="Total Amount This Month" value={data.thisMonth} />
+          </Card>
+        </Col>
+        
       </Row>
       <div className="chart-container">
         <h2>Daily Revenue</h2>
