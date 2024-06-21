@@ -9,6 +9,8 @@ const AddEmployee = () => {
   const [form, setForm] = useState({
     fullName: '',
     phoneNumber: '',
+    address: '',
+    email : '',
     gender: '',
     birthday: null,
     username: '',
@@ -50,6 +52,8 @@ const AddEmployee = () => {
     return (
       form.fullName &&
       form.phoneNumber &&
+      form.address &&
+      form.email &&
       form.gender &&
       form.birthday &&
       form.username &&
@@ -92,6 +96,20 @@ const AddEmployee = () => {
             value={form.phoneNumber}
             onChange={handleChange}
           />
+          <Input
+            className="input-field"
+            placeholder="Address"
+            name="Address"
+            value={form.address}
+            onChange={handleChange}
+          />
+          <Input
+            className="input-field"
+            placeholder="Email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+          />
           <div className="input-field">
             <h3>Gender :</h3>
             <Radio.Group
@@ -101,7 +119,6 @@ const AddEmployee = () => {
             >
               <Radio value="Male">Male</Radio>
               <Radio value="Female">Female</Radio>
-              <Radio value="Other">Other</Radio>
             </Radio.Group>
           </div>
           <DatePicker
@@ -144,7 +161,6 @@ const AddEmployee = () => {
             value={form.role}
             onChange={handleChange}
           >
-            <Radio value="Manager">Manager</Radio>
             <Radio value="Sale Staff">Sale Staff</Radio>
             <Radio value="Cashier">Cashier</Radio>
           </Radio.Group>
