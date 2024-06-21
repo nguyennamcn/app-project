@@ -2,9 +2,18 @@ import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import { Row, Col } from 'antd';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A569BD', '#DC7633'];
+const CARD_COLORS = {
+  orders: '#0088FE',
+  repeatOrders: '#00C49F',
+  topEmployee: '#FFBB28',
+  diamondSold: '#FF8042',
+  goldSold: '#A569BD',
+  jewelrySold: '#ba2500'
+};
 
 export default function TrafficChart({ salesData, ordersData }) {
+  const COLORS = Object.values(CARD_COLORS);
+
   return (
     <Row gutter={16} align="middle">
       <Col span={12}>

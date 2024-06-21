@@ -20,8 +20,8 @@ export default function DashBoard() {
   ];
 
   const ordersData = [
-    { name: 'Orders Sold', value: data.ordersSold },
-    { name: 'Repeat Orders', value: data.repeatOrders },
+    { name: 'Bill Orders', value: data.ordersSold },
+    { name: 'Purchase Orders', value: data.repeatOrders },
   ];
 
   return (
@@ -30,12 +30,12 @@ export default function DashBoard() {
       <Row gutter={16} className="stat-row">
         <Col span={8}>
           <Card className="stat-card orders-sold-card">
-            <Statistic title="Orders Sold" value={data.ordersSold} />
+            <Statistic title="Sell Orders " value={data.ordersSold} />
           </Card>
         </Col>
         <Col span={8}>
           <Card className="stat-card repeat-orders-card">
-            <Statistic title="Repeat Orders" value={data.repeatOrders} />
+            <Statistic title="Purchase Orders" value={data.repeatOrders} />
           </Card>
         </Col>
         <Col span={8}>

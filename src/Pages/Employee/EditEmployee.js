@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Button, Radio, Select, DatePicker } from 'antd';
+import { Input, Button, Radio, Modal } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
-import moment from 'moment';
 import './EditEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
-const { Option } = Select;
-
-
 export default function EditEmployee() {
-  const [form, setForm] = useState();
-  const [employee, setEmployee] = useState();
+  const [form, setForm] = useState({});
+  const [employee, setEmployee] = useState({});
   const { id } = useParams();
+
   useEffect(() => {
     adornicaServ.getViewStaff(id)
       .then((res) => {
         console.log(res.data.metadata);
         setEmployee(res.data.metadata);
+        setForm(res.data.metadata);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [id]);
-  
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -32,7 +30,6 @@ export default function EditEmployee() {
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
-    console.log(file)
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -42,52 +39,37 @@ export default function EditEmployee() {
     }
   };
 
-
-  const handleDateChange = (date, dateString) => {
-    setForm({
-      ...form,
-      birthday: dateString
-    });
-  };
-
-  const handleSelectChange = (value) => {
-    setForm({
-      ...form,
-      storeAddress: value
-    });
-  };
-
   const handleSubmit = () => {
     const data = {
+      ...form,
       id: employee.id,
-      roles: [form.role]
     };
 
-    // const dataImg = {
-    //   id : employee.id,
-    //   file : 
-    // }
-    
-    adornicaServ.postImg(id)
-      .then((res) => {
-        console.log('Img updated:', res);
-        window.location.reload();
-      })
-      .catch((err) => {
+    Promise.all([
+      adornicaServ.postImg(id).catch((err) => {
         console.log(err);
-      });
-
-
-    adornicaServ.updateRole(data)
-      .then((res) => {
-        console.log('Role updated:', res);
-        window.location.reload();
-      })
-      .catch((err) => {
+      }),
+      adornicaServ.updateRole(data).catch((err) => {
         console.log(err);
-      });
-    console.log('Form data:', data);
+      })
+    ]).then(() => {
+      showConfirm();
+    });
   };
+
+  const showConfirm = () => {
+    Modal.confirm({
+      title: 'Save Successful',
+      content: 'Employee information has been updated successfully.',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
   return (
     <div className="edit-container">
       <h1 className="edit-title">Edit Employee</h1>
@@ -109,11 +91,61 @@ export default function EditEmployee() {
             />
           </div>
           <div className="edit-info">
-            <h1 style={{fontSize: '14px'}}>Name : {employee?.name}</h1>
-            <h1 style={{fontSize: '14px'}}>Address : {employee?.address}</h1>
-            <h1 style={{fontSize: '14px'}}>Phone : {employee?.phone}</h1>
-            <h1 style={{fontSize: '14px'}}>Email : {employee?.email}</h1>
-            <h1 style={{fontSize: '14px'}}>Role : {employee?.roleUser}</h1>
+            <div className="info-row">
+              <div className="info-label">Name:</div>
+              <div className="info-value">
+                <Input
+                  className="input-large"
+                  name="name"
+                  value={form.name || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="info-row">
+              <div className="info-label">Address:</div>
+              <div className="info-value">
+                <Input
+                  className="input-large"
+                  name="address"
+                  value={form.address || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="info-row">
+              <div className="info-label">Phone:</div>
+              <div className="info-value">
+                <Input
+                  className="input-large"
+                  name="phone"
+                  value={form.phone || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="info-row">
+              <div className="info-label">Email:</div>
+              <div className="info-value">
+                <Input
+                  className="input-large"
+                  name="email"
+                  value={form.email || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="info-row">
+              <div className="info-label">Role:</div>
+              <div className="info-value">
+                <Input
+                  className="input-large"
+                  name="roleUser"
+                  value={form.roleUser || ''}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <hr />
@@ -133,7 +165,6 @@ export default function EditEmployee() {
           <NavLink to="/employee">
             <Button className="nav-button">Back</Button>
           </NavLink>
-
           <NavLink>
           <Button type="primary" className="nav-button" onClick={handleSubmit}>Save</Button>
           </NavLink>
