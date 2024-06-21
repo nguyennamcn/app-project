@@ -146,23 +146,35 @@ const BillDiamond = () => {
   const userInfo = useSelector((state) => state.userReducer.userInfo);
   const location = useLocation();
   const { formData } = location.state || {}; // Retrieve the state data
-
-  const [customerDetails, setCustomerDetails] = useState({
-    name: formData?.customerName || '',
-    phone: formData?.phone || '',
-    address: '',
-    paymentMethod: 'Cash',
-  });
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('Cash');
+  const [address, setAddress] = useState('');
 
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const handleDetailChange = (e) => {
-    const { name, value } = e.target;
-    setCustomerDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+  useEffect(() => {
+    if (customerPhone) {
+      adornicaServ.getPhoneCustomer(customerPhone)
+        .then(response => {
+          if (response.data) {
+            setCustomerName(response.data.metadata.name);
+            setAddress(response.data.metadata.address);
+            console.log(response)
+          } else {
+            setCustomerName('');
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching customer data:", error);
+          setCustomerName(''); // Clear the customer name if there's an error
+        });
+    }
+  }, [customerPhone]);
+
+  const handleInputChange = (setter) => (event) => {
+    setter(event.target.value);
   };
 
   const totalItems = products.reduce((sum, product) => sum + 1, 0);
@@ -191,8 +203,9 @@ const BillDiamond = () => {
     const purchaseData = {
       purchaseOrderCode: generateRandomOrderCode(),
       staffId: userInfo.id,
-      customerName: customerDetails.name,
-      phone: customerDetails.phone,
+      customerName: customerName,
+      phone: customerPhone,
+      address: address,
       list: products.map((product) => ({
         origin: product.origin,
         color: product.color,
@@ -232,7 +245,7 @@ const BillDiamond = () => {
     // window.print();
   };
 
-  const isFinishButtonDisabled = !customerDetails.name || !customerDetails.phone || !customerDetails.address;
+  const isFinishButtonDisabled = !customerName || !customerPhone || !address;
 
   return (
     <div style={pageStyles.container}>
@@ -243,8 +256,8 @@ const BillDiamond = () => {
           type="text"
           style={pageStyles.detailInput}
           name="name"
-          value={customerDetails.name}
-          onChange={handleDetailChange}
+          value={customerName}
+          onChange={handleInputChange(setCustomerName)}
         />
 
         <label style={pageStyles.detailLabel}>Phone:</label>
@@ -252,8 +265,8 @@ const BillDiamond = () => {
           type="text"
           style={pageStyles.detailInput}
           name="phone"
-          value={customerDetails.phone}
-          onChange={handleDetailChange}
+          value={customerPhone}
+          onChange={handleInputChange(setCustomerPhone)}
         />
 
         <label style={pageStyles.detailLabel}>Address:</label>
@@ -261,19 +274,19 @@ const BillDiamond = () => {
           type="text"
           style={pageStyles.detailInput}
           name="address"
-          value={customerDetails.address}
-          onChange={handleDetailChange}
+          value={address}
+          onChange={handleInputChange(setAddress)}
         />
 
         <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select
           style={pageStyles.paymentSelect}
           name="paymentMethod"
-          value={customerDetails.paymentMethod}
-          onChange={handleDetailChange}
+          value={paymentMethod}
+          onChange={handleInputChange(setPaymentMethod)}
         >
           <option value="Cash">Cash</option>
-          <option value="Card">Banking</option>
+          
         </select>
       </div>
 
@@ -328,19 +341,7 @@ const BillDiamond = () => {
         style={pageStyles.modal}
       >
         <h2>Successfully</h2>
-        {/* <p>Thank you for your purchase!</p> */}
-        {/* <div style={pageStyles.modalButtonWrapper}>
-          <NavLink to="/buyProduct" exact>
-            <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
-          </NavLink>
-
-          <button
-            style={{ ...pageStyles.button, ...pageStyles.printButton }}
-            onClick={handlePrintClick}
-          >
-            PRINT
-          </button>
-        </div> */}
+     
       </Modal>
     </div>
   );

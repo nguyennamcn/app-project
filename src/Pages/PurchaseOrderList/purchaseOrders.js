@@ -173,7 +173,7 @@ export default function PurchaseOrder() {
                     style={{ margin: '8px 0' }}
                     dataSource={filteredData}
                     columns={columns(handleView, handleDelete)}
-                    pagination={{ className: 'custom__pagination', pageSize: 5 }}
+                    pagination={{ className: 'custom__pagination', pageSize: 4 }}
                 />
             </div>
             <Modal
