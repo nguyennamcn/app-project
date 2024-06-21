@@ -14,6 +14,18 @@ const CARD_COLORS = {
 export default function TrafficChart({ salesData, ordersData }) {
   const COLORS = Object.values(CARD_COLORS);
 
+  const renderTooltipContent = ({ payload }) => {
+    if (payload && payload.length) {
+      const { name } = payload[0];
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${name}`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <Row gutter={16} align="middle">
       <Col span={12}>
@@ -26,20 +38,19 @@ export default function TrafficChart({ salesData, ordersData }) {
               outerRadius={100}
               fill="#8884d8"
               dataKey="value"
-              label
             >
               {ordersData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip content={renderTooltipContent} />
           </PieChart>
         </ResponsiveContainer>
         <ul>
           {ordersData.map((entry, index) => (
             <li key={`item-${index}`} style={{ color: COLORS[index % COLORS.length], marginBottom: '10px' }}>
               <span style={{ backgroundColor: COLORS[index % COLORS.length], padding: '5px', borderRadius: '5px', marginRight: '10px' }}></span>
-              {entry.name}: {entry.value}
+              {entry.name} : {entry.value}
             </li>
           ))}
         </ul>
@@ -54,20 +65,19 @@ export default function TrafficChart({ salesData, ordersData }) {
               outerRadius={100}
               fill="#8884d8"
               dataKey="value"
-              label
             >
               {salesData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip content={renderTooltipContent} />
           </PieChart>
         </ResponsiveContainer>
         <ul>
           {salesData.map((entry, index) => (
             <li key={`item-${index}`} style={{ color: COLORS[index % COLORS.length], marginBottom: '10px' }}>
               <span style={{ backgroundColor: COLORS[index % COLORS.length], padding: '5px', borderRadius: '5px', marginRight: '10px' }}></span>
-              {entry.name}: {entry.value}
+              {entry.name} : {entry.value}
             </li>
           ))}
         </ul>
