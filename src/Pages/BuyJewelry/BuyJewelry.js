@@ -244,6 +244,7 @@ const JewelrySelection = () => {
     }
 
     const jewelryData = jewelryItems.map(item => ({
+      name: item.name,
       goldType: item.goldType,
       weight: item.weight,
       cut: item.cut,
@@ -266,6 +267,17 @@ const JewelrySelection = () => {
             <div style={styles.jewelryLabel}>
               Jewelry {index + 1}
               <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+            </div>
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Name:</label>
+              <input
+                type="text"
+                style={styles.input}
+                value={item.name}
+                onChange={e => handleInputChange(index, 'name', e.target.value)}
+                //disabled={item.goldType === 'None'}
+                required
+              />
             </div>
             <div style={styles.formGroup} ref={index === jewelryItems.length - 1 ? newItemRef : null}>
               <label style={styles.label}>Gold type:</label>

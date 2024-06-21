@@ -277,6 +277,7 @@ const BillJewelry = () => {
       <div>
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
+            <span>Name</span>
             <span>Gold type</span>
             <span>Weight</span>
             <span>Cut</span>
@@ -288,6 +289,7 @@ const BillJewelry = () => {
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
+              <span>{product.name}</span>
               <span>{product.goldType}</span>
               <span>{product.weight}</span>
               <span>{product.cut}</span>
