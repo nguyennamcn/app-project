@@ -128,7 +128,7 @@ const JewelrySelection = () => {
       i === index ? { ...item, [field]: value } : item
     );
     setJewelryItems(updatedItems);
-    validateForm();
+    validateForm(updatedItems);
 
     if (field === 'goldType' && value !== 'None') {
       // Fetch and update gold price for the selected item
@@ -137,6 +137,7 @@ const JewelrySelection = () => {
         const updatedItem = { ...updatedItems[index], materialBuyPrice: selectedGold.materialBuyPrice };
         updatedItems[index] = updatedItem;
         setJewelryItems(updatedItems);
+        validateForm(updatedItems);
       }
     }
 
@@ -160,6 +161,7 @@ const JewelrySelection = () => {
                 const updatedItem = { ...updatedItems[index], gemBuyPrice: priceData.gemBuyPrice };
                 updatedItems[index] = updatedItem;
                 setJewelryItems(updatedItems);
+                validateForm(updatedItems);
               }
             }
           } catch (err) {
@@ -224,12 +226,12 @@ const JewelrySelection = () => {
   const handleDeleteItem = (index) => {
     const updatedItems = jewelryItems.filter((_, i) => i !== index);
     setJewelryItems(updatedItems);
-    validateForm();
+    validateForm(updatedItems);
   };
 
-  const validateForm = () => {
-    const isFormValid = jewelryItems.every(item => 
-      item.goldType && item.weight && (!item.diamond || (item.diamond !== 'None' && item.carat && item.color && item.clarity && item.cut))
+  const validateForm = (updatedItems) => {
+    const isFormValid = updatedItems.every(item => 
+      (item.goldType && item.goldType !== 'None' && item.weight) || (item.diamond && item.diamond !== 'None' && item.carat && item.color && item.clarity && item.cut)
     );
     console.log('Form valid:', isFormValid); // Debugging log
     setFormValid(isFormValid);
@@ -244,7 +246,6 @@ const JewelrySelection = () => {
     }
 
     const jewelryData = jewelryItems.map(item => ({
-      name: item.name,
       goldType: item.goldType,
       weight: item.weight,
       cut: item.cut,
@@ -279,6 +280,7 @@ const JewelrySelection = () => {
                 required
               />
             </div>
+            <div></div>
             <div style={styles.formGroup} ref={index === jewelryItems.length - 1 ? newItemRef : null}>
               <label style={styles.label}>Gold type:</label>
               <select style={styles.input} value={item.goldType} onChange={e => handleInputChange(index, 'goldType', e.target.value)} required>
