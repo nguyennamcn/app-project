@@ -8,6 +8,8 @@ function AddJewelry() {
   const [newJewelry, setNewJewelry] = useState({
     productCode: 'None',
     productName: 'None',
+    gemCost: 0,
+    productionCost: 0,
     gender: 'MALE',
     categoryId: 0,
     material: 0,
@@ -35,6 +37,8 @@ function AddJewelry() {
     const productData = {
       productCode: newJewelry.productCode,
       productName: newJewelry.productName,
+      gemCost: Number(newJewelry.gemCost),
+      productionCost: Number(newJewelry.productionCost),
       gender: newJewelry.gender,
       categoryId: Number(newJewelry.categoryId),
       materialProductRequests: [
@@ -76,6 +80,16 @@ function AddJewelry() {
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
                 <input type="text" name="productName" value={newJewelry.productName} onChange={handleInputChange} />
+              </div>
+            </div>
+            <div className="add-jewelry-form-row">
+              <div className="add-jewelry-form-group">
+                <label>Gem Cost:</label>
+                <input type="number" name="gemCost" value={newJewelry.gemCost} onChange={handleInputChange} />
+              </div>
+              <div className="add-jewelry-form-group">
+                <label>Production Cost:</label>
+                <input type="number" name="productionCost" value={newJewelry.productionCost} onChange={handleInputChange} />
               </div>
             </div>
             <div className="add-jewelry-form-row">
