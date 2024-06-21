@@ -169,7 +169,7 @@ export default function DiamondPage() {
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
                 <div className="product-info">
                   <h1>{sp.productCode}</h1>
-                  <h2>{sp.productPrice}$</h2>
+                  <h2> {sp.productPrice < 1 ? 'Undefined' : `${sp.productPrice}$`} </h2>
                 </div>
                 <div className="overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>

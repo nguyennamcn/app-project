@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal } from 'antd';
+import { Table, Button, Modal, notification } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
@@ -14,26 +14,28 @@ const CartPage = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
-    // Handle input change for customer name
     const handleInputChange = (event) => {
         setCustomerName(event.target.value);
     };
 
     const handleInputChange1 = (event) => {
-        setCustomerPhone(event.target.value);
+        const input = event.target.value;
+        if (/^\d*$/.test(input) && input.length <= 11) {
+            setCustomerPhone(input);
+        } else {
+            notification.error({ message: 'Phone incorrect (11 digits).' });
+        }
     };
 
     let userInfo = useSelector((state) => {
         return state.userReducer.userInfo;
     });
 
-    // Load cart items from localStorage when component mounts
     useEffect(() => {
         const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         setDataSource(cartItems);
     }, []);
 
-    // Fetch customer data when phone number changes
     useEffect(() => {
         if (customerPhone) {
             adornicaServ.getPhoneCustomer(customerPhone)
@@ -48,12 +50,11 @@ const CartPage = () => {
                 })
                 .catch(error => {
                     console.error("Error fetching customer data:", error);
-                    setCustomerName(''); // Clear the customer name if there's an error
+                    setCustomerName(''); 
                 });
         }
     }, [customerPhone]);
 
-    // Calculate totals and set up auto-clear timeout
     useEffect(() => {
         const totalQty = dataSource.reduce((acc, item) => acc + item.quantity, 0);
         setTotalQuantity(totalQty);
@@ -77,7 +78,7 @@ const CartPage = () => {
     const showModal = (message) => {
         setModalMessage(message);
         setIsModalVisible(true);
-        setTimeout(() => setIsModalVisible(false), 1000);
+        setTimeout(() => setIsModalVisible(false), 3000);
     };
 
     // Handle quantity change for cart items
@@ -104,11 +105,31 @@ const CartPage = () => {
     };
     // Handle sending the order
     const handleSendOrder = () => {
-        if (!customerPhone || !customerName || dataSource.length === 0) {
+        if(dataSource.length === 0){
             showModal(
                 <div className='notice__content'>
                     <i className="error__icon fa-solid fa-circle-xmark" ></i>
-                    <h1>Failed to send order. Please check your input data.</h1>
+                    <h1>Cart is empty !</h1>
+                </div>
+            );
+            return;
+        }        
+
+        if (!customerPhone || !customerName ) {
+            showModal(
+                <div className='notice__content'>
+                    <i className="error__icon fa-solid fa-circle-xmark" ></i>
+                    <h1>Failed to send order. Please check name and phone number.</h1>
+                </div>
+            );
+            return;
+        }
+
+        if (customerPhone.length !== 11) {
+            showModal(
+                <div className='notice__content'>
+                    <i className="error__icon fa-solid fa-circle-xmark" ></i>
+                    <h1>Phone number incorrect. Please check your input data.</h1>
                 </div>
             );
             return;
@@ -210,7 +231,8 @@ const CartPage = () => {
                                     background: '#C7CCD0',
                                     color: 'black',
                                     marginLeft: '1%',
-                                    marginTop: '10px'
+                                    marginTop: '10px',
+                                    paddingLeft: '10px',
                                 }}
                                 type="text"
                                 placeholder='Customer'
@@ -226,10 +248,12 @@ const CartPage = () => {
                                     background: '#C7CCD0',
                                     color: 'black',
                                     marginLeft: '1%',
-                                    marginTop: '10px'
+                                    marginTop: '10px',
+                                    paddingLeft: '10px',
                                 }}
                                 type="text"
                                 placeholder='Phone'
+
                                 value={customerPhone}
                                 onChange={handleInputChange1}
                             />

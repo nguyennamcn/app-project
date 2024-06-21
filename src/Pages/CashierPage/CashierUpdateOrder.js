@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 export default function CashierUpdateOrder() {
     const [products, setProducts] = useState([]);
+    const [productsUpdated, setProductsUpdated] = useState([]);
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [totalAllPrice, setTotalAllPrice] = useState(0);
     const { orderKey } = useParams();
@@ -34,8 +35,11 @@ export default function CashierUpdateOrder() {
 
     const handlRemove = (productId) => {
         const updatedProducts = products.filter(product => product.productId !== productId);
+        console.log('update product: ',updatedProducts);
+        setProductsUpdated(updatedProducts);
         setProducts(updatedProducts);
         calculateTotals(updatedProducts);
+        console.log(products);
     };
 
     const calculateTotals = (products) => {
@@ -44,15 +48,19 @@ export default function CashierUpdateOrder() {
     };
 
     const handleUpdateOrder = () => {
+        const orderList = 
+        productsUpdated.map(product => ({
+                productId: product.productId,
+                price: product.price,
+            }));
+        
+
         const orderData = {
             orderCode: orderKey,
             staffId: userInfo.id,
             phone: userInfo.name,
             name: userInfo.phone,
-            orderList: products.map(product => ({
-                productId: product.productId,
-                price: product.price,
-            })),
+            orderList: orderList,
             totalPrice: totalAllPrice
         };
 
@@ -60,6 +68,7 @@ export default function CashierUpdateOrder() {
         adornicaServ.updatePreOrder(orderData)
             .then((res) => {
                 console.log('Order updated successfully:', res);
+                console.log(orderList);
             })
             .catch((err) => {
                 console.error('Error updating order:', err.response); // Log error details
@@ -99,16 +108,16 @@ export default function CashierUpdateOrder() {
         <div>
             <div className='container'>
                 <div className='row justify-center'>
-                    <div className='col-sm-12 mt-6'>
+                    <div className='col-sm-12'>
                         <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Update order: #{orderKey}</h1>
                     </div>
-                    <div className='col-sm-11 mb-10'>
-                        <Table dataSource={products} columns={columns} pagination={false} scroll={{ y: 350 }} />
+                    <div className='col-sm-11 mb-4'>
+                        <Table dataSource={products} columns={columns} pagination={false} scroll={{ y: 320 }} style={{maxHeight:'300px'}}/>
                     </div>
 
-                    <div className='col-sm-12'><h1>Total: {totalAllPrice}</h1></div>
+                    <div style={{position:'absolute', bottom:'130px'}} className='col-sm-12'><h1>Total: {totalAllPrice}</h1></div>
                     <hr />
-                    <div className='row col-sm-12 justify-center'>
+                    <div className='row col-sm-12 justify-center' style={{position:'absolute', bottom:'74px'}}>
                         <NavLink to='/cashierListOrder'>
                             <button style={{
                                 padding: '15px 40px',

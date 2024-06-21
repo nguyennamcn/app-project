@@ -137,7 +137,11 @@ export default function DetailPage() {
                             X
                         </button>
                     </div>
-                    <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} $</span></p>
+                    {   product.totalPrice < 1 ? 
+                        <p className="product-price">The product is: <span className="price-amount">Undefined</span></p> :
+                        <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} $</span></p>
+                    }
+                   
                     <div className="product-description">
                         {/* <p className="description-title">Description</p>
                         <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span> */}

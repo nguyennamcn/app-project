@@ -159,12 +159,12 @@ export default function SentPage() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>List order sended</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 10px 0' }}>List order sended</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div>
                 <Table
-                    style={{ margin: '30px 60px 0 60px' }}
+                    style={{ margin: '10px 60px 0 60px' }}
                     dataSource={dataSource}
                     columns={columns(handleView, handleDelete)}
                     pagination={{ className: 'custom__pagination', pageSize: 4 }}
