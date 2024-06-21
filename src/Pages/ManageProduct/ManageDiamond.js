@@ -8,19 +8,25 @@ export default function ManageDiamond() {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    adornicaServ.getDiamondPrice()
+    adornicaServ.getListDiamond()
       .then((res) => {
-        console.log(res.data.metadata);
-        setDiamondManage(res.data.metadata);
+        console.log(res.data.metadata.data);
+        setDiamondManage(res.data.metadata.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  const handleDelete = (diamondId) => {
-    const updatedDiamonds = diamondManage.filter(diamond => diamond.gemId !== diamondId);
-    setDiamondManage(updatedDiamonds);
+  const handleDelete = (diamondCode) => {
+      adornicaServ.deleteProduct(diamondCode)
+              .then(() => {
+                  const newProductData = diamondManage.filter((item) => item.productCode !== diamondCode);
+                  setDiamondManage(newProductData);
+              })
+              .catch((err) => {
+                  console.log("Error deleting order:", err);
+              });
   };
 
   const handleInputChange = (e, diamondId) => {
@@ -75,8 +81,8 @@ export default function ManageDiamond() {
         </thead>
         <tbody>
           {currentDiamonds.map((diamond) => (
-            <tr key={diamond.gemId}>
-              <td style={styles.td}>{diamond.gemId}</td>
+            <tr key={diamond.productId}>
+              <td style={styles.td}>{diamond.productCode}</td>
               <td style={styles.td}>{diamond.origin}</td>
               <td style={styles.td}>{diamond.carat}</td>
               <td style={styles.td}>{diamond.clarity}</td>
@@ -110,7 +116,7 @@ export default function ManageDiamond() {
                 </button>
                 <button
                   style={styles.deleteButton}
-                  onClick={() => handleDelete(diamond.gemId)}
+                  onClick={() => handleDelete(diamond.productCode)}
                 >
                   Delete
                 </button>
