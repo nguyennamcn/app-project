@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Statistic } from 'antd';
 import RevenueChart from './RevenueChart';
 import MonthlyRevenueChart from './MonthlyRevenueChart';
+import ProductPieChart from './ProductPieChart';
 import './DashBoard.css';
 
 export default function DashBoard() {
@@ -11,6 +12,11 @@ export default function DashBoard() {
     thisMonth: 30000,
     staffMostOrders: 'John Doe',
     lastMonth: 19700,
+    products: {
+      jewelry: 120,
+      gold: 80,
+      diamond: 50,
+    },
   });
 
   const dailyRevenueData = [
@@ -21,6 +27,12 @@ export default function DashBoard() {
   const monthlyRevenueData = [
     { month: 'Last Month', revenue: data.lastMonth },
     { month: 'This Month', revenue: data.thisMonth },
+  ];
+
+  const productData = [
+    { name: 'Jewelry', value: data.products.jewelry },
+    { name: 'Gold', value: data.products.gold },
+    { name: 'Diamond', value: data.products.diamond },
   ];
 
   return (
@@ -54,7 +66,6 @@ export default function DashBoard() {
             <Statistic title="Total Amount This Month" value={data.thisMonth} />
           </Card>
         </Col>
-        
       </Row>
       <div className="chart-container">
         <h2>Daily Revenue</h2>
@@ -63,6 +74,9 @@ export default function DashBoard() {
       <div className="chart-container">
         <h2>Monthly Revenue</h2>
         <MonthlyRevenueChart data={monthlyRevenueData} />
+      </div>
+      <div className="chart-container">
+        <ProductPieChart data={productData} />
       </div>
     </div>
   );

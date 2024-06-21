@@ -54,10 +54,30 @@
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
-.traffic-chart {
-  width: 70%;
+.chart-content {
+  display: flex;
+  align-items: center;
+}
+
+.chart-description {
+  margin-left: 20px;
+  color: #ffffff;
+}
+
+.pie-chart {
+  width: 50%;
+}
+
+.chart-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
 }
 
 ul {
@@ -78,4 +98,8 @@ li span {
   height: 20px;
   margin-right: 10px;
   border-radius: 3px;
+}
+
+.traffic-chart {
+  width: 50%;
 }
