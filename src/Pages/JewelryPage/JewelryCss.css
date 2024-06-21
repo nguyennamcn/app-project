@@ -140,16 +140,16 @@
   overflow-y: auto;
 }
 
-::-webkit-scrollbar {
+.product-container::-webkit-scrollbar {
   width: 10px;
 }
 
-::-webkit-scrollbar-track {
+.product-container::-webkit-scrollbar-track {
   background-color: darkgrey;
   border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb {
+.product-container::-webkit-scrollbar-thumb {
   background-color:  rgba(0, 0, 0, 0.9);
   border-radius: 10px;
 }
