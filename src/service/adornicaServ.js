@@ -137,6 +137,11 @@ export const adornicaServ = {
         return https.delete(`/api/v1/users/delete/${id}`);
     },
 
+    deleteProduct: (id) => {
+        console.log(id)
+        return https.delete(`/api/v1/products/delete/${id}`);
+    },
+
     postImg: (id, file) => {
         const formData = new FormData();
         formData.append('file', file);

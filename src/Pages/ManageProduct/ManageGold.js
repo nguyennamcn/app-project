@@ -8,19 +8,26 @@ export default function ManageGold() {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    adornicaServ.getPriceMaterial()
+    adornicaServ.getListGold()
       .then((res) => {
-        console.log(res.data.metadata);
-        setGoldManage(res.data.metadata);
+        console.log(res.data.metadata.data);
+        setGoldManage(res.data.metadata.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  const handleDelete = (materialId) => {
-    const updatedProducts = goldManage.filter(product => product.materialId !== materialId);
-    setGoldManage(updatedProducts);
+  const handleDelete = (goldCode) => {
+    adornicaServ.deleteProduct(goldCode)
+            .then(() => {
+                const newProductData = goldManage.filter((item) => item.productCode !== goldCode);
+                setGoldManage(newProductData);
+            })
+            .catch((err) => {
+                console.log("Error deleting order:", err);
+            });
+
   };
 
   const handleInputChange = (e, productId) => {
@@ -71,8 +78,8 @@ export default function ManageGold() {
         </thead>
         <tbody>
           {currentGold.map((product) => (
-            <tr key={product.materialId}>
-              <td style={styles.td}>{product.materialId}</td>
+            <tr key={product.productId}>
+              <td style={styles.td}>{product.productCode}</td>
               <td style={styles.td}>{product.materialName}</td>
               <td style={styles.td}>
                 <input
@@ -102,7 +109,7 @@ export default function ManageGold() {
                 </button>
                 <button
                   style={styles.deleteButton}
-                  onClick={() => handleDelete(product.materialId)}
+                  onClick={() => handleDelete(product.productCode)}
                 >
                   Delete
                 </button>

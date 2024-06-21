@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { adornicaServ } from '../../service/adornicaServ';
 
 const initialJewelry = [
   { id: 1, name: "Gold Necklace", type: "Necklace", material: "Gold", carat: 18, buyPrice: 1400, sellPrice: 1500 },
@@ -9,13 +10,32 @@ const initialJewelry = [
 ];
 
 const JewelryInventoryPage = () => {
-  const [jewelry, setJewelry] = useState(initialJewelry);
+  const [jewelry, setJewelry] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  const handleDelete = (jewelryId) => {
-    const updatedJewelry = jewelry.filter(item => item.id !== jewelryId);
-    setJewelry(updatedJewelry);
+  useEffect(() => {
+    adornicaServ.getListJewelry()
+      .then((res) => {
+        console.log(res.data.metadata.data);
+        setJewelry(res.data.metadata.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+
+  const handleDelete = (jewelryCode) => {
+    adornicaServ.deleteProduct(jewelryCode)
+            .then(() => {
+                const newProductData = jewelry.filter((item) => item.productCode !== jewelryCode);
+                setJewelry(newProductData);
+            })
+            .catch((err) => {
+                console.log("Error deleting order:", err);
+            });
+
   };
 
   const handleUpdate = (jewelryId) => {
@@ -53,8 +73,8 @@ const JewelryInventoryPage = () => {
         </thead>
         <tbody>
           {currentJewelry.map((item) => (
-            <tr key={item.id}>
-              <td style={styles.td}>{item.id}</td>
+            <tr key={item.productId}>
+              <td style={styles.td}>{item.productCode}</td>
               <td style={styles.td}>{item.name}</td>
               <td style={styles.td}>{item.type}</td>
               <td style={styles.td}>{item.material}</td>
@@ -70,7 +90,7 @@ const JewelryInventoryPage = () => {
                 </button>
                 <button
                   style={styles.deleteButton}
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item.productCode)}
                 >
                   Delete
                 </button>
