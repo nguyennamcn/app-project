@@ -89,21 +89,21 @@ export default function EditEmployee() {
             />
           </div>
           <div className="edit-info">
-            <h1 style={{ fontSize: '14px' }}>Name : {employee?.name}</h1>
-            <h1 style={{ fontSize: '14px' }}>Address : {employee?.address}</h1>
-            <h1 style={{ fontSize: '14px' }}>Phone : {employee?.phone}</h1>
-            <h1 style={{ fontSize: '14px' }}>Email : {employee?.email}</h1>
-            <h1 style={{ fontSize: '14px' }}>Role : {employee?.roleUser}</h1>
+            <Input className="input-field" placeholder="Full Name" name="name" value={employee?.name} onChange={handleChange} />
+            <Input className="input-field" placeholder="Phone number" name="phone" value={employee?.phone} onChange={handleChange} />
+            <Input className="input-field" placeholder="Email" name="email" value={employee?.email} onChange={handleChange} />
+            <Input className="input-field" placeholder="Gender" name="gender" value={employee?.gender} onChange={handleChange} />
+            <Input className="input-field" placeholder="Address" name="address" value={employee?.address} onChange={handleChange} />
           </div>
         </div>
         <hr />
         <div className="edit-details">
-          <h3>Work Information</h3>
+          {/* <h3>Work Information</h3> */}
+          <h3>Role:</h3>
           <div className="role-group-edit">
-            <h3>Role:</h3>
+            {/* <h3>Role:</h3> */}
             <Radio.Group name="role" onChange={handleChange} style={{ marginLeft: '10px' }}>
               <Radio value="ROLE_SALES_STAFF">Staff</Radio>
-              <Radio value="ROLE_MANAGER">Manager</Radio>
               <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
             </Radio.Group>
           </div>
