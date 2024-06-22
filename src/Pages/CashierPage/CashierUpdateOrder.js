@@ -39,14 +39,14 @@ export default function CashierUpdateOrder() {
         setProductsUpdated(updatedProducts);
         setProducts(updatedProducts);
         calculateTotals(updatedProducts);
-        console.log(products);
     };
-
+    console.log(productsUpdated)
     const calculateTotals = (products) => {
         const totalAllPrice = products.reduce((sum, product) => sum + product.price, 0);
         setTotalAllPrice(totalAllPrice);
     };
 
+    console.log(products)
     const handleUpdateOrder = () => {
         const orderList = 
         productsUpdated.map(product => ({
@@ -68,7 +68,7 @@ export default function CashierUpdateOrder() {
         adornicaServ.updatePreOrder(orderData)
             .then((res) => {
                 console.log('Order updated successfully:', res);
-                console.log(orderList);
+                console.log(orderData);
             })
             .catch((err) => {
                 console.error('Error updating order:', err.response); // Log error details

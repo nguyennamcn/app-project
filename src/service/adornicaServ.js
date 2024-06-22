@@ -2,6 +2,7 @@ import {https} from "./config"
 
 export const adornicaServ = {
     getDetailProduct: (productCode) => {
+        console.log(productCode)
         return https.get(`/api/v1/products/${productCode}`);
     },
 
@@ -74,7 +75,13 @@ export const adornicaServ = {
 
     
     updatePreOrder: (orderData) => {
+        console.log(orderData)
         return https.put(`/api/v1/orders/order/update`, orderData);
+    },
+
+    updateProduct: (code , orderData) => {
+        console.log(code , orderData)
+        return https.put(`/api/v1/products/update/${code}`, orderData);
     },
 
     getDetailPurchase: (OrderCode) => {

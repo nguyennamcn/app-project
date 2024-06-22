@@ -38,10 +38,6 @@ export default function ManageDiamond() {
     );
   };
 
-  const handleUpdate = (diamondId) => {
-    const updatedDiamond = diamondManage.find(diamond => diamond.gemId === diamondId);
-    console.log('Updated Diamond:', updatedDiamond);
-  };
 
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
@@ -103,12 +99,13 @@ export default function ManageDiamond() {
               </td> */}
               {/* <td style={styles.td}>{formatDate(diamond.effectDate)}</td> */}
               <td style={styles.td}>
+                <NavLink to={`/update-diamond/${diamond.productId}`}>
                 <button
                   style={styles.updateButton}
-                  onClick={() => handleUpdate(diamond.gemId)}
                 >
                   Update
                 </button>
+                </NavLink>
                 <button
                   style={styles.deleteButton}
                   onClick={() => handleDelete(diamond.productCode)}
