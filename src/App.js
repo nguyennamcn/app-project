@@ -49,6 +49,9 @@ import BillDiamond from './Pages/BillBuying/BillDiamond';
 import BillJewelry from './Pages/BillBuying/BillJewelry';
 import PurchaseDetail from './Pages/PurchaseOrderList/purchaseDetail';
 import HistoryOrder from './Pages/HistoryOrder/HistoryOrder';
+import UpGold from './Pages/UpdateProduct/UpGold';
+import UpDiamonds from './Pages/UpdateProduct/UpDiamonds';
+import UpJewelry from './Pages/UpdateProduct/UpJewelry';
 
 function App() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -82,6 +85,9 @@ function App() {
               <Route path="/add-diamond" element={<Layout Component={AddDiamond} />} />
               <Route path="/add-jewelry" element={<Layout Component={AddJewelry} />} />
               <Route path="/add-gold" element={<Layout Component={AddGold} />} />
+              <Route path="/update-gold/:productCode" element={<Layout Component={UpGold} />} />
+              <Route path="/update-diamond/:productCode" element={<Layout Component={UpDiamonds} />} />
+              <Route path="/update-jewelry/:productCode" element={<Layout Component={UpJewelry} />} />
               <Route path="/bill-gold" element={<Layout Component={BillGold} />} />
               <Route path="/bill-diamond" element={<Layout Component={BillDiamond} />} />
               <Route path="/bill-jewelry" element={<Layout Component={BillJewelry} />} />
