@@ -9,7 +9,7 @@ function AddJewelry() {
     productCode: 'None',
     productName: 'None',
     gender: 'MALE',
-    categoryId: 0,
+    categoryId: 6, //id: 6 Diamond
     material: 0,
     weight: 0,
     gemId: 0,
@@ -71,6 +71,7 @@ function AddJewelry() {
       .catch(error => {
         setModalMessage('Error adding jewelry. Please try again.');
         setIsModalVisible(true);
+        console.log(error);
       });
   };
 
@@ -87,14 +88,14 @@ function AddJewelry() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" value={newJewelry.productCode} onChange={handleInputChange} />
+                <input type="text" name="productCode" value={newJewelry.productCode} onChange={handleInputChange} required/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
-                <input type="text" name="productName" value={newJewelry.productName} onChange={handleInputChange} />
+                <input type="text" name="productName" value={newJewelry.productName} onChange={handleInputChange} required/>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
+            {/* <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Gender:</label>
                 <select name="gender" value={newJewelry.gender} onChange={handleInputChange}>
@@ -116,21 +117,21 @@ function AddJewelry() {
                 <label>Weight:</label>
                 <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} />
               </div>
-            </div>
+            </div> */}
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Gem ID:</label>
-                <input type="number" name="gemId" value={newJewelry.gemId} onChange={handleInputChange} />
+                <input type="number" name="gemId" value={newJewelry.gemId} onChange={handleInputChange} min={1}/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
-                <input type="text" name="gemCode" value={newJewelry.gemCode} onChange={handleInputChange} />
+                <input type="text" name="gemCode" value={newJewelry.gemCode} onChange={handleInputChange} required/>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Diamond Name:</label>
-                <input type="text" name="diamondName" value={newJewelry.diamondName} onChange={handleInputChange} />
+                <input type="text" name="diamondName" value={newJewelry.diamondName} onChange={handleInputChange} required/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Origin:</label>
@@ -157,7 +158,7 @@ function AddJewelry() {
                 <input type="number" name="carat" value={newJewelry.carat} onChange={handleInputChange} />
               </div>
             </div>
-            <div className="add-jewelry-form-row">
+            {/* <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Size:</label>
                 <select name="size" value={newJewelry.size} onChange={handleInputChange}>
@@ -173,7 +174,7 @@ function AddJewelry() {
                   <option value="false">No</option>
                 </select>
               </div>
-            </div>
+            </div> */}
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Images:</label>

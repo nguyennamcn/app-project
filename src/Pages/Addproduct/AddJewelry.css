@@ -117,4 +117,19 @@
     justify-content: center;
   }
   
+  .btn__ok {
+    background-color: #007BFF;
+    color: #fff;
+    width: 70px;
+    height: 40px;
+    border-radius: 6px;
+  }
+
+  .btn__ok:hover{
+    opacity: 0.6;
+  }
+
+  .add-jewelry-container input{
+    border: 1px solid;
+  }
 

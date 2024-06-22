@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, message, notification } from 'antd';
 import { NavLink } from 'react-router-dom';
 import './AddJewelry.css';
 import { adornicaServ } from '../../service/adornicaServ';
@@ -11,7 +11,7 @@ function AddJewelry() {
     gemCost: 0,
     productionCost: 0,
     gender: 'MALE',
-    categoryId: 0, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earring
+    categoryId: 0, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earrings
     material: 0,
     weight: 0,
     gemId: 0,
@@ -32,11 +32,7 @@ function AddJewelry() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const numericValue = parseInt(value, 10);
-    
-    if (numericValue >= 1 && numericValue <= 4) {
-      setNewJewelry({ ...newJewelry, [name]: numericValue });
-    }
+    setNewJewelry({ ...newJewelry, [name]: value });
   };
 
   const handleImageUpload = (e) => {
@@ -71,15 +67,54 @@ function AddJewelry() {
       jewelryDiamond: newJewelry.jewelryDiamond === 'true' || newJewelry.jewelryDiamond === true,
     };
 
-    adornicaServ.postCreateProduct(productData)
-      .then(response => {
-        setModalMessage('Jewelry added successfully!');
-        setIsModalVisible(true);
-      })
-      .catch(error => {
-        setModalMessage('Error adding jewelry. Please try again.');
-        setIsModalVisible(true);
-      });
+    if (validateForm(productData)) {
+      adornicaServ.postCreateProduct(productData)
+        .then(response => {
+          setModalMessage('Jewelry added successfully!');
+          setIsModalVisible(true);
+        })
+        .catch(error => {
+          setModalMessage('Error adding jewelry. Please try again.');
+          setIsModalVisible(true);
+        });
+    } else {
+      notification.error({message:'Please check your input data.'});
+      //setIsModalVisible(true);
+    }
+  };
+
+  const validateForm = (data) => {
+    const requiredFields = [
+      'productCode',
+      'productName',
+      'gemCost',
+      'productionCost',
+      'categoryId',
+      'material',
+      'weight',
+      'gemId',
+      'gemCode',
+      'diamondName',
+      'origin',
+      'color',
+      'clarity',
+      'cut',
+      'carat',
+    ];
+
+  
+
+    // for (let field of requiredFields) {
+    //   if (!data[field] || data[field] === 'None' || data[field] === 0 || data[field] === null) {
+    //     return false;
+    //   }
+    // }
+
+    // if (productImages.length === 0) {
+    //   return false;
+    // }
+
+    return true;
   };
 
   const handleModalOk = () => {
@@ -95,11 +130,11 @@ function AddJewelry() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" value={newJewelry.productCode} onChange={handleInputChange} />
+                <input type="text" name="productCode" value={newJewelry.productCode} onChange={handleInputChange} required/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
-                <input type="text" name="productName" value={newJewelry.productName} onChange={handleInputChange} />
+                <input type="text" name="productName" value={newJewelry.productName} onChange={handleInputChange} required/>
               </div>
             </div>
             <div className="add-jewelry-form-row">
@@ -109,7 +144,7 @@ function AddJewelry() {
               </div>
               <div className="add-jewelry-form-group">
                 <label>Production Cost:</label>
-                <input type="number" name="productionCost" value={newJewelry.productionCost} onChange={handleInputChange} />
+                <input type="number" name="productionCost" value={newJewelry.productionCost} onChange={handleInputChange} min={1}/>
               </div>
             </div>
             <div className="add-jewelry-form-row">
@@ -122,17 +157,17 @@ function AddJewelry() {
               </div>
               <div className="add-jewelry-form-group">
                 <label>Category ID:</label>
-                <input type="number" name="categoryId" value={newJewelry.categoryId} onChange={handleInputChange} required/>
+                <input type="number" name="categoryId" value={newJewelry.categoryId} onChange={handleInputChange} min={1} max={4}/>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Material:</label>
-                <input type="number" name="material" value={newJewelry.material} onChange={handleInputChange} />
+                <input type="number" name="material" value={newJewelry.material} onChange={handleInputChange} min={1} max={4}/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Weight:</label>
-                <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} />
+                <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={1}/>
               </div>
             </div>
             <div className="add-jewelry-form-row">
@@ -210,6 +245,7 @@ function AddJewelry() {
         visible={isModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
+        footer={<button className='btn__ok' onClick={handleModalOk}>OK</button>}
         className="custom-modal"
       >
         <div>{modalMessage}</div>
