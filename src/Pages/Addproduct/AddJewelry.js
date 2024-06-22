@@ -6,14 +6,14 @@ import { adornicaServ } from '../../service/adornicaServ';
 
 function AddJewelry() {
   const [newJewelry, setNewJewelry] = useState({
-    productCode: 'None',
-    productName: 'None',
-    gemCost: 0,
-    productionCost: 0,
+    productCode: 'None', // not null
+    productName: 'None', // not null
+    gemCost: 0, 
+    productionCost: 0, // not null
     gender: 'MALE',
     categoryId: 0, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earrings
-    material: 0,
-    weight: 0,
+    material: 0,  // not null
+    weight: 0, // not null
     gemId: 0,
     gemCode: 'None',
     diamondName: 'None',
@@ -22,7 +22,7 @@ function AddJewelry() {
     clarity: 'None',
     cut: 'None',
     carat: 0,
-    size: 'SIZE_1',
+    size: 'SIZE_1', // có size mới chạy api vd: SIZE_1 
     jewelryDiamond: true,
   });
 
@@ -70,12 +70,12 @@ function AddJewelry() {
     if (validateForm(productData)) {
       adornicaServ.postCreateProduct(productData)
         .then(response => {
-          setModalMessage('Jewelry added successfully!');
-          setIsModalVisible(true);
+          notification.success({message: "Add product success"})
+          console.log(response.data.metadata);
         })
         .catch(error => {
-          setModalMessage('Error adding jewelry. Please try again.');
-          setIsModalVisible(true);
+          notification.error({message: error.response.data.metadata.message})
+        console.log(error.response.data.metadata.message);
         });
     } else {
       notification.error({message:'Please check your input data.'});
