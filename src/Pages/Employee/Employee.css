@@ -5,7 +5,8 @@
 
 .employee-list-title {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .add-employee-list-button {
@@ -63,4 +64,27 @@
 
 .employee-list-status.offline {
   background-color: gray;
+}
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  margin: 0 5px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #ddd;
+}
+
+.pagination button.active {
+  background-color: black;
+  color: white;
 }
