@@ -73,10 +73,10 @@ function UpDiamonds() {
       productCode: sp.productCode,
       productName: sp.productName,
       gender: sp.gender,
-      categoryId: 0,
+      categoryId: 6,
       materialProductRequests: [
         {
-          material: 0,
+          material: 1,
           weight: 0,
         },
       ],
@@ -89,7 +89,7 @@ function UpDiamonds() {
       cut: sp.gem[0].cut,
       carat: Number(sp.gem[0].carat),
       size: sp.size,
-      jewelryDiamond: sp.jewelryDiamond,
+      jewelryDiamond: false,
     };
 
     adornicaServ.updateProduct(productCode, productData)
@@ -116,7 +116,7 @@ function UpDiamonds() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" placeholder="Product code" value={sp.productCode} onChange={handleInputChange} required />
+                <input type="text" name="productCode" placeholder="Product code" value={sp.productCode} onChange={handleInputChange}  required/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
@@ -126,7 +126,7 @@ function UpDiamonds() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Gem ID:</label>
-                <input type="number" name="id" placeholder="Gem id" value={sp.gem[0]?.id || ''} onChange={handleGemInputChange} min={0} required />
+                <input type="number" name="id" placeholder="Gem id" value={sp.gem[0]?.id || ''} onChange={handleGemInputChange}  readOnly />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
@@ -136,60 +136,37 @@ function UpDiamonds() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Diamond Name:</label>
-                <input type="text" name="diamondName" placeholder="Diamond name" value={sp.gem[0].gemName} onChange={handleInputChange} required />
+                <input type="text" name="diamondName" placeholder="Diamond name" value={sp.gem[0].gemName} onChange={handleInputChange} readOnly />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Origin:</label>
-                <select name="origin" value={sp.gem[0].origin} onChange={handleInputChange} required>
-                  <option value="" >Select origin</option>
-                  <option value="NATURAL">NATURAL</option>
+                <select name="origin" value={sp.gem[0].origin} onChange={handleInputChange} >
+                  <option value={sp.gem[0].origin} >{sp.gem[0].origin}</option>
+         
                 </select>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Color:</label>
-                <select name="color" value={sp.gem[0].color} onChange={handleInputChange} required>
-                  <option value="">Select color</option>
-                  <option value="D">D</option>
-                  <option value="E">E</option>
-                  <option value="F">F</option>
-                  <option value="G">G</option>
-                  <option value="H">H</option>
-                  <option value="I">I</option>
-                  <option value="J">J</option>
-                  <option value="K">K</option>
-                  <option value="L">L</option>
-                  <option value="M">M</option>
+                <select name="color" value={sp.gem[0].color} onChange={handleInputChange} >
+                  <option value={sp.gem[0].color} >{sp.gem[0].color} </option>
                 </select>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Clarity:</label>
-                <select name="clarity" value={sp.gem[0].clarity} onChange={handleInputChange} required>
-                  <option value="">Select Clarity</option>
-                  <option value="FL">FL</option>
-                  <option value="IF">IF</option>
-                  <option value="VVS1">VVS1</option>
-                  <option value="VVS2">VVS2</option>
-                  <option value="VS1">VS1</option>
-                  <option value="VS2">VS2</option>
-                  <option value="SI1">SI1</option>
-                  <option value="SI2">SI2</option>
-                  <option value="I1">I1</option>
-                  <option value="I2">I2</option>
-                  <option value="I3">I3</option>
+                <select name="clarity" value={sp.gem[0].clarity} onChange={handleInputChange} >
+                  <option value={sp.gem[0].clarity}>{sp.gem[0].clarity}</option>
+                
                 </select>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Cut:</label>
-                <select name="cut" value={sp.gem[0].cut} onChange={handleInputChange} required>
-                  <option value="">Select Cut</option>
-                  <option value="EX">EX</option>
-                  <option value="G">G</option>
-                  <option value="F">F</option>
-                  <option value="P">P</option>
+                <select name="cut" value={sp.gem[0].cut} onChange={handleInputChange} >
+                  <option value="">{sp.gem[0].cut}</option>
+
                 </select>
               </div>
               <div className="add-jewelry-form-group">

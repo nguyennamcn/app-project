@@ -125,15 +125,17 @@ export default function ManageGold() {
               <td style={styles.td}>{product.productId}</td>
               <td style={styles.td}>{product.productCode}</td>
               <td style={styles.td}>{product.productName}</td>
-              <td style={styles.td}>{product.productPrice}</td>
+              <td style={styles.td}>{product.productPrice <= 0 ? 'undefinded' : product.productPrice}</td>
               <td style={styles.td}>{product.size}</td>
               <td style={styles.td}>
+              <NavLink to={`/update-gold/${product.productId}`}>
                 <button
                   style={styles.updateButton}
                   onClick={() => handleUpdate(product.productCode)}
                 >
                   Update
                 </button>
+                </NavLink>
                 <button
                   style={styles.deleteButton}
                   onClick={() => handleDelete(product.productCode)}

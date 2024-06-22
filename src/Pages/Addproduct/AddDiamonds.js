@@ -170,12 +170,12 @@ function AddDiamond() {
                 <input type="number" name="carat" value={newJewelry.carat} onChange={handleInputChange} min={0.1} step={0.1}/>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
+            {/* <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Images:</label>
                 <input type="file" name="productImages" multiple onChange={handleImageUpload} />
               </div>
-            </div>
+            </div> */}
             <div className="add-jewelry-form-footer">
               <NavLink to="/ManageDiamond" className="add-jewelry-back-button">BACK</NavLink>
               <button className="add-jewelry-add-button" type="submit">ADD DIAMOND</button>
