@@ -61,30 +61,26 @@ const JewelryInventoryPage = () => {
       <table style={styles.table}>
         <thead>
           <tr>
-            <th style={styles.th}>ID</th>
+          <th style={styles.th}>ID</th>
+            <th style={styles.th}>Code</th>
             <th style={styles.th}>Name</th>
-            <th style={styles.th}>Type</th>
-            <th style={styles.th}>Material</th>
-            <th style={styles.th}>Carat</th>
-            <th style={styles.th}>Buy Price</th>
-            <th style={styles.th}>Sell Price</th>
+            <th style={styles.th}>Price</th>
+            <th style={styles.th}>Size</th>
             <th style={styles.th}>Action</th>
           </tr>
         </thead>
         <tbody>
           {currentJewelry.map((item) => (
             <tr key={item.productId}>
+              <td style={styles.td}>{item.productId}</td>
               <td style={styles.td}>{item.productCode}</td>
-              <td style={styles.td}>{item.name}</td>
-              <td style={styles.td}>{item.type}</td>
-              <td style={styles.td}>{item.material}</td>
-              <td style={styles.td}>{item.carat}</td>
-              <td style={styles.td}>{item.buyPrice}</td>
-              <td style={styles.td}>{item.sellPrice}</td>
+              <td style={styles.td}>{item.productName}</td>
+              <td style={styles.td}>{item.productPrice}</td>
+              <td style={styles.td}>{item.size}</td>
               <td style={styles.td}>
                 <button
                   style={styles.updateButton}
-                  onClick={() => handleUpdate(item.id)}
+                  onClick={() => handleUpdate(item.productCode)}
                 >
                   Update
                 </button>

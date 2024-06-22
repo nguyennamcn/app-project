@@ -69,41 +69,26 @@ export default function ManageGold() {
         <thead>
           <tr>
             <th style={styles.th}>ID</th>
+            <th style={styles.th}>Code</th>
             <th style={styles.th}>Name</th>
-            <th style={styles.th}>Buy Price</th>
-            <th style={styles.th}>Sell Price</th>
-            <th style={styles.th}>Date</th>
+            <th style={styles.th}>Price</th>
+            <th style={styles.th}>Size</th>
             <th style={styles.th}>Action</th>
           </tr>
         </thead>
         <tbody>
           {currentGold.map((product) => (
             <tr key={product.productId}>
+              <td style={styles.td}>{product.productId}</td>
               <td style={styles.td}>{product.productCode}</td>
-              <td style={styles.td}>{product.materialName}</td>
-              <td style={styles.td}>
-                <input
-                  type="text"
-                  name="materialBuyPrice"
-                  value={product.materialBuyPrice}
-                  onChange={(e) => handleInputChange(e, product.materialId)}
-                  style={styles.input}
-                />
-              </td>
-              <td style={styles.td}>
-                <input
-                  type="text"
-                  name="materialSellPrice"
-                  value={product.materialSellPrice}
-                  onChange={(e) => handleInputChange(e, product.materialId)}
-                  style={styles.input}
-                />
-              </td>
-              <td style={styles.td}>{formatDate(product.effectDate)}</td>
+              <td style={styles.td}>{product.productName}</td>
+              <td style={styles.td}>{product.productPrice}</td>
+              <td style={styles.td}>{product.size}</td>
+              {/* <td style={styles.td}><img src={product.productImage}/></td> */}
               <td style={styles.td}>
                 <button
                   style={styles.updateButton}
-                  onClick={() => handleUpdate(product.materialId)}
+                  onClick={() => handleUpdate(product.productCode)}
                 >
                   Update
                 </button>

@@ -67,28 +67,23 @@ export default function ManageDiamond() {
       <table style={styles.table}>
         <thead>
           <tr>
-            <th style={styles.th}>ID</th>
-            <th style={styles.th}>Origin</th>
-            <th style={styles.th}>Carat</th>
-            <th style={styles.th}>Clarity</th>
-            <th style={styles.th}>Color</th>
-            <th style={styles.th}>Cut</th>
-            <th style={styles.th}>BuyPrice</th>
-            <th style={styles.th}>SellPrice</th>
-            <th style={styles.th}>Date</th>
+          <th style={styles.th}>ID</th>
+            <th style={styles.th}>Code</th>
+            <th style={styles.th}>Name</th>
+            <th style={styles.th}>Price</th>
+            <th style={styles.th}>Size</th>
             <th style={styles.th}>Action</th>
           </tr>
         </thead>
         <tbody>
           {currentDiamonds.map((diamond) => (
             <tr key={diamond.productId}>
+              <td style={styles.td}>{diamond.productId}</td>
               <td style={styles.td}>{diamond.productCode}</td>
-              <td style={styles.td}>{diamond.origin}</td>
-              <td style={styles.td}>{diamond.carat}</td>
-              <td style={styles.td}>{diamond.clarity}</td>
-              <td style={styles.td}>{diamond.color}</td>
-              <td style={styles.td}>{diamond.cut}</td>
-              <td style={styles.td}>
+              <td style={styles.td}>{diamond.productName}</td>
+              <td style={styles.td}>{diamond.productPrice}</td>
+              <td style={styles.td}>{diamond.size}</td>
+              {/* <td style={styles.td}>
                 <input
                   type="text"
                   name="gemBuyPrice"
@@ -105,7 +100,7 @@ export default function ManageDiamond() {
                   onChange={(e) => handleInputChange(e, diamond.gemId)}
                   style={styles.input}
                 />
-              </td>
+              </td> */}
               <td style={styles.td}>{formatDate(diamond.effectDate)}</td>
               <td style={styles.td}>
                 <button
