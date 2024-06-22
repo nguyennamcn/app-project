@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Modal } from 'antd';
+import { Modal ,notification} from 'antd';
 import { NavLink } from 'react-router-dom';
 import './AddJewelry.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
-function AddJewelry() {
+function AddDiamond() {
   const [newJewelry, setNewJewelry] = useState({
-    productCode: 'None',
-    productName: 'None',
-    gender: 'MALE',
+    productCode: 'None', // not null
+    productName: 'None', // not null
+    gemCost: 0, // not null
+    productionCost: 0,
+    //gender: 'MALE',
     categoryId: 6, //id: 6 Diamond
-    material: 0,
+    material: 1, // not null
     weight: 0,
     gemId: 0,
     gemCode: 'None',
@@ -65,13 +67,12 @@ function AddJewelry() {
 
     adornicaServ.postCreateProduct(productData)
       .then(response => {
-        setModalMessage('Jewelry added successfully!');
-        setIsModalVisible(true);
+        notification.success({message: "Add product success"})
+        console.log(response.data.metadata);
       })
       .catch(error => {
-        setModalMessage('Error adding jewelry. Please try again.');
-        setIsModalVisible(true);
-        console.log(error);
+        notification.error({message: error.response.data.metadata.message})
+        console.log(error.response.data.metadata.message);
       });
   };
 
@@ -121,7 +122,7 @@ function AddJewelry() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Gem ID:</label>
-                <input type="number" name="gemId" value={newJewelry.gemId} onChange={handleInputChange} min={1}/>
+                <input type="number" name="gemId" value={newJewelry.gemId} onChange={handleInputChange} min={0}/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
@@ -182,7 +183,7 @@ function AddJewelry() {
               </div>
             </div>
             <div className="add-jewelry-form-footer">
-              <NavLink to="/ManageJewelry" className="add-jewelry-back-button">BACK</NavLink>
+              <NavLink to="/ManageDiamond" className="add-jewelry-back-button">BACK</NavLink>
               <button className="add-jewelry-add-button" type="submit">ADD DIAMOND</button>
             </div>
           </form>
@@ -201,4 +202,4 @@ function AddJewelry() {
   );
 }
 
-export default AddJewelry;
+export default AddDiamond;

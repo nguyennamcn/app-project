@@ -101,7 +101,7 @@ export default function ManageDiamond() {
                   style={styles.input}
                 />
               </td> */}
-              <td style={styles.td}>{formatDate(diamond.effectDate)}</td>
+              {/* <td style={styles.td}>{formatDate(diamond.effectDate)}</td> */}
               <td style={styles.td}>
                 <button
                   style={styles.updateButton}
