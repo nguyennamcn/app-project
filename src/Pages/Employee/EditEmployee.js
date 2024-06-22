@@ -14,7 +14,6 @@ export default function EditEmployee() {
       .then((res) => {
         console.log(res.data.metadata);
         setEmployee(res.data.metadata);
-        setForm(res.data.metadata);
       })
       .catch((err) => {
         console.log(err);
@@ -42,31 +41,32 @@ export default function EditEmployee() {
 
   const handleSubmit = () => {
     const data = {
-      roles: employee.roleUser,
       id: employee.id,
+      roles: [form.role]
     };
     console.log(data)
-    Promise.all([
-      adornicaServ.updateRole(data).catch((err) => {
+
+    adornicaServ.postImg(id)
+      .then((res) => {
+        console.log('Img updated:', res);
+        window.location.reload();
+      })
+      .catch((err) => {
         console.log(err);
       })
-    ]).then(() => {
-      showConfirm();
-    });
+
+    adornicaServ.updateRole(data)
+      .then((res) => {
+        console.log('Role updated:', res);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    console.log('Form data:', data);
   };
 
-  const showConfirm = () => {
-    Modal.confirm({
-      title: 'Save Successful',
-      content: 'Employee information has been updated successfully.',
-      onOk() {
-        console.log('OK');
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
-    });
-  };
+
 
   return (
     <div className="edit-container">
@@ -89,61 +89,11 @@ export default function EditEmployee() {
             />
           </div>
           <div className="edit-info">
-            <div className="info-row">
-              <div className="info-label">Name:</div>
-              <div className="info-value">
-                <Input
-                  className="input-large"
-                  name="name"
-                  value={form.name || ''}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="info-row">
-              <div className="info-label">Address:</div>
-              <div className="info-value">
-                <Input
-                  className="input-large"
-                  name="address"
-                  value={form.address || ''}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="info-row">
-              <div className="info-label">Phone:</div>
-              <div className="info-value">
-                <Input
-                  className="input-large"
-                  name="phone"
-                  value={form.phone || ''}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="info-row">
-              <div className="info-label">Email:</div>
-              <div className="info-value">
-                <Input
-                  className="input-large"
-                  name="email"
-                  value={form.email || ''}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="info-row">
-              <div className="info-label">Role:</div>
-              <div className="info-value">
-                <Input
-                  className="input-large"
-                  name="roleUser"
-                  value={form.roleUser || ''}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
+            <h1 style={{ fontSize: '14px' }}>Name : {employee?.name}</h1>
+            <h1 style={{ fontSize: '14px' }}>Address : {employee?.address}</h1>
+            <h1 style={{ fontSize: '14px' }}>Phone : {employee?.phone}</h1>
+            <h1 style={{ fontSize: '14px' }}>Email : {employee?.email}</h1>
+            <h1 style={{ fontSize: '14px' }}>Role : {employee?.roleUser}</h1>
           </div>
         </div>
         <hr />
@@ -164,7 +114,7 @@ export default function EditEmployee() {
             <Button className="nav-button">Back</Button>
           </NavLink>
           <NavLink>
-          <Button type="primary" className="nav-button" onClick={handleSubmit}>Save</Button>
+            <Button type="primary" className="nav-button" onClick={handleSubmit}>Save</Button>
           </NavLink>
         </div>
       </div>
