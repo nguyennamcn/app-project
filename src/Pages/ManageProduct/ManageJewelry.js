@@ -111,15 +111,17 @@ const JewelryInventoryPage = () => {
               <td style={styles.td}>{item.productId}</td>
               <td style={styles.td}>{item.productCode}</td>
               <td style={styles.td}>{item.productName}</td>
-              <td style={styles.td}>{item.productPrice}</td>
+              <td style={styles.td}>{item.productPrice <= 0 ? 'undefinded' : item.productPrice}</td>
               <td style={styles.td}>{item.size}</td>
               <td style={styles.td}>
+                <NavLink to={`/update-jewelry/${item.productId}`}>
                 <button
                   style={styles.updateButton}
                   onClick={() => handleUpdate(item.productCode)}
                 >
                   Update
                 </button>
+                </NavLink>
                 <button
                   style={styles.deleteButton}
                   onClick={() => handleDelete(item.productCode)}

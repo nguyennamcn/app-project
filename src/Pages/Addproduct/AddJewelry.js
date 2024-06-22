@@ -225,16 +225,16 @@ function AddJewelry() {
                 <label>Jewelry Diamond:</label>
                 <select name="jewelryDiamond" value={newJewelry.jewelryDiamond} onChange={handleInputChange}>
                   <option value="true">Yes</option>
-                  <option value="false">No</option>
+                  
                 </select>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
+            {/* <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Images:</label>
                 <input type="file" name="productImages" multiple onChange={handleImageUpload} />
               </div>
-            </div>
+            </div> */}
             <div className="add-jewelry-form-footer">
               <NavLink to="/ManageJewelry" className="add-jewelry-back-button">BACK</NavLink>
               <button className="add-jewelry-add-button" type="submit">ADD JEWELRY</button>

@@ -128,12 +128,12 @@ function AddGold() {
                 </select>
               </div>
             </div> */}
-            <div className="add-jewelry-form-row">
+            {/* <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Images:</label>
                 <input type="file" name="productImages" multiple onChange={handleImageUpload} />
               </div>
-            </div>
+            </div> */}
             <div className="add-jewelry-form-footer">
               <NavLink to="/ManageGold" className="add-jewelry-back-button">BACK</NavLink>
               <button className="add-jewelry-add-button" type="submit">ADD GOLD</button>
