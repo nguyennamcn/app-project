@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { notification } from 'antd';
 
 // Define styles as objects
 const styles = {
@@ -106,6 +107,7 @@ const JewelrySelection = () => {
     cut: ''
   }]);
   const [totalPrice, setTotalPrice] = useState(0);
+
   const [goldPrices, setGoldPrices] = useState([]);
   const [formValid, setFormValid] = useState(false); // Track form validation state
   const newItemRef = useRef(null);
@@ -195,6 +197,8 @@ const JewelrySelection = () => {
               ));
               if (priceData) {
                 total += priceData.gemBuyPrice;
+              } else {
+                notification.error({ message:"Gem was undefined"});
               }
             }
           }

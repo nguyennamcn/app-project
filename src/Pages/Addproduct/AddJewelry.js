@@ -11,7 +11,7 @@ function AddJewelry() {
     gemCost: 0,
     productionCost: 0,
     gender: 'MALE',
-    categoryId: 0,
+    categoryId: 0, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earring
     material: 0,
     weight: 0,
     gemId: 0,
@@ -32,7 +32,11 @@ function AddJewelry() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewJewelry({ ...newJewelry, [name]: value });
+    const numericValue = parseInt(value, 10);
+    
+    if (numericValue >= 1 && numericValue <= 4) {
+      setNewJewelry({ ...newJewelry, [name]: numericValue });
+    }
   };
 
   const handleImageUpload = (e) => {
@@ -118,7 +122,7 @@ function AddJewelry() {
               </div>
               <div className="add-jewelry-form-group">
                 <label>Category ID:</label>
-                <input type="number" name="categoryId" value={newJewelry.categoryId} onChange={handleInputChange} />
+                <input type="number" name="categoryId" value={newJewelry.categoryId} onChange={handleInputChange} required/>
               </div>
             </div>
             <div className="add-jewelry-form-row">
