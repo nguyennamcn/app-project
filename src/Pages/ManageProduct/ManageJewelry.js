@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
-
-const initialJewelry = [
-  { id: 1, name: "Gold Necklace", type: "Necklace", material: "Gold", carat: 18, buyPrice: 1400, sellPrice: 1500 },
-  { id: 2, name: "Diamond Earrings", type: "Earrings", material: "Diamond", carat: 22, buyPrice: 2900, sellPrice: 3000 },
-  { id: 3, name: "Silver Bracelet", type: "Bracelet", material: "Silver", carat: 14, buyPrice: 800, sellPrice: 850 },
-  { id: 4, name: "Platinum Ring", type: "Ring", material: "Platinum", carat: 24, buyPrice: 4900, sellPrice: 5000 }
-];
+import { Modal, Button, notification, message } from 'antd';
 
 const JewelryInventoryPage = () => {
   const [jewelry, setJewelry] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [currentJewelryId, setCurrentJewelryId] = useState(null);
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -25,22 +22,61 @@ const JewelryInventoryPage = () => {
       });
   }, []);
 
-
   const handleDelete = (jewelryCode) => {
     adornicaServ.deleteProduct(jewelryCode)
-            .then(() => {
-                const newProductData = jewelry.filter((item) => item.productCode !== jewelryCode);
-                setJewelry(newProductData);
-            })
-            .catch((err) => {
-                console.log("Error deleting order:", err);
-            });
-
+      .then(() => {
+        const newProductData = jewelry.filter((item) => item.productCode !== jewelryCode);
+        setJewelry(newProductData);
+      })
+      .catch((err) => {
+        console.log("Error deleting order:", err);
+      });
   };
 
   const handleUpdate = (jewelryId) => {
     const updatedItem = jewelry.find(item => item.id === jewelryId);
     console.log('Updated Jewelry:', updatedItem);
+  };
+
+  const handleUpdateImg = (jewelryId) => {
+    setCurrentJewelryId(jewelryId);
+    setIsModalVisible(true);
+  };
+
+  const handleImageChange = (e, index) => {
+    const files = [...selectedImages];
+    files[index] = e.target.files[0];
+    setSelectedImages(files);
+  };
+
+  const handleModalOk = () => {
+    if (selectedImages.length !== 4) {
+      notification.error({ message: 'Please select all 4 images' });
+      return;
+    }
+  
+    adornicaServ.postProductImg(
+      currentJewelryId,
+      selectedImages[0],
+      selectedImages[1],
+      selectedImages[2],
+      selectedImages[3]
+    ).then(() => {
+      setIsModalVisible(false);
+      setSelectedImages([]);
+      setCurrentJewelryId(null);
+      message.success('Images updated successfully');
+    }).catch((err) => {
+      console.log("Error uploading images:", err.response);
+      notification.error({ message: 'Error uploading images' });
+    });
+  };
+  
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setSelectedImages([]);
+    setCurrentJewelryId(null);
   };
 
   const lastItemIndex = currentPage * itemsPerPage;
@@ -61,7 +97,7 @@ const JewelryInventoryPage = () => {
       <table style={styles.table}>
         <thead>
           <tr>
-          <th style={styles.th}>ID</th>
+            <th style={styles.th}>ID</th>
             <th style={styles.th}>Code</th>
             <th style={styles.th}>Name</th>
             <th style={styles.th}>Price</th>
@@ -90,6 +126,12 @@ const JewelryInventoryPage = () => {
                 >
                   Delete
                 </button>
+                <button
+                  style={styles.updateButton}
+                  onClick={() => handleUpdateImg(item.productId)}
+                >
+                  Update Img
+                </button>
               </td>
             </tr>
           ))}
@@ -105,6 +147,25 @@ const JewelryInventoryPage = () => {
           ))}
         </div>
       </div>
+      <Modal
+        title={`Update Images of product ID: ${currentJewelryId}`}
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+      >
+        <div>
+          {[...Array(4)].map((_, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <span style={{ marginRight: '6px' }}>Img {index + 1}</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, index)}
+              />
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 };

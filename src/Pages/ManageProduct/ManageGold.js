@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
+import { Modal, notification, message } from 'antd';
 
 export default function ManageGold() {
   const [goldManage, setGoldManage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [currentGoldId, setCurrentGoldId] = useState(null);
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -20,14 +24,13 @@ export default function ManageGold() {
 
   const handleDelete = (goldCode) => {
     adornicaServ.deleteProduct(goldCode)
-            .then(() => {
-                const newProductData = goldManage.filter((item) => item.productCode !== goldCode);
-                setGoldManage(newProductData);
-            })
-            .catch((err) => {
-                console.log("Error deleting order:", err);
-            });
-
+      .then(() => {
+        const newProductData = goldManage.filter((item) => item.productCode !== goldCode);
+        setGoldManage(newProductData);
+      })
+      .catch((err) => {
+        console.log("Error deleting order:", err);
+      });
   };
 
   const handleInputChange = (e, productId) => {
@@ -42,6 +45,46 @@ export default function ManageGold() {
   const handleUpdate = (productId) => {
     const updatedProduct = goldManage.find(product => product.materialId === productId);
     console.log('Updated Product:', updatedProduct);
+  };
+
+  const handleUpdateImg = (goldId) => {
+    setCurrentGoldId(goldId);
+    setIsModalVisible(true);
+  };
+
+  const handleImageChange = (e, index) => {
+    const files = [...selectedImages];
+    files[index] = e.target.files[0];
+    setSelectedImages(files);
+  };
+
+  const handleModalOk = () => {
+    if (selectedImages.length !== 4) {
+      notification.error({ message: 'Please select all 4 images' });
+      return;
+    }
+
+    adornicaServ.postProductImg(
+      currentGoldId,
+      selectedImages[0],
+      selectedImages[1],
+      selectedImages[2],
+      selectedImages[3]
+    ).then(() => {
+      setIsModalVisible(false);
+      setSelectedImages([]);
+      setCurrentGoldId(null);
+      message.success('Images updated successfully');
+    }).catch((err) => {
+      console.log("Error uploading images:", err.response.data);
+      notification.error({ message: 'Error uploading images' });
+    });
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setSelectedImages([]);
+    setCurrentGoldId(null);
   };
 
   const lastItemIndex = currentPage * itemsPerPage;
@@ -84,7 +127,6 @@ export default function ManageGold() {
               <td style={styles.td}>{product.productName}</td>
               <td style={styles.td}>{product.productPrice}</td>
               <td style={styles.td}>{product.size}</td>
-              {/* <td style={styles.td}><img src={product.productImage}/></td> */}
               <td style={styles.td}>
                 <button
                   style={styles.updateButton}
@@ -97,6 +139,12 @@ export default function ManageGold() {
                   onClick={() => handleDelete(product.productCode)}
                 >
                   Delete
+                </button>
+                <button
+                  style={styles.updateButton}
+                  onClick={() => handleUpdateImg(product.productId)}
+                >
+                  Update Img
                 </button>
               </td>
             </tr>
@@ -113,6 +161,25 @@ export default function ManageGold() {
           ))}
         </div>
       </div>
+      <Modal
+        title={`Update Images of product ID: ${currentGoldId}`}
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+      >
+        <div>
+          {[...Array(4)].map((_, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <span style={{ marginRight: '6px' }}>Img {index + 1}</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, index)}
+              />
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 };

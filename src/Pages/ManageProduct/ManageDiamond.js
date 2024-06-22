@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
+import { Modal, Button, notification, message } from 'antd';
 
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [currentDiamondId, setCurrentDiamondId] = useState(null);
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -19,25 +23,56 @@ export default function ManageDiamond() {
   }, []);
 
   const handleDelete = (diamondCode) => {
-      adornicaServ.deleteProduct(diamondCode)
-              .then(() => {
-                  const newProductData = diamondManage.filter((item) => item.productCode !== diamondCode);
-                  setDiamondManage(newProductData);
-              })
-              .catch((err) => {
-                  console.log("Error deleting order:", err);
-              });
+    adornicaServ.deleteProduct(diamondCode)
+      .then(() => {
+        const newProductData = diamondManage.filter((item) => item.productCode !== diamondCode);
+        setDiamondManage(newProductData);
+      })
+      .catch((err) => {
+        console.log("Error deleting order:", err);
+      });
   };
 
-  const handleInputChange = (e, diamondId) => {
-    const { name, value } = e.target;
-    setDiamondManage(prevState =>
-      prevState.map(diamond =>
-        diamond.gemId === diamondId ? { ...diamond, [name]: value } : diamond
-      )
-    );
+
+  const handleUpdateImg = (diamondId) => {
+    setCurrentDiamondId(diamondId);
+    setIsModalVisible(true);
   };
 
+  const handleImageChange = (e, index) => {
+    const files = [...selectedImages];
+    files[index] = e.target.files[0];
+    setSelectedImages(files);
+  };
+
+  const handleModalOk = () => {
+    if (selectedImages.length !== 4) {
+      notification.error({ message: 'Please select all 4 images' });
+      return;
+    }
+
+    adornicaServ.postProductImg(
+      currentDiamondId,
+      selectedImages[0],
+      selectedImages[1],
+      selectedImages[2],
+      selectedImages[3]
+    ).then(() => {
+      setIsModalVisible(false);
+      setSelectedImages([]);
+      setCurrentDiamondId(null);
+      message.success('Images updated successfully');
+    }).catch((err) => {
+      console.log("Error uploading images:", err.response);
+      notification.error({ message: 'Error uploading images' });
+    });
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setSelectedImages([]);
+    setCurrentDiamondId(null);
+  };
 
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
@@ -46,12 +81,6 @@ export default function ManageDiamond() {
 
   const changePage = (pageNumber) => {
     setCurrentPage(pageNumber);
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return date.toLocaleDateString('vi-VN', options);
   };
 
   return (
@@ -63,7 +92,7 @@ export default function ManageDiamond() {
       <table style={styles.table}>
         <thead>
           <tr>
-          <th style={styles.th}>ID</th>
+            <th style={styles.th}>ID</th>
             <th style={styles.th}>Code</th>
             <th style={styles.th}>Name</th>
             <th style={styles.th}>Price</th>
@@ -79,25 +108,6 @@ export default function ManageDiamond() {
               <td style={styles.td}>{diamond.productName}</td>
               <td style={styles.td}>{diamond.productPrice}</td>
               <td style={styles.td}>{diamond.size}</td>
-              {/* <td style={styles.td}>
-                <input
-                  type="text"
-                  name="gemBuyPrice"
-                  value={diamond.gemBuyPrice}
-                  onChange={(e) => handleInputChange(e, diamond.gemId)}
-                  style={styles.input}
-                />
-              </td>
-              <td style={styles.td}>
-                <input
-                  type="text"
-                  name="gemSellPrice"
-                  value={diamond.gemSellPrice}
-                  onChange={(e) => handleInputChange(e, diamond.gemId)}
-                  style={styles.input}
-                />
-              </td> */}
-              {/* <td style={styles.td}>{formatDate(diamond.effectDate)}</td> */}
               <td style={styles.td}>
                 <NavLink to={`/update-diamond/${diamond.productId}`}>
                 <button
@@ -111,6 +121,12 @@ export default function ManageDiamond() {
                   onClick={() => handleDelete(diamond.productCode)}
                 >
                   Delete
+                </button>
+                <button
+                  style={styles.updateButton}
+                  onClick={() => handleUpdateImg(diamond.productId)}
+                >
+                  Update Img
                 </button>
               </td>
             </tr>
@@ -127,9 +143,28 @@ export default function ManageDiamond() {
           ))}
         </div>
       </div>
+      <Modal
+        title={`Update Images of product ID: ${currentDiamondId}`}
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+      >
+        <div>
+          {[...Array(4)].map((_, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <span style={{ marginRight: '6px' }}>Img {index + 1}</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, index)}
+              />
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
-};
+}
 
 const styles = {
   container: {
@@ -152,7 +187,8 @@ const styles = {
     border: 'none',
     borderRadius: '4px',
     padding: '8px 16px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    textDecoration: 'none'
   },
   table: {
     width: '100%',
@@ -169,13 +205,6 @@ const styles = {
     border: '1px solid #ddd',
     padding: '8px',
     textAlign: 'left'
-  },
-  input: {
-    width: '100%',
-    padding: '5px',
-    boxSizing: 'border-box',
-    border: '1px solid #ccc',
-    borderRadius: '4px'
   },
   updateButton: {
     padding: '5px 10px',

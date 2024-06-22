@@ -160,6 +160,22 @@ export const adornicaServ = {
           },
         });
       },
+
+      postProductImg: (id, file1, file2, file3, file4) => {
+        const formData = new FormData();
+        formData.append('image1', file1);
+        formData.append('image2', file2);
+        formData.append('image3', file3);
+        formData.append('image4', file4);
+      
+        return https.post(`/api/v1/products/add-images/${id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      },
+
+
     postUserUpdate: (id, data) => {
         console.log(id, data)
         return https.put(`/api/v1/users/update/${id}`, data);
