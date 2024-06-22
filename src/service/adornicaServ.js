@@ -129,6 +129,7 @@ export const adornicaServ = {
     },
 
     updateRole: (data) => {
+        console.log(data)
         return https.put(`/api/v1/users/staff/change-role`, data);
     },
 
@@ -184,5 +185,24 @@ export const adornicaServ = {
     postCreateProduct: (data) => {
         console.log(data)
         return https.post(`/api/v1/products/create`, data);
+    },
+
+    getTotalYesterday: () => {
+        return https.get(`/api/v1/dashboard/yesterday`);
+    },
+    getTotalToday: () => {
+        return https.get(`/api/v1/dashboard/today`);
+    },
+    getTotalThisMonth: () => {
+        return https.get(`/api/v1/dashboard/this-month`);
+    },
+    getTotalLastMonth: () => {
+        return https.get(`/api/v1/dashboard/last-month`);
+    },
+    getMostStaff: () => {
+        return https.get(`/api/v1/dashboard/staff-create-most-orders`);
+    },
+    getCategoryType: () => {
+        return https.get(`/api/v1/dashboard/category-type-most-orders`);
     },
 }

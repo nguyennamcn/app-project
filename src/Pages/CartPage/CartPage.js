@@ -125,7 +125,7 @@ const CartPage = () => {
             return;
         }
 
-        if (customerPhone.length !== 11) {
+        if (customerPhone.length !== 10) {
             showModal(
                 <div className='notice__content'>
                     <i className="error__icon fa-solid fa-circle-xmark" ></i>

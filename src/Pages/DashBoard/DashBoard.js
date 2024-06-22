@@ -1,23 +1,62 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Statistic } from 'antd';
 import RevenueChart from './RevenueChart';
 import MonthlyRevenueChart from './MonthlyRevenueChart';
 import ProductPieChart from './ProductPieChart';
 import './DashBoard.css';
+import { adornicaServ } from '../../service/adornicaServ';
 
 export default function DashBoard() {
   const [data, setData] = useState({
-    yesterday: 800,
-    today: 1500,
-    thisMonth: 30000,
-    staffMostOrders: 'John Doe',
-    lastMonth: 19700,
+    yesterday: 0,
+    today: 0,
+    thisMonth: 0,
+    staffMostOrders: '',
+    lastMonth: 0,
     products: {
-      jewelry: 120,
-      gold: 80,
-      diamond: 50,
+      jewelry: 0,
+      gold: 0,
+      diamond: 0,
     },
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const lastMonthRes = await adornicaServ.getTotalLastMonth();
+        const thisMonthRes = await adornicaServ.getTotalThisMonth();
+        const todayRes = await adornicaServ.getTotalToday();
+        const yesterdayRes = await adornicaServ.getTotalYesterday();
+        const staffRes = await adornicaServ.getMostStaff();
+        const productsRes = await adornicaServ.getCategoryType();
+
+        const productsData = productsRes.data.metadata.reduce((acc, item) => {
+          if (item.categoryType === 'JEWELRY') {
+            acc.jewelry = item.percentage;
+          } else if (item.categoryType === 'GOLD') {
+            acc.gold = item.percentage;
+          } else if (item.categoryType === 'DIAMOND') {
+            acc.diamond = item.percentage;
+          }
+          return acc;
+        }, { jewelry: 0, gold: 0, diamond: 0 });
+
+        setData((prevState) => ({
+          ...prevState,
+          lastMonth: lastMonthRes.data.metadata,
+          thisMonth: thisMonthRes.data.metadata,
+          today: todayRes.data.metadata,
+          yesterday: yesterdayRes.data.metadata,
+          staffMostOrders: staffRes.data.metadata.staffName,
+          products: productsData,
+        }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const dailyRevenueData = [
     { day: 'Yesterday', revenue: data.yesterday },

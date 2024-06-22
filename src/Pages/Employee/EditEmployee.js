@@ -28,6 +28,7 @@ export default function EditEmployee() {
     });
   };
 
+  console.log(form)
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -41,14 +42,11 @@ export default function EditEmployee() {
 
   const handleSubmit = () => {
     const data = {
-      ...form,
+      roles: employee.roleUser,
       id: employee.id,
     };
-
+    console.log(data)
     Promise.all([
-      adornicaServ.postImg(id).catch((err) => {
-        console.log(err);
-      }),
       adornicaServ.updateRole(data).catch((err) => {
         console.log(err);
       })
