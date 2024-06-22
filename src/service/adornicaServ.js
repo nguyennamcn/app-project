@@ -205,4 +205,9 @@ export const adornicaServ = {
     getCategoryType: () => {
         return https.get(`/api/v1/dashboard/category-type-most-orders`);
     },
+
+    postNewEmployee: (form) => {
+        console.log(form)
+        return https.post(`/api/v1/users/create`, form);
+    },
 }

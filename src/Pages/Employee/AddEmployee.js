@@ -2,64 +2,74 @@ import React, { useState } from 'react';
 import { Input, Button, Radio, DatePicker, Modal } from 'antd';
 import { useNavigate, NavLink } from 'react-router-dom';
 import './AddEmployee.css';
+import { adornicaServ } from '../../service/adornicaServ';
 
 const { confirm } = Modal;
 
 const AddEmployee = () => {
   const [form, setForm] = useState({
-    fullName: '',
-    phoneNumber: '',
-    address: '',
-    email : '',
+    email: '',
+    name: '',
+    phone: '',
     gender: '',
-    birthday: null,
-    username: '',
+    dateOfBirth: 0,
+    address: '',
     password: '',
     confirmPassword: '',
-    role: 'Manager',
+    role: '',
   });
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [name]: value,
     });
   };
 
   const handleGenderChange = (e) => {
     setForm({
       ...form,
-      gender: e.target.value
+      gender: e.target.value,
     });
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (date, dateString) => {
+    const birthdayTimestamp = date ? date.valueOf() : null;
     setForm({
       ...form,
-      birthday: date
+      dateOfBirth: birthdayTimestamp,
     });
   };
-
+  
   const handleSubmit = () => {
     if (isFormValid()) {
-      showModal();
+      console.log(form)
+      adornicaServ.postNewEmployee(form)
+        .then(() => {
+          showModal();
+        })
+        .catch((err) => {
+          console.log(err);
+          // Handle error here
+        });
     }
   };
 
   const isFormValid = () => {
     return (
-      form.fullName &&
-      form.phoneNumber &&
-      form.address &&
-      form.email &&
-      form.gender &&
-      form.birthday &&
-      form.username &&
-      form.password &&
-      form.confirmPassword &&
-      form.password === form.confirmPassword
+      form.email.trim() !== '' &&
+      form.name.trim() !== '' &&
+      form.phone.trim() !== '' &&
+      form.gender.trim() !== '' &&
+      form.dateOfBirth !== 0 &&
+      form.address.trim() !== '' &&
+      form.password.trim() !== '' &&
+      form.confirmPassword.trim() !== '' &&
+      form.password === form.confirmPassword &&
+      form.role.trim() !== ''
     );
   };
 
@@ -85,38 +95,30 @@ const AddEmployee = () => {
           <Input
             className="input-field"
             placeholder="Full Name"
-            name="fullName"
-            value={form.fullName}
+            name="name"
+            value={form.name}
             onChange={handleChange}
           />
           <Input
             className="input-field"
             placeholder="Phone number"
-            name="phoneNumber"
-            value={form.phoneNumber}
+            name="phone"
+            value={form.phone}
             onChange={handleChange}
           />
           <DatePicker
             className="input-field"
-            placeholder="Birthday"
+            placeholder="Date of Birth"
             onChange={handleDateChange}
             style={{ width: '100%' }}
           />
           <Input
             className="input-field"
             placeholder="Address"
-            name="Address"
+            name="address"
             value={form.address}
             onChange={handleChange}
           />
-          <Input
-            className="input-field"
-            placeholder="Email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-          />
-
           <div className="input-field">
             <h3>Gender :</h3>
             <Radio.Group
@@ -124,18 +126,18 @@ const AddEmployee = () => {
               value={form.gender}
               onChange={handleGenderChange}
             >
-              <Radio value="Male">Male</Radio>
-              <Radio value="Female">Female</Radio>
+              <Radio value="MALE">Male</Radio>
+              <Radio value="FEMALE">Female</Radio>
             </Radio.Group>
           </div>
         </div>
-         <div className="form-group">
+        <div className="form-group">
           <h2>Account :</h2>
           <Input
             className="input-field"
-            placeholder="Username"
-            name="username"
-            value={form.username}
+            placeholder="Email"
+            name="email"
+            value={form.email}
             onChange={handleChange}
           />
           <Input.Password
@@ -153,17 +155,18 @@ const AddEmployee = () => {
             onChange={handleChange}
           />
           <div className="store-role-section">
-                <div className="role-group">
-                  <h3>Role :</h3>
-                  <Radio.Group
-                    name="role"
-                    value={form.role}
-                    onChange={handleChange}
-                  >
-                    <Radio value="Sale Staff">Sale Staff</Radio>
-                    <Radio value="Cashier">Cashier</Radio>
-                  </Radio.Group>
-                </div>
+            <div className="role-group">
+              <h3>Role :</h3>
+              <Radio.Group
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+              >
+                <Radio value="ROLE_ADMIN">Admin</Radio>
+                <Radio value="ROLE_SALES_STAFF">Sales Staff</Radio>
+                <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
+              </Radio.Group>
+            </div>
           </div>
         </div>
       </div>
