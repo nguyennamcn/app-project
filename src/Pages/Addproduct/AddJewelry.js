@@ -64,7 +64,7 @@ function AddJewelry() {
       cut: newJewelry.cut,
       carat: Number(newJewelry.carat),
       size: newJewelry.size,
-      jewelryDiamond: newJewelry.jewelryDiamond === 'true' || newJewelry.jewelryDiamond === true,
+      jewelryDiamond: true,
     };
 
     adornicaServ.postCreateProduct(productData)
