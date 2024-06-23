@@ -73,7 +73,7 @@ function UpJewelry() {
       productCode: sp.productCode,
       productName: sp.productName,
       gender: sp.gender,
-      categoryId: 1,
+      categoryId: sp.categoryId,
       materialProductRequests: sp.materials.map(material => ({
         material: material.id,
         weight: material.weight,
