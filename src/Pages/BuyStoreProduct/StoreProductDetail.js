@@ -108,7 +108,7 @@ export default function StoreProductDetail() {
             </div>
             <div className="container">
                 <div className="row justify-content-md-center">
-                    <div className="product__table col-sm-6"
+                    <div className="product__table col-sm-12"
                         style={{
                             marginLeft: '10px',
                             backgroundColor: 'white',
@@ -116,43 +116,43 @@ export default function StoreProductDetail() {
                             height: '400px',
                             padding: '0',
                         }}>
-                        <Table style={{ margin: '20px 60px 0 60px', width: '90%' }} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 168 }} />
-                        <div className="row">
-                            <div className='col-sm-6'>
-                                <div className="col-sm-12">
+                            <div className='col-sm-1'>
+                                <div className="col-sm-12"  style={{ whiteSpace: 'nowrap' }}>
                                     <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                         Customer:<span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
                                     </h1>
                                 </div>
-                                <div className="col-sm-12">
+                                <div className="col-sm-12"  style={{ whiteSpace: 'nowrap' }}>
                                     <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                         Phone:<span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
                                     </h1>
                                 </div>
-                                <div className="col-sm-12">
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                <div className="col-sm-12"  style={{ whiteSpace: 'nowrap' }}>
+                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 10px 11%' }}>
                                         Date of sale:<span style={{ marginLeft: '4%' }}>{dateSellFormatted}</span>
                                     </h1>
                                 </div>
-                            </div>
-                            <div className='col-sm-6'>
-                                <div className="col-sm-12">
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                        Total items:<span style={{ marginLeft: '4%' }}>{sp?.list ? sp.list.length : 0}</span>
-                                    </h1>
-                                </div>
-                                <div className="col-sm-12">
+                                <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                     <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                         Payment method:<span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
                                     </h1>
                                 </div>
-                                <div className="col-sm-12">
+                            </div>
+                        <Table style={{ width: '100%' }} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 168 }} />
+                            <div className='col-sm-1' >
+                                <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                        Total items:<span style={{ marginLeft: '4%' }}>{sp?.list ? sp.list.length : 0}</span>
+                                    </h1>
+                                </div>
+
+                                <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                     <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                         Total Pay:<span style={{ marginLeft: '4%' }}>${totalPrice}</span>
                                     </h1>
                                 </div>
                             </div>
-                        </div>
+                        {/* </div> */}
                     </div>
                     <div className="col-sm-12 flex justify-center mt-6">
                         <NavLink to={"/buyProduct"}>
@@ -166,7 +166,7 @@ export default function StoreProductDetail() {
                             size="large"
                             htmlType='submit'
                             onClick={handleSubmit}
-                            style={{ padding: '0 46px', marginLeft: '30px' }}
+                            style={{ padding: '0 46px', marginLeft: '50px' }}
                         >Purchase</Button>
                     </div>
                 </div>
@@ -182,3 +182,5 @@ export default function StoreProductDetail() {
         </div>
     );
 }
+
+
