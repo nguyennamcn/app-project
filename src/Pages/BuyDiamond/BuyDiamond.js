@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { notification } from 'antd';
 
 const styles = {
   container: {
@@ -97,18 +98,20 @@ const DiamondSelection = () => {
   const [formValid, setFormValid] = useState(false); // Track form validation state
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const calculateTotalPrice = () => {
-      const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
-        const price = parseFloat(item.gemBuyPrice) || 0;
-        return acc + price;
-      }, 0);
-      setTotalPrice(calculatedTotalPrice.toFixed(2));
-    };
+  // useEffect(() => {
+  //   const calculateTotalPrice = () => {
+   
+  //     const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
+  //       const price = parseFloat(item.gemBuyPrice) || 0;
+  //       return acc + price;
+  //     }, 0);
+  //     setTotalPrice(calculatedTotalPrice.toFixed(2));
+    
+  //   };
 
-    calculateTotalPrice();
-    validateForm(); // Validate form whenever diamondItems change
-  }, [diamondItems]);
+  //   calculateTotalPrice();
+  //   validateForm(); // Validate form whenever diamondItems change
+  // }, [diamondItems]);
 
   const handleAddItem = () => {
     setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
@@ -146,11 +149,18 @@ const DiamondSelection = () => {
             const updatedItems = [...diamondItems];
             updatedItems[index].gemBuyPrice = priceData.gemBuyPrice.toFixed(2);
             setDiamondItems(updatedItems);
+            setTotalPrice( priceData.gemBuyPrice.toFixed(2));
+
+          } else {
+            notification.error({message:'"Gem was undefined"'})
+            setTotalPrice(0.00);
           }
         } else {
           console.warn('Invalid response structure', res.data);
+          
         }
-      } catch (err) {
+      }   
+      catch (err) {
         console.error('Error fetching price:', err);
       }
     }
@@ -253,6 +263,7 @@ const DiamondSelection = () => {
               <select style={styles.input} value={item.origin} onChange={(e) => handleDiamondItemChange(index, 'origin', e.target.value)}>
                 <option value=""></option>
                 <option value="NATURAL">NATURAL</option>
+                <option value="LAB_GROWN">LAB_GROWN</option>
               </select>
             </div>
           </React.Fragment>
@@ -267,8 +278,11 @@ const DiamondSelection = () => {
         <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
         <button
           type="submit"
-          style={{ ...styles.button, ...(formValid ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
-          disabled={!formValid}
+          style={{
+            ...styles.button,
+            ...((!formValid || totalPrice <= 0) ? { backgroundColor: 'gray', cursor: 'not-allowed' } : {})
+          }}
+          disabled={!formValid || totalPrice <= 0}
         >
           PURCHASE
         </button>
