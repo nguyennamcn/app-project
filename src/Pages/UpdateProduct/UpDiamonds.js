@@ -116,7 +116,7 @@ function UpDiamonds() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" placeholder="Product code" value={sp.productCode} onChange={handleInputChange}  readOnly/>
+                <h2 name="productCode">{sp.productCode}</h2>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
@@ -130,48 +130,45 @@ function UpDiamonds() {
               </div> */}
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
-                <input type="text" name="gemCode" placeholder="Gem code" value={sp.gem[0]?.gemCode || ''} onChange={handleGemInputChange} readOnly />
+                <h2 name="gemCode" >{sp.gem[0]?.gemCode || ''}</h2>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Diamond Name:</label>
-                <input type="text" name="diamondName" placeholder="Diamond name" value={sp.gem[0].gemName} onChange={handleInputChange} readOnly />
+                <h2  name="diamondName">{sp.gem[0].gemName}</h2> 
               </div>
               <div className="add-jewelry-form-group">
                 <label>Origin:</label>
-                <select name="origin" value={sp.gem[0].origin} onChange={handleInputChange} >
-                  <option value={sp.gem[0].origin} >{sp.gem[0].origin}</option>
-         
-                </select>
+                <h2 name="origin" >{sp.gem[0].origin}
+                </h2>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Color:</label>
-                <select name="color" value={sp.gem[0].color} onChange={handleInputChange} >
-                  <option value={sp.gem[0].color} >{sp.gem[0].color} </option>
-                </select>
+                <h2 name="color" >
+                 {sp.gem[0].color} 
+                </h2>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Clarity:</label>
-                <select name="clarity" value={sp.gem[0].clarity} onChange={handleInputChange} >
-                  <option value={sp.gem[0].clarity}>{sp.gem[0].clarity}</option>
+                <h2 name="clarity" >
+                  {sp.gem[0].clarity}
                 
-                </select>
+                </h2>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Cut:</label>
-                <select name="cut" value={sp.gem[0].cut} onChange={handleInputChange} >
-                  <option value="">{sp.gem[0].cut}</option>
-
-                </select>
+                <h2 name="cut"  >
+                 {sp.gem[0].cut}
+                </h2>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Carat:</label>
-                <input type="number" name="carat" value={sp.gem[0].carat} onChange={handleInputChange} />
+                <h2  name="carat" >{sp.gem[0].carat}</h2>
               </div>
             </div>
 
