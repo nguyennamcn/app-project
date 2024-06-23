@@ -10,7 +10,7 @@ function AddJewelry() {
     productName: '', // not null
     gemCost: 0, 
     productionCost: null, // not null
-    gender: 'MALE',
+    gender: 'UNISEX',
     categoryId: null, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earrings
     material: null,  // not null
     weight: null, // not null
@@ -111,9 +111,11 @@ function AddJewelry() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Gender:</label>
-                <select name="gender" value={newJewelry.gender} onChange={handleInputChange}>
-                  <option value="MALE">Male</option>
-                  <option value="FEMALE">Female</option>
+                <select name="gender" value={newJewelry.gender} onChange={handleInputChange} required>
+                <option value="">Select gender</option>
+                <option value="UNISEX">UNISEX</option>
+                  <option value="MALE">MALE</option>
+                  <option value="FEMALE">FEMALE</option>
                 </select>
               </div>
               <div className="add-jewelry-form-group">
@@ -161,9 +163,10 @@ function AddJewelry() {
               <div className="add-jewelry-form-group">
                 <label>Origin:</label>
                 <select type="text" name="origin" value={newJewelry.origin} onChange={handleInputChange} required>
-                <option value=""disabled>Select origin</option>
+                <option value="">Select origin</option>
                 <option value="NONE">NONE</option>
                 <option value="NATURAL">NATURAL</option>
+                <option value="LAB_GROWN">LAB_GROWN</option>
                 </select>
               </div>
             </div>

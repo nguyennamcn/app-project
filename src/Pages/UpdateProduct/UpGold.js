@@ -86,7 +86,7 @@ function UpGold() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" value={sp.productCode} onChange={handleInputChange} readOnly />
+                <h2  name="productCode" >{sp.productCode}</h2>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
@@ -97,7 +97,7 @@ function UpGold() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Material ID:</label>
-                <input type="text" name="id" value={sp.materials[0]?.name || ''} onChange={handleMaterialChange} readOnly />
+                <h2  name="id"  >{sp.materials[0]?.name || ''}</h2>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Weight (gram):</label>
