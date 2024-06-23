@@ -111,12 +111,12 @@ function UpDiamonds() {
     <div className="add-jewelry-container">
       <div className="add-jewelry-content">
         <div className="add-jewelry-form">
-          <h2 className="add-jewelry-title">ADD DIAMOND</h2>
+          <h2 className="add-jewelry-title">UPDATE DIAMOND</h2>
           <form onSubmit={handleUpdate}>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" placeholder="Product code" value={sp.productCode} onChange={handleInputChange}  required/>
+                <input type="text" name="productCode" placeholder="Product code" value={sp.productCode} onChange={handleInputChange}  readOnly/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
@@ -124,13 +124,13 @@ function UpDiamonds() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+              {/* <div className="add-jewelry-form-group">
                 <label>Gem ID:</label>
                 <input type="number" name="id" placeholder="Gem id" value={sp.gem[0]?.id || ''} onChange={handleGemInputChange}  readOnly />
-              </div>
+              </div> */}
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
-                <input type="text" name="gemCode" placeholder="Gem code" value={sp.gem[0]?.gemCode || ''} onChange={handleGemInputChange} required />
+                <input type="text" name="gemCode" placeholder="Gem code" value={sp.gem[0]?.gemCode || ''} onChange={handleGemInputChange} readOnly />
               </div>
             </div>
             <div className="add-jewelry-form-row">

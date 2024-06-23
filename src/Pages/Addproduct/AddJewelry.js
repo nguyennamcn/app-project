@@ -14,7 +14,7 @@ function AddJewelry() {
     categoryId: null, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earrings
     material: null,  // not null
     weight: null, // not null
-    gemId: null,
+    //gemId: null,
     gemCode: '',
     diamondName: '',
     origin: '',
@@ -55,7 +55,7 @@ function AddJewelry() {
           weight: Number(newJewelry.weight),
         }
       ],
-      gemId: Number(newJewelry.gemId),
+      //gemId: Number(newJewelry.gemId),
       gemCode: newJewelry.gemCode,
       diamondName: newJewelry.diamondName,
       origin: newJewelry.origin,
@@ -118,13 +118,23 @@ function AddJewelry() {
               </div>
               <div className="add-jewelry-form-group">
                 <label>Category ID:</label>
-                <input type="number" name="categoryId" placeholder='Category id' value={newJewelry.categoryId} onChange={handleInputChange} min={1} max={4} required/>
+                <select name="categoryId" placeholder='Category id' value={newJewelry.categoryId} onChange={handleInputChange} min={1}>
+                  <option value={1}>Ring</option>
+                  <option value={2}>Bracelet</option>
+                  <option value={3}>Necklace</option>
+                  <option value={4}>Earrings</option>
+                </select>
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Material:</label>
-                <input type="number" name="material" placeholder='Material id' value={newJewelry.material} onChange={handleInputChange} min={1} max={4} required/>
+                <select name="material" placeholder='Material id' value={newJewelry.material} onChange={handleInputChange} min={1} >
+                  <option value={1}>24K GOlD</option>
+                  <option value={2}>18K GOLD</option>
+                  <option value={3}>WHITE GOLD</option>
+                  <option value={4}>GOLD BARS</option>
+                </select>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Weight (gram):</label>
@@ -132,10 +142,10 @@ function AddJewelry() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+              {/* <div className="add-jewelry-form-group">
                 <label>Gem ID:</label>
                 <input type="number" name="gemId" value={newJewelry.gemId} onChange={handleInputChange} min={0} required/>
-              </div>
+              </div> */}
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
                 <input type="text" name="gemCode" placeholder='Gem Code' value={newJewelry.gemCode} onChange={handleInputChange} required/>
