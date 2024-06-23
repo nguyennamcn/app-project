@@ -23,7 +23,7 @@ function AddJewelry() {
     cut: '',
     carat: 0,
     size: 'SIZE_1', // có size mới chạy api vd: SIZE_1 
-    jewelryDiamond: true,
+    jewelryDiamond: false,
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -64,7 +64,7 @@ function AddJewelry() {
       cut: newJewelry.cut,
       carat: Number(newJewelry.carat),
       size: newJewelry.size,
-      jewelryDiamond: true,
+      isJewelryDiamond: newJewelry.jewelryDiamond,
     };
 
     adornicaServ.postCreateProduct(productData)
@@ -73,8 +73,8 @@ function AddJewelry() {
         console.log(response.data.metadata);
       })
       .catch(error => {
-        notification.error({message: error.response.data.metadata.message})
-        console.log(error.response.data.metadata.message);
+        notification.error({message: "error"})
+        console.log(error);
       });
   };
 
@@ -99,10 +99,15 @@ function AddJewelry() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Gem Cost:</label>
-                <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  />
+            <div className="add-jewelry-form-group">
+                <label>Jewelry Diamond:</label>
+                <select name="jewelryDiamond" value={newJewelry.jewelryDiamond} onChange={handleInputChange}>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                  
+                </select>
               </div>
+
               <div className="add-jewelry-form-group">
                 <label>Production Cost:</label>
                 <input type="number" name="productionCost" placeholder='Production cost' value={newJewelry.productionCost} onChange={handleInputChange} min={1} required/>
@@ -237,11 +242,8 @@ function AddJewelry() {
                 </select>
               </div>
               <div className="add-jewelry-form-group">
-                <label>Jewelry Diamond:</label>
-                <select name="jewelryDiamond" value={newJewelry.jewelryDiamond} onChange={handleInputChange}>
-                  <option value="true">Yes</option>
-                  
-                </select>
+                <label>Gem Cost:</label>
+                <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  />
               </div>
             </div>
             {/* <div className="add-jewelry-form-row">

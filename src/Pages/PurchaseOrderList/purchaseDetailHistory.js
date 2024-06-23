@@ -257,9 +257,15 @@ const PurchaseDetailHistory = () => {
       <div style={pageStyles.footerInfo}>
         <div style={pageStyles.buttonWrapper}>
           <NavLink to="/buyProduct" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+          <button
+            onClick={handleFinishClick}
+            style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+          >
+            Finish
+          </button>
         </div>
       </div>
-
+      
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

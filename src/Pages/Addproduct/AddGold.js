@@ -11,7 +11,7 @@ function AddGold() {
     categoryId: 5, //id 5: GOLD
     material: 0,
     weight: 0,
-    size: 'SIZE_1',
+    size: 'NONE',
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
