@@ -14,7 +14,7 @@ export default function NavSide() {
     <div className='navbar'>
         <NavLink to='/homePage' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -31,7 +31,7 @@ export default function NavSide() {
         {isManager && (
           <NavLink to='/inventory' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -49,7 +49,7 @@ export default function NavSide() {
         {isAdmin || isManager  ? (
           <NavLink to='/employee' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -67,7 +67,7 @@ export default function NavSide() {
         {!isStaff && (
           <NavLink to='/historyOrder' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -84,7 +84,7 @@ export default function NavSide() {
         )}
         <NavLink to='/profile' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -100,7 +100,7 @@ export default function NavSide() {
         </NavLink>
         <NavLink to='/gold-price' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -132,7 +132,7 @@ export default function NavSide() {
         </NavLink> */}
         <NavLink to='/customer' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -148,7 +148,7 @@ export default function NavSide() {
         </NavLink>
         <NavLink to='/dashboard' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -164,7 +164,7 @@ export default function NavSide() {
         </NavLink>
         <NavLink to='/feedbacks' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
@@ -180,7 +180,7 @@ export default function NavSide() {
         </NavLink>
         <NavLink to='/buyProduct' 
           style={{
-            width : '50%',
+            width : '55%',
             display : 'flex',
             alignItems : 'center',
             textDecoration : 'none',
