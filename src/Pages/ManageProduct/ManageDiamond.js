@@ -216,6 +216,7 @@ const styles = {
     cursor: 'pointer'
   },
   deleteButton: {
+    marginRight:'5px',
     padding: '5px 10px',
     backgroundColor: '#f44336',
     color: 'white',
