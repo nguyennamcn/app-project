@@ -130,48 +130,42 @@ const JewelrySelection = () => {
     setJewelryItems(updatedItems);
     validateForm(updatedItems);
 
-    if (field === 'goldType' && value !== 'None') {
-      // Fetch and update gold price for the selected item
-      const selectedGold = goldPrices.find(gold => gold.materialName === value);
-      if (selectedGold) {
-        const updatedItem = { ...updatedItems[index], materialBuyPrice: selectedGold.materialBuyPrice };
-        updatedItems[index] = updatedItem;
-        setJewelryItems(updatedItems);
-        validateForm(updatedItems);
-      }
-    }
-
-    if (field === 'diamond' && value !== 'None') {
-      // Fetch and update diamond price for the selected item
-      const { carat, clarity, color, cut } = updatedItems[index];
-      if (carat && clarity && color && cut) {
-        const caratValue = parseFloat(carat);
-        if (!isNaN(caratValue)) {
-          try {
-            const res = await adornicaServ.getPurchaseDiamondPrice(cut, caratValue, clarity, color, value);
-            if (res.data && res.data.metadata) {
-              const priceData = res.data.metadata.find((data) => (
-                data.cut === cut &&
-                data.carat === caratValue &&
-                data.clarity === clarity &&
-                data.color === color &&
-                data.origin === value
-              ));
-              if (priceData) {
-                const updatedItem = { ...updatedItems[index], gemBuyPrice: priceData.gemBuyPrice };
-                updatedItems[index] = updatedItem;
-                setJewelryItems(updatedItems);
-                validateForm(updatedItems);
-              } else {
-                notification.error({ message: "Gem was undefined" });
-              }
-            }
-          } catch (err) {
-            console.error('Error fetching diamond price:', err);
-          }
+    // Handle goldType change
+    if (field === 'goldType') {
+      if (value === 'None') {
+        // Clear and disable related fields
+        updatedItems[index] = {
+          ...updatedItems[index],
+          weight: '',
+        };
+      } else {
+        // Fetch and update gold price for the selected item
+        const selectedGold = goldPrices.find(gold => gold.materialName === value);
+        if (selectedGold) {
+          updatedItems[index] = {
+            ...updatedItems[index],
+            materialBuyPrice: selectedGold.materialBuyPrice,
+          };
         }
       }
     }
+
+    // Handle diamond change
+    if (field === 'diamond') {
+      if (value === 'None') {
+        // Clear and disable related fields
+        updatedItems[index] = {
+          ...updatedItems[index],
+          carat: '',
+          color: '',
+          clarity: '',
+          cut: '',
+        };
+      }
+    }
+
+    setJewelryItems(updatedItems);
+    validateForm(updatedItems);
   };
 
   useEffect(() => {
@@ -243,10 +237,10 @@ const JewelrySelection = () => {
   };
 
   const validateForm = (updatedItems) => {
-    const isFormValid = updatedItems.every(item => 
-      (item.goldType && item.goldType !== 'None' && item.weight) || (item.diamond && item.diamond !== 'None' && item.carat && item.color && item.clarity && item.cut)
+    const isFormValid = updatedItems.every(item =>
+      (item.goldType && item.goldType !== 'None' && item.weight) ||
+      (item.diamond && item.diamond !== 'None' && item.carat && item.color && item.clarity && item.cut)
     );
-    console.log('Form valid:', isFormValid); // Debugging log
     setFormValid(isFormValid);
   };
 
@@ -312,7 +306,7 @@ const JewelrySelection = () => {
                 value={item.weight}
                 onChange={e => handleInputChange(index, 'weight', e.target.value)}
                 disabled={item.goldType === 'None'}
-                required
+                required={item.goldType !== 'None'}
               />
             </div>
             <div style={styles.formGroup}>
@@ -400,7 +394,7 @@ const JewelrySelection = () => {
         ))}
         <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Add Jewelry</button>
         <div style={styles.totalPrice}>
-              Total price: {totalPrice} $
+          Total price: {totalPrice} $
         </div>
         <button
           type="submit"
