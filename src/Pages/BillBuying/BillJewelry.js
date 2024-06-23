@@ -17,7 +17,7 @@ const pageStyles = {
     fontFamily: 'Arial, sans-serif',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '20px',
+    gap: '8px',
   },
   header: {
     gridColumn: 'span 2',
