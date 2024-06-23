@@ -97,7 +97,7 @@ const LoginPage = () => {
                   layout="vertical"
                 >
                   <Form.Item
-                    label="PhoneNumber"
+                    label="Phone"
                     name="phone"
                     rules={[
                       { required: true, message: 'Please input your phone number!' },
