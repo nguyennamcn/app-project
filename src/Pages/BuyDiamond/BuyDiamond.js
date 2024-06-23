@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { notification } from 'antd';
 
 const styles = {
   container: {
@@ -99,11 +100,15 @@ const DiamondSelection = () => {
 
   useEffect(() => {
     const calculateTotalPrice = () => {
+      if(diamondItems ===null){
       const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
         const price = parseFloat(item.gemBuyPrice) || 0;
         return acc + price;
       }, 0);
       setTotalPrice(calculatedTotalPrice.toFixed(2));
+    } else {
+      setTotalPrice(0.00);
+    }
     };
 
     calculateTotalPrice();
@@ -146,11 +151,15 @@ const DiamondSelection = () => {
             const updatedItems = [...diamondItems];
             updatedItems[index].gemBuyPrice = priceData.gemBuyPrice.toFixed(2);
             setDiamondItems(updatedItems);
+          } else {
+            notification.error({message:'"Gem was undefined"'})
           }
         } else {
           console.warn('Invalid response structure', res.data);
+          
         }
-      } catch (err) {
+      }   
+      catch (err) {
         console.error('Error fetching price:', err);
       }
     }
@@ -253,6 +262,7 @@ const DiamondSelection = () => {
               <select style={styles.input} value={item.origin} onChange={(e) => handleDiamondItemChange(index, 'origin', e.target.value)}>
                 <option value=""></option>
                 <option value="NATURAL">NATURAL</option>
+                <option value="LAB_GROWN">LAB_GROWN</option>
               </select>
             </div>
           </React.Fragment>
@@ -267,8 +277,11 @@ const DiamondSelection = () => {
         <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
         <button
           type="submit"
-          style={{ ...styles.button, ...(formValid ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
-          disabled={!formValid}
+          style={{
+            ...styles.button,
+            ...((!formValid || totalPrice <= 0) ? { backgroundColor: 'gray', cursor: 'not-allowed' } : {})
+          }}
+          disabled={!formValid || totalPrice <= 0}
         >
           PURCHASE
         </button>
