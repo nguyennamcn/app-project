@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table } from 'antd';
+import { Button, Table, Modal } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import "./StoreProductDetail.css";
 import { useSelector } from 'react-redux';
 
 export default function StoreProductDetail() {
     const [sp, setSp] = useState({});
     const [products, setProducts] = useState([]);
-    const [discount, setDiscount] = useState(10);
     const [totalPrice, setTotalPrice] = useState(0);
     const { orderCode } = useParams();
     const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const navigate = useNavigate();
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [modalTitle, setModalTitle] = useState('');
 
     useEffect(() => {
         adornicaServ.getOrderDetail(orderCode)
             .then((res) => {
                 const orderDetail = res.data.metadata;
                 setSp(orderDetail);
-                console.log(orderDetail);
                 setProducts(orderDetail.list);
                 const calculatedTotalPrice = orderDetail.list.reduce((sum, product) => sum + (product.price || 0), 0);
-                setTotalPrice(calculatedTotalPrice);
+                const priceAll = calculatedTotalPrice * 0.7;
+                setTotalPrice(priceAll);
             })
             .catch((err) => {
                 console.log(err);
@@ -53,7 +57,13 @@ export default function StoreProductDetail() {
         try {
             const response = await adornicaServ.postPurchaseOrderCode(formData);
             console.log('Order sent successfully:', response.data);
-            alert('Order sent successfully');
+            setModalTitle('Success');
+            setModalMessage('Order sent successfully');
+            setModalVisible(true);
+            setTimeout(() => {
+                setModalVisible(false);
+                navigate('/buyProduct');
+            }, 2000);
         } catch (error) {
             console.error('There was an error sending the order:', error);
             if (error.response) {
@@ -63,7 +73,9 @@ export default function StoreProductDetail() {
             } else {
                 console.error('Error message:', error.message);
             }
-            alert('Failed to send order. Please check your input data.');
+            setModalTitle('Error');
+            setModalMessage('Failed to send order. Please check your input data.');
+            setModalVisible(true);
         }
     };
 
@@ -134,6 +146,11 @@ export default function StoreProductDetail() {
                                         Payment method:<span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
                                     </h1>
                                 </div>
+                                <div className="col-sm-12">
+                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                        Total Pay:<span style={{ marginLeft: '4%' }}>${totalPrice}</span>
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,6 +171,14 @@ export default function StoreProductDetail() {
                     </div>
                 </div>
             </div>
+            <Modal
+                title={modalTitle}
+                visible={modalVisible}
+                onOk={() => setModalVisible(false)}
+                onCancel={() => setModalVisible(false)}
+            >
+                <p>{modalMessage}</p>
+            </Modal>
         </div>
     );
 }

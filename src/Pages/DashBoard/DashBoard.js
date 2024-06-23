@@ -32,11 +32,11 @@ export default function DashBoard() {
 
         const productsData = productsRes.data.metadata.reduce((acc, item) => {
           if (item.categoryType === 'JEWELRY') {
-            acc.jewelry = item.percentage;
+            acc.jewelry = Math.ceil(item.percentage);
           } else if (item.categoryType === 'GOLD') {
-            acc.gold = item.percentage;
+            acc.gold = Math.ceil(item.percentage);
           } else if (item.categoryType === 'DIAMOND') {
-            acc.diamond = item.percentage;
+            acc.diamond = Math.ceil(item.percentage);
           }
           return acc;
         }, { jewelry: 0, gold: 0, diamond: 0 });

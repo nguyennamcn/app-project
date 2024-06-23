@@ -55,7 +55,7 @@ const columns = (handleView, handleDelete) => [
         render: (_, record) => {
             return (
                 <div style={{ width: '50%', display: 'flex' }}>
-                    <NavLink to={`/payment-bill/${record.orderCode}`}>
+                    <NavLink to={`/payment-history/${record.orderCode}`}>
                         <Button
                             style={{ marginRight: '14px' }}
                             type="primary"

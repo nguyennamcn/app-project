@@ -1,11 +1,12 @@
+import React, { useEffect } from 'react';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo } from './redux/action/userAction';
+
 import Layout from './Layout/Layout';
 import LoginPage from './Pages/LoginPage/LoginPage';
-import TestPage from './Pages/TestPage/TestPage';
 import ListProduct from './Pages/DetailPage/ListProduct';
-import AdminPage from './Pages/AdminPage/AdminPage';
 import Feedbacks from './Pages/Feedbacks/Feedbacks';
 import DetailPage from './Pages/DetailPage/DetailPage';
 import BuyListProduct from './Pages/BuyJewelry/BuyListProduct';
@@ -42,9 +43,6 @@ import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
 import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
 import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
 import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
-
-
-import { useSelector } from 'react-redux';
 import BillDiamond from './Pages/BillBuying/BillDiamond';
 import BillJewelry from './Pages/BillBuying/BillJewelry';
 import PurchaseDetail from './Pages/PurchaseOrderList/purchaseDetail';
@@ -52,18 +50,35 @@ import HistoryOrder from './Pages/HistoryOrder/HistoryOrder';
 import UpGold from './Pages/UpdateProduct/UpGold';
 import UpDiamonds from './Pages/UpdateProduct/UpDiamonds';
 import UpJewelry from './Pages/UpdateProduct/UpJewelry';
+import purchaseDetailHistory from './Pages/PurchaseOrderList/purchaseDetailHistory';
 
 function App() {
-  let userInfo = useSelector((state) => state.userReducer.userInfo);
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+
+  useEffect(() => {
+    const savedUserInfo = localStorage.getItem('USER_INFO');
+    if (savedUserInfo) {
+      dispatch(setUserInfo(JSON.parse(savedUserInfo)));
+    }
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen">
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<LoginPage />} />
+          {/* Route to LoginPage if userInfo does not exist */}
+          {!userInfo ? (
+            <Route path="/*" element={<Navigate to="/login" replace />} />
+          ) : (
+            <Route path="/*" element={<Navigate to="/homePage" replace />} />
+          )}
 
-          {userInfo ? (
+          <Route path="/login" element={<LoginPage />} />
+          {/* Private Routes - Require authentication */}
+          {userInfo && (
             <>
+              
               <Route path="/feedbacks" element={<Layout Component={Feedbacks} />} />
               <Route path="/homePage" element={<Layout Component={ListProduct} />} />
               <Route path="/detail/:productCode" element={<Layout Component={DetailPage} />} />
@@ -92,6 +107,7 @@ function App() {
               <Route path="/bill-diamond" element={<Layout Component={BillDiamond} />} />
               <Route path="/bill-jewelry" element={<Layout Component={BillJewelry} />} />
               <Route path="/payment-bill/:orderCode" element={<Layout Component={PurchaseDetail} />} />
+              <Route path="/payment-history/:orderCode" element={<Layout Component={purchaseDetailHistory} />} />
               <Route path="/employee" element={<Layout Component={Employee} />} />
               <Route path="/add-employee" element={<Layout Component={AddEmployee} />} />
               <Route path="/view-employee" element={<Layout Component={ViewEmployee} />} />
@@ -110,7 +126,10 @@ function App() {
               <Route path="/about-system-login" element={<Layout Component={AboutSystemLogin} />} />
               <Route path="/historyOrder" element={<Layout Component={HistoryOrder} />} />
             </>
-          ) : null}
+          )}
+
+          {/* Not found page */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>
     </div>

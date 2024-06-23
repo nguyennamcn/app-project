@@ -17,7 +17,10 @@ export const setSignUpAction = (value) => {
     }
 };
 
-
+export const setUserInfo = (userInfo) => ({
+    type: 'SET_USER_INFO',
+    payload: userInfo,
+  });
 
 export const setLoginActionService = (value,onCompleted)=>{
     return(dispatch) => {

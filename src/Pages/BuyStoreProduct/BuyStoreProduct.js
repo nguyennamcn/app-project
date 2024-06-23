@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
 import { adornicaServ } from '../../service/adornicaServ';
 
 // Define styles as objects
@@ -53,12 +54,38 @@ const styles = {
   },
   buttonHover: {
     backgroundColor: '#000000'
+  },
+  modal: {
+    content: {
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      padding: '20px',
+      maxWidth: '300px',
+      maxHeight: '200px',
+      margin: 'auto',
+      textAlign: 'center',
+      color: 'black',
+    },
+  },
+  modalButton: {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    marginTop: '20px'
   }
 };
+
+Modal.setAppElement('#root');
 
 const StoreSelection = () => {
   const [phone, setPhone] = useState('');
   const [ordercode, setOrdercode] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -79,16 +106,25 @@ const StoreSelection = () => {
     adornicaServ.postOrderCode(phone, ordercode)
       .then(response => {
         console.log("Order sent successfully:", response.data);
-        alert('Order sent successfully');
-        navigate(`/storeProductDetail/${ordercode}`);
+        setModalMessage('Order sent successfully');
+        setModalIsOpen(true);
+        setTimeout(() => {
+          setModalIsOpen(false);
+          navigate(`/storeProductDetail/${ordercode}`);
+        }, 1000);
       })
       .catch(error => {
         console.error("There was an error sending the order:", error);
-        alert('Failed to send order. Please check your input data.');
+        setModalMessage('Failed to send order. Please check your input data.');
+        setModalIsOpen(true);
       });
   };
 
   const isFormValid = phone || ordercode;
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <div style={styles.container}>
@@ -111,6 +147,15 @@ const StoreSelection = () => {
           disabled={!isFormValid}
         >Check</button>
       </form>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={styles.modal}
+      >
+        <h2>{modalMessage}</h2>
+        <button onClick={closeModal} style={styles.modalButton}>Close</button>
+      </Modal>
     </div>
   );
 };
