@@ -151,6 +151,26 @@ body, html {
   .delete-button:hover {
     background-color: darkred;
   }
+
+  .edit-placeholder-employee {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ddd;
+    font-size: 24px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    overflow: hidden;
+  }
+
+  .profile-image-employee {
+    margin-right: 20px;
+    position: relative;
+  }
   
   
   
