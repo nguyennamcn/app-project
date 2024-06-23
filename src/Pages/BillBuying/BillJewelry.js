@@ -17,7 +17,7 @@ const pageStyles = {
     fontFamily: 'Arial, sans-serif',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '20px',
+    gap: '8px',
   },
   header: {
     gridColumn: 'span 2',
@@ -57,7 +57,7 @@ const pageStyles = {
   },
   tableHeader: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(8, 1fr)',
+    gridTemplateColumns: 'repeat(9, 1fr)',
     fontWeight: 'bold',
     borderBottom: '1px solid #333',
     paddingBottom: '5px',
@@ -72,14 +72,14 @@ const pageStyles = {
   },
   tableRow: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(8, 1fr)',
+    gridTemplateColumns: 'repeat(9, 1fr)',
     paddingTop: '5px',
     paddingBottom: '5px',
     textAlign: 'center',
   },
   tableFooter: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(8, 1fr)',
+    gridTemplateColumns: 'repeat(9, 1fr)',
     fontWeight: 'bold',
     borderTop: '1px solid #333',
     paddingTop: '5px',

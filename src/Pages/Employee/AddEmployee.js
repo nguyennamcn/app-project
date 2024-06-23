@@ -162,7 +162,7 @@ const AddEmployee = () => {
                 value={form.role}
                 onChange={handleChange}
               >
-                <Radio value="ROLE_ADMIN">Admin</Radio>
+                {/* <Radio value="ROLE_ADMIN">Admin</Radio> */}
                 <Radio value="ROLE_SALES_STAFF">Sales Staff</Radio>
                 <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
               </Radio.Group>
