@@ -99,7 +99,10 @@ const LoginPage = () => {
                   <Form.Item
                     label="PhoneNumber"
                     name="phone"
-                    rules={[{ required: true, message: 'Please input your phone number!' }]}
+                    rules={[
+                      { required: true, message: 'Please input your phone number!' },
+                      { pattern: /^[0-9]+$/, message: 'Phone number must be digits only!' }
+                    ]}
                   >
                     <Input />
                   </Form.Item>
