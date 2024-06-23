@@ -178,7 +178,7 @@ export default function ListOrderPage() {
                     onChange={handleSearch}
                     prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
                     size="small"
-                    style={{ marginBottom: 20, width: '250px' }}
+                    style={{ marginBottom: 5, width: '275px' }}
                 />
                 <Table
                     style={{ margin: '8px 0' }}

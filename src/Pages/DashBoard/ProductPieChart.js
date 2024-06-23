@@ -12,7 +12,7 @@ export default function ProductPieChart({ data }) {
           {data.map((entry, index) => (
             <li key={`item-${index}`}>
               <span style={{ backgroundColor: COLORS[index % COLORS.length] }}></span>
-              {entry.name}: {entry.value}
+              {entry.name} : {entry.value} % 
             </li>
           ))}
         </ul>
