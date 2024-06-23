@@ -98,22 +98,20 @@ const DiamondSelection = () => {
   const [formValid, setFormValid] = useState(false); // Track form validation state
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const calculateTotalPrice = () => {
-      if(diamondItems ===null){
-      const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
-        const price = parseFloat(item.gemBuyPrice) || 0;
-        return acc + price;
-      }, 0);
-      setTotalPrice(calculatedTotalPrice.toFixed(2));
-    } else {
-      setTotalPrice(0.00);
-    }
-    };
+  // useEffect(() => {
+  //   const calculateTotalPrice = () => {
+   
+  //     const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
+  //       const price = parseFloat(item.gemBuyPrice) || 0;
+  //       return acc + price;
+  //     }, 0);
+  //     setTotalPrice(calculatedTotalPrice.toFixed(2));
+    
+  //   };
 
-    calculateTotalPrice();
-    validateForm(); // Validate form whenever diamondItems change
-  }, [diamondItems]);
+  //   calculateTotalPrice();
+  //   validateForm(); // Validate form whenever diamondItems change
+  // }, [diamondItems]);
 
   const handleAddItem = () => {
     setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
@@ -151,8 +149,11 @@ const DiamondSelection = () => {
             const updatedItems = [...diamondItems];
             updatedItems[index].gemBuyPrice = priceData.gemBuyPrice.toFixed(2);
             setDiamondItems(updatedItems);
+            setTotalPrice( priceData.gemBuyPrice.toFixed(2));
+
           } else {
             notification.error({message:'"Gem was undefined"'})
+            setTotalPrice(0.00);
           }
         } else {
           console.warn('Invalid response structure', res.data);
