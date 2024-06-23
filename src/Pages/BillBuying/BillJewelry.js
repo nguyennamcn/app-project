@@ -28,6 +28,7 @@ const pageStyles = {
   customerDetails: {
     display: 'flex',
     flexDirection: 'column',
+    // maxWidth:'400px'
   },
   detailLabel: {
     fontSize: '12px',
@@ -56,6 +57,7 @@ const pageStyles = {
     marginTop: '21px',
   },
   tableHeader: {
+    fontSize:'13px',
     display: 'grid',
     gridTemplateColumns: 'repeat(9, 1fr)',
     fontWeight: 'bold',
