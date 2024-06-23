@@ -17,8 +17,10 @@ function UpGold() {
   useEffect(() => {
     adornicaServ.getDetailProduct(productCode)
       .then((res) => {
-        setSp(res.data.metadata);
-        console.log(res.data.metadata);
+        const productData = res.data.metadata;
+        const firstMaterial = productData.materials.length > 0 ? productData.materials[0] : {};
+        setSp({ ...productData, materials: [firstMaterial] });
+        console.log("Data from api: ",productData);
       })
       .catch((err) => {
         console.log(err);
@@ -59,11 +61,11 @@ function UpGold() {
         weight: material.weight,
       })),
     };
-
+    console.log("productData sent: ",productData);
     adornicaServ.updateProduct(productCode, productData)
       .then((response) => {
         notification.success({ message: 'Update product success' });
-        console.log(response.data.metadata);
+        console.log(productData);
       })
       .catch((error) => {
         notification.error({ message: error.response.data.metadata.message });
@@ -79,12 +81,12 @@ function UpGold() {
     <div className="add-jewelry-container">
       <div className="add-jewelry-content">
         <div className="add-jewelry-form">
-          <h2 className="add-jewelry-title">ADD GOLD</h2>
+          <h2 className="add-jewelry-title">UPDATE GOLD</h2>
           <form onSubmit={handleUpdate}>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" value={sp.productCode} onChange={handleInputChange} required />
+                <input type="text" name="productCode" value={sp.productCode} onChange={handleInputChange} readOnly />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
@@ -95,7 +97,7 @@ function UpGold() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Material ID:</label>
-                <input type="number" name="id" value={sp.materials[0]?.id || ''} onChange={handleMaterialChange} readOnly />
+                <input type="text" name="id" value={sp.materials[0]?.name || ''} onChange={handleMaterialChange} readOnly />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Weight (gram):</label>

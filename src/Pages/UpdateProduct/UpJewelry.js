@@ -78,7 +78,7 @@ function UpJewelry() {
         material: material.id,
         weight: material.weight,
       })),
-      gemId: Number(sp.gem[0].id),
+      //gemId: Number(sp.gem[0].id),
       gemCode: sp.gem[0].gemCode,
       diamondName: sp.gem[0].gemName,
       origin: sp.gem[0].origin,
@@ -118,7 +118,7 @@ function UpJewelry() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" placeholder='Product code' value={sp.productCode} onChange={handleInputChange} required />
+                <input type="text" name="productCode" placeholder='Product code' value={sp.productCode} onChange={handleInputChange} readOnly />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
@@ -161,10 +161,10 @@ function UpJewelry() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+              {/* <div className="add-jewelry-form-group">
                 <label>Gem ID:</label>
                 <input type="text" name="id" placeholder='Gem id' value={sp.gem[0]?.id} onChange={(e) => handleGemInputChange(e, 0)} min={0} readOnly />
-              </div>
+              </div> */}
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
                 <input type="text" name="gemCode" placeholder='Gem Code' value={sp.gem[0]?.gemCode} onChange={(e) => handleGemInputChange(e, 0)} readOnly />

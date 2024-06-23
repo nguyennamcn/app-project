@@ -14,7 +14,7 @@ function AddDiamond() {
     categoryId: 6, //id: 6 Diamond
     material: 1, // not null
     weight: 0,
-    gemId: 0,
+    //gemId: 0,
     gemCode: '',
     diamondName: '',
     origin: '',
@@ -53,7 +53,7 @@ function AddDiamond() {
           weight: Number(newJewelry.weight),
         }
       ],
-      gemId: Number(newJewelry.gemId),
+      //gemId: Number(newJewelry.gemId),
       gemCode: newJewelry.gemCode,
       diamondName: newJewelry.diamondName,
       origin: newJewelry.origin,
@@ -97,10 +97,10 @@ function AddDiamond() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+              {/* <div className="add-jewelry-form-group">
                 <label>Gem ID:</label>
                 <input type="number" name="gemId" placeholder='Gem id' value={newJewelry.gemId} onChange={handleInputChange} min={0} required/>
-              </div>
+              </div> */}
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
                 <input type="text" name="gemCode" placeholder='Gem code' value={newJewelry.gemCode} onChange={handleInputChange} required/>
