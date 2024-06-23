@@ -107,12 +107,10 @@ const JewelrySelection = () => {
     cut: ''
   }]);
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [goldPrices, setGoldPrices] = useState([]);
   const [formValid, setFormValid] = useState(false); // Track form validation state
   const newItemRef = useRef(null);
   const navigate = useNavigate();
-
   const userInfo = useSelector((state) => state.userReducer.userInfo);
 
   useEffect(() => {
@@ -164,6 +162,8 @@ const JewelrySelection = () => {
                 updatedItems[index] = updatedItem;
                 setJewelryItems(updatedItems);
                 validateForm(updatedItems);
+              } else {
+                notification.error({ message: "Gem was undefined" });
               }
             }
           } catch (err) {
@@ -177,10 +177,14 @@ const JewelrySelection = () => {
   useEffect(() => {
     const calculateTotalPrice = async () => {
       let total = 0;
+      let hasValidPrice = true;
+
       for (const item of jewelryItems) {
         const selectedGold = goldPrices.find(gold => gold.materialName === item.goldType);
         if (selectedGold) {
-          total += selectedGold.materialBuyPrice * parseFloat(item.weight || 0);
+          const goldPrice = selectedGold.materialBuyPrice * parseFloat(item.weight || 0);
+          if (goldPrice === 0 && item.goldType !== 'None') hasValidPrice = false;
+          total += goldPrice;
         }
 
         if (item.diamond && item.carat && item.clarity && item.color && item.cut) {
@@ -196,15 +200,20 @@ const JewelrySelection = () => {
                 data.origin === item.diamond
               ));
               if (priceData) {
-                total += priceData.gemBuyPrice;
+                const diamondPrice = priceData.gemBuyPrice;
+                if (diamondPrice === 0) hasValidPrice = false;
+                total += diamondPrice;
               } else {
-                notification.error({ message:"Gem was undefined"});
+                notification.error({ message: "Gem was undefined" });
+                hasValidPrice = false;
               }
             }
           }
         }
       }
+
       setTotalPrice(total); // Set total as a number
+      setFormValid(hasValidPrice); // Set form valid based on price validity
     };
 
     calculateTotalPrice();
@@ -244,8 +253,8 @@ const JewelrySelection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formValid) {
-      alert('Please fill out all required fields.');
+    if (!formValid || totalPrice === 0) {
+      alert('Please fill out all required fields and ensure total price is greater than 0.');
       return;
     }
 
@@ -311,8 +320,8 @@ const JewelrySelection = () => {
               <select style={styles.input} value={item.diamond} onChange={e => handleInputChange(index, 'diamond', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
-                <option value="NATURAL">Natural</option>
-                <option value="Synthetic">Synthetic</option>
+                <option value="NATURAL">NATURAL</option>
+                <option value="LAB_GROWN">LAB_GROWN</option>
               </select>
             </div>
             <div style={styles.formGroup}>
@@ -395,8 +404,8 @@ const JewelrySelection = () => {
         </div>
         <button
           type="submit"
-          style={{ ...styles.button, ...(formValid ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
-          disabled={!formValid}
+          style={{ ...styles.button, ...(formValid && totalPrice > 0 ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
+          disabled={!formValid || totalPrice === 0}
         >
           PURCHASE
         </button>
