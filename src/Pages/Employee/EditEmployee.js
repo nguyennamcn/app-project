@@ -84,6 +84,7 @@ export default function EditEmployee() {
             <input
               id="avatar-upload"
               type="file"
+              disabled
               style={{ display: 'none' }}
               onChange={handleAvatarChange}
             />

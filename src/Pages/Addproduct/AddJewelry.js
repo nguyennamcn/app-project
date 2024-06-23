@@ -8,7 +8,7 @@ function AddJewelry() {
   const [newJewelry, setNewJewelry] = useState({
     productCode: '', // not null
     productName: '', // not null
-    gemCost: null, 
+    gemCost: 0, 
     productionCost: null, // not null
     gender: 'MALE',
     categoryId: null, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earrings
@@ -21,7 +21,7 @@ function AddJewelry() {
     color: '',
     clarity: '',
     cut: '',
-    carat: null,
+    carat: 0,
     size: 'SIZE_1', // có size mới chạy api vd: SIZE_1 
     jewelryDiamond: true,
   });
@@ -101,7 +101,7 @@ function AddJewelry() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Gem Cost:</label>
-                <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  required/>
+                <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Production Cost:</label>
@@ -119,6 +119,7 @@ function AddJewelry() {
               <div className="add-jewelry-form-group">
                 <label>Category ID:</label>
                 <select name="categoryId" placeholder='Category id' value={newJewelry.categoryId} onChange={handleInputChange} min={1}>
+                <option value={0}>Select category</option>
                   <option value={1}>Ring</option>
                   <option value={2}>Bracelet</option>
                   <option value={3}>Necklace</option>
@@ -130,6 +131,7 @@ function AddJewelry() {
               <div className="add-jewelry-form-group">
                 <label>Material:</label>
                 <select name="material" placeholder='Material id' value={newJewelry.material} onChange={handleInputChange} min={1} >
+                <option value={0} >Select material</option>
                   <option value={1}>24K GOlD</option>
                   <option value={2}>18K GOLD</option>
                   <option value={3}>WHITE GOLD</option>
@@ -138,7 +140,7 @@ function AddJewelry() {
               </div>
               <div className="add-jewelry-form-group">
                 <label>Weight (gram):</label>
-                <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={1}/>
+                <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={1} required/>
               </div>
             </div>
             <div className="add-jewelry-form-row">
@@ -148,13 +150,13 @@ function AddJewelry() {
               </div> */}
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
-                <input type="text" name="gemCode" placeholder='Gem Code' value={newJewelry.gemCode} onChange={handleInputChange} required/>
+                <input type="text" name="gemCode" placeholder='Gem Code' value={newJewelry.gemCode} onChange={handleInputChange} />
               </div>
             </div>
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Diamond Name:</label>
-                <input type="text" name="diamondName" placeholder='Diamond Name' value={newJewelry.diamondName} onChange={handleInputChange} required/>
+                <input type="text" name="diamondName" placeholder='Diamond Name' value={newJewelry.diamondName} onChange={handleInputChange} />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Origin:</label>

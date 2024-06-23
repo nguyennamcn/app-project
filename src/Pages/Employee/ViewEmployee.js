@@ -44,8 +44,8 @@ function ViewEmployee() {
       <h1 className="profile-title">Profile of {employee?.name}</h1>
       <div className="profile-card">
         <div className="profile-header">
-          <div className="profile-image">
-            <label htmlFor="avatar-upload" className="profile-placeholder">
+          <div className="profile-image-employee">
+            <label htmlFor="avatar-upload" className="edit-placeholder-employee">
               {employee?.avatar ? (
                 <img src={employee.avatar} alt="Avatar" className="avatar" />
               ) : (
@@ -55,6 +55,7 @@ function ViewEmployee() {
             <input
               id="avatar-upload"
               type="file"
+              disabled
               style={{ display: 'none' }}
               onChange={handleAvatarChange}
             />

@@ -104,7 +104,13 @@ function AddGold() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Material:</label>
-                <input type="number" name="material" value={newJewelry.material} onChange={handleInputChange} min={1}/>
+                <select name="material" value={newJewelry.material} onChange={handleInputChange} >
+                <option value="" disabled>Select material</option>
+                  <option value={1}>24K GOlD</option>
+                  <option value={2}>18K GOLD</option>
+                  <option value={3}>WHITE GOLD</option>
+                  <option value={4}>GOLD BARS</option>
+                </select>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Weight (gram):</label>
