@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useNavigate } from 'react-router-dom';
+import { notification } from 'antd';
 
 // Define styles as objects
 const styles = {
@@ -152,6 +153,9 @@ const GoldSelection = () => {
   };
 
   const handleWeightChange = (index, value) => {
+    if(value < 0){
+      return;
+    }
     const newGoldItems = [...goldItems];
     newGoldItems[index].weight = value;
     setGoldItems(newGoldItems);
@@ -201,7 +205,7 @@ const GoldSelection = () => {
             <div style={styles.formGroup}>
               <label style={styles.label}>Weight (gram):</label>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <input type="number" style={styles.input} value={item.weight} onChange={e => handleWeightChange(index, e.target.value)} />
+                <input type="number" style={styles.input} value={item.weight} onChange={e => handleWeightChange(index, e.target.value)} min={0}/>
                 <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
               </div>
             </div>
@@ -209,12 +213,15 @@ const GoldSelection = () => {
         ))}
         <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>ADD GOLD</button>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice} $
+          Total price: {totalPrice > 0 ? totalPrice : 0.00} $
         </div>
         <button
           type="submit"
-          style={{ ...styles.button, ...(formValid ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
-          disabled={!formValid}
+          style={{
+            ...styles.button,
+            ...((!formValid || totalPrice <= 0) ? { backgroundColor: 'gray', cursor: 'not-allowed' } : {})
+          }}
+          disabled={!formValid || totalPrice <= 0}
         >
           PURCHASE
         </button>

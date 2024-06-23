@@ -98,20 +98,20 @@ const DiamondSelection = () => {
   const [formValid, setFormValid] = useState(false); // Track form validation state
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const calculateTotalPrice = () => {
+  useEffect(() => {
+    const calculateTotalPrice = () => {
    
-  //     const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
-  //       const price = parseFloat(item.gemBuyPrice) || 0;
-  //       return acc + price;
-  //     }, 0);
-  //     setTotalPrice(calculatedTotalPrice.toFixed(2));
+      const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
+        const price = parseFloat(item.gemBuyPrice) || 0;
+        return acc + price;
+      }, 0);
+      setTotalPrice(calculatedTotalPrice.toFixed(2));
     
-  //   };
+    };
 
-  //   calculateTotalPrice();
-  //   validateForm(); // Validate form whenever diamondItems change
-  // }, [diamondItems]);
+    calculateTotalPrice();
+    validateForm(); // Validate form whenever diamondItems change
+  }, [diamondItems]);
 
   const handleAddItem = () => {
     setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
@@ -153,7 +153,7 @@ const DiamondSelection = () => {
 
           } else {
             notification.error({message:'"Gem was undefined"'})
-            setTotalPrice(0.00);
+            setFormValid(false);
           }
         } else {
           console.warn('Invalid response structure', res.data);
