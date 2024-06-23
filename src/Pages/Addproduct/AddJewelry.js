@@ -99,10 +99,15 @@ function AddJewelry() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Gem Cost:</label>
-                <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  />
+            <div className="add-jewelry-form-group">
+                <label>Jewelry Diamond:</label>
+                <select name="jewelryDiamond" value={newJewelry.jewelryDiamond} onChange={handleInputChange}>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                  
+                </select>
               </div>
+
               <div className="add-jewelry-form-group">
                 <label>Production Cost:</label>
                 <input type="number" name="productionCost" placeholder='Production cost' value={newJewelry.productionCost} onChange={handleInputChange} min={1} required/>
@@ -237,12 +242,8 @@ function AddJewelry() {
                 </select>
               </div>
               <div className="add-jewelry-form-group">
-                <label>Jewelry Diamond:</label>
-                <select name="jewelryDiamond" value={newJewelry.jewelryDiamond} onChange={handleInputChange}>
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
-                  
-                </select>
+                <label>Gem Cost:</label>
+                <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  />
               </div>
             </div>
             {/* <div className="add-jewelry-form-row">

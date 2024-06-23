@@ -98,9 +98,11 @@ const styles = {
 
 const JewelrySelection = () => {
   const [jewelryItems, setJewelryItems] = useState([{
+    name:'',
     goldType: '',
     weight: '',
     diamond: '',
+    origin:'',
     carat: '',
     color: '',
     clarity: '',
@@ -159,6 +161,7 @@ const JewelrySelection = () => {
           carat: '',
           color: '',
           clarity: '',
+          origin:'',
           cut: '',
         };
       }
@@ -215,11 +218,13 @@ const JewelrySelection = () => {
 
   const handleAddItem = () => {
     setJewelryItems([...jewelryItems, {
+      name: '',
       goldType: '',
       weight: '',
       diamond: '',
       carat: '',
       color: '',
+      origin,
       clarity: '',
       cut: ''
     }]);
@@ -253,13 +258,14 @@ const JewelrySelection = () => {
     }
 
     const jewelryData = jewelryItems.map(item => ({
+      name: item.name,
       goldType: item.goldType,
       weight: item.weight,
       cut: item.cut,
       carat: item.carat,
       clarity: item.clarity,
       color: item.color,
-      origin: item.origin,
+      origin: item.diamond,
       total: totalPrice
     }));
 

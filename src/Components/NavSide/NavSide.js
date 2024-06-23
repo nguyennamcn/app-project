@@ -146,7 +146,8 @@ export default function NavSide() {
           Customer
           </p>
         </NavLink>
-        <NavLink to='/dashboard' 
+        {isManager && (
+          <NavLink to='/dashboard' 
           style={{
             width : '55%',
             display : 'flex',
@@ -162,6 +163,8 @@ export default function NavSide() {
             DashBoard
           </p>
         </NavLink>
+        )}
+        
         <NavLink to='/feedbacks' 
           style={{
             width : '55%',

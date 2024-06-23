@@ -24,7 +24,7 @@ const columns = (handleView, handleDelete) => [
         key: 'salesStaffName',
     },
     {
-        title: 'Order Code',
+        title: 'Purchase Code',
         dataIndex: 'orderCode',
         key: 'orderCode',
     },
@@ -157,7 +157,7 @@ export default function PurchaseOrder() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '0px 0 6px 0' }}>Order List</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '0px 0 6px 0' }}>Purchase List</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div style={{ margin: '20px 80px' }}>
