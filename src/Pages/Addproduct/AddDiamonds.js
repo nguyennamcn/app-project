@@ -6,24 +6,23 @@ import { adornicaServ } from '../../service/adornicaServ';
 
 function AddDiamond() {
   const [newJewelry, setNewJewelry] = useState({
-    productCode: '', // not null
-    productName: '', // not null
+    productCode: 'NONE', // not null
+    productName: 'NONE', // not null
     gemCost: 0, // not null
-    productionCost: 0,
+    //productionCost: 0,
     gender: 'UNISEX',
     categoryId: 6, //id: 6 Diamond
-    material: 1, // not null
-    weight: 0,
+    // material: 1, // not null
+    // weight: 0,
     //gemId: 0,
     gemCode: '',
-    diamondName: '',
-    origin: '',
-    color: '',
-    clarity: '',
-    cut: '',
+    diamondName: 'NONE',
+    origin: 'NONE',
+    color: 'NONE',
+    clarity: 'NONE',
+    cut: 'NONE',
     carat: 0,
-    size: 'SIZE_1',
-    jewelryDiamond: true,
+    size: 'NONE',
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -32,11 +31,10 @@ function AddDiamond() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewJewelry({ ...newJewelry, [name]: value });
-  };
-
-  const handleImageUpload = (e) => {
-    setProductImages(Array.from(e.target.files));
+    setNewJewelry((prevJewelry) => ({
+      ...prevJewelry,
+      [name]: name === 'carat' ? parseFloat(value) : value,
+    }));
   };
 
   const handleFormSubmit = (e) => {
@@ -45,14 +43,9 @@ function AddDiamond() {
     const productData = {
       productCode: newJewelry.productCode,
       productName: newJewelry.productName,
-      gender: newJewelry.gender,
-      categoryId: Number(newJewelry.categoryId),
-      materialProductRequests: [
-        {
-          material: Number(newJewelry.material),
-          weight: Number(newJewelry.weight),
-        }
-      ],
+      gender: "UNISEX",
+      categoryId: 6,
+      
       //gemId: Number(newJewelry.gemId),
       gemCode: newJewelry.gemCode,
       diamondName: newJewelry.diamondName,
@@ -60,10 +53,12 @@ function AddDiamond() {
       color: newJewelry.color,
       clarity: newJewelry.clarity,
       cut: newJewelry.cut,
-      carat: Number(newJewelry.carat),
+      carat: newJewelry.carat,
       size: newJewelry.size,
-      jewelryDiamond: newJewelry.jewelryDiamond === 'true' || newJewelry.jewelryDiamond === true,
+      isJewelryDiamond: false,
     };
+
+    console.log("product Data",productData);
 
     adornicaServ.postCreateProduct(productData)
       .then(response => {
@@ -71,8 +66,8 @@ function AddDiamond() {
         console.log(response.data.metadata);
       })
       .catch(error => {
-        notification.error({message: error.response.data.metadata.message})
-        console.log(error.response.data.metadata.message);
+        notification.error({message: "error"})
+        console.log(error);
       });
   };
 
@@ -116,6 +111,7 @@ function AddDiamond() {
                 <select type="text" name="origin" value={newJewelry.origin} onChange={handleInputChange} required>
                 <option value=""disabled>Select origin</option>
                 <option value="NATURAL">NATURAL</option>
+                <option value="LAB_GROWN">LAB_GROWN</option>
                 </select>
               </div>
             </div>
