@@ -6,21 +6,17 @@ import { adornicaServ } from '../../service/adornicaServ';
 
 function AddDiamond() {
   const [newJewelry, setNewJewelry] = useState({
-    productCode: 'NONE', // not null
-    productName: 'NONE', // not null
+    productCode: '', // not null
+    productName: '', // not null
     gemCost: 0, // not null
-    //productionCost: 0,
     gender: 'UNISEX',
     categoryId: 6, //id: 6 Diamond
-    // material: 1, // not null
-    // weight: 0,
-    //gemId: 0,
     gemCode: '',
-    diamondName: 'NONE',
-    origin: 'NONE',
-    color: 'NONE',
-    clarity: 'NONE',
-    cut: 'NONE',
+    diamondName: '',
+    origin: '',
+    color: '',
+    clarity: '',
+    cut: '',
     carat: 0,
     size: 'NONE',
   });
@@ -46,7 +42,6 @@ function AddDiamond() {
       gender: "UNISEX",
       categoryId: 6,
       
-      //gemId: Number(newJewelry.gemId),
       gemCode: newJewelry.gemCode,
       diamondName: newJewelry.diamondName,
       origin: newJewelry.origin,
@@ -55,7 +50,7 @@ function AddDiamond() {
       cut: newJewelry.cut,
       carat: newJewelry.carat,
       size: newJewelry.size,
-      isJewelryDiamond: false,
+      //isJewelryDiamond: false,
     };
 
     console.log("product Data",productData);
@@ -66,7 +61,8 @@ function AddDiamond() {
         console.log(response.data.metadata);
       })
       .catch(error => {
-        notification.error({message: "error"})
+        const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
+        notification.error({ message: errorMessage });
         console.log(error);
       });
   };
@@ -92,10 +88,7 @@ function AddDiamond() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              {/* <div className="add-jewelry-form-group">
-                <label>Gem ID:</label>
-                <input type="number" name="gemId" placeholder='Gem id' value={newJewelry.gemId} onChange={handleInputChange} min={0} required/>
-              </div> */}
+
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
                 <input type="text" name="gemCode" placeholder='Gem code' value={newJewelry.gemCode} onChange={handleInputChange} required/>
@@ -166,12 +159,6 @@ function AddDiamond() {
                 <input type="number" name="carat" value={newJewelry.carat} onChange={handleInputChange} min={0.1} step={0.1}/>
               </div>
             </div>
-            {/* <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Product Images:</label>
-                <input type="file" name="productImages" multiple onChange={handleImageUpload} />
-              </div>
-            </div> */}
             <div className="add-jewelry-form-footer">
               <NavLink to="/ManageDiamond" className="add-jewelry-back-button">BACK</NavLink>
               <button className="add-jewelry-add-button" type="submit">ADD DIAMOND</button>

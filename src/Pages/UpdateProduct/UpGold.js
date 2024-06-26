@@ -68,8 +68,9 @@ function UpGold() {
         console.log(productData);
       })
       .catch((error) => {
-        notification.error({ message: error.response.data.metadata.message });
-        console.log(error.response.data.metadata.message);
+        const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.log(error);
       });
   };
 
