@@ -6,10 +6,10 @@ import { adornicaServ } from '../../service/adornicaServ';
 
 function AddGold() {
   const [newJewelry, setNewJewelry] = useState({
-    productCode: 'None',
-    productName: 'None',
+    productCode: '',
+    productName: '',
     categoryId: 5, //id 5: GOLD
-    material: 0,
+    material: 1,
     weight: 0,
     size: 'NONE',
   });
@@ -53,8 +53,9 @@ function AddGold() {
         console.log(response.data.metadata);
       })
       .catch(error => {
-        notification.error({message: error.response.data.metadata.message})
-        console.log(error.response.data.metadata.message);
+        const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.log(error);
       });
   };
 
@@ -71,42 +72,18 @@ function AddGold() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" value={newJewelry.productCode} onChange={handleInputChange} required/>
+                <input type="text" name="productCode" placeholder='Product code' value={newJewelry.productCode} onChange={handleInputChange} required/>
               </div>
               <div className="add-jewelry-form-group">
                 <label>Product Name:</label>
-                <input type="text" name="productName" value={newJewelry.productName} onChange={handleInputChange} required/>
+                <input type="text" name="productName" placeholder='Product name' value={newJewelry.productName} onChange={handleInputChange} required/>
               </div>
             </div>
-            {/* <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Gem Cost:</label>
-                <input type="number" name="gemCost" value={newJewelry.gemCost} onChange={handleInputChange} />
-              </div>
-              <div className="add-jewelry-form-group">
-                <label>Production Cost:</label>
-                <input type="number" name="productionCost" value={newJewelry.productionCost} onChange={handleInputChange} />
-              </div>
-            </div> */}
-            {/* <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Gender:</label>
-                <select name="gender" value={newJewelry.gender} onChange={handleInputChange}>
-                  <option value="MALE">Male</option>
-                  <option value="FEMALE">Female</option>
-                </select>
-              </div>
-              <div className="add-jewelry-form-group">
-                <label>Category ID:</label>
-                <input type="number" name="categoryId" value={newJewelry.categoryId} onChange={handleInputChange} />
-              </div>
-            </div> */}
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Material:</label>
                 <select name="material" value={newJewelry.material} onChange={handleInputChange} >
-                <option value="" disabled>Select material</option>
-                  <option value={1}>24K GOlD</option>
+                  <option value={1}>24K GOLD</option>
                   <option value={2}>18K GOLD</option>
                   <option value={3}>WHITE GOLD</option>
                   <option value={4}>GOLD BARS</option>
@@ -117,29 +94,7 @@ function AddGold() {
                 <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={0.1} step={0.1}/>
               </div>
             </div>
-            {/* <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Size:</label>
-                <select name="size" value={newJewelry.size} onChange={handleInputChange}>
-                  <option value="SIZE_1">Size 1</option>
-                  <option value="SIZE_2">Size 2</option>
-                  <option value="SIZE_3">Size 3</option>
-                </select>
-              </div>
-              <div className="add-jewelry-form-group">
-                <label>Jewelry Diamond:</label>
-                <select name="jewelryDiamond" value={newJewelry.jewelryDiamond} onChange={handleInputChange}>
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
-                </select>
-              </div>
-            </div> */}
-            {/* <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Product Images:</label>
-                <input type="file" name="productImages" multiple onChange={handleImageUpload} />
-              </div>
-            </div> */}
+ 
             <div className="add-jewelry-form-footer">
               <NavLink to="/ManageGold" className="add-jewelry-back-button">BACK</NavLink>
               <button className="add-jewelry-add-button" type="submit">ADD GOLD</button>

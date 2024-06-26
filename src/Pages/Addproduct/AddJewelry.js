@@ -10,7 +10,7 @@ function AddJewelry() {
     productName: '', // not null
     gemCost: 0, 
     productionCost: null, // not null
-    gender: 'UNISEX',
+    gender: '',
     categoryId: null, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earrings
     material: null,  // not null
     weight: null, // not null
@@ -23,7 +23,7 @@ function AddJewelry() {
     cut: '',
     carat: 0,
     size: 'SIZE_1', // có size mới chạy api vd: SIZE_1 
-    jewelryDiamond: false,
+    isJewelryDiamond: false,
   });
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -33,10 +33,6 @@ function AddJewelry() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewJewelry({ ...newJewelry, [name]: value });
-  };
-
-  const handleImageUpload = (e) => {
-    setProductImages(Array.from(e.target.files));
   };
 
   const handleFormSubmit = (e) => {
@@ -64,7 +60,7 @@ function AddJewelry() {
       cut: newJewelry.cut,
       carat: Number(newJewelry.carat),
       size: newJewelry.size,
-      isJewelryDiamond: newJewelry.jewelryDiamond,
+      isJewelryDiamond: newJewelry.isJewelryDiamond,
     };
 
     adornicaServ.postCreateProduct(productData)
@@ -73,7 +69,8 @@ function AddJewelry() {
         console.log(response.data.metadata);
       })
       .catch(error => {
-        notification.error({message: "error"})
+        const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
+        notification.error({ message: errorMessage });
         console.log(error);
       });
   };
@@ -101,7 +98,7 @@ function AddJewelry() {
             <div className="add-jewelry-form-row">
             <div className="add-jewelry-form-group">
                 <label>Jewelry Diamond:</label>
-                <select name="jewelryDiamond" value={newJewelry.jewelryDiamond} onChange={handleInputChange}>
+                <select name="isJewelryDiamond" value={newJewelry.isJewelryDiamond} onChange={handleInputChange}>
                   <option value="true">Yes</option>
                   <option value="false">No</option>
                   
@@ -139,7 +136,7 @@ function AddJewelry() {
                 <label>Material:</label>
                 <select name="material" placeholder='Material id' value={newJewelry.material} onChange={handleInputChange} min={1} >
                 <option value={0} >Select material</option>
-                  <option value={1}>24K GOlD</option>
+                  <option value={1}>24K GOLD</option>
                   <option value={2}>18K GOLD</option>
                   <option value={3}>WHITE GOLD</option>
                   <option value={4}>GOLD BARS</option>
@@ -151,10 +148,7 @@ function AddJewelry() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              {/* <div className="add-jewelry-form-group">
-                <label>Gem ID:</label>
-                <input type="number" name="gemId" value={newJewelry.gemId} onChange={handleInputChange} min={0} required/>
-              </div> */}
+
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
                 <input type="text" name="gemCode" placeholder='Gem Code' value={newJewelry.gemCode} onChange={handleInputChange} />
@@ -246,12 +240,7 @@ function AddJewelry() {
                 <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  />
               </div>
             </div>
-            {/* <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
-                <label>Product Images:</label>
-                <input type="file" name="productImages" multiple onChange={handleImageUpload} />
-              </div>
-            </div> */}
+
             <div className="add-jewelry-form-footer">
               <NavLink to="/ManageJewelry" className="add-jewelry-back-button">BACK</NavLink>
               <button className="add-jewelry-add-button" type="submit">ADD JEWELRY</button>

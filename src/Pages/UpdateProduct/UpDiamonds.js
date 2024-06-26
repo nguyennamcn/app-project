@@ -25,14 +25,14 @@ function UpDiamonds() {
     }],
     gemId: '',
     gemCode: '',
-    diamondName: '',
+
     origin: '',
     color: '',
     clarity: '',
     cut: '',
     carat: '',
     size: 'SIZE_1',
-    jewelryDiamond: false,
+    isJewelryDiamond: false,
   });
 
   useEffect(() => {
@@ -89,7 +89,7 @@ function UpDiamonds() {
       cut: sp.gem[0].cut,
       carat: Number(sp.gem[0].carat),
       size: sp.size,
-      jewelryDiamond: false,
+      isJewelryDiamond: false,
     };
 
     adornicaServ.updateProduct(productCode, productData)
@@ -98,8 +98,9 @@ function UpDiamonds() {
         console.log(response.data.metadata);
       })
       .catch((error) => {
-        notification.error({ message: error.response.data.metadata.message });
-        console.log(error.response.data.metadata.message);
+        const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.log(error);
       });
   };
 
@@ -124,10 +125,7 @@ function UpDiamonds() {
               </div>
             </div>
             <div className="add-jewelry-form-row">
-              {/* <div className="add-jewelry-form-group">
-                <label>Gem ID:</label>
-                <input type="number" name="id" placeholder="Gem id" value={sp.gem[0]?.id || ''} onChange={handleGemInputChange}  readOnly />
-              </div> */}
+     
               <div className="add-jewelry-form-group">
                 <label>Gem Code:</label>
                 <h2 name="gemCode" >{sp.gem[0]?.gemCode || ''}</h2>
@@ -136,7 +134,7 @@ function UpDiamonds() {
             <div className="add-jewelry-form-row">
               <div className="add-jewelry-form-group">
                 <label>Diamond Name:</label>
-                <h2  name="diamondName">{sp.gem[0].gemName}</h2> 
+                <input type="text" name="gemName" placeholder="Diamond name" value={sp.gem[0].gemName} onChange={handleGemInputChange} required />
               </div>
               <div className="add-jewelry-form-group">
                 <label>Origin:</label>
