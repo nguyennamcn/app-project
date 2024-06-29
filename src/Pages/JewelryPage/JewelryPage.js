@@ -76,7 +76,7 @@ export default function JewelryPage() {
   return (
     <div className="jewelry-page">
       <div className='filter'>
-        <div>
+        <div style={{ display: 'flex', gap: '10px' }}>
           <select name='jewelry__category' id='category'>
             <option value='Rings'>Rings</option>
             <option value='Earrings'>Earrings</option>
