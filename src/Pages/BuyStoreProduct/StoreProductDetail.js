@@ -96,23 +96,54 @@ export default function StoreProductDetail() {
             key: 'price',
             render: (text) => `$${text}`,
         },
+        {
+            title: 'Choose',
+            dataIndex: 'choose',
+            key: 'choose',
+            render: () => <div style={{width:'100%', textAlign:'center'}}><input type='checkbox'style={{width:'20px', height:'20px'}}/></div>,
+        },
     ];
+
+    const buyBackItem = [
+        {
+            title: 'Product Name',
+            dataIndex: 'productName',
+            key: 'productName',
+        },
+        {
+            title: 'Product Code',
+            dataIndex: 'productCode',
+            key: 'productCode',
+        },
+        {
+            title: 'Price',
+            dataIndex: 'price',
+            key: 'price',
+            render: (text) => `$${text}`,
+        },
+        {
+            title: 'Remove',
+            dataIndex: 'remove',
+            key: 'remove',
+            render: () => <div><Button type='primary' danger>Remove</Button></div>,
+        },
+    ]
 
     const dateSellFormatted = sp?.dateSell ? new Date(sp.dateSell).toLocaleDateString() : '';
 
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order Code: {sp?.orderCode}</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 6px 0' }}>Order Code: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div className="container">
-                <div className="row justify-content-md-center">
-                    <div className="product__table col-sm-12"
+            <div className="container bg-white" style={{width:'94%', boxShadow:'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius:'20px'}}>
+                <div className="row justify-around bg-white pb-4" >
+                    <div className="product__table col-sm-6"
                         style={{
                             marginLeft: '10px',
                             backgroundColor: 'white',
-                            width: '100px',
+                            width: '100%',
                             height: '400px',
                             padding: '0',
                         }}>
@@ -138,7 +169,7 @@ export default function StoreProductDetail() {
                                     </h1>
                                 </div>
                             </div>
-                        <Table style={{ width: '100%' }} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 168 }} />
+                        <Table style={{ width: '94%', border:'1px solid #ccc',}} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 120 }} />
                             <div className='col-sm-1' >
                                 <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                     <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
@@ -154,7 +185,19 @@ export default function StoreProductDetail() {
                             </div>
                         {/* </div> */}
                     </div>
-                    <div className="col-sm-12 flex justify-center mt-6">
+                    <div className='cart__table col-sm-6' 
+                    style={{
+                        marginRight: '-24px',
+                        backgroundColor: 'white',
+                        width: '100%',
+                        height: '400px',
+                        padding: '0',
+                        
+                    }}>
+                        <div className='col-sm-12 mt-2'><h1>Buy back items</h1></div>
+                        <Table style={{ width: '94%', border:'1px solid #ccc', }} dataSource={products} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
+                    </div>
+                    <div className="col-sm-12 flex justify-center mt-1">
                         <NavLink to={"/buyProduct"}>
                             <Button
                                 style={{ padding: '0 56px 0 56px' }}
