@@ -77,16 +77,9 @@ export default function DiamondPage() {
   );
 
   return (
-    <div>
-      <div className='filter' style={{
-        display: 'flex',
-        marginTop: '-6px',
-        marginBottom: '6px',
-        marginLeft: '22px',
-        justifyContent: 'space-between',
-      }}>
-
-        <div>
+    <div className='diamond-page'>
+      <div className='filter'>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
           <select name='jewelry__category' id='Carat'>
             <option value='Carat'>Carat</option>
             <option value='Carat'>0.30-0.49</option>
@@ -135,14 +128,7 @@ export default function DiamondPage() {
           </select>
         </div>
 
-        <div className='search__input ' style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '6px',
-          border: 'solid black 1px',
-          borderRadius: '20px',
-        }}>
+        <div className='search__input_diamond'>
           <textarea 
             placeholder='Search by product code or name...' 
             value={searchTerm} 
@@ -154,7 +140,6 @@ export default function DiamondPage() {
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
           </svg>
         </div>
-
       </div>
 
       <div className="product-container">
