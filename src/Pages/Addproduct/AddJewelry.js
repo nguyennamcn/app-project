@@ -16,7 +16,7 @@ function AddJewelry() {
     weight: null, // not null
     //gemId: null,
     gemCode: '',
-    diamondName: '',
+    //diamondName: '',
     origin: '',
     color: '',
     clarity: '',
