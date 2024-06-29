@@ -90,7 +90,7 @@ export default function JewelryPage() {
           </select>
         </div>
 
-        <div className='search__input'>
+        <div className='search__input_jewelry'>
           <textarea
             placeholder='Search by product code or name...'
             value={searchTerm}

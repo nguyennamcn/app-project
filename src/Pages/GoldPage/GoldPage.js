@@ -7,8 +7,6 @@ const { Meta } = Card;
 
 export default function GoldPage() {
   const [products, setProducts] = useState([]);
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedId, setSelectedId] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -36,8 +34,7 @@ export default function GoldPage() {
       productId: product.productId,
       productCode: product.productCode,
       name: product.productName,
-      size: selectedSize,
-      sizeId: selectedId,
+      size: product.size,
       quantity: quantity,
       price: product.productPrice,
       totalPrice: quantity * product.productPrice,
@@ -48,9 +45,9 @@ export default function GoldPage() {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
     // Check if the item is already in the cart
-    const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode );
+    const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
-    if(product.productPrice < 0){
+    if (product.productPrice < 0) {
       showModal(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
       return;
     }
@@ -70,22 +67,22 @@ export default function GoldPage() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredProducts = products.filter(product => 
+  const filteredProducts = products.filter(product =>
     product.productCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.productName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div>
+    <div className="gold-page">
       <div className='filter'>
-        <div>
-          <select name='jewelry__category' id='category'>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <select name='gold__category' id='category'>
             <option value='gold-ring'>Gold ring</option>
             <option value='gold-bars'>Gold bars</option>
           </select>
         </div>
 
-        <div className='search__input'>
+        <div className='search__input_gold'>
           <textarea
             placeholder='Search by product code or name...'
             value={searchTerm}
@@ -124,9 +121,9 @@ export default function GoldPage() {
         ) : (
           <div className="no-products-message-container">
             {searchTerm ? (
-            <div className="no-products-message">No products found matching your search criteria.</div>
-          ) : null }
-            </div>
+              <div className="no-products-message">No products found matching your search criteria.</div>
+            ) : null}
+          </div>
         )}
       </div>
       <Modal

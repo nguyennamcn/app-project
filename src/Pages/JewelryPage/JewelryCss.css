@@ -21,7 +21,7 @@
 .filter select,
 
 
-.filter .search__input {
+.filter .search__input_jewelry {
   display: flex;
   align-items: center;
   padding: 2px;
@@ -31,7 +31,7 @@
   max-width: 300px;
 }
 
-.filter .search__input textarea {
+.filter .search__input_jewelry textarea {
   border: none;
   outline: none;
   margin-left: 8px;
@@ -40,7 +40,7 @@
   resize: none;
 }
 
-.filter .search__input svg {
+.filter .search__input_jewelry svg {
   flex-shrink: 0;
 }
 
@@ -147,7 +147,7 @@
     align-items: flex-start;
   }
 
-  .filter .search__input {
+  .filter .search__input_jewelry{
     width: 100%;
     max-width: 100%;
   }
@@ -165,7 +165,7 @@
   }
 
   .filter select,
-  .filter .search__input {
+  .filter .search__input_jewelry {
     width: 48%;
     margin: 5px 0;
   }
@@ -183,7 +183,7 @@
   }
 
   .filter select,
-  .filter .search__input {
+  .filter .search__input_jewelry {
     width: 100%;
     margin: 5px 0;
   }
