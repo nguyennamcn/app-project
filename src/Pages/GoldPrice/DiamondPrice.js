@@ -63,7 +63,7 @@ const styles = {
     borderRadius: '8px',
   },
   header: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#6993FE',
     color: '#fff',
     padding: '10px',
     textAlign: 'center',
