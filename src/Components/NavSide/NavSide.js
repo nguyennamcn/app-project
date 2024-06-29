@@ -53,6 +53,12 @@ export default function NavSide() {
           <i className="fa fa-dollar-sign"></i>
           <p>Gold price</p>
         </NavLink>
+        <NavLink to='/diamond-price' 
+          className='nav-item'
+        >
+          <i className="fa fa-dollar-sign"></i>
+          <p>Diamond price</p>
+        </NavLink>
         <NavLink to='/customer' 
           className='nav-item'
         >
