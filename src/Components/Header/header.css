@@ -3,6 +3,20 @@
     background-color: black;
     color: white;
 }
+.header__login {
+    display: flex;
+    align-items: center;
+}
+
+.header__login__left {
+    margin-right: auto;
+}
+
+.header__login__right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Add space between items */
+}
 .userName{
     background-color: white;
     color: black;
@@ -16,4 +30,50 @@
 a:hover{
     color: rgb(133, 123, 123);
     transition: 0.4s all;
+}
+
+/* Media queries for tablet */
+@media (max-width: 1024px) {
+    #header {
+        height: auto;
+        padding: 8px 16px;
+    }
+
+    .header__login__right a {
+        font-size: 10px;
+    }
+
+    .header__login__right svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .header__login__right button {
+        width: 100px;
+        height: 30px;
+        font-size: 14px;
+    }
+}
+
+/* Media queries for mobile */
+@media (max-width: 480px) {
+    #header {
+        height: auto;
+        padding: 10px 10px;
+    }
+
+    .header__login__right a {
+        font-size: 10px;
+    }
+
+    .header__login__right svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .header__login__right button {
+        width: 90px;
+        height: 28px;
+        font-size: 12px;
+    }
 }

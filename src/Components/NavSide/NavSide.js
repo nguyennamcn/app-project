@@ -1,7 +1,6 @@
 import React from 'react'
 import './NavSide.css'
 import { NavLink } from 'react-router-dom'
-import { Flex } from 'antd'
 import { useSelector } from 'react-redux';
 
 export default function NavSide() {
@@ -13,191 +12,73 @@ export default function NavSide() {
   return (
     <div className='navbar'>
         <NavLink to='/homePage' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-home"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Home
-          </p>
+          <i className="fa fa-home"></i>
+          <p>Home</p>
         </NavLink>
         {isManager && (
           <NavLink to='/inventory' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-tasks"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Inventory
-          </p>
+          <i className="fa fa-tasks"></i>
+          <p>Inventory</p>
         </NavLink>
         )}
         {isAdmin || isManager  ? (
           <NavLink to='/employee' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-users"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Employees
-          </p>
+          <i className="fa fa-users"></i>
+          <p>Employees</p>
         </NavLink>
         ): null }
         {!isStaff && (
           <NavLink to='/historyOrder' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-file-invoice-dollar"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Order list
-          </p>
+          <i className="fa fa-file-invoice-dollar"></i>
+          <p>Order list</p>
         </NavLink>
         )}
         <NavLink to='/profile' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-user"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Profile
-          </p>
+          <i className="fa fa-user"></i>
+          <p>Profile</p>
         </NavLink>
         <NavLink to='/gold-price' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-dollar-sign"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Gold price
-          </p>
+          <i className="fa fa-dollar-sign"></i>
+          <p>Gold price</p>
         </NavLink>
-        {/* <NavLink to='/login' 
-          style={{
-            width : '50%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
-        >
-          <i class="fa fa-question-circle"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Applications
-          </p>
-        </NavLink> */}
         <NavLink to='/customer' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-user-cog"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-          Customer
-          </p>
+          <i className="fa fa-user-cog"></i>
+          <p>Customer</p>
         </NavLink>
         {isManager && (
           <NavLink to='/dashboard' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-tv"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            DashBoard
-          </p>
+          <i className="fa fa-tv"></i>
+          <p>DashBoard</p>
         </NavLink>
         )}
-        
         <NavLink to='/feedbacks' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-comment"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Feedback
-          </p>
+          <i className="fa fa-comment"></i>
+          <p>Feedback</p>
         </NavLink>
         <NavLink to='/buyProduct' 
-          style={{
-            width : '55%',
-            display : 'flex',
-            alignItems : 'center',
-            textDecoration : 'none',
-          }}
+          className='nav-item'
         >
-          <i class="fa fa-hand-holding-usd"></i>
-          <p 
-          style={{
-            marginLeft: '12px',
-          }}>
-            Buy
-          </p>
+          <i className="fa fa-hand-holding-usd"></i>
+          <p>Buy</p>
         </NavLink>
-          
     </div>
   )
 }
