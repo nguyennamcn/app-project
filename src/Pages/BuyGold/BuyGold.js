@@ -139,13 +139,15 @@ const GoldSelection = () => {
       newGoldItems[index] = {
         ...newGoldItems[index],
         goldType: value,
-        materialBuyPrice: selectedGold.materialBuyPrice // Add materialBuyPrice here
+        materialBuyPrice: selectedGold.materialBuyPrice, // Add materialBuyPrice here
+        materialSellPrice: selectedGold.materialSellPrice // Add materialSellPrice here
       };
     } else {
       newGoldItems[index] = {
         ...newGoldItems[index],
         goldType: value,
-        materialBuyPrice: null
+        materialBuyPrice: null,
+        materialSellPrice: null
       };
     }
     setGoldItems(newGoldItems);
@@ -209,9 +211,20 @@ const GoldSelection = () => {
                 <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
               </div>
             </div>
+            {item.goldType && (
+              <>
+                <div style={styles.totalPrice}>
+                  {item.goldType}: buy price: {item.materialBuyPrice} sell price: {item.materialSellPrice}
+                </div>
+                <div style={styles.totalPrice}>
+                  Total: {item.weight} * {item.materialBuyPrice} = {(item.weight * item.materialBuyPrice).toFixed(2)}
+                </div>
+              </>
+            )}
           </React.Fragment>
         ))}
         <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>ADD GOLD</button>
+        
         <div style={styles.totalPrice}>
           Total price: {totalPrice > 0 ? totalPrice : 0.00} $
         </div>
