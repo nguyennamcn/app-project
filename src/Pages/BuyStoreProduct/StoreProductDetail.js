@@ -9,6 +9,7 @@ export default function StoreProductDetail() {
     const [sp, setSp] = useState({});
     const [products, setProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [selectedProducts, setSelectedProducts] = useState([]);
     const { orderCode } = useParams();
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function StoreProductDetail() {
             purchaseOrderCode: generateRandomOrderCode(),
             customerName: sp?.customerName,
             phone: sp?.customerPhone,
-            list: products.map(product => ({
+            list: selectedProducts.map(product => ({
                 name: product.productName,
                 productCode: product.productCode,
                 price: product.price
@@ -79,6 +80,16 @@ export default function StoreProductDetail() {
         }
     };
 
+    const handleCheckboxChange = (product) => {
+        setSelectedProducts((prevSelectedProducts) => {
+            if (prevSelectedProducts.find(p => p.productCode === product.productCode)) {
+                return prevSelectedProducts.filter(p => p.productCode !== product.productCode);
+            } else {
+                return [...prevSelectedProducts, product];
+            }
+        });
+    };
+
     const columnsProductInBill = [
         {
             title: 'Product Name',
@@ -100,7 +111,16 @@ export default function StoreProductDetail() {
             title: 'Choose',
             dataIndex: 'choose',
             key: 'choose',
-            render: () => <div style={{width:'100%', textAlign:'center'}}><input type='checkbox'style={{width:'20px', height:'20px'}}/></div>,
+            render: (_, record) => (
+                <div style={{ width: '100%', textAlign: 'center' }}>
+                    <input
+                        type='checkbox'
+                        style={{ width: '20px', height: '20px' }}
+                        checked={selectedProducts.some(p => p.productCode === record.productCode)}
+                        onChange={() => handleCheckboxChange(record)}
+                    />
+                </div>
+            ),
         },
     ];
 
@@ -125,9 +145,13 @@ export default function StoreProductDetail() {
             title: 'Remove',
             dataIndex: 'remove',
             key: 'remove',
-            render: () => <div><Button type='primary' danger>Remove</Button></div>,
+            render: (_, record) => (
+                <div>
+                    <Button type='primary' danger onClick={() => handleCheckboxChange(record)}>Remove</Button>
+                </div>
+            ),
         },
-    ]
+    ];
 
     const dateSellFormatted = sp?.dateSell ? new Date(sp.dateSell).toLocaleDateString() : '';
 
@@ -137,8 +161,8 @@ export default function StoreProductDetail() {
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 6px 0' }}>Order Code: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div className="container bg-white" style={{width:'94%', boxShadow:'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius:'20px'}}>
-                <div className="row justify-around bg-white pb-4" >
+            <div className="container bg-white" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius: '20px' }}>
+                <div className="row justify-around bg-white pb-4">
                     <div className="product__table col-sm-6"
                         style={{
                             marginLeft: '10px',
@@ -147,55 +171,52 @@ export default function StoreProductDetail() {
                             height: '400px',
                             padding: '0',
                         }}>
-                            <div className='col-sm-1'>
-                                <div className="col-sm-12"  style={{ whiteSpace: 'nowrap' }}>
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                        Customer:<span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
-                                    </h1>
-                                </div>
-                                <div className="col-sm-12"  style={{ whiteSpace: 'nowrap' }}>
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                        Phone:<span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
-                                    </h1>
-                                </div>
-                                <div className="col-sm-12"  style={{ whiteSpace: 'nowrap' }}>
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 10px 11%' }}>
-                                        Date of sale:<span style={{ marginLeft: '4%' }}>{dateSellFormatted}</span>
-                                    </h1>
-                                </div>
-                                <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                        Payment method:<span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
-                                    </h1>
-                                </div>
+                        <div className='col-sm-1'>
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                    Customer:<span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
+                                </h1>
                             </div>
-                        <Table style={{ width: '94%', border:'1px solid #ccc',}} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 120 }} />
-                            <div className='col-sm-1' >
-                                <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                        Total items:<span style={{ marginLeft: '4%' }}>{sp?.list ? sp.list.length : 0}</span>
-                                    </h1>
-                                </div>
-
-                                <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                    <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                        Total Pay:<span style={{ marginLeft: '4%' }}>${totalPrice}</span>
-                                    </h1>
-                                </div>
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                    Phone:<span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
+                                </h1>
                             </div>
-                        {/* </div> */}
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 10px 11%' }}>
+                                    Date of sale:<span style={{ marginLeft: '4%' }}>{dateSellFormatted}</span>
+                                </h1>
+                            </div>
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                    Payment method:<span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
+                                </h1>
+                            </div>
+                        </div>
+                        <Table style={{ width: '94%', border: '1px solid #ccc', }} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 120 }} />
+                        <div className='col-sm-1' >
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                    Total items:<span style={{ marginLeft: '4%' }}>{sp?.list ? sp.list.length : 0}</span>
+                                </h1>
+                            </div>
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                    Total Pay:<span style={{ marginLeft: '4%' }}>${totalPrice}</span>
+                                </h1>
+                            </div>
+                        </div>
                     </div>
-                    <div className='cart__table col-sm-6' 
-                    style={{
-                        marginRight: '-24px',
-                        backgroundColor: 'white',
-                        width: '100%',
-                        height: '400px',
-                        padding: '0',
-                        
-                    }}>
+                    <div className='cart__table col-sm-6'
+                        style={{
+                            marginRight: '-24px',
+                            backgroundColor: 'white',
+                            width: '100%',
+                            height: '400px',
+                            padding: '0',
+                        }}>
                         <div className='col-sm-12 mt-2'><h1>Buy back items</h1></div>
-                        <Table style={{ width: '94%', border:'1px solid #ccc', }} dataSource={products} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
+                        <Table style={{ width: '94%', border: '1px solid #ccc', }} dataSource={selectedProducts} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
                     </div>
                     <div className="col-sm-12 flex justify-center mt-1">
                         <NavLink to={"/buyProduct"}>
@@ -225,5 +246,3 @@ export default function StoreProductDetail() {
         </div>
     );
 }
-
-
