@@ -200,7 +200,7 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '25px'
+    fontSize: '25px',
   },
   addButton: {
     backgroundColor: '#4CAF50',

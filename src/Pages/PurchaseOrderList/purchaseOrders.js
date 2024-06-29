@@ -33,21 +33,6 @@ const columns = (handleView, handleDelete) => [
         dataIndex: 'totalPrice',
         key: 'totalPrice',
     },
-    // {
-    //     title: 'Date Order',
-    //     dataIndex: 'dateOrder',
-    //     key: 'dateOrder',
-    // },
-    // {
-    //     title: 'Payment method',
-    //     dataIndex: 'paymentMethod',
-    //     key: 'paymentMethod',
-    // },
-    // {
-    //     title: 'Delivery Status',
-    //     dataIndex: 'deliveryStatus',
-    //     key: 'deliveryStatus',
-    // },
     {
         title: 'Action',
         key: 'action',
@@ -160,14 +145,14 @@ export default function PurchaseOrder() {
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '0px 0 6px 0' }}>Purchase List</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div style={{ margin: '20px 80px' }}>
+            <div style={{ margin: '10px 70px' }}>
                 <Input
                     placeholder="Search by Staff name or Order Code"
                     value={searchText}
                     onChange={handleSearch}
                     prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
                     size="small"
-                    style={{ marginBottom: 20, width: '270px' }}
+                    style={{ marginBottom: 10, width: '270px' }}
                 />
                 <Table
                     style={{ margin: '8px 0' }}

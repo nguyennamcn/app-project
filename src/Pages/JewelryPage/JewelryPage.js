@@ -76,7 +76,7 @@ export default function JewelryPage() {
   return (
     <div className="jewelry-page">
       <div className='filter'>
-        <div>
+        <div style={{ display: 'flex', gap: '10px' }}>
           <select name='jewelry__category' id='category'>
             <option value='Rings'>Rings</option>
             <option value='Earrings'>Earrings</option>
@@ -90,7 +90,7 @@ export default function JewelryPage() {
           </select>
         </div>
 
-        <div className='search__input'>
+        <div className='search__input_jewelry'>
           <textarea
             placeholder='Search by product code or name...'
             value={searchTerm}

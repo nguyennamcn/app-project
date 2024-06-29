@@ -24,6 +24,7 @@ import ManageGold from './Pages/ManageProduct/ManageGold';
 import ManageDiamond from './Pages/ManageProduct/ManageDiamond';
 import ManageJewelry from './Pages/ManageProduct/ManageJewelry';
 import GoldPrice from './Pages/GoldPrice/GoldPrice';
+import DiamondPrice from './Pages/GoldPrice/DiamondPrice';
 import AddJewelry from './Pages/Addproduct/AddJewelry';
 import AddGold from './Pages/Addproduct/AddGold';
 import AddDiamond from './Pages/Addproduct/AddDiamonds';
@@ -97,6 +98,7 @@ function App() {
               <Route path="/manageDiamond" element={<Layout Component={ManageDiamond} />} />
               <Route path="/manageJewelry" element={<Layout Component={ManageJewelry} />} />
               <Route path="/gold-price" element={<Layout Component={GoldPrice} />} />
+              <Route path="/diamond-price" element={<Layout Component={DiamondPrice} />} />
               <Route path="/add-diamond" element={<Layout Component={AddDiamond} />} />
               <Route path="/add-jewelry" element={<Layout Component={AddJewelry} />} />
               <Route path="/add-gold" element={<Layout Component={AddGold} />} />
