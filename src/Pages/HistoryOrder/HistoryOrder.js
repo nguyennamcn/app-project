@@ -1,5 +1,4 @@
 import { useState } from 'react';
-//import './ListProduct.css'
 import ListOrderPage from '../CashierPage/CashierListOrder';    
 import PurchaseOrder from '../PurchaseOrderList/purchaseOrders';    
 

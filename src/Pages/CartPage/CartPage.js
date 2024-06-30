@@ -164,8 +164,6 @@ const CartPage = () => {
             });
     };
 
-
-    // Define table columns
     const columns = [
         {
             title: 'Name',
@@ -177,11 +175,6 @@ const CartPage = () => {
             title: 'Product Code',
             dataIndex: 'productCode',
             key: 'productCode',
-            // render: (text, record) => (
-            //     <div>
-            //                           <span style={{ margin: '0 10px' }}>{record.quantity}</span>
-            //       </div>
-            // ),
         },
         {
             title: 'Price',
@@ -207,7 +200,7 @@ const CartPage = () => {
     ];
 
     return (
-        <div>
+        <div style={{maxHeight:'70vh',overflowY:'auto'}}>
             <Table style={{ minHeight: '230px' }} dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
             <hr />
             <div>
