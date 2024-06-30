@@ -98,7 +98,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   transition: background 0.3s ease;
 }
@@ -136,6 +136,9 @@
 }
 /* Responsive styles */
 @media (max-width: 1024px) {
+  .form-title {
+    font-size: 18px;
+  }
   .add-gold-form-row {
       flex-direction: column;
   }
@@ -145,17 +148,21 @@
   }
 
   .form-footer {
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
   }
 
   .add-gold-button {
-      width: 20%;
-      /* margin-bottom: 10px; */
+      margin-left: 20px;
+      padding: 0px 10px;
   }
 
   .back-button {
-      width: 20%;
-      margin-bottom: 15px;
+      padding: 8px 14px; 
+      margin-right: 20px;
+  }
+  .add-gold-form-group {
+    font-size: 13px;
   }
 }
 
