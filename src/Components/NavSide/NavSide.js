@@ -50,7 +50,7 @@ export default function NavSide() {
         <NavLink to='/gold-price' 
           className='nav-item'
         >
-          <i className="fa fa-dollar-sign"></i>
+          <i className="fa fa-money-bill"></i>
           <p>Gold price</p>
         </NavLink>
         <NavLink to='/diamond-price' 
@@ -69,14 +69,14 @@ export default function NavSide() {
           <NavLink to='/dashboard' 
           className='nav-item'
         >
-          <i className="fa fa-tv"></i>
+          <i className="fa fa-chart-line"></i>
           <p>DashBoard</p>
         </NavLink>
         )}
         <NavLink to='/feedbacks' 
           className='nav-item'
         >
-          <i className="fa fa-comment"></i>
+          <i className="fa fa-star"></i>
           <p>Feedback</p>
         </NavLink>
         <NavLink to='/buyProduct' 

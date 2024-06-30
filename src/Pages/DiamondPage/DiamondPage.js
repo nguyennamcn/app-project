@@ -44,11 +44,7 @@ export default function DiamondPage() {
       totalPrice: quantity * product.productPrice,
     };
     console.log(item);
-
-    // Get existing cart items from local storage
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    // Check if the item is already in the cart
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode );
 
     if(product.productPrice < 0){
@@ -59,10 +55,8 @@ export default function DiamondPage() {
     if (existingItemIndex > -1) {
       showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {
-      // Add new item to the cart
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      // Save updated cart items to local storage
       showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
     }
   };

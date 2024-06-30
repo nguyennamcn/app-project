@@ -73,7 +73,7 @@
   border: solid black 1px;
   border-radius: 20px;
   flex: 3;
-  max-width: 300px;
+  max-width: 350px;
 }
 
 .filter .search__input_gold input {

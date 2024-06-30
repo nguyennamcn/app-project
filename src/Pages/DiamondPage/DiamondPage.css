@@ -29,11 +29,11 @@
   .filter .search__input_diamond {
     display: flex;
     align-items: center;
-    padding: 2px;
+    padding: 6px;
     border: solid black 1px;
     border-radius: 10px;
     width: 100%;
-    max-width: 300px;
+    max-width: 350px;
   }
   
   .filter .search__input_diamond textarea {

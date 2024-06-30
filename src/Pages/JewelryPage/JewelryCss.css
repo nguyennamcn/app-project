@@ -24,11 +24,11 @@
 .filter .search__input_jewelry {
   display: flex;
   align-items: center;
-  padding: 2px;
+  padding: 3px;
   border: solid black 1px;
   border-radius: 10px;
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
 }
 
 .filter .search__input_jewelry textarea {

@@ -1,6 +1,8 @@
 .employee-list-container {
   padding: 20px;
   font-family: Arial, sans-serif;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .employee-list-title {
@@ -15,13 +17,11 @@
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-  float: right;
   margin-bottom: 10px;
 }
 
 .employee-list-search-input {
   padding: 10px;
-  width: 250px;
   margin-bottom: 20px;
   border: 2px solid black;
   border-radius: 5px;
@@ -65,6 +65,7 @@
 .employee-list-status.offline {
   background-color: gray;
 }
+
 .pagination {
   display: flex;
   justify-content: flex-end;
@@ -87,4 +88,72 @@
 .pagination button.active {
   background-color: black;
   color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  .employee-list-search-input {
+    width: calc(50% - 10px); 
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 2px; 
+    font-size: 14px; 
+  }
+  add-employee-list-button {
+    width: calc(100% - 10px); 
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 2px; 
+    font-size: 10px; 
+  }
+
+  .employee-list-search-input {
+    margin-right: 0px;
+  }
+
+  .employee-list-table thead {
+    display: none;
+  }
+
+  .employee-list-table, .employee-list-table tbody, .employee-list-table tr, .employee-list-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .employee-list-table tr {
+    margin-bottom: 15px;
+  }
+
+  .employee-list-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .employee-list-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: calc(50% - 30px);
+    padding-right: 10px;
+    text-align: left;
+    font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .add-employee-list-button, .employee-list-search-input {
+    width: calc(50% - 10px); 
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 5px; 
+    font-size: 12px; 
+  }
+
+  .employee-list-search-input {
+    margin-right: 10px;
+  }
+
+  .pagination {
+    justify-content: center;
+  }
 }
