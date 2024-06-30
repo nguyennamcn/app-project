@@ -46,16 +46,18 @@ export default function EmployeeList() {
   return (
     <div className="employee-list-container">
       <h1 className="employee-list-title">Employees</h1>
-      <NavLink to="/add-employee">
-        <button className="add-employee-list-button">+ ADD EMPLOYEE</button>
-      </NavLink>
-      <input 
-        type="text" 
-        placeholder="Search by name, phone or role" 
-        className="employee-list-search-input" 
-        value={searchTerm} 
-        onChange={handleSearch} 
-      />
+      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+        <input 
+          type="text" 
+          placeholder="Search by name, phone or role" 
+          className="employee-list-search-input" 
+          value={searchTerm} 
+          onChange={handleSearch} 
+        />
+        <NavLink to="/add-employee">
+          <button className="add-employee-list-button">+ ADD EMPLOYEE</button>
+        </NavLink>
+      </div>
       <table className="employee-list-table">
         <thead>
           <tr>
@@ -70,14 +72,14 @@ export default function EmployeeList() {
         <tbody>
           {currentEmployees.map(employee => (
             <tr key={employee.id}>
-              <td>{employee.staffId}</td>
-              <td>{employee.name}</td>
-              <td>{employee.phone}</td>
-              <td>{Array.isArray(employee.roles) ? employee.roles.join(', ') : employee.roles}</td>
-              <td>
+              <td data-label="ID">{employee.staffId}</td>
+              <td data-label="Name">{employee.name}</td>
+              <td data-label="Phone">{employee.phone}</td>
+              <td data-label="Role User">{Array.isArray(employee.roles) ? employee.roles.join(', ') : employee.roles}</td>
+              <td data-label="Status">
                 <span className={`employee-list-status ${employee.active ? 'online' : 'offline'}`}></span>
               </td>
-              <td>
+              <td data-label="">
                 <NavLink to={`/view-employee/${employee.staffId}`}>
                   <button className="employee-list-view-button">View</button>
                 </NavLink>

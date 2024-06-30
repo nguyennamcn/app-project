@@ -3,50 +3,58 @@ import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
+import './CashierListOrder.css';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
 };
 
-const columns = (handleView, handleDelete, handleUpdate) => [
+const columns = (handleView, handleDelete) => [
     {
         title: 'Order ID',
         dataIndex: 'orderId',
         key: 'orderId',
+        render: (text) => <span data-label="Order ID">{text}</span>,
     },
     {
         title: 'Staff name',
         dataIndex: 'salesStaffName',
         key: 'salesStaffName',
+        render: (text) => <span data-label="Staff name">{text}</span>,
     },
     {
         title: 'Order Code',
         dataIndex: 'orderCode',
         key: 'orderCode',
+        render: (text) => <span data-label="Order Code">{text}</span>,
     },
     {
         title: 'Total Price',
         dataIndex: 'totalPrice',
         key: 'totalPrice',
+        render: (text) => <span data-label="Total Price">{text}</span>,
     },
     {
         title: 'Date Order',
         dataIndex: 'dateOrder',
         key: 'dateOrder',
+        render: (text) => <span data-label="Date Order">{text}</span>,
     },
     {
         title: 'Payment method',
         dataIndex: 'paymentMethod',
         key: 'paymentMethod',
+        render: (text) => <span data-label="Payment method">{text}</span>,
     },
     {
         title: 'Delivery Status',
         dataIndex: 'deliveryStatus',
         key: 'deliveryStatus',
+        render: (text) => <span data-label="Delivery Status">{text}</span>,
     },
     {
         title: 'Action',
@@ -56,7 +64,7 @@ const columns = (handleView, handleDelete, handleUpdate) => [
             const isSuccess = record.deliveryStatus.toLowerCase() === 'success';
             const isPaid = record.paymentMethod.toLowerCase() === ('cash' || 'banking');
             return (
-                <div style={{ width: '50%', display: 'flex' }}>
+                <div className="action-buttons">
                     <NavLink to={`/cashierOrderDetail/${record.orderCode}`}>
                         <Button
                             style={{ marginRight: '14px' }}
@@ -111,7 +119,7 @@ export default function ListOrderPage() {
                         paymentMethod: order.paymentMethod,
                         deliveryStatus: order.deliveryStatus,
                     }))
-                    .sort((a, b) => b.orderId - a.orderId); // Sắp xếp theo thứ tự giảm dần
+                    .sort((a, b) => b.orderId - a.orderId);
 
                 setDataSource(orders);
                 setFilteredData(orders);
@@ -166,22 +174,22 @@ export default function ListOrderPage() {
     };
 
     return (
-        <div>
+        <div style={{maxHeight:'70vh',overflowY:'auto'}}>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '0px 0 6px 0' }}>Order List</h1>
-                <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
+                <h1>Order List</h1>
+                <div className='line'></div>
             </div>
-            <div style={{ margin: '10px 70px' }}>
+            <div className='table-container'>
                 <Input
+                    className='search-input'
                     placeholder="Search by Staff name or Order Code"
                     value={searchText}
                     onChange={handleSearch}
                     prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
                     size="small"
-                    style={{ marginBottom: 10, width: '250px' }}
                 />
                 <Table
-                    style={{ margin: '8px 0' }}
+                    className="table"
                     dataSource={filteredData}
                     columns={columns(handleView, handleDelete)}
                     pagination={{ className: 'custom__pagination', pageSize: 4 }}
