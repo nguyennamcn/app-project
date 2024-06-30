@@ -166,7 +166,7 @@ export default function ListOrderPage() {
     };
 
     return (
-        <div>
+        <div style={{maxHeight:'70vh',overflowY:'auto'}}>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '0px 0 6px 0' }}>Order List</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
