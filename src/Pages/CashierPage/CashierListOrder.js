@@ -218,6 +218,8 @@ export default function ListOrderPage() {
                 {`
                     .order-list-container {
                         padding: 20px;
+                        max-height:70vh;
+                        overflow-y: auto;
                     }
 
                     .order-list-title {
