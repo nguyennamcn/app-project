@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, notification } from 'antd';
 import { NavLink } from 'react-router-dom';
-import './AddJewelry.css';
+import './AddGold.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
 function AddGold() {
@@ -64,23 +64,23 @@ function AddGold() {
   };
 
   return (
-    <div className="add-jewelry-container">
-      <div className="add-jewelry-content">
-        <div className="add-jewelry-form">
-          <h2 className="add-jewelry-title">ADD GOLD</h2>
+    <div className="add-gold-container">
+      <div className="add-gold-content">
+        <div className="add-gold-form">
+          <h2 className="form-title">ADD GOLD</h2>
           <form onSubmit={handleFormSubmit}>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="add-gold-form-row">
+              <div className="add-gold-form-group">
                 <label>Product Code:</label>
                 <input type="text" name="productCode" placeholder='Product code' value={newJewelry.productCode} onChange={handleInputChange} required/>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="add-gold-form-group">
                 <label>Product Name:</label>
                 <input type="text" name="productName" placeholder='Product name' value={newJewelry.productName} onChange={handleInputChange} required/>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="add-gold-form-row">
+              <div className="add-gold-form-group">
                 <label>Material:</label>
                 <select name="material" value={newJewelry.material} onChange={handleInputChange} >
                   <option value={1}>24K GOLD</option>
@@ -89,15 +89,14 @@ function AddGold() {
                   <option value={4}>GOLD BARS</option>
                 </select>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="add-gold-form-group">
                 <label>Weight (gram):</label>
                 <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={0.1} step={0.1}/>
               </div>
             </div>
- 
-            <div className="add-jewelry-form-footer">
-              <NavLink to="/ManageGold" className="add-jewelry-back-button">BACK</NavLink>
-              <button className="add-jewelry-add-button" type="submit">ADD GOLD</button>
+            <div className="form-footer">
+              <NavLink to="/ManageGold" className="back-button">BACK</NavLink>
+              <button className="add-gold-button" type="submit">ADD GOLD</button>
             </div>
           </form>
         </div>
