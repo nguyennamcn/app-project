@@ -7,8 +7,9 @@ export default function GoldPrice() {
   useEffect(() => {
     adornicaServ.getPriceDiamond()
       .then((res) => {
-        console.log(res.data.metadata);
-        setGoldPrices(res.data.metadata);
+        const filteredData = res.data.metadata.filter(price => price.gemBuyPrice && price.gemSellPrice);
+        console.log(filteredData);
+        setGoldPrices(filteredData);
       })
       .catch((err) => {
         console.log(err);
@@ -135,4 +136,3 @@ const styles = {
     },
   },
 };
-
