@@ -297,7 +297,7 @@ const BillGold = () => {
             <div key={index} style={pageStyles.tableRow}>
               <span>{product.goldType}</span>
               <span>{product.weight}</span>
-              <span>{product.materialBuyPrice}$</span>
+              <span>{product.materialBuyPrice.toFixed(2)}$</span>
             </div>
           ))}
         </div>

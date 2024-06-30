@@ -106,7 +106,7 @@ export default function ManageDiamond() {
               <td style={styles.td}>{diamond.productId}</td>
               <td style={styles.td}>{diamond.productCode}</td>
               <td style={styles.td}>{diamond.productName}</td>
-              <td style={styles.td}>{diamond.productPrice <= 0 ? 'undefinded' : diamond.productPrice}</td>
+              <td style={styles.td}>{diamond.productPrice <= 0 ? 'Not yet been priced' :(diamond.productPrice + "$")}</td>
               <td style={styles.td}>{diamond.size}</td>
               <td style={styles.td}>
                 <NavLink to={`/update-diamond/${diamond.productId}`}>

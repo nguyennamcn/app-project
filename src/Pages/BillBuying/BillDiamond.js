@@ -182,7 +182,7 @@ const BillDiamond = () => {
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     products.forEach((product) => {
-      totalPrice += product.gemBuyPrice;
+      totalPrice += parseFloat(product.gemBuyPrice);
     });
     return parseFloat(totalPrice).toFixed(2);
   };

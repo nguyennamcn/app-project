@@ -236,4 +236,8 @@ export const adornicaServ = {
         console.log(form)
         return https.post(`/api/v1/users/create`, form);
     },
+
+    getAllCategoryBbp: () => {
+        return https.get(`/api/v1/category`);
+    },
 }
