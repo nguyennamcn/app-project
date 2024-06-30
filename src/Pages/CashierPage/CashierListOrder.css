@@ -19,7 +19,7 @@
 }
 
 .table-container {
-    margin: 10px 70px;
+    margin: 10px 70px ;
 }
 
 .action-buttons {
@@ -40,11 +40,10 @@
     }
 
     .search-input {
-        width: calc(50% - 10px); 
-        display: inline-block;
+        width: calc(100% - 10px); 
         margin-bottom: 10px;
-        padding: 2px; 
-        font-size: 14px; 
+        padding: 1px; 
+        font-size: 10px; 
     }
 
     .action-buttons {

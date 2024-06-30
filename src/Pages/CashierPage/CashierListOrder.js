@@ -174,7 +174,7 @@ export default function ListOrderPage() {
     };
 
     return (
-        <div>
+        <div style={{maxHeight:'70vh',overflowY:'auto'}}>
             <div className='title'>
                 <h1>Order List</h1>
                 <div className='line'></div>

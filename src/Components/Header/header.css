@@ -15,7 +15,7 @@
 .header__login__right {
     display: flex;
     align-items: center;
-    gap: 15px; /* Add space between items */
+    gap: 15px; 
 }
 .userName{
     background-color: white;
@@ -32,7 +32,7 @@ a:hover{
     transition: 0.4s all;
 }
 
-/* Media queries for tablet */
+
 @media (max-width: 1024px) {
     #header {
         height: auto;
@@ -55,7 +55,7 @@ a:hover{
     }
 }
 
-/* Media queries for mobile */
+
 @media (max-width: 480px) {
     #header {
         height: auto;
