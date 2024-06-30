@@ -1,4 +1,4 @@
-.add-jewelry-container {
+.add-diamond-container {
   display: flex;
   height: calc(70vh); 
   margin-top: 30px;
@@ -7,14 +7,14 @@
   margin: 20px 20px 20px 20px;
 }
 
-.add-jewelry-content {
+.add-diamond-content {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.add-jewelry-form {
+.add-diamond-form {
   width: 100%;
   max-width: 900px;
   padding: 20px;
@@ -24,7 +24,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-jewelry-title {
+.add-diamond-title {
   text-align: center;
   font-weight: bold;
   font-size: 25px;
@@ -32,31 +32,31 @@
   color: #00796B;
 }
 
-.add-jewelry-form-row {
+.add-diamond-form-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.add-jewelry-form-group {
+.add-diamond-form-group {
   flex: 1;
   margin-right: 15px;
 }
 
-.add-jewelry-form-group:last-child {
+.add-diamond-form-group:last-child {
   margin-right: 0;
 }
 
-.add-jewelry-form-group label {
+.add-diamond-form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
   color: #000000;
 }
 
-.add-jewelry-form-group input[type="text"],
-.add-jewelry-form-group input[type="number"],
-.add-jewelry-form-group select {
+.add-diamond-form-group input[type="text"],
+.add-diamond-form-group input[type="number"],
+.add-diamond-form-group select {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
@@ -66,18 +66,18 @@
   color: #333;
 }
 
-.add-jewelry-form-group input[type="text"]::placeholder,
-.add-jewelry-form-group input[type="number"]::placeholder {
+.add-diamond-form-group input[type="text"]::placeholder,
+.add-diamond-form-group input[type="number"]::placeholder {
   color: #000000;
 }
 
-.add-jewelry-form-footer {
+.add-diamond-form-footer {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.add-jewelry-back-button {
+.add-diamond-back-button {
   padding: 8px 16px;
   background: #52e7fb;
   border: 1px solid #070202;
@@ -88,11 +88,11 @@
   color: #ffffff;
 }
 
-.add-jewelry-back-button:hover {
+.add-diamond-back-button:hover {
   background: #1ce3fd;
 }
 
-.add-jewelry-add-button {
+.add-diamond-add-button {
   padding: 8px 16px;
   background: #52e7fb;
   color: #fff;
@@ -104,7 +104,7 @@
   transition: background 0.3s ease;
 }
 
-.add-jewelry-add-button:hover {
+.add-diamond-add-button:hover {
   background: #0097A7;
 }
 
@@ -138,29 +138,32 @@
 
 /* Responsive styles */
 @media (max-width: 1024px) {
-  .add-jewelry-form-row {
-      flex-direction: column;
+  .add-diamond-title {
+    font-size: 18px;
+}
+  .add-diamond-form-row {
+      flex-direction: row;
   }
 
-  .add-jewelry-form-group {
-      margin-right: 0;
-      margin-bottom: 15px;
+  .add-diamond-form-group {
+      margin-right: 9px;
+      font-size: small;
   }
 }
 
 @media (max-width: 480px) {
-  .add-jewelry-title {
+  .add-diamond-title {
       font-size: 20px;
   }
 
-  .add-jewelry-form-group input[type="text"],
-  .add-jewelry-form-group input[type="number"],
-  .add-jewelry-form-group select {
+  .add-diamond-form-group input[type="text"],
+  .add-diamond-form-group input[type="number"],
+  .add-diamond-form-group select {
       padding: 6px;
   }
 
-  .add-jewelry-add-button,
-  .add-jewelry-back-button {
+  .add-diamond-add-button,
+  .add-diamond-back-button {
       font-size: 12px;
       padding: 6px 12px;
       width: auto;

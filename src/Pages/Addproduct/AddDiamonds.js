@@ -5,7 +5,7 @@ import './AddDiamond.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
 function AddDiamond() {
-  const [newJewelry, setNewJewelry] = useState({
+  const [newDiamond, setNewDiamond] = useState({
     productCode: '', // not null
     productName: '', // not null
     gemCost: 0, // not null
@@ -27,7 +27,7 @@ function AddDiamond() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewJewelry((prevJewelry) => ({
+    setNewDiamond((prevJewelry) => ({
       ...prevJewelry,
       [name]: name === 'carat' ? parseFloat(value) : value,
     }));
@@ -37,18 +37,18 @@ function AddDiamond() {
     e.preventDefault();
 
     const productData = {
-      productCode: newJewelry.productCode,
-      productName: newJewelry.productName,
+      productCode: newDiamond.productCode,
+      productName: newDiamond.productName,
       gender: "UNISEX",
       categoryId: 6,
-      gemCode: newJewelry.gemCode,
-      diamondName: newJewelry.diamondName,
-      origin: newJewelry.origin,
-      color: newJewelry.color,
-      clarity: newJewelry.clarity,
-      cut: newJewelry.cut,
-      carat: newJewelry.carat,
-      size: newJewelry.size,
+      gemCode: newDiamond.gemCode,
+      diamondName: newDiamond.diamondName,
+      origin: newDiamond.origin,
+      color: newDiamond.color,
+      clarity: newDiamond.clarity,
+      cut: newDiamond.cut,
+      carat: newDiamond.carat,
+      size: newDiamond.size,
     };
 
     adornicaServ.postCreateProduct(productData)
@@ -68,45 +68,45 @@ function AddDiamond() {
   };
 
   return (
-    <div className="add-jewelry-container">
-      <div className="add-jewelry-content">
-        <div className="add-jewelry-form">
-          <h2 className="add-jewelry-title">ADD DIAMOND</h2>
+    <div className="add-diamond-container">
+      <div className="add-diamond-content">
+        <div className="add-diamond-form">
+          <h2 className="add-diamond-title">ADD DIAMOND</h2>
           <form onSubmit={handleFormSubmit}>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="add-diamond-form-row">
+              <div className="add-diamond-form-group">
                 <label>Product Code:</label>
-                <input type="text" name="productCode" placeholder='Product code' value={newJewelry.productCode} onChange={handleInputChange} required />
+                <input type="text" name="productCode" placeholder='Product code' value={newDiamond.productCode} onChange={handleInputChange} required />
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="add-diamond-form-group">
                 <label>Product Name:</label>
-                <input type="text" name="productName" placeholder='Product name' value={newJewelry.productName} onChange={handleInputChange} required />
+                <input type="text" name="productName" placeholder='Product name' value={newDiamond.productName} onChange={handleInputChange} required />
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="add-diamond-form-row">
+              <div className="add-diamond-form-group">
                 <label>Gem Code:</label>
-                <input type="text" name="gemCode" placeholder='Gem code' value={newJewelry.gemCode} onChange={handleInputChange} required />
+                <input type="text" name="gemCode" placeholder='Gem code' value={newDiamond.gemCode} onChange={handleInputChange} required />
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="add-diamond-form-row">
+              <div className="add-diamond-form-group">
                 <label>Diamond Name:</label>
-                <input type="text" name="diamondName" placeholder='Diamond name' value={newJewelry.diamondName} onChange={handleInputChange} required />
+                <input type="text" name="diamondName" placeholder='Diamond name' value={newDiamond.diamondName} onChange={handleInputChange} required />
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="add-diamond-form-group">
                 <label>Origin:</label>
-                <select type="text" name="origin" value={newJewelry.origin} onChange={handleInputChange} required>
+                <select type="text" name="origin" value={newDiamond.origin} onChange={handleInputChange} required>
                   <option value="" disabled>Select origin</option>
                   <option value="NATURAL">NATURAL</option>
                   <option value="LAB_GROWN">LAB_GROWN</option>
                 </select>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="add-diamond-form-row">
+              <div className="add-diamond-form-group">
                 <label>Color:</label>
-                <select type="text" name="color" value={newJewelry.color} onChange={handleInputChange} required>
+                <select type="text" name="color" value={newDiamond.color} onChange={handleInputChange} required>
                   <option value="" disabled>Select color</option>
                   <option value="D">D</option>
                   <option value="E">E</option>
@@ -120,9 +120,9 @@ function AddDiamond() {
                   <option value="M">M</option>
                 </select>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="add-diamond-form-group">
                 <label>Clarity:</label>
-                <select type="text" name="clarity" value={newJewelry.clarity} onChange={handleInputChange} required>
+                <select type="text" name="clarity" value={newDiamond.clarity} onChange={handleInputChange} required>
                   <option value="" disabled>Select Clarity</option>
                   <option value="FL">FL</option>
                   <option value="IF">IF</option>
@@ -138,10 +138,10 @@ function AddDiamond() {
                 </select>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="add-diamond-form-row">
+              <div className="add-diamond-form-group">
                 <label>Cut:</label>
-                <select name="cut" value={newJewelry.cut} onChange={handleInputChange} required>
+                <select name="cut" value={newDiamond.cut} onChange={handleInputChange} required>
                   <option value="" disabled>Select Cut</option>
                   <option value="EX">EX</option>
                   <option value="G">G</option>
@@ -149,14 +149,14 @@ function AddDiamond() {
                   <option value="P">P</option>
                 </select>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="add-diamond-form-group">
                 <label>Carat:</label>
-                <input type="number" name="carat" value={newJewelry.carat} onChange={handleInputChange} min={0.1} step={0.1} />
+                <input type="number" name="carat" value={newDiamond.carat} onChange={handleInputChange} min={0.1} step={0.1} />
               </div>
             </div>
-            <div className="add-jewelry-form-footer">
-              <NavLink to="/ManageDiamond" className="add-jewelry-back-button">BACK</NavLink>
-              <button className="add-jewelry-add-button" type="submit">ADD DIAMOND</button>
+            <div className="add-diamond-form-footer">
+              <NavLink to="/ManageDiamond" className="add-diamond-back-button">BACK</NavLink>
+              <button className="add-diamond-add-button" type="submit">ADD DIAMOND</button>
             </div>
           </form>
         </div>
