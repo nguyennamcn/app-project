@@ -157,7 +157,7 @@ export default function SentPage() {
     };
 
     return (
-        <div>
+        <div style={{maxHeight:'70vh',overflowY:'auto'}}>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 10px 0' }}>List order sended</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
