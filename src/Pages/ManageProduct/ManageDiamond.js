@@ -126,7 +126,7 @@ export default function ManageDiamond() {
                   style={styles.updateButton}
                   onClick={() => handleUpdateImg(diamond.productId)}
                 >
-                  Update Img
+                  Img
                 </button>
               </td>
             </tr>
@@ -169,7 +169,9 @@ export default function ManageDiamond() {
 const styles = {
   container: {
     padding: '20px',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Arial, sans-serif',
+    maxHeight:'70vh',
+    overflowY:'auto',
   },
   header: {
     display: 'flex',
@@ -179,7 +181,8 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '25px'
+    fontSize: '18px',
+    fontWeight: 'bold'
   },
   addButton: {
     backgroundColor: '#4CAF50',
@@ -213,7 +216,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginBottom:'4px',
   },
   deleteButton: {
     marginRight:'5px',
@@ -222,7 +226,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginBottom:'4px',
   },
   footer: {
     display: 'flex',

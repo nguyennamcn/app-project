@@ -146,7 +146,7 @@ export default function ManageGold() {
                   style={styles.updateButton}
                   onClick={() => handleUpdateImg(product.productId)}
                 >
-                  Update Img
+                  Img
                 </button>
               </td>
             </tr>
@@ -189,7 +189,9 @@ export default function ManageGold() {
 const styles = {
   container: {
     padding: '20px',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Arial, sans-serif',
+    maxHeight: '70vh',
+    overflowY: 'auto'
   },
   header: {
     display: 'flex',
@@ -241,7 +243,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginBottom:'4px',
   },
   deleteButton: {
     padding: '5px 10px',
@@ -250,7 +253,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginBottom:'4px',
   },
   footer: {
     display: 'flex',
