@@ -96,7 +96,7 @@ const DiamondSelection = () => {
   const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00', gemSellPrice: '0.00' }]);
 
   const [formValid, setFormValid] = useState(false); 
-  const [buyBackPromotion, setBuyBackPromotion] = useState(0);
+  const [gemPromotion, setGemPromotion] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const DiamondSelection = () => {
       .then((res) => {
         const diamondCategory = res.data.metadata.find(category => category.id === 6);
         if (diamondCategory) {
-          setBuyBackPromotion(diamondCategory.buyBackPromotion);
+          setGemPromotion(diamondCategory.buyBackPromotion);
         }
       })
       .catch((err) => {
@@ -198,7 +198,7 @@ const DiamondSelection = () => {
       clarity: item.clarity,
       color: item.color,
       origin: item.origin,
-      gemBuyPrice: ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(buyBackPromotion)).toFixed(2)),
+      gemBuyPrice: ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(2)),
       gemSellPrice: parseFloat(item.gemSellPrice),
     }));
 
@@ -210,7 +210,7 @@ const DiamondSelection = () => {
   const totalPrice = diamondItems.reduce((acc, item) => {
     const gemBuyPrice = parseFloat(item.gemBuyPrice) || 0;
     const gemSellPrice = parseFloat(item.gemSellPrice) || 0;
-    const totalItemPrice = gemBuyPrice + (gemSellPrice - gemBuyPrice) * buyBackPromotion;
+    const totalItemPrice = gemBuyPrice + (gemSellPrice - gemBuyPrice) * gemPromotion;
     return acc + totalItemPrice;
   }, 0).toFixed(2);
 
@@ -282,8 +282,8 @@ const DiamondSelection = () => {
               Buy price: {item.gemBuyPrice} Sell price: {item.gemSellPrice}
             </div>
             <div style={styles.totalPrice}>
-              Total: ({item.gemBuyPrice} + ({item.gemSellPrice} - {item.gemBuyPrice}) * {buyBackPromotion}) =
-              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(buyBackPromotion)).toFixed(2))}
+              Total: ({item.gemBuyPrice} + ({item.gemSellPrice} - {item.gemBuyPrice}) * {gemPromotion}) =
+              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(2))}
             </div>
           </React.Fragment>
         ))}

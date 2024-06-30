@@ -101,13 +101,11 @@ const JewelrySelection = () => {
     name:'',
     goldType: '',
     weight: '',
-    diamond: '',
     origin:'',
     carat: '',
     color: '',
     clarity: '',
-    cut: '',
-    gemBuyPrice: '0.00', gemSellPrice: '0.00',
+    cut: ''
   }]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [goldPromotion, setGoldPromotion] = useState(0.6);
@@ -133,6 +131,7 @@ const JewelrySelection = () => {
     adornicaServ.getPriceDiamond()
       .then((res) => {
         setGemPrices(res.data.metadata);
+        console.log(res.data.metadata);
       })
       .catch((err) => {
         console.log(err);
@@ -162,35 +161,40 @@ const JewelrySelection = () => {
           updatedItems[index] = {
             ...updatedItems[index],
             materialBuyPrice: selectedGold.materialBuyPrice,
+            materialSellPrice: selectedGold.materialSellPrice,
           };
         }
       }
     }
   
     // Handle diamond change
-    if (field === 'diamond') {
+    if (field === 'origin') {
       if (value === 'None') {
         // Clear and disable related fields
         updatedItems[index] = {
           ...updatedItems[index],
+          origin:'',
           carat: '',
           color: '',
           clarity: '',
           cut: '',
           gemBuyPrice: 0,
+          gemSellPrice:0,
         };
       } else {
         const selectedGem = gemPrices.find(gem => 
-          gem.origin === value &&
+          gem.origin === updatedItems[index].origin &&
           gem.color === updatedItems[index].color &&
           gem.clarity === updatedItems[index].clarity &&
           gem.cut === updatedItems[index].cut &&
           gem.carat === parseFloat(updatedItems[index].carat)
         );
+        console.log(selectedGem);
         if (selectedGem) {
           updatedItems[index] = {
             ...updatedItems[index],
             gemBuyPrice: selectedGem.gemBuyPrice,
+            gemSellPrice: selectedGem.gemSellPrice,
           };
         }
       }
@@ -199,6 +203,7 @@ const JewelrySelection = () => {
     setJewelryItems(updatedItems);
     validateForm(updatedItems);
   };  
+  console.log(jewelryItems);
 
   useEffect(() => {
     const calculateTotalPrice = async () => {
@@ -213,17 +218,17 @@ const JewelrySelection = () => {
           total += goldPrice;
         }
 
-        if (item.diamond && item.carat && item.clarity && item.color && item.cut) {
+        if (item.origin && item.carat && item.clarity && item.color && item.cut) {
           const caratValue = parseFloat(item.carat);
           if (!isNaN(caratValue)) {
-            const res = await adornicaServ.getPurchaseDiamondPrice(item.cut, caratValue, item.clarity, item.color, item.diamond);
+            const res = await adornicaServ.getPurchaseDiamondPrice(item.cut, caratValue, item.clarity, item.color, item.origin);
             if (res.data && res.data.metadata) {
               const priceData = res.data.metadata.find((data) => (
                 data.cut === item.cut &&
                 data.carat === caratValue &&
                 data.clarity === item.clarity &&
                 data.color === item.color &&
-                data.origin === item.diamond
+                data.origin === item.origin
               ));
               if (priceData) {
                 const diamondPrice = priceData.gemBuyPrice;
@@ -250,7 +255,6 @@ const JewelrySelection = () => {
       name: '',
       goldType: '',
       weight: '',
-      diamond: '',
       carat: '',
       color: '',
       origin,
@@ -273,7 +277,7 @@ const JewelrySelection = () => {
   const validateForm = (updatedItems) => {
     const isFormValid = updatedItems.every(item =>
       (item.goldType && item.goldType !== 'None' && item.weight) ||
-      (item.diamond && item.diamond !== 'None' && item.carat && item.color && item.clarity && item.cut)
+      (item.origin && item.origin !== 'None' && item.carat && item.color && item.clarity && item.cut)
     );
     setFormValid(isFormValid);
   };
@@ -294,7 +298,7 @@ const JewelrySelection = () => {
       carat: item.carat,
       clarity: item.clarity,
       color: item.color,
-      origin: item.diamond,
+      origin: item.origin,
       total: totalPrice
     }));
 
@@ -346,7 +350,7 @@ const JewelrySelection = () => {
             </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Diamond:</label>
-              <select style={styles.input} value={item.diamond} onChange={e => handleInputChange(index, 'diamond', e.target.value)} required>
+              <select style={styles.input} value={item.origin} onChange={e => handleInputChange(index, 'origin', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
                 <option value="NATURAL">NATURAL</option>
@@ -360,8 +364,8 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.carat}
                 onChange={e => handleInputChange(index, 'carat', e.target.value)}
-                disabled={item.diamond === 'None'}
-                required={item.diamond !== 'None'}
+                disabled={item.origin === 'None'}
+                required={item.origin !== 'None'}
               />
             </div>
             <div style={styles.formGroup}>
@@ -370,8 +374,8 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.color}
                 onChange={e => handleInputChange(index, 'color', e.target.value)}
-                disabled={item.diamond === 'None'}
-                required={item.diamond !== 'None'}
+                disabled={item.origin === 'None'}
+                required={item.origin !== 'None'}
               >
                 <option value=''></option>
                 <option value='D'>D</option>
@@ -392,8 +396,8 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.clarity}
                 onChange={e => handleInputChange(index, 'clarity', e.target.value)}
-                disabled={item.diamond === 'None'}
-                required={item.diamond !== 'None'}
+                disabled={item.origin === 'None'}
+                required={item.origin !== 'None'}
               >
                 <option value=''></option>
                 <option value='FL'>FL</option>
@@ -415,8 +419,8 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.cut}
                 onChange={e => handleInputChange(index, 'cut', e.target.value)}
-                disabled={item.diamond === 'None'}
-                required={item.diamond !== 'None'}
+                disabled={item.origin === 'None'}
+                required={item.origin !== 'None'}
               >
                 <option value=""></option>
                 <option value="EX">EX</option>
@@ -429,14 +433,18 @@ const JewelrySelection = () => {
             {item.goldType && item.goldType !== "None" && (
               <>
                 <div style={styles.totalPrice}>
-                  {item.goldType}: buy price: {item.materialBuyPrice} sell price: {(goldPrices.find(gold => gold.materialName === item.goldType)?.materialSellPrice)}
+                  {item.goldType}: buy price: {item.materialBuyPrice} sell price: {item.materialSellPrice}
                 </div>
                 <div style={styles.totalPrice}>
-                  Total: ({item.materialBuyPrice} + ({(goldPrices.find(gold => gold.materialName === item.goldType)?.materialSellPrice)} - {item.materialBuyPrice}) * {goldPromotion}) * {item.weight} = 
-                  {((item.materialBuyPrice + ((goldPrices.find(gold => gold.materialName === item.goldType)?.materialSellPrice) - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(2)}
+                  Total: ({item.materialBuyPrice} + ({item.materialSellPrice} - {item.materialBuyPrice}) * {goldPromotion}) * {item.weight} = 
+                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(2)}
                 </div>
               </>
             )}
+
+            {item.gemBuyPrice}
+
+            
             
             
           </React.Fragment>
