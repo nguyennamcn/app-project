@@ -28,7 +28,7 @@ const LoginPage = () => {
     console.log('Success:', values);
     userService.postLogin(values)
       .then((res) => {
-        message.success("login successfully");
+        message.success("Login successfully");
         // lưu thông tin user vào localStorage
         localService.set(res.data.metadata);
         dispatch(setLoginAction(

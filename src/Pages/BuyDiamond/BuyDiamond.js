@@ -93,28 +93,17 @@ const styles = {
 };
 
 const DiamondSelection = () => {
-  const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
-  const [totalPrice, setTotalPrice] = useState('0.00');
+  const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00', gemSellPrice: '0.00' }]);
   const [formValid, setFormValid] = useState(false); // Track form validation state
+  const [buyBackPromotion, setBuyBackPromotion] = useState(0.4);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const calculateTotalPrice = () => {
-   
-      const calculatedTotalPrice = diamondItems.reduce((acc, item) => {
-        const price = parseFloat(item.gemBuyPrice) || 0;
-        return acc + price;
-      }, 0);
-      setTotalPrice(calculatedTotalPrice.toFixed(2));
-    
-    };
-
-    calculateTotalPrice();
     validateForm(); // Validate form whenever diamondItems change
   }, [diamondItems]);
 
   const handleAddItem = () => {
-    setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00' }]);
+    setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00', gemSellPrice: '0.00' }]);
   };
 
   const handleDeleteItem = (index) => {
@@ -145,22 +134,20 @@ const DiamondSelection = () => {
             data.origin === origin
           ));
 
+          const updatedItems = [...diamondItems];
           if (priceData) {
-            const updatedItems = [...diamondItems];
             updatedItems[index].gemBuyPrice = priceData.gemBuyPrice.toFixed(2);
-            setDiamondItems(updatedItems);
-            setTotalPrice( priceData.gemBuyPrice.toFixed(2));
-
+            updatedItems[index].gemSellPrice = priceData.gemSellPrice.toFixed(2);
           } else {
-            notification.error({message:'"Gem was undefined"'})
-            setFormValid(false);
+            updatedItems[index].gemBuyPrice = '0.00';
+            updatedItems[index].gemSellPrice = '0.00';
+            notification.error({ message: 'Gem was undefined' });
           }
+          setDiamondItems(updatedItems);
         } else {
           console.warn('Invalid response structure', res.data);
-          
         }
-      }   
-      catch (err) {
+      } catch (err) {
         console.error('Error fetching price:', err);
       }
     }
@@ -176,7 +163,8 @@ const DiamondSelection = () => {
 
   const validateForm = () => {
     const isFormValid = diamondItems.every(item =>
-      item.color && item.cut && item.clarity && item.carat && item.origin
+      item.color && item.cut && item.clarity && item.carat && item.origin &&
+      item.gemBuyPrice !== '0.00' && item.gemSellPrice !== '0.00'
     );
     setFormValid(isFormValid);
   };
@@ -195,12 +183,21 @@ const DiamondSelection = () => {
       clarity: item.clarity,
       color: item.color,
       origin: item.origin,
-      gemBuyPrice: parseFloat(item.gemBuyPrice),
+      gemBuyPrice: ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(buyBackPromotion)).toFixed(2)),
+      gemSellPrice: parseFloat(item.gemSellPrice),
     }));
 
     localStorage.setItem('gemData', JSON.stringify(diamondData));
     navigate('/bill-diamond');
   };
+
+  // Calculate total price dynamically
+  const totalPrice = diamondItems.reduce((acc, item) => {
+    const gemBuyPrice = parseFloat(item.gemBuyPrice) || 0;
+    const gemSellPrice = parseFloat(item.gemSellPrice) || 0;
+    const totalItemPrice = gemBuyPrice + (gemSellPrice - gemBuyPrice) * buyBackPromotion;
+    return acc + totalItemPrice;
+  }, 0).toFixed(2);
 
   return (
     <div style={styles.container}>
@@ -265,6 +262,13 @@ const DiamondSelection = () => {
                 <option value="NATURAL">NATURAL</option>
                 <option value="LAB_GROWN">LAB_GROWN</option>
               </select>
+            </div>
+            <div style={styles.totalPrice}>
+              Buy price: {item.gemBuyPrice} Sell price: {item.gemSellPrice}
+            </div>
+            <div style={styles.totalPrice}>
+              Total: ({item.gemBuyPrice} + ({item.gemSellPrice} - {item.gemBuyPrice}) * {buyBackPromotion}) =
+              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(buyBackPromotion)).toFixed(2))}
             </div>
           </React.Fragment>
         ))}

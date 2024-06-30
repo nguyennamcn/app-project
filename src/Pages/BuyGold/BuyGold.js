@@ -3,11 +3,10 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { useNavigate } from 'react-router-dom';
 import { notification } from 'antd';
 
-// Define styles as objects
 const styles = {
   container: {
-    maxHeight: '70vh', // Adjust this value as needed
-    overflowY: 'auto', // Add this line to enable vertical scrolling
+    maxHeight: '70vh',
+    overflowY: 'auto',
     background: '#F7F0B6',
     padding: '20px',
     maxWidth: '900px',
@@ -19,7 +18,7 @@ const styles = {
   form: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '20px' // Increased gap for better spacing
+    gap: '20px'
   },
   formGroup: {
     display: 'flex',
@@ -37,7 +36,7 @@ const styles = {
     border: '2px solid #cccccc',
     borderRadius: '5px',
     fontSize: '16px',
-    width: '100%' // Ensure input takes full width
+    width: '100%'
   },
   button: {
     backgroundColor: '#222222',
@@ -58,14 +57,14 @@ const styles = {
     backgroundColor: '#4CAF50',
     color: 'white',
     border: 'none',
-    padding: '10px 20px', // Increased padding for better look
+    padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '16px', // Increased font size for better readability
+    fontSize: '16px',
     textAlign: 'center',
     gridColumn: 'span 2',
     justifySelf: 'center',
-    marginTop: '20px' // Increased margin for better spacing
+    marginTop: '20px'
   },
   deleteButton: {
     backgroundColor: '#FF6347',
@@ -90,10 +89,11 @@ const GoldSelection = () => {
   const [goldItems, setGoldItems] = useState([{ goldType: '', weight: '' }]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
-  const [formValid, setFormValid] = useState(false); // Track form validation state
+  const [buyBackPromotion, setBuyBackPromotion] = useState(0);
+  const [formValid, setFormValid] = useState(false);
   const newItemRef = useRef(null);
 
-  const navigate = useNavigate(); // Get the navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     adornicaServ.getPriceMaterial()
@@ -106,16 +106,32 @@ const GoldSelection = () => {
   }, []);
 
   useEffect(() => {
+    adornicaServ.getAllCategoryBbp()
+      .then((res) => {
+        const goldCategory = res.data.metadata.find(category => category.id === 5);
+        if (goldCategory) {
+          setBuyBackPromotion(goldCategory.buyBackPromotion);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
     let calculatedTotalPrice = 0;
     goldItems.forEach(item => {
       const selectedGold = goldPrices.find(gold => gold.materialName === item.goldType);
       if (selectedGold) {
-        calculatedTotalPrice += selectedGold.materialBuyPrice * parseFloat(item.weight || 0);
+        const buyPrice = selectedGold.materialBuyPrice * parseFloat(item.weight || 0);
+        const sellPrice = selectedGold.materialSellPrice * parseFloat(item.weight || 0);
+        const itemTotal = buyPrice + (sellPrice - buyPrice) * buyBackPromotion;
+        calculatedTotalPrice += itemTotal;
       }
     });
     setTotalPrice(calculatedTotalPrice.toFixed(2));
-    validateForm(); // Validate form whenever goldItems or goldPrices change
-  }, [goldItems, goldPrices]);
+    validateForm();
+  }, [goldItems, goldPrices, buyBackPromotion]);
 
   const handleAddItem = () => {
     setGoldItems([...goldItems, { goldType: '', weight: '' }]);
@@ -129,7 +145,7 @@ const GoldSelection = () => {
   const handleDeleteItem = (index) => {
     const updatedItems = goldItems.filter((_, i) => i !== index);
     setGoldItems(updatedItems);
-    validateForm(); // Validate form whenever an item is deleted
+    validateForm();
   };
 
   const handleGoldTypeChange = (index, value) => {
@@ -139,8 +155,8 @@ const GoldSelection = () => {
       newGoldItems[index] = {
         ...newGoldItems[index],
         goldType: value,
-        materialBuyPrice: selectedGold.materialBuyPrice, // Add materialBuyPrice here
-        materialSellPrice: selectedGold.materialSellPrice // Add materialSellPrice here
+        materialBuyPrice: selectedGold.materialBuyPrice,
+        materialSellPrice: selectedGold.materialSellPrice
       };
     } else {
       newGoldItems[index] = {
@@ -151,7 +167,7 @@ const GoldSelection = () => {
       };
     }
     setGoldItems(newGoldItems);
-    validateForm(); // Validate form whenever a gold type is changed
+    validateForm();
   };
 
   const handleWeightChange = (index, value) => {
@@ -161,7 +177,7 @@ const GoldSelection = () => {
     const newGoldItems = [...goldItems];
     newGoldItems[index].weight = value;
     setGoldItems(newGoldItems);
-    validateForm(); // Validate form whenever a weight is changed
+    validateForm();
   };
 
   const validateForm = () => {
@@ -170,21 +186,22 @@ const GoldSelection = () => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
 
     if (!formValid) {
       alert('Please fill out all required fields.');
       return;
     }
 
-    // Extract gold type, weight, and materialBuyPrice from goldItems array
-    const goldData = goldItems.map(item => ({
-      goldType: item.goldType,
-      weight: item.weight,
-      materialBuyPrice: item.weight * item.materialBuyPrice // Include materialBuyPrice here
-    }));
+    const goldData = goldItems.map(item => {
+      const total = (item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight;
+      return {
+        goldType: item.goldType,
+        weight: item.weight,
+        materialBuyPrice: total,
+      };
+    });
 
-    // Save gold data to local storage
     localStorage.setItem('goldData', JSON.stringify(goldData));
 
     navigate('/bill-gold');
@@ -217,7 +234,8 @@ const GoldSelection = () => {
                   {item.goldType}: buy price: {item.materialBuyPrice} sell price: {item.materialSellPrice}
                 </div>
                 <div style={styles.totalPrice}>
-                  Total: {item.weight} * {item.materialBuyPrice} = {(item.weight * item.materialBuyPrice).toFixed(2)}
+                  Total: ({item.materialBuyPrice} + ({item.materialSellPrice} - {item.materialBuyPrice}) * {buyBackPromotion}) * {item.weight} = 
+                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(2)}
                 </div>
               </>
             )}
