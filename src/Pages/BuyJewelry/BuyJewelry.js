@@ -106,10 +106,14 @@ const JewelrySelection = () => {
     carat: '',
     color: '',
     clarity: '',
-    cut: ''
+    cut: '',
+    gemBuyPrice: '0.00', gemSellPrice: '0.00',
   }]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [goldPromotion, setGoldPromotion] = useState(0.6);
+  const [gemPromotion, setGemPromotion] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
+  const [gemPrices, setGemPrices] = useState([]);
   const [formValid, setFormValid] = useState(false); // Track form validation state
   const newItemRef = useRef(null);
   const navigate = useNavigate();
@@ -125,13 +129,24 @@ const JewelrySelection = () => {
       });
   }, []);
 
+  useEffect(() => {
+    adornicaServ.getPriceDiamond()
+      .then((res) => {
+        setGemPrices(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+
   const handleInputChange = async (index, field, value) => {
     const updatedItems = jewelryItems.map((item, i) =>
       i === index ? { ...item, [field]: value } : item
     );
     setJewelryItems(updatedItems);
     validateForm(updatedItems);
-
+  
     // Handle goldType change
     if (field === 'goldType') {
       if (value === 'None') {
@@ -151,7 +166,7 @@ const JewelrySelection = () => {
         }
       }
     }
-
+  
     // Handle diamond change
     if (field === 'diamond') {
       if (value === 'None') {
@@ -161,15 +176,29 @@ const JewelrySelection = () => {
           carat: '',
           color: '',
           clarity: '',
-          origin:'',
           cut: '',
+          gemBuyPrice: 0,
         };
+      } else {
+        const selectedGem = gemPrices.find(gem => 
+          gem.origin === value &&
+          gem.color === updatedItems[index].color &&
+          gem.clarity === updatedItems[index].clarity &&
+          gem.cut === updatedItems[index].cut &&
+          gem.carat === parseFloat(updatedItems[index].carat)
+        );
+        if (selectedGem) {
+          updatedItems[index] = {
+            ...updatedItems[index],
+            gemBuyPrice: selectedGem.gemBuyPrice,
+          };
+        }
       }
     }
-
+  
     setJewelryItems(updatedItems);
     validateForm(updatedItems);
-  };
+  };  
 
   useEffect(() => {
     const calculateTotalPrice = async () => {
@@ -179,7 +208,7 @@ const JewelrySelection = () => {
       for (const item of jewelryItems) {
         const selectedGold = goldPrices.find(gold => gold.materialName === item.goldType);
         if (selectedGold) {
-          const goldPrice = selectedGold.materialBuyPrice * parseFloat(item.weight || 0);
+          const goldPrice = (selectedGold.materialBuyPrice + (selectedGold.materialSellPrice - selectedGold.materialBuyPrice) * goldPromotion )* parseFloat(item.weight || 0);
           if (goldPrice === 0 && item.goldType !== 'None') hasValidPrice = false;
           total += goldPrice;
         }
@@ -396,11 +425,25 @@ const JewelrySelection = () => {
                 <option value="P">P</option>
               </select>
             </div>
+
+            {item.goldType && item.goldType !== "None" && (
+              <>
+                <div style={styles.totalPrice}>
+                  {item.goldType}: buy price: {item.materialBuyPrice} sell price: {(goldPrices.find(gold => gold.materialName === item.goldType)?.materialSellPrice)}
+                </div>
+                <div style={styles.totalPrice}>
+                  Total: ({item.materialBuyPrice} + ({(goldPrices.find(gold => gold.materialName === item.goldType)?.materialSellPrice)} - {item.materialBuyPrice}) * {goldPromotion}) * {item.weight} = 
+                  {((item.materialBuyPrice + ((goldPrices.find(gold => gold.materialName === item.goldType)?.materialSellPrice) - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(2)}
+                </div>
+              </>
+            )}
+            
+            
           </React.Fragment>
         ))}
         <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Add Jewelry</button>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice} $
+          Total price: {totalPrice.toFixed(2)} $
         </div>
         <button
           type="submit"

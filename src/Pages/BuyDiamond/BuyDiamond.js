@@ -94,13 +94,28 @@ const styles = {
 
 const DiamondSelection = () => {
   const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00', gemSellPrice: '0.00' }]);
-  const [formValid, setFormValid] = useState(false); // Track form validation state
-  const [buyBackPromotion, setBuyBackPromotion] = useState(0.4);
+
+  const [formValid, setFormValid] = useState(false); 
+  const [buyBackPromotion, setBuyBackPromotion] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    validateForm(); // Validate form whenever diamondItems change
+    validateForm(); 
+
   }, [diamondItems]);
+
+  useEffect(() => {
+    adornicaServ.getAllCategoryBbp()
+      .then((res) => {
+        const diamondCategory = res.data.metadata.find(category => category.id === 6);
+        if (diamondCategory) {
+          setBuyBackPromotion(diamondCategory.buyBackPromotion);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleAddItem = () => {
     setDiamondItems([...diamondItems, { color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00', gemSellPrice: '0.00' }]);
@@ -109,7 +124,7 @@ const DiamondSelection = () => {
   const handleDeleteItem = (index) => {
     const updatedItems = diamondItems.filter((_, i) => i !== index);
     setDiamondItems(updatedItems);
-    validateForm(); // Validate form whenever an item is deleted
+    validateForm();
   };
 
   const fetchPrice = async (index) => {
@@ -158,7 +173,7 @@ const DiamondSelection = () => {
     newDiamondItems[index][field] = value;
     setDiamondItems(newDiamondItems);
     fetchPrice(index);
-    validateForm(); // Validate form whenever a field changes
+    validateForm();
   };
 
   const validateForm = () => {
@@ -170,7 +185,7 @@ const DiamondSelection = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault(); 
 
     if (!formValid) {
       alert('Please fill out all required fields.');
