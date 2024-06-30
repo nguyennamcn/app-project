@@ -94,12 +94,14 @@ const styles = {
 
 const DiamondSelection = () => {
   const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00', gemSellPrice: '0.00' }]);
+
   const [formValid, setFormValid] = useState(false); 
   const [buyBackPromotion, setBuyBackPromotion] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     validateForm(); 
+
   }, [diamondItems]);
 
   useEffect(() => {
