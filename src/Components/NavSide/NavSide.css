@@ -15,11 +15,11 @@
   align-items: center;
   justify-content: left; 
   text-decoration: none;
-  margin: 10px 0;
+  margin: 2px 0;
   color: black; 
   transition: color 0.3s;
   padding-left: 20px; 
-  font-size: 13px; 
+  font-size: 15px; 
 }
 
 .nav-item i {
@@ -34,7 +34,7 @@
   color: white; 
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1000px) {
   .navbar {
     padding: 10px 0;
   }
@@ -47,7 +47,7 @@
     display: none; 
   }
   .nav-item i {
-    font-size: 16px; 
+    font-size: 17px; 
   }
 }
 

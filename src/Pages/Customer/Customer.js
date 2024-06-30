@@ -10,7 +10,7 @@ export default function CustomerDetails() {
       .then((res) => {
         console.log(res.data.metadata);
         // Sắp xếp khách hàng theo thứ tự giảm dần của ID
-        const sortedDetails = res.data.metadata.sort((a, b) => b.customerId - a.customerId);
+        const sortedDetails = res.data.metadata.sort((a, b) =>  a.customerId - b.customerId);
         setCustomerDetails(sortedDetails);
       })
       .catch((err) => {
