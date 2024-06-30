@@ -32,7 +32,7 @@ export default function CustomerDetails() {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>CUSTOMER INFORMATION - {currentDate}</h2>
+      <h2 style={styles.header}>CUSTOMER INFORMATION</h2>
       <input 
         type="text"
         placeholder="Search by Name or Phone"
