@@ -37,7 +37,7 @@ export default function PurchaseOrder() {
                         paymentMethod: order.paymentMethod,
                         deliveryStatus: order.deliveryStatus,
                     }))
-                    .sort((a, b) => b.orderId - a.orderId);
+                    .sort((a, b) => a.orderId - b.orderId);
 
                 setDataSource(orders);
                 setFilteredData(orders);
@@ -204,6 +204,8 @@ export default function PurchaseOrder() {
                 {`
                     .order-list-container {
                         padding: 20px;
+                        max-height:70vh;
+                        overflow-y: auto;
                     }
 
                     .order-list-title {

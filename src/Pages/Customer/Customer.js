@@ -10,7 +10,7 @@ export default function CustomerDetails() {
       .then((res) => {
         console.log(res.data.metadata);
         // Sắp xếp khách hàng theo thứ tự giảm dần của ID
-        const sortedDetails = res.data.metadata.sort((a, b) => b.customerId - a.customerId);
+        const sortedDetails = res.data.metadata.sort((a, b) =>  a.customerId - b.customerId);
         setCustomerDetails(sortedDetails);
       })
       .catch((err) => {
@@ -32,7 +32,7 @@ export default function CustomerDetails() {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>CUSTOMER INFORMATION - {currentDate}</h2>
+      <h2 style={styles.header}>CUSTOMER INFORMATION</h2>
       <input 
         type="text"
         placeholder="Search by Name or Phone"
