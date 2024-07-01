@@ -90,6 +90,11 @@ const styles = {
     color: '#333',
     position: 'relative',
   },
+  subPrice: {
+    width:'100%',
+    gridColumn: 'span 2',
+    textAlign: 'center',
+  },
 };
 
 const DiamondSelection = () => {
@@ -280,12 +285,12 @@ const DiamondSelection = () => {
             </div>
           {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
             <>
-              <div style={styles.totalPrice}>
-              Buy price: {item.gemBuyPrice} Sell price: {item.gemSellPrice}
-            </div>
+               <div style={styles.totalPrice}>Diamond:</div>
+               <div style={styles.subPrice}>Buy price {item.gemBuyPrice} VND</div>
+                  <div style={styles.subPrice}>Sell price {item.gemSellPrice} VND</div>
             <div style={styles.totalPrice}>
-              Total: ({item.gemBuyPrice} + ({item.gemSellPrice} - {item.gemBuyPrice}) * {gemPromotion}) =
-              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
+              Diamond total: {item.gemBuyPrice} + {gemPromotion} promotion
+              = {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
             </div>
             </>
           )}

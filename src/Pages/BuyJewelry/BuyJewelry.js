@@ -93,7 +93,12 @@ const styles = {
     textAlign: 'center',
     marginTop: '2px',
     position: 'relative'
-  }
+  },
+  subPrice: {
+    width:'100%',
+    gridColumn: 'span 2',
+    textAlign: 'center',
+  },
 };
 
 const JewelrySelection = () => {
@@ -108,7 +113,7 @@ const JewelrySelection = () => {
     cut: ''
   }]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [goldPromotion, setGoldPromotion] = useState(0.6);
+  const [goldPromotion, setGoldPromotion] = useState(0);
   const [gemPromotion, setGemPromotion] = useState(0);
   const [goldPrices, setGoldPrices] = useState([]);
   const [gemPrices, setGemPrices] = useState([]);
@@ -132,6 +137,32 @@ const JewelrySelection = () => {
       .then((res) => {
         setGemPrices(res.data.metadata);
         console.log(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    adornicaServ.getAllCategoryBbp()
+      .then((res) => {
+        const diamondCategory = res.data.metadata.find(category => category.id === 6);
+        if (diamondCategory) {
+          setGemPromotion(diamondCategory.buyBackPromotion);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    adornicaServ.getAllCategoryBbp()
+      .then((res) => {
+        const goldCategory = res.data.metadata.find(category => category.id === 5);
+        if (goldCategory) {
+          setGoldPromotion(goldCategory.buyBackPromotion);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -281,8 +312,9 @@ const JewelrySelection = () => {
 
   const validateForm = (updatedItems) => {
     const isFormValid = updatedItems.every(item =>
-      (item.goldType && item.goldType !== 'None' && item.weight) ||
-      (item.origin && item.origin !== 'None' && item.carat && item.color && item.clarity && item.cut)
+      ((item.goldType && item.goldType !== 'None' && item.weight) ||
+      (item.origin && item.origin !== 'None' && item.carat && item.color && item.clarity && item.cut)) &&
+      !(item.goldType === 'None' && item.origin === 'None') // Check if both are "None"
     );
     setFormValid(isFormValid);
   };
@@ -446,24 +478,24 @@ const JewelrySelection = () => {
 
             {item.goldType && item.weight && item.weight >0 && (
               <>
+                <div style={styles.totalPrice}>{item.goldType}:</div>
+                <div style={styles.subPrice}>Buy price {item.materialBuyPrice} VND</div>  
+                <div style={styles.subPrice}>Sell price {item.materialSellPrice} VND</div>
                 <div style={styles.totalPrice}>
-                  {item.goldType}: buy price: {item.materialBuyPrice} sell price: {item.materialSellPrice}
-                </div>
-                <div style={styles.totalPrice}>
-                  Material: ({item.materialBuyPrice} + ({item.materialSellPrice} - {item.materialBuyPrice}) * {goldPromotion}) * {item.weight} = 
-                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(0)}
+                  Material total: ({item.materialBuyPrice} * {item.weight}) + {goldPromotion} promotion
+                   = {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(0)} VND
                 </div>
               </>
             )}
 
             { item.carat && item.clarity && item.color && item.cut && item.origin && (item.origin ==="NATURAL"|| item.origin ==="LAB_GROWN")  && formValid &&(
               <>
-               <div style={styles.totalPrice}>
-              Buy price: {item.gemBuyPrice} Sell price: {item.gemSellPrice}
-            </div>
+               <div style={styles.totalPrice}>Diamond:</div>
+               <div style={styles.subPrice}>Buy price {item.gemBuyPrice} VND</div>
+                  <div style={styles.subPrice}>Sell price {item.gemSellPrice} VND</div>
             <div style={styles.totalPrice}>
-              Gem: ({item.gemBuyPrice} + ({item.gemSellPrice} - {item.gemBuyPrice}) * {gemPromotion}) =
-              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
+              Diamond total: {item.gemBuyPrice} + {gemPromotion} promotion
+              = {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
             </div>
               </>
             )}        
