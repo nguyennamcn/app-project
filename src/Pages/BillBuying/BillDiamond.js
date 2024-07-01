@@ -185,6 +185,7 @@ const BillDiamond = () => {
     if (setter === setCustomerPhone) {
       if (!/^\d*$/.test(value)) {
         setPhoneError('Phone number must be digits only!');
+        return;
       } else if (value.length > 10) {
         return;
       } else {

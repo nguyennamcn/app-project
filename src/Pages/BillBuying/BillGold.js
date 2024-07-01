@@ -8,8 +8,8 @@ Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
-    maxHeight:'70vh',
-    overflowY:'auto',
+    maxHeight: '70vh',
+    overflowY: 'auto',
     background: '#FFFFFF',
     padding: '20px',
     maxWidth: '1000px',
@@ -189,6 +189,7 @@ const BillGold = () => {
     if (setter === setCustomerPhone) {
       if (!/^\d*$/.test(value)) {
         setPhoneError('Phone number must be digits only!');
+        return;
       } else if (value.length > 10) {
         return;
       } else {
