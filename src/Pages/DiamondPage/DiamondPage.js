@@ -74,7 +74,7 @@ export default function DiamondPage() {
     <div className='diamond-page'>
       <div className='filter'>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          <select name='jewelry__category' id='Carat'>
+          {/* <select name='jewelry__category' id='Carat'>
             <option value='Carat'>Carat</option>
             <option value='Carat'>0.30-0.49</option>
             <option value='Carat'>0.50-0.89</option>
@@ -119,7 +119,7 @@ export default function DiamondPage() {
             <option value='I1'>I1</option>
             <option value='I2'>I2</option>
             <option value='I3'>I3</option>
-          </select>
+          </select> */}
         </div>
 
         <div className='search__input_diamond'>

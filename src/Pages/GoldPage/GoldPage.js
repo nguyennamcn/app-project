@@ -76,10 +76,10 @@ export default function GoldPage() {
     <div className="gold-page">
       <div className='filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <select name='gold__category' id='category'>
+          {/* <select name='gold__category' id='category'>
             <option value='gold-ring'>Gold ring</option>
             <option value='gold-bars'>Gold bars</option>
-          </select>
+          </select> */}
         </div>
 
         <div className='search__input_gold'>

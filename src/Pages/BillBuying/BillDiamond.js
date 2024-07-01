@@ -8,9 +8,9 @@ Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
-    maxHeight:'70vh',
-    overflowY:'auto',
-    background: '#FFFFFF',
+    maxHeight: '70vh',
+    overflowY: 'auto',
+    background: '#f0f8ff', 
     padding: '20px',
     maxWidth: '1000px',
     margin: '20px auto',
@@ -26,6 +26,7 @@ const pageStyles = {
     textAlign: 'center',
     fontSize: '25px',
     fontWeight: 'bold',
+    color: '#4682b4', 
   },
   customerDetails: {
     display: 'flex',
@@ -39,7 +40,7 @@ const pageStyles = {
   },
   detailInput: {
     padding: '10px',
-    border: '2px solid #cccccc',
+    border: '2px solid #4682b4', 
     borderRadius: '5px',
     fontSize: '12px',
     marginBottom: '5px',
@@ -50,40 +51,44 @@ const pageStyles = {
   },
   paymentSelect: {
     padding: '10px',
-    border: '2px solid #cccccc',
+    border: '2px solid #4682b4', 
     borderRadius: '5px',
     fontSize: '12px',
   },
   productTable: {
-    width: '100%',
-    border: '1px solid #333',
+    width: '150%',
+    border: '2px solid #4682b4', 
     borderRadius: '5px',
     padding: '10px',
     marginTop: '21px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gap: '10px',
   },
   tableHeader: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(6, 1fr)',
     fontWeight: 'bold',
-    borderBottom: '1px solid #333',
+    borderBottom: '1px solid #4682b4', 
     paddingBottom: '5px',
     textAlign: 'center',
+    color: '#4682b4', 
+    display: 'contents', 
   },
   tableRow: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(6, 1fr)',
     paddingTop: '5px',
     paddingBottom: '5px',
     textAlign: 'center',
+    color: '#333',
+    display: 'contents', 
   },
   tableFooter: {
     display: 'grid',
     gridTemplateColumns: 'repeat(6, 1fr)',
     fontWeight: 'bold',
-    borderTop: '1px solid #333',
+    borderTop: '1px solid #4682b4',
     paddingTop: '5px',
     textAlign: 'center',
     marginTop: '10px',
+    color: '#4682b4',
   },
   footerInfo: {
     gridColumn: 'span 2',
@@ -103,8 +108,8 @@ const pageStyles = {
     width: '100%',
   },
   button: {
-    height: '40px', // Set a fixed height
-    width: '100px', // Set a fixed width
+    height: '40px',
+    width: '100px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -117,7 +122,7 @@ const pageStyles = {
     border: 'none',
   },
   finishButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#4682b4', 
     color: 'white',
   },
   backButton: {
@@ -130,7 +135,7 @@ const pageStyles = {
   },
   modal: {
     content: {
-      backgroundColor: '#4CAF50',
+      backgroundColor: '#4682b4', 
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
@@ -297,28 +302,6 @@ const BillDiamond = () => {
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
 
-        <label style={pageStyles.detailLabel}>Address:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="address"
-          value={address}
-          onChange={handleInputChange(setAddress)}
-        />
-
-        <label style={pageStyles.detailLabel}>Payment methods:</label>
-        <select
-          style={pageStyles.paymentSelect}
-          name="paymentMethod"
-          value={paymentMethod}
-          onChange={handleInputChange(setPaymentMethod)}
-        >
-          <option value="Cash">Cash</option>
-          
-        </select>
-      </div>
-
-      <div>
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
             <span>Cut</span>
@@ -339,6 +322,29 @@ const BillDiamond = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div style={pageStyles.customerDetails}>
+      <label style={pageStyles.detailLabel}>Address:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="address"
+          value={address}
+          onChange={handleInputChange(setAddress)}
+        />
+
+        <label style={pageStyles.detailLabel}>Payment methods:</label>
+        <select
+          style={pageStyles.paymentSelect}
+          name="paymentMethod"
+          value={paymentMethod}
+          onChange={handleInputChange(setPaymentMethod)}
+        >
+          <option value="Cash">Cash</option>
+          <option value="Banking">Banking</option>
+          
+        </select>
       </div>
 
       <div style={pageStyles.summary}>
