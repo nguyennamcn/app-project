@@ -34,7 +34,7 @@ export default function ManageDiamond() {
           .then(() => {
             const newProductData = diamondManage.filter((item) => item.productCode !== diamondCode);
             setDiamondManage(newProductData);
-            notification.success({ message: "Delete Successful" });
+            notification.success({ message: "Delete Successfully" });
           })
           .catch((err) => {
             const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";

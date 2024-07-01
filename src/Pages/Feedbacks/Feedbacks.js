@@ -52,7 +52,7 @@ function Feedback() {
       {isModalOpen && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
-            <p>Submit Successful</p>
+            <p>Submit Successfully</p>
             <button style={styles.closeButton} onClick={closeModal}>
               Close
             </button>

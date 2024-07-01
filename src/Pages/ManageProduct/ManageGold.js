@@ -40,7 +40,7 @@ export default function ManageGold() {
       .then(() => {
         const newProductData = goldManage.filter((item) => item.productCode !== goldCode);
         setGoldManage(newProductData);
-        notification.success({ message: "Delete Successful" });
+        notification.success({ message: "Delete Successfully" });
       })
       .catch((err) => {
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
