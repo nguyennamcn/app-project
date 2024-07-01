@@ -151,8 +151,8 @@ const DiamondSelection = () => {
 
           const updatedItems = [...diamondItems];
           if (priceData) {
-            updatedItems[index].gemBuyPrice = priceData.gemBuyPrice.toFixed(2);
-            updatedItems[index].gemSellPrice = priceData.gemSellPrice.toFixed(2);
+            updatedItems[index].gemBuyPrice = priceData.gemBuyPrice.toFixed(0);
+            updatedItems[index].gemSellPrice = priceData.gemSellPrice.toFixed(0);
           } else {
             updatedItems[index].gemBuyPrice = '0.00';
             updatedItems[index].gemSellPrice = '0.00';
@@ -198,7 +198,7 @@ const DiamondSelection = () => {
       clarity: item.clarity,
       color: item.color,
       origin: item.origin,
-      gemBuyPrice: ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(2)),
+      gemBuyPrice: ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)),
       gemSellPrice: parseFloat(item.gemSellPrice),
     }));
 
@@ -212,7 +212,7 @@ const DiamondSelection = () => {
     const gemSellPrice = parseFloat(item.gemSellPrice) || 0;
     const totalItemPrice = gemBuyPrice + (gemSellPrice - gemBuyPrice) * gemPromotion;
     return acc + totalItemPrice;
-  }, 0).toFixed(2);
+  }, 0).toFixed(0);
 
   return (
     <div style={styles.container}>
@@ -278,13 +278,19 @@ const DiamondSelection = () => {
                 <option value="LAB_GROWN">LAB_GROWN</option>
               </select>
             </div>
-            <div style={styles.totalPrice}>
+          {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
+            <>
+              <div style={styles.totalPrice}>
               Buy price: {item.gemBuyPrice} Sell price: {item.gemSellPrice}
             </div>
             <div style={styles.totalPrice}>
               Total: ({item.gemBuyPrice} + ({item.gemSellPrice} - {item.gemBuyPrice}) * {gemPromotion}) =
-              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(2))}
+              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
             </div>
+            </>
+          )}
+            
+
           </React.Fragment>
         ))}
         <button
@@ -294,7 +300,7 @@ const DiamondSelection = () => {
         >
           ADD DIAMOND
         </button>
-        <div style={styles.totalPrice}>Total price: {totalPrice} $</div>
+        <div style={styles.totalPrice}>Total price: {totalPrice} VND</div>
         <button
           type="submit"
           style={{

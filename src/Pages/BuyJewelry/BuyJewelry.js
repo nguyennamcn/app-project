@@ -168,16 +168,16 @@ const JewelrySelection = () => {
     }
   
     // Handle diamond change
-    if (field === 'origin') {
+    if (field === 'origin' || field === 'cut' || field === 'carat' || field === 'clarity' || field === 'color') {
       if (value === 'None') {
         // Clear and disable related fields
         updatedItems[index] = {
           ...updatedItems[index],
-          origin:'',
-          carat: '',
-          color: '',
-          clarity: '',
-          cut: '',
+          origin:'None',
+          carat: 'None',
+          color: 'None',
+          clarity: 'None',
+          cut: 'None',
           gemBuyPrice: 0,
           gemSellPrice:0,
         };
@@ -214,8 +214,13 @@ const JewelrySelection = () => {
         const selectedGold = goldPrices.find(gold => gold.materialName === item.goldType);
         if (selectedGold) {
           const goldPrice = (selectedGold.materialBuyPrice + (selectedGold.materialSellPrice - selectedGold.materialBuyPrice) * goldPromotion )* parseFloat(item.weight || 0);
-          if (goldPrice === 0 && item.goldType !== 'None') hasValidPrice = false;
-          total += goldPrice;
+          if (goldPrice <= 0 && item.goldType !== 'None'){
+            hasValidPrice = false;
+            total += 0;
+          } else {
+            total += goldPrice;
+          }
+          
         }
 
         if (item.origin && item.carat && item.clarity && item.color && item.cut) {
@@ -284,27 +289,35 @@ const JewelrySelection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (!formValid || totalPrice === 0) {
       alert('Please fill out all required fields and ensure total price is greater than 0.');
       return;
     }
-
-    const jewelryData = jewelryItems.map(item => ({
-      name: item.name,
-      goldType: item.goldType,
-      weight: item.weight,
-      cut: item.cut,
-      carat: item.carat,
-      clarity: item.clarity,
-      color: item.color,
-      origin: item.origin,
-      total: totalPrice
-    }));
-
+  
+    const jewelryData = jewelryItems.map(item => {
+      const totalMaterial = ((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight) || 0;
+      const totalGem = ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion))) || 0;
+  
+      return {
+        name: item.name,
+        goldType: item.goldType,
+        weight: item.weight,
+        cut: item.cut,
+        carat: item.carat,
+        clarity: item.clarity,
+        color: item.color,
+        origin: item.origin,
+        totalMaterial: totalMaterial,
+        totalGem: totalGem,
+        total: totalMaterial + totalGem,
+      };
+    });
+  
     localStorage.setItem('jewelryData', JSON.stringify(jewelryData));
     navigate('/bill-jewelry');
   };
+  
 
   return (
     <div style={styles.container}>
@@ -346,10 +359,11 @@ const JewelrySelection = () => {
                 onChange={e => handleInputChange(index, 'weight', e.target.value)}
                 disabled={item.goldType === 'None'}
                 required={item.goldType !== 'None'}
+                
               />
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Diamond:</label>
+              <label style={styles.label}>Origin:</label>
               <select style={styles.input} value={item.origin} onChange={e => handleInputChange(index, 'origin', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
@@ -430,28 +444,35 @@ const JewelrySelection = () => {
               </select>
             </div>
 
-            {item.goldType && item.goldType !== "None" && (
+            {item.goldType && item.weight && item.weight >0 && (
               <>
                 <div style={styles.totalPrice}>
                   {item.goldType}: buy price: {item.materialBuyPrice} sell price: {item.materialSellPrice}
                 </div>
                 <div style={styles.totalPrice}>
-                  Total: ({item.materialBuyPrice} + ({item.materialSellPrice} - {item.materialBuyPrice}) * {goldPromotion}) * {item.weight} = 
-                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(2)}
+                  Material: ({item.materialBuyPrice} + ({item.materialSellPrice} - {item.materialBuyPrice}) * {goldPromotion}) * {item.weight} = 
+                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(0)}
                 </div>
               </>
             )}
 
-            {item.gemBuyPrice}
-
-            
-            
+            { item.carat && item.clarity && item.color && item.cut && item.origin && (item.origin ==="NATURAL"|| item.origin ==="LAB_GROWN")  && formValid &&(
+              <>
+               <div style={styles.totalPrice}>
+              Buy price: {item.gemBuyPrice} Sell price: {item.gemSellPrice}
+            </div>
+            <div style={styles.totalPrice}>
+              Gem: ({item.gemBuyPrice} + ({item.gemSellPrice} - {item.gemBuyPrice}) * {gemPromotion}) =
+              {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
+            </div>
+              </>
+            )}        
             
           </React.Fragment>
         ))}
         <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Add Jewelry</button>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice.toFixed(2)} $
+          Total price: {totalPrice.toFixed(0)} VND
         </div>
         <button
           type="submit"

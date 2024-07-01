@@ -129,7 +129,7 @@ const GoldSelection = () => {
         calculatedTotalPrice += itemTotal;
       }
     });
-    setTotalPrice(calculatedTotalPrice.toFixed(2));
+    setTotalPrice(calculatedTotalPrice.toFixed(0));
     validateForm();
   }, [goldItems, goldPrices, buyBackPromotion]);
 
@@ -235,7 +235,7 @@ const GoldSelection = () => {
                 </div>
                 <div style={styles.totalPrice}>
                   Total: ({item.materialBuyPrice} + ({item.materialSellPrice} - {item.materialBuyPrice}) * {buyBackPromotion}) * {item.weight} = 
-                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(2)}
+                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(0)}
                 </div>
               </>
             )}
@@ -244,7 +244,7 @@ const GoldSelection = () => {
         <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>ADD GOLD</button>
         
         <div style={styles.totalPrice}>
-          Total price: {totalPrice > 0 ? totalPrice : 0.00} $
+          Total price: {totalPrice > 0 ? totalPrice : 0.00} VND
         </div>
         <button
           type="submit"
