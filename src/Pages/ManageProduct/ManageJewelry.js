@@ -10,7 +10,7 @@ const JewelryInventoryPage = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentJewelryId, setCurrentJewelryId] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+  const itemsPerPage = 4; // Số lượng mục trên mỗi trang
   const totalPages = Math.ceil(jewelry.length / itemsPerPage);
 
   useEffect(() => {
@@ -214,44 +214,49 @@ const JewelryInventoryPage = () => {
 
 const styles = {
   container: {
-    padding: '20px',
+    margin: '30px 20px 20px 20px',
+    padding: '25px',
     fontFamily: 'Arial, sans-serif',
     maxHeight: '70vh',
     overflowY: 'auto',
+    backgroundColor: '#F8E5F4', // Màu hồng nhạt
+    borderRadius: '10px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 1)'
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '20px',
+    marginBottom: '20px'
   },
   title: {
     margin: 0,
-    fontSize: '18px',
-    fontWeight: 'bold',
+    fontSize: '25px',
+    color: '#FF69B4' // Màu hồng đậm
   },
   addButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#FF69B4', // Màu hồng đậm
     color: 'white',
     border: 'none',
     borderRadius: '4px',
     padding: '8px 16px',
     cursor: 'pointer',
-    textDecoration: 'none',
+    textDecoration: 'none'
   },
   table: {
     width: '100%',
     borderCollapse: 'collapse',
-    boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 2px 15px rgba(0,0,0,0.1)'
   },
   th: {
-    border: '1px solid #ddd',
+    border: '3px solid #FFB6C1', // Màu viền hồng nhạt
     padding: '8px',
     textAlign: 'left',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#FFC0CB', // Màu nền hồng nhạt
+    color: '#FF69B4'
   },
   td: {
-    border: '1px solid #ddd',
+    border: '3px solid #ddd',
     padding: '8px',
     textAlign: 'left',
   },

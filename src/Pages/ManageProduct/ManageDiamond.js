@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
-import { Modal, notification, message } from 'antd';
+import { Modal, notification } from 'antd';
 import ReactPaginate from 'react-paginate';
+
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentDiamondId, setCurrentDiamondId] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+  const itemsPerPage = 4; // Số lượng mục trên mỗi trang
   const totalPages = Math.ceil(diamondManage.length / itemsPerPage);
-  
 
   useEffect(() => {
     adornicaServ.getListDiamond()
@@ -54,10 +54,10 @@ export default function ManageDiamond() {
     setCurrentDiamondId(diamondId);
     setIsModalVisible(true);
   };
+
   const changePage = (pageNumber) => {
     setCurrentPage(pageNumber - 1); // Trang bắt đầu từ 0
   };
-  
 
   const handleImageChange = (e, index) => {
     const files = [...selectedImages];
@@ -108,7 +108,6 @@ export default function ManageDiamond() {
   const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, diamondManage.length);
   const currentDiamonds = diamondManage.slice(firstItemIndex, lastItemIndex);
 
-
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -148,7 +147,7 @@ export default function ManageDiamond() {
                   style={diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? styles.updateButton : styles.disabledButton}
                   onClick={() => diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(diamond.productId)}
                   disabled={diamond.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
-                 >
+                >
                   Img
                 </button>
               </td>
@@ -178,7 +177,6 @@ export default function ManageDiamond() {
           breakLinkClassName={'page-link'}
           disabledClassName={'disabled'}
         />
-
       </div>
       <Modal
         title={`Update Images of product ID: ${currentDiamondId}`}
@@ -205,10 +203,14 @@ export default function ManageDiamond() {
 
 const styles = {
   container: {
+    margin:'30px 20px 20px 20px',
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
     maxHeight: '70vh',
     overflowY: 'auto',
+    backgroundColor: '#f7f3fc', // Màu tím nhạt
+    borderRadius: '10px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 1)'
   },
   header: {
     display: 'flex',
@@ -218,11 +220,11 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontSize: '18px',
-    fontWeight: 'bold'
+    fontSize: '25px',
+    color: '#6b46c1' // Màu tím đậm
   },
   addButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#6b46c1', // Màu tím đậm
     color: 'white',
     border: 'none',
     borderRadius: '4px',
@@ -236,13 +238,14 @@ const styles = {
     boxShadow: '0 2px 15px rgba(0,0,0,0.1)'
   },
   th: {
-    border: '1px solid #ddd',
+    border: '2px solid #d3b5ff', // Màu viền tím nhạt
     padding: '8px',
     textAlign: 'left',
-    backgroundColor: '#f4f4f4'
+    backgroundColor: '#e9d8fd', // Màu nền tím nhạt
+    color: '#6b46c1'
   },
   td: {
-    border: '1px solid #ddd',
+    border: '2px solid #ddd',
     padding: '8px',
     textAlign: 'left'
   },
