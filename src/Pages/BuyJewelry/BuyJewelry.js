@@ -80,11 +80,11 @@ const styles = {
     right: '5px'
   },
   totalPrice: {
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
-    margin: '0px 0'
+    margin: '2px 0'
   },
   jewelryLabel: {
     fontSize: '18px',
@@ -478,24 +478,31 @@ const JewelrySelection = () => {
 
             {item.goldType && item.weight && item.weight >0 && (
               <>
-                <div style={styles.totalPrice}>{item.goldType}:</div>
-                <div style={styles.subPrice}>Buy price {item.materialBuyPrice} VND</div>  
-                <div style={styles.subPrice}>Sell price {item.materialSellPrice} VND</div>
+                <div style={styles.totalPrice}>{item.goldType}: Buy price {item.materialBuyPrice} VND - Sell price {item.materialSellPrice} VND</div>
+                
+                <div style={styles.totalPrice}>Gold promotion: {goldPromotion}</div>
+
                 <div style={styles.totalPrice}>
-                  Material total: ({item.materialBuyPrice} * {item.weight}) + {goldPromotion} promotion
-                   = {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(0)} VND
+                  Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(0)} VND
                 </div>
               </>
             )}
 
             { item.carat && item.clarity && item.color && item.cut && item.origin && (item.origin ==="NATURAL"|| item.origin ==="LAB_GROWN")  && formValid &&(
               <>
-               <div style={styles.totalPrice}>Diamond:</div>
-               <div style={styles.subPrice}>Buy price {item.gemBuyPrice} VND</div>
-                  <div style={styles.subPrice}>Sell price {item.gemSellPrice} VND</div>
+               <div style={{
+                fontSize: '16px',
+                fontWeight: 'bold',
+                gridColumn: 'span 2',
+                textAlign: 'center',
+                marginTop: '20px'
+               }}>Diamond: Buy price {item.gemBuyPrice} VND - Sell price {item.gemSellPrice} VND
+               </div>
+               
+               <div style={styles.totalPrice}>Diamond promotion: {gemPromotion}</div>
+
             <div style={styles.totalPrice}>
-              Diamond total: {item.gemBuyPrice} + {gemPromotion} promotion
-              = {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
+              Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
             </div>
               </>
             )}        

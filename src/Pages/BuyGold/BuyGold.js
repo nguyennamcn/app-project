@@ -77,11 +77,11 @@ const styles = {
     marginLeft: '10px',
   },
   totalPrice: {
-    fontSize: '20px',
+    fontSize: '16px',
     fontWeight: 'bold',
     gridColumn: 'span 2',
     textAlign: 'center',
-    margin: '20px 0'
+    margin: '2px 0'
   },
   subPrice: {
     width:'100%',
@@ -235,12 +235,12 @@ const GoldSelection = () => {
             </div>
             {item.goldType && (
               <>
-                <div style={styles.totalPrice}>{item.goldType}:</div>
-                <div style={styles.subPrice}>Buy price {item.materialBuyPrice} VND</div>  
-                <div style={styles.subPrice}>Sell price {item.materialSellPrice} VND</div>
+                <div style={styles.totalPrice}>{item.goldType}: Buy price {item.materialBuyPrice} VND - Sell price {item.materialSellPrice} VND</div>
+                
+                <div style={styles.totalPrice}>Gold promotion: {buyBackPromotion}</div>
+
                 <div style={styles.totalPrice}>
-                  Material total: ({item.materialBuyPrice} * {item.weight}) + {buyBackPromotion} promotion
-                   = {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(0)} VND
+                  Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(0)} VND
                 </div>
               </>
             )}
