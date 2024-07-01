@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Button, notification, message } from 'antd';
+import ReactPaginate from 'react-paginate';
 
 const JewelryInventoryPage = () => {
   const [jewelry, setJewelry] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentJewelryId, setCurrentJewelryId] = useState(null);
-  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+  const totalPages = Math.ceil(jewelry.length / itemsPerPage);
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -58,6 +60,9 @@ const JewelryInventoryPage = () => {
     setCurrentJewelryId(jewelryId);
     setIsModalVisible(true);
   };
+  const changePage = (pageNumber) => {
+    setCurrentPage(pageNumber - 1); // Trang bắt đầu từ 0
+  };
 
   const handleImageChange = (e, index) => {
     const files = [...selectedImages];
@@ -104,14 +109,10 @@ const JewelryInventoryPage = () => {
     setCurrentJewelryId(null);
   };
 
-  const lastItemIndex = currentPage * itemsPerPage;
-  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const firstItemIndex = currentPage * itemsPerPage;
+  const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, jewelry.length);
   const currentJewelry = jewelry.slice(firstItemIndex, lastItemIndex);
-  const totalPages = Math.ceil(jewelry.length / itemsPerPage);
 
-  const changePage = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   return (
     <div style={styles.container}>
@@ -167,13 +168,26 @@ const JewelryInventoryPage = () => {
       </table>
       <div style={styles.footer}>
         <NavLink to="/inventory" style={styles.backButton}>BACK</NavLink>
-        <div style={styles.pagination}>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button key={i} style={styles.pageButton} onClick={() => changePage(i + 1)}>
-              {i + 1}
-            </button>
-          ))}
-        </div>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={totalPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={(data) => changePage(data.selected + 1)}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
       </div>
       <Modal
         title={`Update Images of product ID: ${currentJewelryId}`}

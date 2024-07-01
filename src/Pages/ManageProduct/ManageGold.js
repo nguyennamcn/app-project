@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { Modal, notification, message } from 'antd';
+import ReactPaginate from 'react-paginate';
+
 
 export default function ManageGold() {
   const [goldManage, setGoldManage] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentGoldId, setCurrentGoldId] = useState(null);
-  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+  const totalPages = Math.ceil(goldManage.length / itemsPerPage);
+  
 
   useEffect(() => {
     adornicaServ.getListGold()
@@ -48,6 +52,10 @@ export default function ManageGold() {
         console.log(err);
       });
   };
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
+  
 
   const handleInputChange = (e, productId) => {
     const { name, value } = e.target;
@@ -114,10 +122,11 @@ export default function ManageGold() {
     setCurrentGoldId(null);
   };
 
-  const lastItemIndex = currentPage * itemsPerPage;
-  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const firstItemIndex = currentPage * itemsPerPage;
+  const lastItemIndex = firstItemIndex + itemsPerPage;
   const currentGold = goldManage.slice(firstItemIndex, lastItemIndex);
-  const totalPages = Math.ceil(goldManage.length / itemsPerPage);
+  
+
 
   const changePage = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -183,13 +192,27 @@ export default function ManageGold() {
       </table>
       <div style={styles.footer}>
         <NavLink to="/inventory" style={styles.backButton}>BACK</NavLink>
-        <div style={styles.pagination}>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button key={i} style={styles.pageButton} onClick={() => changePage(i + 1)}>
-              {i + 1}
-            </button>
-          ))}
-        </div>
+        <ReactPaginate
+  previousLabel={'Previous'}
+  nextLabel={'Next'}
+  breakLabel={'...'}
+  pageCount={totalPages}
+  marginPagesDisplayed={2}
+  pageRangeDisplayed={5}
+  onPageChange={handlePageClick}
+  containerClassName={'pagination'}
+  activeClassName={'active'}
+  pageClassName={'page-item'}
+  pageLinkClassName={'page-link'}
+  previousClassName={'page-item'}
+  previousLinkClassName={'page-link'}
+  nextClassName={'page-item'}
+  nextLinkClassName={'page-link'}
+  breakClassName={'page-item'}
+  breakLinkClassName={'page-link'}
+  disabledClassName={'disabled'}
+/>
+
       </div>
       <Modal
         title={`Update Images of product ID: ${currentGoldId}`}
