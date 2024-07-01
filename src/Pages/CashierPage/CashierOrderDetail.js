@@ -237,8 +237,8 @@ export default function ListOrderPage() {
                             </div>
                             <div className="col-sm-12">
                                 <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
-                                    <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{totalPrice.toFixed(2)}$</span>
-                                    <span style={{ marginLeft: '4%', color: 'orange' }}>{(totalPrice - (totalPrice * discount / 100)).toFixed(2)}$</span>
+                                    <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{totalPrice.toFixed(2)} VND</span>
+                                    <span style={{ marginLeft: '4%', color: 'orange' }}>{(totalPrice - (totalPrice * discount / 100)).toFixed(2)} VND</span>
                                 </h1>
                             </div>
                         </div>
