@@ -3,6 +3,8 @@ import { Card, Modal } from 'antd';
 import { NavLink } from 'react-router-dom';
 import './GoldPage.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import ReactPaginate from 'react-paginate';
+
 const { Meta } = Card;
 
 export default function GoldPage() {
@@ -11,6 +13,8 @@ export default function GoldPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10; // Số sản phẩm mỗi trang
 
   useEffect(() => {
     adornicaServ.getListGold()
@@ -41,10 +45,7 @@ export default function GoldPage() {
     };
     console.log(item);
 
-    // Get existing cart items from local storage
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    // Check if the item is already in the cart
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if (product.productPrice < 0) {
@@ -55,10 +56,8 @@ export default function GoldPage() {
     if (existingItemIndex > -1) {
       showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {
-      // Add new item to the cart
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      // Save updated cart items to local storage
       showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
     }
   };
@@ -67,21 +66,24 @@ export default function GoldPage() {
     setSearchTerm(e.target.value);
   };
 
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
+
   const filteredProducts = products.filter(product =>
     product.productCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.productName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
+  const offset = currentPage * itemsPerPage;
+  const currentItems = filteredProducts.slice(offset, offset + itemsPerPage);
+
   return (
     <div className="gold-page">
       <div className='filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
-          {/* <select name='gold__category' id='category'>
-            <option value='gold-ring'>Gold ring</option>
-            <option value='gold-bars'>Gold bars</option>
-          </select> */}
         </div>
-
         <div className='search__input_gold'>
           <textarea
             placeholder='Search by product code or name...'
@@ -96,8 +98,8 @@ export default function GoldPage() {
         </div>
       </div>
       <div className="product-container">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((sp) => (
+        {currentItems.length > 0 ? (
+          currentItems.map((sp) => (
             <div className="product-card-container" key={sp.productCode}>
               <Card
                 bodyStyle={{ padding: '8px' }}
@@ -126,8 +128,29 @@ export default function GoldPage() {
           </div>
         )}
       </div>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
+      </div>
       <Modal
-        title="Notification"
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}
