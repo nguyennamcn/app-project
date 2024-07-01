@@ -285,12 +285,13 @@ const DiamondSelection = () => {
             </div>
           {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
             <>
-               <div style={styles.totalPrice}>Diamond:</div>
-               <div style={styles.subPrice}>Buy price {item.gemBuyPrice} VND</div>
-                  <div style={styles.subPrice}>Sell price {item.gemSellPrice} VND</div>
+               <div style={styles.totalPrice}>Diamond: Buy price {item.gemBuyPrice} VND - Sell price {item.gemSellPrice} VND
+               </div>
+               
+               <div style={styles.totalPrice}>Diamond promotion: {gemPromotion}</div>
+
             <div style={styles.totalPrice}>
-              Diamond total: {item.gemBuyPrice} + {gemPromotion} promotion
-              = {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
+              Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
             </div>
             </>
           )}

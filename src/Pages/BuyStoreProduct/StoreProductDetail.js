@@ -25,13 +25,33 @@ export default function StoreProductDetail() {
                 setSp(orderDetail);
                 setProducts(orderDetail.list);
                 const calculatedTotalPrice = orderDetail.list.reduce((sum, product) => sum + (product.price || 0), 0);
-                const priceAll = calculatedTotalPrice * 0.7;
-                setTotalPrice(priceAll);
+                setTotalPrice(calculatedTotalPrice);
+                
+                fetchProductDetails(orderDetail.list);
             })
             .catch((err) => {
                 console.log(err);
             });
     }, [orderCode]);
+
+    const fetchProductDetails = (productsList) => {
+        const promises = productsList.map(product =>
+            adornicaServ.getDetailProduct(product.productId)
+                .then((res) => {
+                    console.log('Product details for', product.productId, ':', res.data.metadata);
+                    return res.data.metadata;
+                })
+                .catch((err) => {
+                    console.error('Error fetching details for product', product.productId, ':', err);
+                    return null;
+                })
+        );
+
+        Promise.all(promises).then((details) => {
+            // You can do something with the product details if needed
+            console.log('All product details:', details);
+        });
+    };
 
     const generateRandomOrderCode = () => {
         return 'SP' + Math.random().toString(36).substring(2, 10).toUpperCase();
@@ -105,7 +125,7 @@ export default function StoreProductDetail() {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
-            render: (text) => `$${text}`,
+            render: (text) => `${text} VND`,
         },
         {
             title: 'Choose',
@@ -139,7 +159,7 @@ export default function StoreProductDetail() {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
-            render: (text) => `$${text}`,
+            render: (text) => `${text} VND`,
         },
         {
             title: 'Remove',
@@ -197,12 +217,12 @@ export default function StoreProductDetail() {
                         <div className='col-sm-1' >
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total items:<span style={{ marginLeft: '4%' }}>{sp?.list ? sp.list.length : 0}</span>
+                                    Total items:<span style={{ marginLeft: '4%' }}> {sp?.list ? sp.list.length : 0}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total Pay:<span style={{ marginLeft: '4%' }}> VND{totalPrice}</span>
+                                    Total:<span style={{ marginLeft: '4%' }}> {totalPrice} VND</span>
                                 </h1>
                             </div>
                         </div>
