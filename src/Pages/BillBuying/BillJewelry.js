@@ -8,7 +8,7 @@ Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
-    background: '#FFFFFF',
+    background: '#e0f7fa', // Màu nền lam nhạt
     padding: '20px',
     maxWidth: '1000px',
     margin: '20px auto',
@@ -24,21 +24,21 @@ const pageStyles = {
     textAlign: 'center',
     fontSize: '25px',
     fontWeight: 'bold',
+    color: '#2e7d32', // Màu chữ lục đậm
   },
   customerDetails: {
     display: 'flex',
     flexDirection: 'column',
-    // maxWidth:'400px'
   },
   detailLabel: {
     fontSize: '12px',
-    color: '#333',
+    color: '#2e7d32', // Màu chữ lục đậm
     marginBottom: '5px',
     fontWeight: 'bold',
   },
   detailInput: {
     padding: '10px',
-    border: '2px solid #cccccc',
+    border: '2px solid #388e3c', // Viền lục
     borderRadius: '5px',
     fontSize: '12px',
     marginBottom: '5px',
@@ -49,25 +49,16 @@ const pageStyles = {
   },
   paymentSelect: {
     padding: '10px',
-    border: '2px solid #cccccc',
+    border: '2px solid #388e3c', // Viền lục
     borderRadius: '5px',
     fontSize: '12px',
   },
   productTable: {
-    width: '100%',
-    border: '1px solid #333',
+    width: '200%',
+    border: '2px solid #388e3c', // Viền lục
     borderRadius: '5px',
     padding: '10px',
     marginTop: '21px',
-  },
-  tableHeader: {
-    fontSize: '13px',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(9, 1fr)',
-    fontWeight: 'bold',
-    borderBottom: '1px solid #333',
-    paddingBottom: '5px',
-    textAlign: 'center',
   },
   buttonWrapper: {
     gridColumn: 'span 2',
@@ -76,34 +67,49 @@ const pageStyles = {
     gap: '10px',
     width: '100%',
   },
+  tableHeader: {
+    fontSize: '13px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(9, 1fr)',
+    fontWeight: 'bold',
+    borderBottom: '1px solid #388e3c', // Viền lục
+    paddingBottom: '5px',
+    textAlign: 'center',
+    color: '#2e7d32', // Màu chữ lục đậm
+  },
   tableRow: {
     display: 'grid',
     gridTemplateColumns: 'repeat(9, 1fr)',
     paddingTop: '5px',
     paddingBottom: '5px',
     textAlign: 'center',
+    color: '#333',
+    
   },
   tableFooter: {
     display: 'grid',
     gridTemplateColumns: 'repeat(9, 1fr)',
     fontWeight: 'bold',
-    borderTop: '1px solid #333',
+    borderTop: '1px solid #388e3c', // Viền lục
     paddingTop: '5px',
     textAlign: 'center',
     marginTop: '10px',
+    color: '#2e7d32', // Màu chữ lục đậm
   },
   footerInfo: {
     gridColumn: 'span 2',
     textAlign: 'right',
     fontSize: '14px',
     marginTop: '70px',
+    color: '#2e7d32', // Màu chữ lục đậm
   },
   totalSummary: {
     fontWeight: 'bold',
     textAlign: 'center',
+    color: '#2e7d32', // Màu chữ lục đậm
   },
   finishButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#388e3c', // Màu nền lục
     color: 'white',
     border: 'none',
     padding: '10px 20px',
@@ -127,7 +133,7 @@ const pageStyles = {
     textAlign: 'center',
   },
   printButton: {
-    backgroundColor: '#ADD8E6',
+    backgroundColor: '#c8e6c9',
     color: 'black',
     border: 'none',
     padding: '10px 20px',
@@ -140,7 +146,7 @@ const pageStyles = {
   },
   modal: {
     content: {
-      backgroundColor: '#4CAF50',
+      backgroundColor: '#388e3c', // Màu nền lục
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
@@ -299,28 +305,7 @@ const BillJewelry = () => {
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
 
-        <label style={pageStyles.detailLabel}>Address:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="address"
-          value={customerDetails.address}
-          onChange={handleDetailChange}
-        />
-
-        <label style={pageStyles.detailLabel}>Payment methods:</label>
-        <select
-          style={pageStyles.paymentSelect}
-          name="paymentMethod"
-          value={customerDetails.paymentMethod}
-          onChange={handleDetailChange}
-        >
-          <option value="Cash">Cash</option>
-          <option value="Card">Banking</option>
-        </select>
-      </div>
-
-      <div>
+        
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
             <span>Name</span>
@@ -348,11 +333,37 @@ const BillJewelry = () => {
           ))}
         </div>
       </div>
+      
+
+      <div style={pageStyles.customerDetails}>
+      <label style={pageStyles.detailLabel}>Address:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="address"
+          value={customerDetails.address}
+          onChange={handleDetailChange}
+        />
+
+        <label style={pageStyles.detailLabel}>Payment methods:</label>
+        <select
+          style={pageStyles.paymentSelect}
+          name="paymentMethod"
+          value={customerDetails.paymentMethod}
+          onChange={handleDetailChange}
+        >
+          <option value="Cash">Cash</option>
+          <option value="Card">Banking</option>
+        </select>
+      </div>
+      
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
         <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}$</div>
       </div>
+
+      
 
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>
@@ -369,6 +380,7 @@ const BillJewelry = () => {
           CREATE
         </button>
       </div>
+      
 
       <Modal
         isOpen={modalIsOpen}
@@ -378,16 +390,9 @@ const BillJewelry = () => {
       >
         <div style={pageStyles.successIcon}>✔</div>
         <h2>Successfully</h2>
-        {/* <p>Thank you for your purchase!</p>
-        <div style={pageStyles.modalButtonWrapper}>
-          <NavLink to="/buyProduct" exact>
-            <button style={pageStyles.backButton}>BACK</button>
-          </NavLink>
-
-          <button style={pageStyles.printButton} onClick={handlePrintClick}>PRINT</button>
-        </div> */}
       </Modal>
     </div>
+    
   );
 };
 

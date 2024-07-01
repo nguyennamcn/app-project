@@ -10,10 +10,10 @@ const pageStyles = {
   container: {
     maxHeight: '70vh',
     overflowY: 'auto',
-    background: '#FFFFFF',
-    padding: '20px',
+    background: '#FFF8DC', 
+    padding: '30px',
     maxWidth: '1000px',
-    margin: '20px auto',
+    margin: '40px auto',
     borderRadius: '10px',
     boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.2)',
     fontFamily: 'Arial, sans-serif',
@@ -26,6 +26,7 @@ const pageStyles = {
     textAlign: 'center',
     fontSize: '25px',
     fontWeight: 'bold',
+    color: '#DAA520',
   },
   customerDetails: {
     display: 'flex',
@@ -33,13 +34,13 @@ const pageStyles = {
   },
   detailLabel: {
     fontSize: '12px',
-    color: '#333',
+    color: 'black', 
     marginBottom: '5px',
     fontWeight: 'bold',
   },
   detailInput: {
     padding: '10px',
-    border: '2px solid #cccccc',
+    border: '2px solid #DAA520', 
     borderRadius: '5px',
     fontSize: '12px',
     marginBottom: '5px',
@@ -50,13 +51,13 @@ const pageStyles = {
   },
   paymentSelect: {
     padding: '10px',
-    border: '2px solid #cccccc',
+    border: '2px solid #DAA520',
     borderRadius: '5px',
     fontSize: '12px',
   },
   productTable: {
-    width: '100%',
-    border: '1px solid #333',
+    width: '150%',
+    border: '2px solid #DAA520',
     borderRadius: '5px',
     padding: '10px',
     marginTop: '21px',
@@ -65,9 +66,10 @@ const pageStyles = {
     display: 'grid',
     gridTemplateColumns: '2fr 1fr 1fr',
     fontWeight: 'bold',
-    borderBottom: '1px solid #333',
+    borderBottom: '1px solid #DAA520', 
     paddingBottom: '5px',
     textAlign: 'center',
+    color: '#DAA520', 
   },
   tableRow: {
     display: 'grid',
@@ -75,15 +77,18 @@ const pageStyles = {
     paddingTop: '5px',
     paddingBottom: '5px',
     textAlign: 'center',
+    color: '#333', 
+    
   },
   tableFooter: {
     display: 'grid',
     gridTemplateColumns: '2fr 1fr 1fr',
     fontWeight: 'bold',
-    borderTop: '1px solid #333',
+    borderTop: '1px solid #DAA520', 
     paddingTop: '5px',
     textAlign: 'center',
     marginTop: '10px',
+    color: '#DAA520',
   },
   footerInfo: {
     gridColumn: 'span 2',
@@ -102,8 +107,8 @@ const pageStyles = {
     width: '100%',
   },
   button: {
-    height: '40px', // Set a fixed height
-    width: '100px', // Set a fixed width
+    height: '40px', 
+    width: '100px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -116,7 +121,7 @@ const pageStyles = {
     border: 'none',
   },
   finishButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#FFD700', 
     color: 'white',
   },
   backButton: {
@@ -130,7 +135,7 @@ const pageStyles = {
   },
   modal: {
     content: {
-      backgroundColor: '#4CAF50',
+      backgroundColor: '#FFD700', 
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
@@ -222,7 +227,7 @@ const BillGold = () => {
   };
 
   const handleMouseUp = (e) => {
-    e.target.style.backgroundColor = '#4CAF50';
+    e.target.style.backgroundColor = '#FFD700';
   };
 
   const generateRandomOrderCode = () => {
@@ -293,7 +298,24 @@ const BillGold = () => {
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
 
-        <label style={pageStyles.detailLabel}>Address:</label>
+        <div style={pageStyles.productTable}>
+          <div style={pageStyles.tableHeader}>
+            <span>Product</span>
+            <span>Weight</span>
+            <span>Price</span>
+          </div>
+          {products.map((product, index) => (
+            <div key={index} style={pageStyles.tableRow}>
+              <span>{product.goldType}</span>
+              <span>{product.weight}</span>
+              <span>{product.materialBuyPrice.toFixed(2)}$</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={pageStyles.customerDetails}>
+      <label style={pageStyles.detailLabel}>Address:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -312,23 +334,6 @@ const BillGold = () => {
           <option value="Cash">Cash</option>
           <option value="Card">Banking</option>
         </select>
-      </div>
-
-      <div>
-        <div style={pageStyles.productTable}>
-          <div style={pageStyles.tableHeader}>
-            <span>Product</span>
-            <span>Weight</span>
-            <span>Price</span>
-          </div>
-          {products.map((product, index) => (
-            <div key={index} style={pageStyles.tableRow}>
-              <span>{product.goldType}</span>
-              <span>{product.weight}</span>
-              <span>{product.materialBuyPrice.toFixed(2)}$</span>
-            </div>
-          ))}
-        </div>
       </div>
 
       <div style={pageStyles.summary}>
