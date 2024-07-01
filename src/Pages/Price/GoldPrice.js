@@ -24,8 +24,8 @@ useEffect(() => {
         <thead>
           <tr>
             <th style={styles.th}>Name</th>
-            <th style={styles.th}>Purchase</th>
-            <th style={styles.th}>Sell</th>
+            <th style={styles.th}>Purchase (VND)</th>
+            <th style={styles.th}>Sell (VND)</th>
           </tr>
         </thead>
         <tbody>
