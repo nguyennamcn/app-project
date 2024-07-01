@@ -22,14 +22,30 @@ const JewelryInventoryPage = () => {
       });
   }, []);
 
+  const showDeleteConfirm = (jewelryCode) => {
+    Modal.confirm({
+      title: 'Confirm',
+      content: 'Do you really want to delete this product?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        handleDelete(jewelryCode);
+      }
+    });
+  };
+
   const handleDelete = (jewelryCode) => {
     adornicaServ.deleteProduct(jewelryCode)
       .then(() => {
         const newProductData = jewelry.filter((item) => item.productCode !== jewelryCode);
         setJewelry(newProductData);
+        notification.success({ message: "Delete Successful" });
       })
       .catch((err) => {
-        console.log("Error deleting order:", err);
+        const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.log(err);
       });
   };
 
@@ -54,7 +70,7 @@ const JewelryInventoryPage = () => {
       notification.error({ message: 'Please select all 4 images' });
       return;
     }
-  
+
     adornicaServ.postProductImg(
       currentJewelryId,
       selectedImages[0],
@@ -65,13 +81,22 @@ const JewelryInventoryPage = () => {
       setIsModalVisible(false);
       setSelectedImages([]);
       setCurrentJewelryId(null);
-      message.success('Images updated successfully');
+      notification.success({message: 'Images updated successfully'});
+
+      adornicaServ.getListJewelry()
+      .then((res) => {
+        console.log(res.data.metadata.data);
+        setJewelry(res.data.metadata.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      
     }).catch((err) => {
       console.log("Error uploading images:", err.response);
       notification.error({ message: 'Error uploading images' });
     });
   };
-  
 
   const handleModalCancel = () => {
     setIsModalVisible(false);
@@ -115,22 +140,23 @@ const JewelryInventoryPage = () => {
               <td style={styles.td}>{item.size}</td>
               <td style={styles.td}>
                 <NavLink to={`/update-jewelry/${item.productId}`}>
-                <button
-                  style={styles.updateButton}
-                  onClick={() => handleUpdate(item.productCode)}
-                >
-                  Update
-                </button>
+                  <button
+                    style={styles.updateButton}
+                    onClick={() => handleUpdate(item.productCode)}
+                  >
+                    Update
+                  </button>
                 </NavLink>
                 <button
                   style={styles.deleteButton}
-                  onClick={() => handleDelete(item.productCode)}
+                  onClick={() => showDeleteConfirm(item.productCode)}
                 >
                   Delete
                 </button>
                 <button
-                  style={styles.updateButton}
-                  onClick={() => handleUpdateImg(item.productId)}
+                  style={item.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? styles.updateButton : styles.disabledButton}
+                  onClick={() => item.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(item.productId)}
+                  disabled={item.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
                   Img
                 </button>
@@ -176,14 +202,14 @@ const styles = {
   container: {
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
-    maxHeight:'70vh',
-    overflowY:'auto',
+    maxHeight: '70vh',
+    overflowY: 'auto',
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '20px'
+    marginBottom: '20px',
   },
   title: {
     margin: 0,
@@ -197,30 +223,30 @@ const styles = {
     borderRadius: '4px',
     padding: '8px 16px',
     cursor: 'pointer',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   table: {
     width: '100%',
     borderCollapse: 'collapse',
-    boxShadow: '0 2px 15px rgba(0,0,0,0.1)'
+    boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
   },
   th: {
     border: '1px solid #ddd',
     padding: '8px',
     textAlign: 'left',
-    backgroundColor: '#f4f4f4'
+    backgroundColor: '#f4f4f4',
   },
   td: {
     border: '1px solid #ddd',
     padding: '8px',
-    textAlign: 'left'
+    textAlign: 'left',
   },
   input: {
     width: '100%',
     padding: '5px',
     boxSizing: 'border-box',
     border: '1px solid #ccc',
-    borderRadius: '4px'
+    borderRadius: '4px',
   },
   updateButton: {
     padding: '5px 10px',
@@ -229,24 +255,34 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '4px',
-    cursor: 'pointer', 
-    marginBottom:'4px',
+    cursor: 'pointer',
+    marginBottom: '4px',
   },
   deleteButton: {
-    marginRight:'5px',
+    marginRight: '5px',
     padding: '5px 10px',
     backgroundColor: '#f44336',
     color: 'white',
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-     marginBottom:'4px',
+    marginBottom: '4px',
+  },
+  disabledButton: {
+    padding: '5px 10px',
+    marginRight: '5px',
+    backgroundColor: '#d3d3d3',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: '',
+    marginBottom: '4px',
   },
   footer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: '20px'
+    marginTop: '20px',
   },
   backButton: {
     padding: '8px 16px',
@@ -255,12 +291,12 @@ const styles = {
     border: '1px solid #ccc',
     borderRadius: '3px',
     textDecoration: 'none',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   pagination: {
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: '10px 20px'
+    padding: '10px 20px',
   },
   pageButton: {
     padding: '5px 10px',
@@ -269,8 +305,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '5px',
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 };
 
 export default JewelryInventoryPage;

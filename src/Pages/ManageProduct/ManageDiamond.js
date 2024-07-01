@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
-import { Modal, Button, notification, message } from 'antd';
+import { Modal, notification, message } from 'antd';
 
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
@@ -23,16 +23,30 @@ export default function ManageDiamond() {
   }, []);
 
   const handleDelete = (diamondCode) => {
-    adornicaServ.deleteProduct(diamondCode)
-      .then(() => {
-        const newProductData = diamondManage.filter((item) => item.productCode !== diamondCode);
-        setDiamondManage(newProductData);
-      })
-      .catch((err) => {
-        console.log("Error deleting order:", err);
-      });
+    Modal.confirm({
+      title: 'Confirm Delete',
+      content: 'Are you sure you want to delete this diamond?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        adornicaServ.deleteProduct(diamondCode)
+          .then(() => {
+            const newProductData = diamondManage.filter((item) => item.productCode !== diamondCode);
+            setDiamondManage(newProductData);
+            notification.success({ message: "Delete Successful" });
+          })
+          .catch((err) => {
+            const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+            notification.error({ message: errorMessage });
+            console.log(err);
+          });
+      },
+      onCancel() {
+        console.log('Delete canceled');
+      },
+    });
   };
-
 
   const handleUpdateImg = (diamondId) => {
     setCurrentDiamondId(diamondId);
@@ -61,7 +75,17 @@ export default function ManageDiamond() {
       setIsModalVisible(false);
       setSelectedImages([]);
       setCurrentDiamondId(null);
-      message.success('Images updated successfully');
+      notification.success({message: 'Images updated successfully'});
+
+      adornicaServ.getListDiamond()
+      .then((res) => {
+        console.log(res.data.metadata.data);
+        setDiamondManage(res.data.metadata.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     }).catch((err) => {
       console.log("Error uploading images:", err.response);
       notification.error({ message: 'Error uploading images' });
@@ -106,15 +130,11 @@ export default function ManageDiamond() {
               <td style={styles.td}>{diamond.productId}</td>
               <td style={styles.td}>{diamond.productCode}</td>
               <td style={styles.td}>{diamond.productName}</td>
-              <td style={styles.td}>{diamond.productPrice <= 0 ? 'Not yet been priced' :(diamond.productPrice + "$")}</td>
+              <td style={styles.td}>{diamond.productPrice <= 0 ? 'Not yet been priced' : `${diamond.productPrice} $`}</td>
               <td style={styles.td}>{diamond.size}</td>
               <td style={styles.td}>
                 <NavLink to={`/update-diamond/${diamond.productId}`}>
-                <button
-                  style={styles.updateButton}
-                >
-                  Update
-                </button>
+                  <button style={styles.updateButton}>Update</button>
                 </NavLink>
                 <button
                   style={styles.deleteButton}
@@ -123,9 +143,10 @@ export default function ManageDiamond() {
                   Delete
                 </button>
                 <button
-                  style={styles.updateButton}
-                  onClick={() => handleUpdateImg(diamond.productId)}
-                >
+                  style={diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? styles.updateButton : styles.disabledButton}
+                  onClick={() => diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(diamond.productId)}
+                  disabled={diamond.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
+                 >
                   Img
                 </button>
               </td>
@@ -170,8 +191,8 @@ const styles = {
   container: {
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
-    maxHeight:'70vh',
-    overflowY:'auto',
+    maxHeight: '70vh',
+    overflowY: 'auto',
   },
   header: {
     display: 'flex',
@@ -217,17 +238,27 @@ const styles = {
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-    marginBottom:'4px',
+    marginBottom: '4px',
   },
   deleteButton: {
-    marginRight:'5px',
+    marginRight: '5px',
     padding: '5px 10px',
     backgroundColor: '#f44336',
     color: 'white',
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-    marginBottom:'4px',
+    marginBottom: '4px',
+  },
+  disabledButton: {
+    padding: '5px 10px',
+    marginRight: '5px',
+    backgroundColor: '#f0f0f0',
+    color: '#888',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'not-allowed',
+    marginBottom: '4px',
   },
   footer: {
     display: 'flex',

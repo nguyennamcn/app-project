@@ -250,7 +250,7 @@ const PurchaseDetailHistory = () => {
       </div>
       <div>
         <h1>Order Code : {sp?.orderCode}</h1>
-        <h1>Order ID : {sp?.orderId}</h1>
+        {/* <h1>Order ID : {sp?.orderId}</h1> */}
         <h1>Total Amount : {sp?.totalAmount}</h1>
       </div>
 
