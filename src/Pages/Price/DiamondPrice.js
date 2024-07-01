@@ -35,8 +35,8 @@ export default function GoldPrice() {
               <th style={styles.th}>Clarity</th>
               <th style={styles.th}>Cut</th>
               <th style={styles.th}>Carat</th>
-              <th style={styles.th}>Purchase</th>
-              <th style={styles.th}>Sell</th>
+              <th style={styles.th}>Purchase (VND) </th>
+              <th style={styles.th}>Sell (VND) </th>
               <th style={styles.th}>Date Update</th>
             </tr>
           </thead>

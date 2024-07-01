@@ -145,14 +145,14 @@ export default function PurchaseOrder() {
                                             View
                                         </Button>
                                     </NavLink>
-                                    <Button
+                                    {/* <Button
                                         style={{ marginRight: '14px' }}
                                         type="primary"
                                         danger
                                         onClick={() => handleDelete(order.orderCode)}
                                     >
                                         Delete
-                                    </Button>
+                                    </Button> */}
                                 </div>
                             </td>
                         </tr>

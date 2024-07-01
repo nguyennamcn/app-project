@@ -101,15 +101,18 @@ const LoginPage = () => {
                     name="phone"
                     rules={[
                       { required: true, message: 'Please input your phone number!' },
-                      { pattern: /^[0-9]+$/, message: 'Phone number must be digits only!' }
+                      { pattern: /^[0-9]+$/, message: 'Phone number must be digits only!' },
+                      { max: 10, message: 'Phone number must be 10 digits!' }
                     ]}
                   >
-                    <Input />
+                    <Input  maxLength={10}/>
                   </Form.Item>
                   <Form.Item
                     label="Password"
                     name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    rules={[{ required: true, message: 'Please input your password!' }]
+                    
+                  }
                   >
                     <Input.Password />
                   </Form.Item>

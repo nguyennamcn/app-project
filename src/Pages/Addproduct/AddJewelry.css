@@ -1,65 +1,65 @@
-.add-jewelry-container {
+.add-gem-container {
   display: flex;
   margin-top: 30px;
   overflow-y: auto;
   justify-content: center;
 }
 
-.add-jewelry-content {
+.add-gem-content {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.add-jewelry-form {
+.add-gem-form {
   overflow-y: auto;
   max-height: 70vh;
   width: 100%;
   max-width: 900px;
   padding: 20px;
-  border: 5px solid #d4af37; 
+  border: 3px solid #e6b413; 
   border-radius: 8px;
-  background-color: #b18b40; 
+  background-color: #dbf567; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.add-jewelry-title {
+.add-gem-title {
   text-align: center;
   font-weight: bold;
   font-size: 24px;
   margin-bottom: 15px;
-  color: #d4af37; /* Thay đổi màu chữ thành màu vàng */
+  color: #000000; /* Thay đổi màu chữ thành màu vàng */
 }
 
-.add-jewelry-form-row {
+.add-gem-form-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
   flex-wrap: wrap; /* Để các phần tử tự động xuống dòng khi không đủ không gian */
 }
 
-.add-jewelry-form-group {
+.add-gem-form-group {
   flex: 1;
   margin-right: 15px;
   margin-bottom: 15px; /* Thêm khoảng cách dưới */
 }
 
-.add-jewelry-form-group:last-child {
+.add-gem-form-group:last-child {
   margin-right: 0;
 }
 
-.add-jewelry-form-group label {
+.add-gem-form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
   color: #555;
 }
 
-.add-jewelry-form-group input[type="text"],
-.add-jewelry-form-group input[type="number"],
-.add-jewelry-form-group input[type="file"],
-.add-jewelry-form-group select {
+.add-gem-form-group input[type="text"],
+.add-gem-form-group input[type="number"],
+.add-gem-form-group input[type="file"],
+.add-gem-form-group select {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
@@ -69,14 +69,14 @@
   color: #333;
 }
 
-.add-jewelry-form-footer {
+.add-gem-form-footer {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
   flex-wrap: wrap; /* Để các phần tử tự động xuống dòng khi không đủ không gian */
 }
 
-.add-jewelry-back-button {
+.add-gem-back-button {
   padding: 8px 16px;
   background: #f0f0f0;
   border: 1px solid #ccc;
@@ -88,14 +88,14 @@
   transition: background 0.3s ease;
 }
 
-.add-jewelry-back-button:hover {
-  background: #d4af37; /* Thay đổi màu nền khi hover thành màu vàng */
+.add-gem-back-button:hover {
+  background: #ae933c; /* Thay đổi màu nền khi hover thành màu vàng */
   color: #fff; /* Thay đổi màu chữ khi hover thành màu trắng */
 }
 
-.add-jewelry-add-button {
+.add-gem-add-button {
   padding: 8px 16px;
-  background: #d4af37; /* Thay đổi màu nền thành màu vàng */
+  background: #f3bc05; /* Thay đổi màu nền thành màu vàng */
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -105,7 +105,7 @@
   transition: background 0.3s ease;
 }
 
-.add-jewelry-add-button:hover {
+.add-gem-add-button:hover {
   background: #c49b33; /* Thay đổi màu nền khi hover thành màu vàng đậm hơn */
 }
 
@@ -137,28 +137,28 @@
   opacity: 0.8;
 }
 
-.add-jewelry-container input {
+.add-gem-container input {
   border: 1px solid #d4af37; /* Thay đổi màu viền thành màu vàng */
 }
 
 /* Responsive cho màn hình nhỏ */
 @media (max-width: 1024px) {
-  .add-jewelry-container {
+  .add-gem-container {
     margin-left: 20px;
     margin-right: 20px;
   }
-  .add-jewelry-form-group {
+  .add-gem-form-group {
     flex: 1 1 100%; /* Đặt các phần tử chiếm 100% chiều rộng màn hình */
     margin-right: 0;
   }
 
-  .add-jewelry-form-footer {
+  .add-gem-form-footer {
     flex-direction: column; /* Sắp xếp các nút theo cột */
     align-items: center;
   }
 
-  .add-jewelry-back-button,
-  .add-jewelry-add-button {
+  .add-gem-back-button,
+  .add-gem-add-button {
     width: 100%;
     margin-bottom: 10px; /* Thêm khoảng cách dưới */
   }
