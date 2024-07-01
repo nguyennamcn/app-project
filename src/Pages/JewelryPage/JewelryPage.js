@@ -77,7 +77,7 @@ export default function JewelryPage() {
     <div className="jewelry-page">
       <div className='filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <select name='jewelry__category' id='category'>
+          {/* <select name='jewelry__category' id='category'>
             <option value='Rings'>Rings</option>
             <option value='Earrings'>Earrings</option>
             <option value='Necklaces'>Necklaces</option>
@@ -87,7 +87,7 @@ export default function JewelryPage() {
           <select name='jewelry__gender' id='gender'>
             <option value='male'>Male</option>
             <option value='female'>Female</option>
-          </select>
+          </select> */}
         </div>
 
         <div className='search__input_jewelry'>
