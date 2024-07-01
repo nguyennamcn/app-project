@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { Modal, notification, message } from 'antd';
-
+import ReactPaginate from 'react-paginate';
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentDiamondId, setCurrentDiamondId] = useState(null);
-  const itemsPerPage = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+  const totalPages = Math.ceil(diamondManage.length / itemsPerPage);
+  
 
   useEffect(() => {
     adornicaServ.getListDiamond()
@@ -52,6 +54,10 @@ export default function ManageDiamond() {
     setCurrentDiamondId(diamondId);
     setIsModalVisible(true);
   };
+  const changePage = (pageNumber) => {
+    setCurrentPage(pageNumber - 1); // Trang bắt đầu từ 0
+  };
+  
 
   const handleImageChange = (e, index) => {
     const files = [...selectedImages];
@@ -98,14 +104,10 @@ export default function ManageDiamond() {
     setCurrentDiamondId(null);
   };
 
-  const lastItemIndex = currentPage * itemsPerPage;
-  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const firstItemIndex = currentPage * itemsPerPage;
+  const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, diamondManage.length);
   const currentDiamonds = diamondManage.slice(firstItemIndex, lastItemIndex);
-  const totalPages = Math.ceil(diamondManage.length / itemsPerPage);
 
-  const changePage = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   return (
     <div style={styles.container}>
@@ -156,13 +158,27 @@ export default function ManageDiamond() {
       </table>
       <div style={styles.footer}>
         <NavLink to="/inventory" style={styles.backButton}>BACK</NavLink>
-        <div style={styles.pagination}>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button key={i} style={styles.pageButton} onClick={() => changePage(i + 1)}>
-              {i + 1}
-            </button>
-          ))}
-        </div>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={totalPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={(data) => changePage(data.selected + 1)}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
+
       </div>
       <Modal
         title={`Update Images of product ID: ${currentDiamondId}`}
