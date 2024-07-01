@@ -3,6 +3,7 @@ import { Card, Modal } from 'antd';
 import './JewelryCss.css';
 import { NavLink } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
+import ReactPaginate from 'react-paginate';
 
 const { Meta } = Card;
 
@@ -12,6 +13,8 @@ export default function JewelryPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [productsPerPage] = useState(10);
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -73,6 +76,14 @@ export default function JewelryPage() {
     product.productName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
+  const offset = currentPage * productsPerPage;
+  const currentProducts = filteredProducts.slice(offset, offset + productsPerPage);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
   return (
     <div className="jewelry-page">
       <div className='filter'>
@@ -104,8 +115,8 @@ export default function JewelryPage() {
         </div>
       </div>
       <div className="product-container">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((sp) => (
+        {currentProducts.length > 0 ? (
+          currentProducts.map((sp) => (
             <div className="product-card-container" key={sp.productCode}>
               <Card
                 bodyStyle={{ padding: '8px' }}
@@ -134,8 +145,29 @@ export default function JewelryPage() {
           </div>
         )}
       </div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
+      </div>
       <Modal
-        title="Notification"
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}

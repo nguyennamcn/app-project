@@ -168,7 +168,7 @@ export default function DiamondPage() {
         )}
       </div>
       <Modal
-        title="Notification"
+        // title="Notification"
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}
