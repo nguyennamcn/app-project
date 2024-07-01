@@ -84,7 +84,6 @@ const pageStyles = {
     paddingBottom: '5px',
     textAlign: 'center',
     color: '#333',
-    
   },
   tableFooter: {
     display: 'grid',
@@ -168,6 +167,97 @@ const pageStyles = {
   successIcon: {
     fontSize: '50px',
     marginBottom: '10px',
+  },
+  // Media queries for responsive design
+  '@media (max-width: 1024px)': {
+    container: {
+      gridTemplateColumns: '1fr',
+      padding: '10px',
+    },
+    header: {
+      fontSize: '20px',
+    },
+    detailInput: {
+      fontSize: '10px',
+      padding: '8px',
+    },
+    detailLabel: {
+      fontSize: '10px',
+    },
+    productTable: {
+      width: '100%',
+      padding: '5px',
+    },
+    tableHeader: {
+      fontSize: '10px',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+    tableRow: {
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+    tableFooter: {
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+    footerInfo: {
+      fontSize: '12px',
+    },
+    finishButton: {
+      fontSize: '12px',
+      padding: '8px 16px',
+    },
+    backButton: {
+      fontSize: '12px',
+      padding: '8px 16px',
+    },
+    printButton: {
+      fontSize: '12px',
+      padding: '8px 16px',
+    },
+  },
+  '@media (max-width: 480px)': {
+    container: {
+      gridTemplateColumns: '1fr',
+      padding: '5px',
+    },
+    header: {
+      fontSize: '18px',
+    },
+    detailInput: {
+      fontSize: '8px',
+      padding: '6px',
+    },
+    detailLabel: {
+      fontSize: '8px',
+    },
+    productTable: {
+      width: '100%',
+      padding: '3px',
+    },
+    tableHeader: {
+      fontSize: '8px',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+    tableRow: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+    tableFooter: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+    footerInfo: {
+      fontSize: '10px',
+    },
+    finishButton: {
+      fontSize: '10px',
+      padding: '6px 12px',
+    },
+    backButton: {
+      fontSize: '10px',
+      padding: '6px 12px',
+    },
+    printButton: {
+      fontSize: '10px',
+      padding: '6px 12px',
+    },
   },
 };
 
@@ -397,3 +487,4 @@ const BillJewelry = () => {
 };
 
 export default BillJewelry;
+
