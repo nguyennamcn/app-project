@@ -43,6 +43,10 @@ const pageStyles = {
     fontSize: '12px',
     marginBottom: '5px',
   },
+  errorText: {
+    color: 'red',
+    marginBottom: '5px',
+  },
   paymentSelect: {
     padding: '10px',
     border: '2px solid #cccccc',
@@ -57,7 +61,7 @@ const pageStyles = {
     marginTop: '21px',
   },
   tableHeader: {
-    fontSize:'13px',
+    fontSize: '13px',
     display: 'grid',
     gridTemplateColumns: 'repeat(9, 1fr)',
     fontWeight: 'bold',
@@ -140,20 +144,24 @@ const pageStyles = {
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
-      maxHeight: '100px',
+      maxHeight: '200px',
       margin: 'auto',
       textAlign: 'center',
       color: 'white',
       display: 'flex',
-      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
+      flexDirection: 'column',
     },
   },
   modalButtonWrapper: {
     display: 'flex',
     gap: '10px',
     marginTop: '20px',
+  },
+  successIcon: {
+    fontSize: '50px',
+    marginBottom: '10px',
   },
 };
 
@@ -166,17 +174,28 @@ const BillJewelry = () => {
     name: formData?.customerName || '',
     phone: formData?.phone || '',
     address: '',
-    paymentMethod: 'Cash'
+    paymentMethod: 'Cash',
   });
 
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
 
   const handleDetailChange = (e) => {
     const { name, value } = e.target;
-    setCustomerDetails(prevDetails => ({
+    if (name === 'phone') {
+      if (!/^\d*$/.test(value)) {
+        setPhoneError('Phone number must be digits only!');
+        return;
+      } else if (value.length > 10) {
+        return;
+      } else {
+        setPhoneError('');
+      }
+    }
+    setCustomerDetails((prevDetails) => ({
       ...prevDetails,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -184,7 +203,7 @@ const BillJewelry = () => {
 
   const calculateTotalPrice = () => {
     let totalPrice = 0;
-    products.forEach(product => {
+    products.forEach((product) => {
       totalPrice += product.total;
     });
     return totalPrice.toFixed(2);
@@ -209,17 +228,17 @@ const BillJewelry = () => {
       staffId: userInfo.id, // Set to the staff ID you want to associate with the purchase
       customerName: customerDetails.name,
       phone: customerDetails.phone,
-      list: products.map(product => ({
+      list: products.map((product) => ({
         name: product.goldType,
         weight: parseFloat(product.weight),
         color: product.color, // You need to provide the color
         clarity: product.clarity, // You need to provide the clarity
         cut: product.cut, // You need to provide the cut
         carat: product.carat, // You need to provide the carat
-        price: parseFloat(product.total)
+        price: parseFloat(product.total),
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
-      productStore: false
+      productStore: false,
     };
 
     adornicaServ
@@ -233,7 +252,7 @@ const BillJewelry = () => {
       });
 
     // Send the purchase data to the server or do whatever you need to do with it
-    console.log("Purchase data:", purchaseData);
+    console.log('Purchase data:', purchaseData);
 
     // Show modal
     setModalIsOpen(true);
@@ -253,24 +272,49 @@ const BillJewelry = () => {
     // window.print();
   };
 
-  const isFinishButtonDisabled = !customerDetails.name || !customerDetails.phone || !customerDetails.address;
+  const isFinishButtonDisabled =
+    !customerDetails.name || !customerDetails.phone || !customerDetails.address;
 
   return (
     <div style={pageStyles.container}>
       <div style={pageStyles.header}>Purchase</div>
       <div style={pageStyles.customerDetails}>
         <label style={pageStyles.detailLabel}>Name:</label>
-        <input type="text" style={pageStyles.detailInput} name="name" value={customerDetails.name} onChange={handleDetailChange} />
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="name"
+          value={customerDetails.name}
+          onChange={handleDetailChange}
+        />
 
         <label style={pageStyles.detailLabel}>Phone:</label>
-        <input type="text" style={pageStyles.detailInput} name="phone" value={customerDetails.phone} onChange={handleDetailChange} />
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="phone"
+          value={customerDetails.phone}
+          onChange={handleDetailChange}
+          maxLength={10}
+        />
+        {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
 
         <label style={pageStyles.detailLabel}>Address:</label>
-        <input type="text" style={pageStyles.detailInput} name="address" value={customerDetails.address} onChange={handleDetailChange} />
-
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="address"
+          value={customerDetails.address}
+          onChange={handleDetailChange}
+        />
 
         <label style={pageStyles.detailLabel}>Payment methods:</label>
-        <select style={pageStyles.paymentSelect} name="paymentMethod" value={customerDetails.paymentMethod} onChange={handleDetailChange}>
+        <select
+          style={pageStyles.paymentSelect}
+          name="paymentMethod"
+          value={customerDetails.paymentMethod}
+          onChange={handleDetailChange}
+        >
           <option value="Cash">Cash</option>
           <option value="Card">Banking</option>
         </select>
@@ -332,6 +376,7 @@ const BillJewelry = () => {
         contentLabel="Confirmation Modal"
         style={pageStyles.modal}
       >
+        <div style={pageStyles.successIcon}>✔</div>
         <h2>Successfully</h2>
         {/* <p>Thank you for your purchase!</p>
         <div style={pageStyles.modalButtonWrapper}>

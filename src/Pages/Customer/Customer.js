@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
+import ReactPaginate from 'react-paginate';
 
 export default function CustomerDetails() {
   const [customerDetails, setCustomerDetails] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 4;
 
   useEffect(() => {
     adornicaServ.getCustomerDetails() // Assuming this endpoint returns customer details
       .then((res) => {
         console.log(res.data.metadata);
         // Sắp xếp khách hàng theo thứ tự giảm dần của ID
-        const sortedDetails = res.data.metadata.sort((a, b) =>  a.customerId - b.customerId);
+        const sortedDetails = res.data.metadata.sort((a, b) => b.customerId - a.customerId);
         setCustomerDetails(sortedDetails);
       })
       .catch((err) => {
@@ -24,6 +27,14 @@ export default function CustomerDetails() {
     detail.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     detail.phone.includes(searchTerm)
   );
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = filteredDetails.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(filteredDetails.length / itemsPerPage);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
 
   const formatBirthday = (date) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -53,7 +64,7 @@ export default function CustomerDetails() {
           </tr>
         </thead>
         <tbody>
-          {filteredDetails.map((detail, index) => (
+          {currentPageData.map((detail, index) => (
             <tr key={index} style={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
               <td style={styles.td}>{detail.customerId}</td>
               <td style={styles.td}>{detail.name}</td>
@@ -66,13 +77,35 @@ export default function CustomerDetails() {
           ))}
         </tbody>
       </table>
+      <div style={styles.paginationContainer}>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
+      </div>
     </div>
   );
 };
 
 const styles = {
   container: {
-    maxHeight: '70vh', 
+    maxHeight: '70vh',
     overflowY: 'auto',
     margin: '20px auto',
     fontFamily: 'Arial, sans-serif',
@@ -121,5 +154,79 @@ const styles = {
   },
   rowOdd: {
     backgroundColor: '#fff',
+  },
+  paginationContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: '5px',
+  },
+  pagination: {
+    display: 'flex',
+    listStyle: 'none',
+    gap: '5px',
+  },
+  pageItem: {
+    display: 'inline-block',
+    padding: '10px',
+    cursor: 'pointer',
+  },
+  pageLink: {
+    textDecoration: 'none',
+    color: '#007bff',
+  },
+  active: {
+    fontWeight: 'bold',
+    borderBottom: '3px solid #007bff',
+  },
+  disabled: {
+    cursor: 'not-allowed',
+    color: '#ccc',
+  },
+  '@media (max-width: 1024px)': {
+    container: {
+      marginLeft: '20px',
+    },
+    table: {
+      fontSize: '14px',
+    },
+    th: {
+      padding: '10px',
+    },
+    td: {
+      padding: '10px',
+    },
+    searchBar: {
+      fontSize: '14px',
+      padding: '8px',
+    },
+    header: {
+      fontSize: '20px',
+      padding: '8px',
+    },
+    paginationContainer: {
+      justifyContent: 'center',
+    },
+  },
+  '@media (max-width: 480px)': {
+    table: {
+      fontSize: '12px',
+    },
+    th: {
+      padding: '8px',
+    },
+    td: {
+      padding: '8px',
+    },
+    searchBar: {
+      fontSize: '12px',
+      padding: '6px',
+    },
+    header: {
+      fontSize: '18px',
+      padding: '6px',
+    },
+    paginationContainer: {
+      justifyContent: 'center',
+    },
   },
 };
