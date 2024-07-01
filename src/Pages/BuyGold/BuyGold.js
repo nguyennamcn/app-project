@@ -82,7 +82,12 @@ const styles = {
     gridColumn: 'span 2',
     textAlign: 'center',
     margin: '20px 0'
-  }
+  },
+  subPrice: {
+    width:'100%',
+    gridColumn: 'span 2',
+    textAlign: 'center',
+  },
 };
 
 const GoldSelection = () => {
@@ -171,7 +176,7 @@ const GoldSelection = () => {
   };
 
   const handleWeightChange = (index, value) => {
-    if(value < 0){
+    if(value <= 0){
       return;
     }
     const newGoldItems = [...goldItems];
@@ -230,12 +235,12 @@ const GoldSelection = () => {
             </div>
             {item.goldType && (
               <>
+                <div style={styles.totalPrice}>{item.goldType}:</div>
+                <div style={styles.subPrice}>Buy price {item.materialBuyPrice} VND</div>  
+                <div style={styles.subPrice}>Sell price {item.materialSellPrice} VND</div>
                 <div style={styles.totalPrice}>
-                  {item.goldType}: buy price: {item.materialBuyPrice} sell price: {item.materialSellPrice}
-                </div>
-                <div style={styles.totalPrice}>
-                  Total: ({item.materialBuyPrice} + ({item.materialSellPrice} - {item.materialBuyPrice}) * {buyBackPromotion}) * {item.weight} = 
-                  {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(0)}
+                  Material total: ({item.materialBuyPrice} * {item.weight}) + {buyBackPromotion} promotion
+                   = {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(0)} VND
                 </div>
               </>
             )}

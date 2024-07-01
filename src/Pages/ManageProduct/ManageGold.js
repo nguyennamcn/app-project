@@ -22,14 +22,30 @@ export default function ManageGold() {
       });
   }, []);
 
+  const showDeleteConfirm = (goldCode) => {
+    Modal.confirm({
+      title: 'Confirm',
+      content: 'Do you really want to delete this product?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        handleDelete(goldCode);
+      }
+    });
+  };
+
   const handleDelete = (goldCode) => {
     adornicaServ.deleteProduct(goldCode)
       .then(() => {
         const newProductData = goldManage.filter((item) => item.productCode !== goldCode);
         setGoldManage(newProductData);
+        notification.success({ message: "Delete Successful" });
       })
       .catch((err) => {
-        console.log("Error deleting order:", err);
+        const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.log(err);
       });
   };
 
@@ -44,7 +60,7 @@ export default function ManageGold() {
 
   const handleUpdate = (productId) => {
     const updatedProduct = goldManage.find(product => product.materialId === productId);
-    console.log('Updated Product:', updatedProduct);
+    console.log('Updated product with id: ', updatedProduct);
   };
 
   const handleUpdateImg = (goldId) => {
@@ -74,7 +90,18 @@ export default function ManageGold() {
       setIsModalVisible(false);
       setSelectedImages([]);
       setCurrentGoldId(null);
-      message.success('Images updated successfully');
+      notification.success({message: 'Images updated successfully'});
+
+      adornicaServ.getListGold()
+      .then((res) => {
+        console.log(res.data.metadata.data);
+        setGoldManage(res.data.metadata.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+
     }).catch((err) => {
       console.log("Error uploading images:", err.response.data);
       notification.error({ message: 'Error uploading images' });
@@ -125,27 +152,28 @@ export default function ManageGold() {
               <td style={styles.td}>{product.productId}</td>
               <td style={styles.td}>{product.productCode}</td>
               <td style={styles.td}>{product.productName}</td>
-              <td style={styles.td}>{product.productPrice <= 0 ? 'undefinded' : product.productPrice}</td>
+              <td style={styles.td}>{product.productPrice <= 0 ? 'undefined' : product.productPrice}</td>
               <td style={styles.td}>{product.size}</td>
               <td style={styles.td}>
-              <NavLink to={`/update-gold/${product.productId}`}>
-                <button
-                  style={styles.updateButton}
-                  onClick={() => handleUpdate(product.productCode)}
-                >
-                  Update
-                </button>
+                <NavLink to={`/update-gold/${product.productId}`}>
+                  <button
+                    style={styles.updateButton}
+                    onClick={() => handleUpdate(product.productCode)}
+                  >
+                    Update
+                  </button>
                 </NavLink>
                 <button
                   style={styles.deleteButton}
-                  onClick={() => handleDelete(product.productCode)}
+                  onClick={() => showDeleteConfirm(product.productCode)}
                 >
                   Delete
                 </button>
                 <button
-                  style={styles.updateButton}
-                  onClick={() => handleUpdateImg(product.productId)}
-                >
+                 style={product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? styles.updateButton : styles.disabledButton}
+                 onClick={() => product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(product.productId)}
+                 disabled={product.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
+               >
                   Img
                 </button>
               </td>
@@ -255,6 +283,16 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
     marginBottom:'4px',
+  },
+  disabledButton: {
+    padding: '5px 10px',
+    marginRight: '5px',
+    backgroundColor: '#f0f0f0',
+    color: '#888',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'not-allowed',
+    marginBottom: '4px',
   },
   footer: {
     display: 'flex',
