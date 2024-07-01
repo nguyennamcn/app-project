@@ -9,7 +9,10 @@
   font-size: 24px;
   margin-bottom: 10px;
   font-weight: bold;
+  color: #001f3f; /* Màu chàm đậm */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Hiệu ứng đổ bóng */
 }
+
 
 .add-employee-list-button {
   background-color: black;
@@ -41,7 +44,7 @@
 
 .employee-list-table th, .employee-list-table td {
   padding: 12px 15px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
 }
 
 .employee-list-view-button {

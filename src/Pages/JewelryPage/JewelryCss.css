@@ -141,6 +141,14 @@
   font-size: 80px;
 }
 
+.custom-modal_1{
+  width: 800px;
+}
+
+.size-button{
+  width: 100%;
+}
+
 @media (max-width: 1024px) {
   .filter {
     flex-direction: column;

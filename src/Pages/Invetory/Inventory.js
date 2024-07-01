@@ -48,36 +48,58 @@ const Inventory = () => {
 
             <style>{`
                 .inventory-container {
+                    padding: 20px;
                     margin: 20px;
                     font-family: 'Arial', sans-serif;
+                    background-color: #f9f9f9;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 }
 
                 table {
                     width: 100%;
                     border-collapse: collapse;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    overflow: hidden;
                 }
 
                 th, td {
-                    border: 1px solid #dddddd;
+                    border: 2px solid #e0e0e0;
                     text-align: left;
-                    padding: 8px;
+                    padding: 12px 15px;
                 }
 
                 th {
+                    background-color: #6AC4EA;
+                    color: white;
+                }
+
+                tr:nth-child(even) {
                     background-color: #f2f2f2;
                 }
 
+                tr:hover {
+                    background-color: #ddd;
+                }
+
                 button {
-                    background-color: #4CAF50;
+                    background-color: #007bff;
                     color: white;
                     border: none;
-                    padding: 5px 10px;
+                    padding: 8px 16px;
                     text-align: center;
                     text-decoration: none;
                     display: inline-block;
-                    font-size: 16px;
+                    font-size: 14px;
                     margin: 4px 2px;
                     cursor: pointer;
+                    border-radius: 4px;
+                    transition: background-color 0.3s ease;
+                }
+
+                button:hover {
+                    background-color: #0056b3;
                 }
             `}</style>
         </div>

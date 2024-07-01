@@ -11,7 +11,7 @@ export default function ManageGold() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentGoldId, setCurrentGoldId] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5; // Số lượng mục trên mỗi trang
+  const itemsPerPage = 4; // Số lượng mục trên mỗi trang
   const totalPages = Math.ceil(goldManage.length / itemsPerPage);
   
 
@@ -239,10 +239,14 @@ export default function ManageGold() {
 
 const styles = {
   container: {
+    margin : '30px 20px 20px 20px',
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
     maxHeight: '70vh',
-    overflowY: 'auto'
+    overflowY: 'auto',
+    backgroundColor: '#fff7e6',
+    borderRadius: '10px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 1)',
   },
   header: {
     display: 'flex',
@@ -254,9 +258,10 @@ const styles = {
   title: {
     margin: 0,
     fontSize: '25px',
+    color: '#d97d0d'
   },
   addButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#d97d0d',
     color: 'white',
     border: 'none',
     borderRadius: '4px',
@@ -270,22 +275,16 @@ const styles = {
     boxShadow: '0 2px 15px rgba(0,0,0,0.1)'
   },
   th: {
-    border: '1px solid #ddd',
+    border: '2px solid #ffcc99',
     padding: '8px',
     textAlign: 'left',
-    backgroundColor: '#f4f4f4'
+    backgroundColor: '#ffe0b3',
+    color: '#d97d0d'
   },
   td: {
-    border: '1px solid #ddd',
+    border: '2px solid #ddd',
     padding: '8px',
     textAlign: 'left'
-  },
-  input: {
-    width: '100%',
-    padding: '5px',
-    boxSizing: 'border-box',
-    border: '1px solid #ccc',
-    borderRadius: '4px'
   },
   updateButton: {
     padding: '5px 10px',
@@ -295,17 +294,17 @@ const styles = {
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-    marginBottom:'4px',
+    marginBottom: '4px',
   },
   deleteButton: {
-    padding: '5px 10px',
     marginRight: '5px',
+    padding: '5px 10px',
     backgroundColor: '#f44336',
     color: 'white',
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-    marginBottom:'4px',
+    marginBottom: '4px',
   },
   disabledButton: {
     padding: '5px 10px',
@@ -332,9 +331,6 @@ const styles = {
     textDecoration: 'none',
     cursor: 'pointer'
   },
-  backButtonHover: {
-    backgroundColor: '#e0e0e0'
-  },
   pagination: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -350,3 +346,4 @@ const styles = {
     cursor: 'pointer'
   }
 };
+

@@ -222,6 +222,7 @@ export default function PurchaseOrder() {
                     .order-list-title {
                         font-size: 2rem;
                         margin-bottom: 0px;
+                        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
                     }
 
                     .search-add-container {
@@ -258,7 +259,7 @@ export default function PurchaseOrder() {
 
                     .order-list-table th,
                     .order-list-table td {
-                        border: 1px solid #ddd;
+                        border: 1.5px solid #ddd;
                         padding: 8px;
                     }
 

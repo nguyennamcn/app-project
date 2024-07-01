@@ -15,6 +15,7 @@ export default function JewelryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
   const [productsPerPage] = useState(5);
+  const [isSizeModalVisible, setIsSizeModalVisible] = useState(false);
   
 
   useEffect(() => {
@@ -89,17 +90,11 @@ export default function JewelryPage() {
     <div className="jewelry-page">
       <div className='filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
-          {/* <select name='jewelry__category' id='category'>
-            <option value='Rings'>Rings</option>
-            <option value='Earrings'>Earrings</option>
-            <option value='Necklaces'>Necklaces</option>
-            <option value='Bracelets'>Bracelets</option>
-          </select>
-
-          <select name='jewelry__gender' id='gender'>
-            <option value='male'>Male</option>
-            <option value='female'>Female</option>
-          </select> */}
+          <button onClick={() => setIsSizeModalVisible(true)} className="size-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-rulers" viewBox="0 0 16 16">
+              <path d="M2.23 0a.5.5 0 0 0-.5.5v1.75a.5.5 0 0 0 1 0V1H6v.25a.5.5 0 0 0 1 0V1h2v.25a.5.5 0 0 0 1 0V1h2.5v1.25a.5.5 0 0 0 1 0V.5a.5.5 0 0 0-.5-.5H2.23zM1 2.5v10.77a.5.5 0 0 0 .5.5h1.75a.5.5 0 0 0 0-1H2V10h.25a.5.5 0 0 0 0-1H2V7h.25a.5.5 0 0 0 0-1H2V4h.25a.5.5 0 0 0 0-1H2V2h.25a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0-.5.5zM13 2v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm-2-6v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm-2-6v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9z"/>
+            </svg>
+          </button>
         </div>
 
         <div className='search__input_jewelry'>
@@ -172,9 +167,19 @@ export default function JewelryPage() {
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}
-        className="custom-modal"
+        className="custom-modal_1"
       >
         <div>{modalMessage}</div>
+      </Modal>
+      <Modal
+        visible={isSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsSizeModalVisible(false)}
+        className="custom-modal_1"
+      >
+        <div>
+          <img src="https://vuanem.com/blog/wp-content/uploads/2022/09/bang-size-nhan-nam1-1.jpg" alt="Ring Sizes" style={{ width: '100%' }} />
+        </div>
       </Modal>
     </div>
   );
