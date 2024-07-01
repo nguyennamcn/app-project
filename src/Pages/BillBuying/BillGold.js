@@ -178,7 +178,13 @@ const BillGold = () => {
   }, []);
 
   const handleInputChange = (setter) => (event) => {
-    setter(event.target.value);
+    const { value } = event.target;
+    if (setter === setCustomerPhone) {
+      if (!/^\d*$/.test(value) || value.length > 10) {
+        return;
+      }
+    }
+    setter(value);
   };
 
   const totalItems = products.reduce((sum, product) => sum + 1, 0);
@@ -263,6 +269,7 @@ const BillGold = () => {
           name="phone"
           value={customerPhone}
           onChange={handleInputChange(setCustomerPhone)}
+          maxLength={10}
         />
 
         <label style={pageStyles.detailLabel}>Address:</label>
