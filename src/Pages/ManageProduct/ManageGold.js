@@ -141,7 +141,7 @@ export default function ManageGold() {
             <th style={styles.th}>ID</th>
             <th style={styles.th}>Code</th>
             <th style={styles.th}>Name</th>
-            <th style={styles.th}>Price</th>
+            <th style={styles.th}>Price (VND)</th>
             <th style={styles.th}>Size</th>
             <th style={styles.th}>Action</th>
           </tr>

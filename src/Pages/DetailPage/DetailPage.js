@@ -139,7 +139,7 @@ export default function DetailPage() {
                     </div>
                     {   product.totalPrice < 1 ? 
                         <p className="product-price">The product is: <span className="price-amount">Undefined</span></p> :
-                        <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} $</span></p>
+                        <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} VND</span></p>
                     }
                    
                     <div className="product-description">

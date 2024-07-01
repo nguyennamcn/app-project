@@ -15,7 +15,7 @@ export default function DiamondPage() {
   const [modalMessage, setModalMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10; // Số sản phẩm mỗi trang
+  const itemsPerPage = 5; // Số sản phẩm mỗi trang
 
   useEffect(() => {
     adornicaServ.getListDiamond()

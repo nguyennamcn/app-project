@@ -56,11 +56,12 @@ const pageStyles = {
     fontSize: '12px',
   },
   productTable: {
-    width: '150%',
+    width: '200%',
     border: '2px solid #DAA520',
     borderRadius: '5px',
     padding: '10px',
     marginTop: '21px',
+    fontSize: '17px',
   },
   tableHeader: {
     display: 'grid',
@@ -308,7 +309,7 @@ const BillGold = () => {
             <div key={index} style={pageStyles.tableRow}>
               <span>{product.goldType}</span>
               <span>{product.weight}</span>
-              <span>{product.materialBuyPrice.toFixed(2)}$</span>
+              <span>{product.materialBuyPrice.toFixed(2)} VND</span>
             </div>
           ))}
         </div>
@@ -338,7 +339,7 @@ const BillGold = () => {
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}$</div>
+        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()} VND</div>
       </div>
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>

@@ -14,7 +14,8 @@ export default function JewelryPage() {
   const [modalMessage, setModalMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [productsPerPage] = useState(10);
+  const [productsPerPage] = useState(5);
+  
 
   useEffect(() => {
     adornicaServ.getListJewelry()
