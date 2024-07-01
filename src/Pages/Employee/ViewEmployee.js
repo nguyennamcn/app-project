@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
+import { Modal, notification } from 'antd';
 import './ViewEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
@@ -21,8 +22,11 @@ function ViewEmployee() {
     adornicaServ.delectAccount(staffId)
       .then((res) => {
         console.log('Employee deleted', res);
+        notification.success({ message: "Delete user successfully" });
       })
       .catch((err) => {
+        const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+        notification.error({ message: errorMessage });
         console.log(err);
       });
     console.log('Employee deleted');

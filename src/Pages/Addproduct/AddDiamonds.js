@@ -53,7 +53,7 @@ function AddDiamond() {
 
     adornicaServ.postCreateProduct(productData)
       .then(response => {
-        notification.success({ message: "Add product success" });
+        notification.success({ message: "Add product successfully" });
         console.log(response.data.metadata);
       })
       .catch(error => {
