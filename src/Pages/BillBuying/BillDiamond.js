@@ -56,7 +56,7 @@ const pageStyles = {
     fontSize: '12px',
   },
   productTable: {
-    width: '150%',
+    width: '200%',
     border: '2px solid #4682b4', 
     borderRadius: '5px',
     padding: '10px',
@@ -318,7 +318,7 @@ const BillDiamond = () => {
               <span>{product.color}</span>
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
-              <span>{product.gemBuyPrice + '$'}</span>
+              <span>{product.gemBuyPrice + ' VND'}</span>
             </div>
           ))}
         </div>
@@ -349,7 +349,7 @@ const BillDiamond = () => {
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}$</div>
+        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()} VND </div>
       </div>
 
       <div style={pageStyles.buttonWrapper}>

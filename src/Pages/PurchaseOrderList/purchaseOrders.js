@@ -4,6 +4,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 // import './PurchaseOrder.css'; // Thêm file CSS riêng nếu cần
+import ReactPaginate from 'react-paginate';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -84,6 +85,7 @@ export default function PurchaseOrder() {
     const handleSearch = (e) => {
         const { value } = e.target;
         setSearchText(value);
+        setCurrentPage(0);
         const filtered = dataSource.filter((entry) =>
             entry.salesStaffName.toLowerCase().includes(value.toLowerCase()) ||
             entry.orderCode.toLowerCase().includes(value.toLowerCase())
@@ -91,15 +93,15 @@ export default function PurchaseOrder() {
         setFilteredData(filtered);
     };
 
-    const indexOfLastOrder = currentPage * ordersPerPage;
+    const handlePageClick = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
+    const indexOfLastOrder = (currentPage + 1) * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders = filteredData.slice(indexOfFirstOrder, indexOfLastOrder);
 
-    const totalPages = Math.ceil(filteredData.length / ordersPerPage);
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    const pageCount = Math.ceil(filteredData.length / ordersPerPage);
 
     return (
         <div className="order-list-container">
@@ -160,17 +162,26 @@ export default function PurchaseOrder() {
                 </tbody>
             </table>
             <div className="pagination-container">
-                <div className="pagination">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            onClick={() => handlePageChange(index + 1)}
-                            className={currentPage === index + 1 ? 'active' : ''}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div>
+            <ReactPaginate
+                    previousLabel={'Previous'}
+                    nextLabel={'Next'}
+                    breakLabel={'...'}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    disabledClassName={'disabled'}
+                />
             </div>
             <Modal
                 title="Notification"
