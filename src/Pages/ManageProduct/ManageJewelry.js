@@ -40,7 +40,7 @@ const JewelryInventoryPage = () => {
       .then(() => {
         const newProductData = jewelry.filter((item) => item.productCode !== jewelryCode);
         setJewelry(newProductData);
-        notification.success({ message: "Delete Successful" });
+        notification.success({ message: "Delete Successfully" });
       })
       .catch((err) => {
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";

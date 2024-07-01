@@ -107,13 +107,13 @@ export default function GoldPage() {
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
                 <div className="product-info">
                   <h1>{sp.productCode}</h1>
-                  <h2> {sp.productPrice < 1 ? 'Undefined' : `${sp.productPrice}$`} </h2>
+                  <h2> {sp.productPrice < 1 ? 'Undefined' : `${sp.productPrice}  VND`} </h2>
                 </div>
                 <div className="overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
                     <button className="overlay-button">View</button>
                   </NavLink>
-                  <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add to Cart</button>
+                  <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
                 </div>
               </Card>
             </div>

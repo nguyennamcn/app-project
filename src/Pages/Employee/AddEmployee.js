@@ -88,7 +88,7 @@ const AddEmployee = () => {
 
   const showModal = () => {
     confirm({
-      title: 'Add Successful',
+      title: 'Add Successfully',
       content: 'Employee has been added successfully!',
       onOk() {
         navigate('/employee');

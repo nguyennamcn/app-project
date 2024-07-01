@@ -60,7 +60,7 @@ export default function CustomerDetails() {
             <th style={styles.th}>Address</th>
             <th style={styles.th}>Birthday</th>
             <th style={styles.th}>Discount (%)</th>
-            <th style={styles.th}>Purchased ($)</th>
+            <th style={styles.th}>Purchased (VND)</th>
           </tr>
         </thead>
         <tbody>

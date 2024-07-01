@@ -256,7 +256,7 @@ const PurchaseDetailHistory = () => {
 
       <div style={pageStyles.footerInfo}>
         <div style={pageStyles.buttonWrapper}>
-          <NavLink to="/buyProduct" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+          <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
           <button
             onClick={handleFinishClick}
             style={{ ...pageStyles.button, ...pageStyles.finishButton }}
@@ -274,7 +274,7 @@ const PurchaseDetailHistory = () => {
         <h2>Order Completed!</h2>
         <p>Your order has been successfully submitted.</p>
         <div style={pageStyles.modalButtonWrapper}>
-          <NavLink to="/buyProduct" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+          <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
           <button
             onClick={handleDownloadPDF}
             style={{ ...pageStyles.button, ...pageStyles.downloadButton }}
