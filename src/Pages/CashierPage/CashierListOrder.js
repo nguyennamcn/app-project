@@ -3,6 +3,7 @@ import { Table, Button, Modal, Input } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
+import ReactPaginate from 'react-paginate';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -19,8 +20,8 @@ export default function ListOrderPage() {
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState([]);
-    const ordersPerPage = 5;
-    const [currentPage, setCurrentPage] = useState(1);
+    const ordersPerPage = 4;
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
         adornicaServ.getHistoryOrders()
@@ -83,7 +84,7 @@ export default function ListOrderPage() {
     const handleSearch = (e) => {
         const { value } = e.target;
         setSearchText(value);
-        setCurrentPage(1);
+        setCurrentPage(0);
         const filtered = dataSource.filter((entry) =>
             entry.salesStaffName.toLowerCase().includes(value.toLowerCase()) ||
             entry.orderCode.toLowerCase().includes(value.toLowerCase())
@@ -91,15 +92,15 @@ export default function ListOrderPage() {
         setFilteredData(filtered);
     };
 
-    const indexOfLastOrder = currentPage * ordersPerPage;
+    const handlePageClick = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
+    const indexOfLastOrder = (currentPage + 1) * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders = filteredData.slice(indexOfFirstOrder, indexOfLastOrder);
 
-    const totalPages = Math.ceil(filteredData.length / ordersPerPage);
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    const pageCount = Math.ceil(filteredData.length / ordersPerPage);
 
     return (
         <div className="order-list-container">
@@ -114,7 +115,6 @@ export default function ListOrderPage() {
                     prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
                     size="small"
                 />
-                
             </div>
             <table className="order-list-table">
                 <thead>
@@ -174,17 +174,26 @@ export default function ListOrderPage() {
                 </tbody>
             </table>
             <div className="pagination-container">
-                <div className="pagination">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            onClick={() => handlePageChange(index + 1)}
-                            className={currentPage === index + 1 ? 'active' : ''}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                </div>
+                <ReactPaginate
+                    previousLabel={'Previous'}
+                    nextLabel={'Next'}
+                    breakLabel={'...'}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    disabledClassName={'disabled'}
+                />
             </div>
             <Modal
                 title="Notification"
@@ -218,7 +227,7 @@ export default function ListOrderPage() {
                 {`
                     .order-list-container {
                         padding: 20px;
-                        max-height:70vh;
+                        max-height: 70vh;
                         overflow-y: auto;
                     }
 
@@ -277,25 +286,34 @@ export default function ListOrderPage() {
                     .pagination-container {
                         display: flex;
                         justify-content: flex-end;
-                        margin-top: 0px;
+                        margin-top: 20px;
                     }
 
                     .pagination {
                         display: flex;
-                        justify-content: center;
+                        list-style: none;
+                        padding: 0;
                     }
 
-                    .pagination button {
+                    .page-item {
+                        margin: 0 5px;
+                    }
+
+                    .page-link {
                         padding: 8px 16px;
-                        margin: 0 4px;
                         border: 1px solid #ddd;
                         background-color: white;
                         cursor: pointer;
                     }
 
-                    .pagination button.active {
+                    .page-link.active {
                         background-color: #008cba;
                         color: white;
+                    }
+
+                    .page-link.disabled {
+                        color: #ccc;
+                        cursor: not-allowed;
                     }
                 `}
             </style>

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Employee.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import ReactPaginate from 'react-paginate';
 
 export default function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const employeesPerPage = 4; 
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function EmployeeList() {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); 
+    setCurrentPage(0); 
   };
 
   const filteredEmployees = employees.filter(employee => {
@@ -33,14 +34,12 @@ export default function EmployeeList() {
            roles.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  const indexOfLastEmployee = currentPage * employeesPerPage;
-  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-  const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+  const pageCount = Math.ceil(filteredEmployees.length / employeesPerPage);
+  const offset = currentPage * employeesPerPage;
+  const currentEmployees = filteredEmployees.slice(offset, offset + employeesPerPage);
 
-  const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
   };
 
   return (
@@ -88,16 +87,27 @@ export default function EmployeeList() {
           ))}
         </tbody>
       </table>
-      <div className="pagination">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button 
-            key={index + 1} 
-            onClick={() => handlePageChange(index + 1)} 
-            className={currentPage === index + 1 ? 'active' : ''}
-          >
-            {index + 1}
-          </button>
-        ))}
+      <div className="pagination-container">
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
       </div>
     </div>
   );

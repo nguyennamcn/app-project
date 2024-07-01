@@ -202,7 +202,7 @@ export default function StoreProductDetail() {
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total Pay:<span style={{ marginLeft: '4%' }}>${totalPrice}</span>
+                                    Total Pay:<span style={{ marginLeft: '4%' }}> VND{totalPrice}</span>
                                 </h1>
                             </div>
                         </div>

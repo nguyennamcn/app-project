@@ -68,7 +68,7 @@ const pageStyles = {
     width: '100%',
   },
   tableHeader: {
-    fontSize: '13px',
+    fontSize: '16px',
     display: 'grid',
     gridTemplateColumns: 'repeat(9, 1fr)',
     fontWeight: 'bold',
@@ -84,6 +84,7 @@ const pageStyles = {
     paddingBottom: '5px',
     textAlign: 'center',
     color: '#333',
+    fontSize : '15px'
   },
   tableFooter: {
     display: 'grid',
@@ -418,7 +419,7 @@ const BillJewelry = () => {
               <span>{product.color}</span>
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
-              <span>{product.total + '$'}</span>
+              <span>{product.total + ' VND'}</span>
             </div>
           ))}
         </div>
@@ -450,7 +451,7 @@ const BillJewelry = () => {
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}$</div>
+        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()} VND</div>
       </div>
 
       

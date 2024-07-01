@@ -119,7 +119,7 @@ export default function ManageDiamond() {
             <th style={styles.th}>ID</th>
             <th style={styles.th}>Code</th>
             <th style={styles.th}>Name</th>
-            <th style={styles.th}>Price</th>
+            <th style={styles.th}>Price (VND)</th>
             <th style={styles.th}>Size</th>
             <th style={styles.th}>Action</th>
           </tr>
@@ -130,7 +130,7 @@ export default function ManageDiamond() {
               <td style={styles.td}>{diamond.productId}</td>
               <td style={styles.td}>{diamond.productCode}</td>
               <td style={styles.td}>{diamond.productName}</td>
-              <td style={styles.td}>{diamond.productPrice <= 0 ? 'Not yet been priced' : `${diamond.productPrice} $`}</td>
+              <td style={styles.td}>{diamond.productPrice <= 0 ? 'Not yet been priced' : `${diamond.productPrice}`}</td>
               <td style={styles.td}>{diamond.size}</td>
               <td style={styles.td}>
                 <NavLink to={`/update-diamond/${diamond.productId}`}>
