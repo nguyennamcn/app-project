@@ -270,13 +270,42 @@ const BillJewelry = () => {
   const [customerDetails, setCustomerDetails] = useState({
     name: formData?.customerName || '',
     phone: formData?.phone || '',
-    address: '',
+    address: formData?.address||'',
     paymentMethod: 'Cash',
   });
 
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [phoneError, setPhoneError] = useState('');
+
+  useEffect(() => {
+    if (customerDetails.phone) {
+      adornicaServ.getPhoneCustomer(customerDetails.phone)
+        .then(response => {
+          if (response.data) {
+            setCustomerDetails(prevDetails => ({
+              ...prevDetails,
+              name: response.data.metadata.name,
+              address: response.data.metadata.address,
+            }));
+          } else {
+            setCustomerDetails(prevDetails => ({
+              ...prevDetails,
+              name: '',
+              address: '',
+            }));
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching customer data:", error);
+          setCustomerDetails(prevDetails => ({
+            ...prevDetails,
+            name: '',
+            address: '',
+          }));
+        });
+    }
+  }, [customerDetails.phone]);
 
   const handleDetailChange = (e) => {
     const { name, value } = e.target;
@@ -325,13 +354,15 @@ const BillJewelry = () => {
       staffId: userInfo.id, // Set to the staff ID you want to associate with the purchase
       customerName: customerDetails.name,
       phone: customerDetails.phone,
+      address: customerDetails.address,
+
       list: products.map((product) => ({
         name: product.goldType,
         weight: parseFloat(product.weight),
         color: product.color, // You need to provide the color
         clarity: product.clarity, // You need to provide the clarity
         cut: product.cut, // You need to provide the cut
-        carat: product.carat, // You need to provide the carat
+        carat: parseFloat(product.carat), // You need to provide the carat
         price: parseFloat(product.total),
       })),
       totalPrice: parseFloat(calculateTotalPrice()),

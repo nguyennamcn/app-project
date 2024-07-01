@@ -12,8 +12,13 @@ export default function EditEmployee() {
   useEffect(() => {
     adornicaServ.getViewStaff(id)
       .then((res) => {
+        const employeeData = res.data.metadata;
         console.log("Staff:",res.data.metadata);
         setEmployee(res.data.metadata);
+        setForm({
+          ...form,
+          role: employeeData.roleUser ? employeeData.roleUser[0] : null
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -108,8 +113,8 @@ export default function EditEmployee() {
           <h3>Role:</h3>
           <div className="role-group-edit">
             {/* <h3>Role:</h3> */}
-            <Radio.Group name="role" onChange={handleChange} style={{ marginLeft: '10px' }}>
-              <Radio value="ROLE_SALES_STAFF">Sell staff</Radio>
+            <Radio.Group name="role" onChange={handleChange} value={form.role} style={{ marginLeft: '10px' }}>
+              <Radio value="ROLE_SALES_STAFF">Sales staff</Radio>
               <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
             </Radio.Group>
           </div>
