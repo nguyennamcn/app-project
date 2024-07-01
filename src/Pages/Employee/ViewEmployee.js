@@ -81,7 +81,7 @@ function ViewEmployee() {
           <p><strong>Role:</strong> {employee?.roleUser}</p>
           <p><strong>Phone:</strong> {employee?.phone}</p>
           <p><strong>Store address:</strong> {employee?.address}</p>
-          <p><strong>Other information ...</strong></p>
+          {/* <p><strong>Other information ...</strong></p> */}
         </div>
         <div className="profile-actions">
           <NavLink to="/employee">

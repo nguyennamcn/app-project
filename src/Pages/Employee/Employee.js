@@ -7,7 +7,7 @@ export default function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const employeesPerPage = 5; 
+  const employeesPerPage = 4; 
 
   useEffect(() => {
     adornicaServ.getEmployee()
@@ -66,7 +66,7 @@ export default function EmployeeList() {
             <th>Phone</th>
             <th>Role User</th>
             <th>Status</th>
-            <th></th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -79,7 +79,7 @@ export default function EmployeeList() {
               <td data-label="Status">
                 <span className={`employee-list-status ${employee.active ? 'online' : 'offline'}`}></span>
               </td>
-              <td data-label="">
+              <td data-label="Action">
                 <NavLink to={`/view-employee/${employee.staffId}`}>
                   <button className="employee-list-view-button">View</button>
                 </NavLink>

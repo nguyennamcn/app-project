@@ -18,11 +18,23 @@ const AddEmployee = () => {
     confirmPassword: '',
     role: '',
   });
+  const [phoneError, setPhoneError] = useState('');
 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'phone') {
+      if (!/^\d*$/.test(value)) {
+        setPhoneError('Phone number must be digits only!');
+        return;
+      } else {
+        setPhoneError('');
+      }
+      if (value.length > 10) {
+        return;
+      }
+    }
     setForm({
       ...form,
       [name]: value,
@@ -69,7 +81,8 @@ const AddEmployee = () => {
       form.password.trim() !== '' &&
       form.confirmPassword.trim() !== '' &&
       form.password === form.confirmPassword &&
-      form.role.trim() !== ''
+      form.role.trim() !== '' &&
+      phoneError === ''
     );
   };
 
@@ -104,8 +117,10 @@ const AddEmployee = () => {
             placeholder="Phone number"
             name="phone"
             value={form.phone}
+            maxLength={10}
             onChange={handleChange}
           />
+          {phoneError && <div className="error-message">{phoneError}</div>}
           <DatePicker
             className="input-field"
             placeholder="Date of Birth"
@@ -162,7 +177,6 @@ const AddEmployee = () => {
                 value={form.role}
                 onChange={handleChange}
               >
-                {/* <Radio value="ROLE_ADMIN">Admin</Radio> */}
                 <Radio value="ROLE_SALES_STAFF">Sales Staff</Radio>
                 <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
               </Radio.Group>
