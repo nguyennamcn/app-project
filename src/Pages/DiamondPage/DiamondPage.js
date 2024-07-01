@@ -3,10 +3,10 @@ import { Card, Modal } from 'antd';
 import { NavLink } from 'react-router-dom';
 import './DiamondPage.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import ReactPaginate from 'react-paginate';
 const { Meta } = Card;
 
 export default function DiamondPage() {
-
   const [products, setProducts] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
@@ -14,6 +14,8 @@ export default function DiamondPage() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 10; // Số sản phẩm mỗi trang
 
   useEffect(() => {
     adornicaServ.getListDiamond()
@@ -45,7 +47,7 @@ export default function DiamondPage() {
     };
     console.log(item);
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode );
+    const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if(product.productPrice < 0){
       showModal(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
@@ -65,61 +67,23 @@ export default function DiamondPage() {
     setSearchTerm(e.target.value);
   };
 
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
+
   const filteredProducts = products.filter(product => 
     product.productCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.productName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
+  const offset = currentPage * itemsPerPage;
+  const currentItems = filteredProducts.slice(offset, offset + itemsPerPage);
+
   return (
     <div className='diamond-page'>
       <div className='filter'>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          {/* <select name='jewelry__category' id='Carat'>
-            <option value='Carat'>Carat</option>
-            <option value='Carat'>0.30-0.49</option>
-            <option value='Carat'>0.50-0.89</option>
-            <option value='Carat'>0.9-1.3</option>
-            <option value='Carat'>1.4-1.9</option>
-            <option value='Carat'>2.0-3.0</option>
-            <option value='Carat<'>above 3.0</option>
-          </select>
-
-          <select name='jewelry__size' id='size'>
-            <option value='size'>Cut</option>
-            <option value='size'>EX</option>
-            <option value='size'>G</option>
-            <option value='size'>F</option>
-            <option value='size'>P</option>
-          </select>
-
-          <select name='jewelry__color' id='color'>
-            <option value='color'>Color</option>
-            <option value=''>D</option>
-            <option value=''>E</option>
-            <option value=''>F</option>
-            <option value=''>G</option>
-            <option value=''>H</option>
-            <option value=''>I</option>
-            <option value=''>J</option>
-            <option value=''>K</option>
-            <option value=''>L</option>
-            <option value=''>M</option>
-          </select>
-
-          <select name='jewelry__clarity' id='clarity'>
-            <option value='clarity'>Clarity</option>
-            <option value='FL'>FL</option>
-            <option value='IF'>IF</option>
-            <option value='VVS1'>VVS1</option>
-            <option value='VVS2'>VVS2</option>
-            <option value='VS1'>VS1</option>
-            <option value='VS2'>VS2</option>
-            <option value='SI1'>SI1</option>
-            <option value='SI2'>SI2</option>
-            <option value='I1'>I1</option>
-            <option value='I2'>I2</option>
-            <option value='I3'>I3</option>
-          </select> */}
         </div>
 
         <div className='search__input_diamond'>
@@ -137,8 +101,8 @@ export default function DiamondPage() {
       </div>
 
       <div className="product-container">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((sp) => (
+        {currentItems.length > 0 ? (
+          currentItems.map((sp) => (
             <div className="product-card-container" key={sp.productCode}>
               <Card
                 bodyStyle={{ padding: '8px' }}
@@ -164,11 +128,32 @@ export default function DiamondPage() {
             {searchTerm ? (
             <div className="no-products-message">No products found matching your search criteria.</div>
           ) : null }
-            </div>
+          </div>
         )}
       </div>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
+      </div>
       <Modal
-        // title="Notification"
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}

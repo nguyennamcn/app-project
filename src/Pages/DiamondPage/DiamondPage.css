@@ -48,6 +48,34 @@
   .filter .search__input_diamond svg {
     flex-shrink: 0;
   }
+  .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .page-item {
+    margin: 0 5px;
+  }
+  
+  .page-link {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .active .page-link {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+  }
+  
+  .disabled .page-link {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  
   
   /* Responsive Styles */
   @media (max-width: 1024px) {
