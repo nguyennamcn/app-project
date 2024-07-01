@@ -8,6 +8,8 @@ Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
+    maxHeight:'70vh',
+    overflowY:'auto',
     background: '#FFFFFF',
     padding: '20px',
     maxWidth: '1000px',
@@ -40,6 +42,10 @@ const pageStyles = {
     border: '2px solid #cccccc',
     borderRadius: '5px',
     fontSize: '12px',
+    marginBottom: '5px',
+  },
+  errorText: {
+    color: 'red',
     marginBottom: '5px',
   },
   paymentSelect: {
@@ -148,6 +154,7 @@ const BillDiamond = () => {
   const { formData } = location.state || {}; // Retrieve the state data
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Cash');
   const [address, setAddress] = useState('');
 
@@ -176,8 +183,12 @@ const BillDiamond = () => {
   const handleInputChange = (setter) => (event) => {
     const { value } = event.target;
     if (setter === setCustomerPhone) {
-      if (!/^\d*$/.test(value) || value.length > 10) {
+      if (!/^\d*$/.test(value)) {
+        setPhoneError('Phone number must be digits only!');
+      } else if (value.length > 10) {
         return;
+      } else {
+        setPhoneError('');
       }
     }
     setter(value);
@@ -275,7 +286,7 @@ const BillDiamond = () => {
           onChange={handleInputChange(setCustomerPhone)}
           maxLength={10}
         />
-
+        {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
         <label style={pageStyles.detailLabel}>Address:</label>
         <input
           type="text"
