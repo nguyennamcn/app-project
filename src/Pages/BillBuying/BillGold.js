@@ -134,10 +134,14 @@ const pageStyles = {
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
-      maxHeight: '100px',
+      maxHeight: '200px',
       margin: 'auto',
       textAlign: 'center',
       color: 'white',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
     },
   },
   modalButtonWrapper: {
@@ -145,6 +149,10 @@ const pageStyles = {
     justifyContent: 'center',
     gap: '10px',
     marginTop: '20px',
+  },
+  successIcon: {
+    fontSize: '50px',
+    marginBottom: '10px',
   },
 };
 
@@ -349,6 +357,7 @@ const BillGold = () => {
         contentLabel="Confirmation Modal"
         style={pageStyles.modal}
       >
+        <div style={pageStyles.successIcon}>✔</div>
         <h2>Successfully</h2>
       </Modal>
     </div>
