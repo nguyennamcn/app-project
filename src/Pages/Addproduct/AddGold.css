@@ -17,9 +17,9 @@
   width: 100%;
   max-width: 1000px;
   padding: 50px;
-  border: 10px solid #f7be43;
+  border: 10px solid #FFA07A; /* Màu cam nhạt */
   border-radius: 7px;
-  background-color: #d7bc85;
+  background-color: #fff7e6; /* Màu cam nhạt */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -59,9 +59,9 @@
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  border: 1px solid #000000;
+  border: 1px solid #FFA07A; /* Màu cam nhạt */
   border-radius: 4px;
-  background-color: #FFFACD;
+  background-color: #FFE4B5; /* Màu cam nhạt */
   color: #333;
 }
 
@@ -78,22 +78,22 @@
 
 .back-button {
   padding: 8px 16px;
-  background: #FFF8DC;
-  border: 1px solid #D4AF37;
+  background: #FFDAB9; /* Màu cam nhạt */
+  border: 1px solid #FFA07A; /* Màu cam nhạt */
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16spx;
+  font-size: 16px;
   text-decoration: none;
   color: #000000;
 }
 
 .back-button:hover {
-  background: #FFEBCD;
+  background: #FFA07A; /* Màu cam nhạt */
 }
 
 .add-gold-button {
   padding: 8px 16px;
-  background: #FFD700;
+  background: #FFA07A; /* Màu cam nhạt */
   color: #000000;
   border: none;
   border-radius: 4px;
@@ -104,13 +104,13 @@
 }
 
 .add-gold-button:hover {
-  background: #FFC107;
+  background: #FF8C00; /* Màu cam đậm hơn */
 }
 
 .custom-modal .ant-modal-content {
   border-radius: 10px;
   padding: 20px;
-  background-color: #FFF8DC;
+  background-color: #FFE4B5; /* Màu cam nhạt */
 }
 
 .custom-modal .ant-modal-header {
@@ -124,7 +124,7 @@
 }
 
 .custom-modal .ant-modal-footer button {
-  background: #FFD700;
+  background: #FFA07A; /* Màu cam nhạt */
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -132,8 +132,9 @@
 }
 
 .custom-modal .ant-modal-footer button:hover {
-  background: #FFC107;
+  background: #FF8C00; /* Màu cam đậm hơn */
 }
+
 /* Responsive styles */
 @media (max-width: 1024px) {
   .form-title {

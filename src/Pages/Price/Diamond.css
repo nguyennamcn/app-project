@@ -1,0 +1,117 @@
+.DiamondPrice-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.DiamondPrice-header {
+    background-color: #6993FE;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+}
+
+.DiamondPrice-tableContainer {
+    overflow-x: auto;
+}
+
+.DiamondPrice-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.DiamondPrice-th {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    background-color: #f2f2f2;
+    font-size: 16px;
+}
+
+.DiamondPrice-td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.DiamondPrice-rowEven {
+    background-color: #f9f9f9;
+}
+
+.DiamondPrice-rowOdd {
+    background-color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+    .DiamondPrice-header {
+        font-size: 20px;
+        padding: 8px;
+    }
+    .DiamondPrice-th {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .DiamondPrice-td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    /* Responsive table styles */
+    .DiamondPrice-table thead {
+        display: none;
+    }
+
+    .DiamondPrice-table,
+    .DiamondPrice-table tbody,
+    .DiamondPrice-table tr,
+    .DiamondPrice-table td {
+        display: block;
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .DiamondPrice-table tr {
+        margin-bottom: 20px;
+    }
+
+    .DiamondPrice-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .DiamondPrice-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: calc(50% - 30px);
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .DiamondPrice-header {
+        font-size: 18px;
+        padding: 6px;
+    }
+    .DiamondPrice-th {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .DiamondPrice-td {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
