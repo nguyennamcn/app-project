@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Button, Radio, Modal } from 'antd';
+import { Input, Button, Radio, Modal, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
 import './EditEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
@@ -12,12 +12,18 @@ export default function EditEmployee() {
   useEffect(() => {
     adornicaServ.getViewStaff(id)
       .then((res) => {
-        console.log(res.data.metadata);
+        const employeeData = res.data.metadata;
+        console.log("Staff:",res.data.metadata);
         setEmployee(res.data.metadata);
+        setForm({
+          ...form,
+          role: employeeData.roleUser ? employeeData.roleUser[0] : null
+        });
       })
       .catch((err) => {
         console.log(err);
       });
+      
   }, [id]);
 
   const handleChange = (e) => {
@@ -58,10 +64,14 @@ export default function EditEmployee() {
     adornicaServ.updateRole(data)
       .then((res) => {
         console.log('Role updated:', res);
-        window.location.reload();
+        //window.location.reload();
+        notification.success({ message: "Update user successfully" });
+
       })
       .catch((err) => {
-        console.log(err)
+        const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.log(err);
       })
     console.log('Form data:', data);
   };
@@ -103,8 +113,8 @@ export default function EditEmployee() {
           <h3>Role:</h3>
           <div className="role-group-edit">
             {/* <h3>Role:</h3> */}
-            <Radio.Group name="role" onChange={handleChange} style={{ marginLeft: '10px' }}>
-              <Radio value="ROLE_SALES_STAFF">Staff</Radio>
+            <Radio.Group name="role" onChange={handleChange} value={form.role} style={{ marginLeft: '10px' }}>
+              <Radio value="ROLE_SALES_STAFF">Sales staff</Radio>
               <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
             </Radio.Group>
           </div>

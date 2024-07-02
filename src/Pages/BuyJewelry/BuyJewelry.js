@@ -205,7 +205,7 @@ const JewelrySelection = () => {
         updatedItems[index] = {
           ...updatedItems[index],
           origin:'None',
-          carat: 'None',
+          carat: 0,
           color: 'None',
           clarity: 'None',
           cut: 'None',
@@ -488,14 +488,14 @@ const JewelrySelection = () => {
               </>
             )}
 
-            { item.carat && item.clarity && item.color && item.cut && item.origin && (item.origin ==="NATURAL"|| item.origin ==="LAB_GROWN")  && formValid &&(
+            { item.clarity && item.color && item.cut && item.origin && (item.origin ==="NATURAL"|| item.origin ==="LAB_GROWN")  && formValid &&(
               <>
                <div style={{
                 fontSize: '16px',
                 fontWeight: 'bold',
                 gridColumn: 'span 2',
                 textAlign: 'center',
-                marginTop: '20px'
+                marginTop: '30px',
                }}>Diamond: Buy price {item.gemBuyPrice} VND - Sell price {item.gemSellPrice} VND
                </div>
                

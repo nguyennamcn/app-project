@@ -32,6 +32,7 @@ export default function StoreProductDetail() {
             .catch((err) => {
                 console.log(err);
             });
+            console.log("List item from bill: ",products);
     }, [orderCode]);
 
     const fetchProductDetails = (productsList) => {
