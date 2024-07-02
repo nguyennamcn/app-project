@@ -246,4 +246,11 @@ export const adornicaServ = {
     getAllCategoryBbp: () => {
         return https.get(`/api/v1/category`);
     },
+
+
+    getDetailProductNotActive: (id) => {
+        console.log(id)
+        return https.get(`/api/v1/products/active/${id}`);
+    },
+    
 }

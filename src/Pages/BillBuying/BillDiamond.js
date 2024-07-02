@@ -334,7 +334,7 @@ const BillDiamond = () => {
           onChange={handleInputChange(setAddress)}
         />
 
-        <label style={pageStyles.detailLabel}>Payment methods:</label>
+        {/* <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select
           style={pageStyles.paymentSelect}
           name="paymentMethod"
@@ -344,7 +344,7 @@ const BillDiamond = () => {
           <option value="Cash">Cash</option>
           <option value="Banking">Banking</option>
           
-        </select>
+        </select> */}
       </div>
 
       <div style={pageStyles.summary}>

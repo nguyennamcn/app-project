@@ -325,7 +325,7 @@ const BillGold = () => {
           onChange={handleInputChange(setAddress)}
         />
 
-        <label style={pageStyles.detailLabel}>Payment methods:</label>
+        {/* <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select
           style={pageStyles.paymentSelect}
           name="paymentMethod"
@@ -334,7 +334,7 @@ const BillGold = () => {
         >
           <option value="Cash">Cash</option>
           <option value="Card">Banking</option>
-        </select>
+        </select> */}
       </div>
 
       <div style={pageStyles.summary}>
