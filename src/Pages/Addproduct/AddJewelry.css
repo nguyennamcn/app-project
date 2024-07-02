@@ -18,9 +18,9 @@
   width: 100%;
   max-width: 900px;
   padding: 20px;
-  border: 3px solid #e6b413; 
+  border: 3px solid #ff9ecb; 
   border-radius: 8px;
-  background-color: #dbf567; 
+  background-color: #ffe6f2; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -29,7 +29,7 @@
   font-weight: bold;
   font-size: 24px;
   margin-bottom: 15px;
-  color: #000000; /* Thay đổi màu chữ thành màu vàng */
+  color: #000000; /* Thay đổi màu chữ thành màu đen */
 }
 
 .add-gem-form-row {
@@ -63,7 +63,7 @@
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  border: 1px solid #000000; /* Thay đổi màu viền thành màu vàng */
+  border: 1px solid #ff9ecb; /* Thay đổi màu viền thành màu hồng nhạt */
   border-radius: 4px;
   background-color: #fff;
   color: #333;
@@ -78,7 +78,7 @@
 
 .add-gem-back-button {
   padding: 8px 16px;
-  background: #f0f0f0;
+  background: #ffe6f2;
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
@@ -89,13 +89,13 @@
 }
 
 .add-gem-back-button:hover {
-  background: #ae933c; /* Thay đổi màu nền khi hover thành màu vàng */
+  background: #ff9ecb; /* Thay đổi màu nền khi hover thành màu hồng nhạt */
   color: #fff; /* Thay đổi màu chữ khi hover thành màu trắng */
 }
 
 .add-gem-add-button {
   padding: 8px 16px;
-  background: #f3bc05; /* Thay đổi màu nền thành màu vàng */
+  background: #ff9ecb; /* Thay đổi màu nền thành màu hồng nhạt */
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -106,7 +106,7 @@
 }
 
 .add-gem-add-button:hover {
-  background: #c49b33; /* Thay đổi màu nền khi hover thành màu vàng đậm hơn */
+  background: #ff7eb3; /* Thay đổi màu nền khi hover thành màu hồng đậm hơn */
 }
 
 .custom-modal .ant-modal-content {
@@ -125,7 +125,7 @@
 }
 
 .btn__ok {
-  background-color: #d4af37; /* Thay đổi màu nền thành màu vàng */
+  background-color: #ff9ecb; /* Thay đổi màu nền thành màu hồng nhạt */
   color: #fff;
   width: 70px;
   height: 40px;
@@ -138,7 +138,7 @@
 }
 
 .add-gem-container input {
-  border: 1px solid #d4af37; /* Thay đổi màu viền thành màu vàng */
+  border: 1px solid #ff9ecb; /* Thay đổi màu viền thành màu hồng nhạt */
 }
 
 /* Responsive cho màn hình nhỏ */

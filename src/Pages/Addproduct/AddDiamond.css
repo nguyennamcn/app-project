@@ -18,9 +18,9 @@
   width: 100%;
   max-width: 900px;
   padding: 20px;
-  border: 1px solid #B9F2FF;
+  border: 1px solid #D8BFD8; /* Màu tím nhạt */
   border-radius: 8px;
-  background-color: #E0F7FA;
+  background-color: #E6E6FA; /* Màu tím nhạt */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -29,7 +29,7 @@
   font-weight: bold;
   font-size: 25px;
   margin-bottom: 15px;
-  color: #00796B;
+  color: #6A5ACD; /* Màu tím đậm */
 }
 
 .add-diamond-form-row {
@@ -60,7 +60,7 @@
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  border: 1px solid #B9F2FF;
+  border: 1px solid #D8BFD8; /* Màu tím nhạt */
   border-radius: 4px;
   background-color: #FFFFFF;
   color: #333;
@@ -79,22 +79,22 @@
 
 .add-diamond-back-button {
   padding: 8px 16px;
-  background: #52e7fb;
-  border: 1px solid #070202;
+  background: #E6E6FA; /* Màu tím nhạt */
+  border: 1px solid #D8BFD8; /* Màu tím nhạt */
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   text-decoration: none;
-  color: #ffffff;
+  color: #6A5ACD; /* Màu tím đậm */
 }
 
 .add-diamond-back-button:hover {
-  background: #1ce3fd;
+  background: #D8BFD8; /* Màu tím nhạt */
 }
 
 .add-diamond-add-button {
   padding: 8px 16px;
-  background: #52e7fb;
+  background: #D8BFD8; /* Màu tím nhạt */
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -105,13 +105,13 @@
 }
 
 .add-diamond-add-button:hover {
-  background: #0097A7;
+  background: #B0C4DE; /* Màu tím đậm hơn */
 }
 
 .custom-modal .ant-modal-content {
   border-radius: 10px;
   padding: 20px;
-  background-color: #E0F7FA;
+  background-color: #E6E6FA; /* Màu tím nhạt */
 }
 
 .custom-modal .ant-modal-header {
@@ -125,7 +125,7 @@
 }
 
 .custom-modal .ant-modal-footer button {
-  background: #00BCD4;
+  background: #D8BFD8; /* Màu tím nhạt */
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -133,40 +133,40 @@
 }
 
 .custom-modal .ant-modal-footer button:hover {
-  background: #0097A7;
+  background: #B0C4DE; /* Màu tím đậm hơn */
 }
 
 /* Responsive styles */
 @media (max-width: 1024px) {
   .add-diamond-title {
     font-size: 18px;
-}
+  }
   .add-diamond-form-row {
-      flex-direction: row;
+    flex-direction: row;
   }
 
   .add-diamond-form-group {
-      margin-right: 9px;
-      font-size: small;
+    margin-right: 9px;
+    font-size: small;
   }
 }
 
 @media (max-width: 480px) {
   .add-diamond-title {
-      font-size: 20px;
+    font-size: 20px;
   }
 
   .add-diamond-form-group input[type="text"],
   .add-diamond-form-group input[type="number"],
   .add-diamond-form-group select {
-      padding: 6px;
+    padding: 6px;
   }
 
   .add-diamond-add-button,
   .add-diamond-back-button {
-      font-size: 12px;
-      padding: 6px 12px;
-      width: auto;
-      margin-bottom: 0;
+    font-size: 12px;
+    padding: 6px 12px;
+    width: auto;
+    margin-bottom: 0;
   }
 }
