@@ -14,7 +14,7 @@ export default function GoldPage() {
   const [modalMessage, setModalMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5; // Số sản phẩm mỗi trang
+  const itemsPerPage = 5;
 
   useEffect(() => {
     adornicaServ.getListGold()
@@ -80,11 +80,11 @@ export default function GoldPage() {
   const currentItems = filteredProducts.slice(offset, offset + itemsPerPage);
 
   return (
-    <div className="gold-page">
-      <div className='filter'>
+    <div className="home-gold-page">
+      <div className='home-gold-filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
         </div>
-        <div className='search__input_gold'>
+        <div className='home-gold-search-input-gold'>
           <textarea
             placeholder='Search by product code or name...'
             value={searchTerm}
@@ -97,25 +97,25 @@ export default function GoldPage() {
           </svg>
         </div>
       </div>
-      <div className="product-container">
+      <div className="home-gold--container">
         {currentItems.length > 0 ? (
           currentItems.map((sp) => (
-            <div className="product-card-container" key={sp.productCode}>
+            <div className="home-gold-card-container" key={sp.productCode}>
               <Card
                 bodyStyle={{ padding: '8px' }}
                 style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
-                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '146px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
+                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '190px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
               >
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
-                <div className="product-info">
+                <div className="home-gold--info">
                   <h1>{sp.productCode}</h1>
                   <h2> {sp.productPrice < 1 ? 'Undefined' : `${sp.productPrice}  VND`} </h2>
                 </div>
-                <div className="overlay">
+                <div className="home-gold-overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-                    <button className="overlay-button">View</button>
+                    <button className="home-gold-overlay-button">View</button>
                   </NavLink>
-                  <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                  <button className="home-gold-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
                 </div>
               </Card>
             </div>
@@ -128,7 +128,7 @@ export default function GoldPage() {
           </div>
         )}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+      <div className="home-gold-pagination-container">
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
@@ -137,17 +137,17 @@ export default function GoldPage() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
-          pageClassName={'page-item'}
-          pageLinkClassName={'page-link'}
+          containerClassName={'home-gold-pagination'}
+          activeClassName={'home-gold-active'}
+          pageClassName={'home-gold-page-item'}
+          pageLinkClassName={'home-gold-page-link'}
           previousClassName={'page-item'}
           previousLinkClassName={'page-link'}
           nextClassName={'page-item'}
           nextLinkClassName={'page-link'}
           breakClassName={'page-item'}
           breakLinkClassName={'page-link'}
-          disabledClassName={'disabled'}
+          disabledClassName={'home-gold-disabled'}
         />
       </div>
       <Modal

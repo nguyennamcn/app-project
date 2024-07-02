@@ -1,5 +1,5 @@
 
-.jewelry-page {
+.home-jewelry-page {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   overflow-y: auto;
 }
 
-.filter {
+.home-jewelry-filter {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -18,10 +18,10 @@
   gap: 10px; 
 }
 
-.filter select,
+.home-jewelry-filter select,
 
 
-.filter .search__input_jewelry {
+.home-jewelry-filter .home-jewelry-search-input-jewelry {
   display: flex;
   align-items: center;
   padding: 3px;
@@ -31,7 +31,7 @@
   max-width: 320px;
 }
 
-.filter .search__input_jewelry textarea {
+.home-jewelry-filter .home-jewelry-search-input-jewelry textarea {
   border: none;
   outline: none;
   margin-left: 8px;
@@ -40,12 +40,12 @@
   resize: none;
 }
 
-.filter .search__input_jewelry svg {
+.home-jewelry-filter .home-jewelry-search-input-jewelry svg {
   flex-shrink: 0;
 }
 
 
-.product-container {
+.home-jewelry-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -54,9 +54,10 @@
   max-width: 1200px;
   max-height: 70vh; 
   overflow-y: auto; 
+  margin-top: 20px;
 }
 
-.product-card-container {
+.home-jewelry-card-container {
   flex: 1 1 calc(33.333% - 20px);
   max-width: 200px;
   box-sizing: border-box;
@@ -64,7 +65,7 @@
   overflow: hidden;
 }
 
-.product-card-container .overlay {
+.home-jewelry-card-container .home-jewelry-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -79,11 +80,11 @@
   border-radius: 10px;
 }
 
-.product-card-container:hover .overlay {
+.home-jewelry-card-container:hover .home-jewelry-overlay {
   opacity: 1;
 }
 
-.overlay-button {
+.home-jewelry-overlay-button {
   background: white;
   border: none;
   padding: 10px 20px;
@@ -94,110 +95,133 @@
   transition: background-color 0.3s;
 }
 
-.overlay-button:hover {
+.home-jewelry-overlay-button:hover {
   background-color: #ddd;
 }
 
-.custom-modal .ant-modal-content {
+.home-jewelry-custom-modal .ant-modal-content {
   border-radius: 10px;
   text-align: center;
   height: 310px;
 }
 
-.custom-modal .ant-modal-header {
+.home-jewelry-custom-modal .ant-modal-header {
   border-bottom: none;
   padding: 16px;
   font-size: 18px;
   font-weight: bold;
 }
 
-.custom-modal .ant-modal-title {
+.home-jewelry-custom-modal .ant-modal-title {
   font-size: 30px;
 }
 
-.custom-modal .ant-modal-body {
+.home-jewelry-custom-modal .ant-modal-body {
   padding: 16px;
   font-size: 16px;
 }
 
-.custom-modal .ant-modal-footer {
+.home-jewelry-custom-modal .ant-modal-footer {
   display: none;
 }
 
-.notice__content {}
+.home-jewelry-notice-content {}
 
-.notice__content h1 {
+.home-jewelry-notice-content h1 {
   font-size: 24px;
   margin-top: 20px;
 }
 
-.check__icon {
+.home-jewelry-check-icon {
   color: #22c37d;
   font-size: 80px;
 }
 
-.error__icon {
+.home-jewelry-error-icon {
   color: #e60a0a;
   font-size: 80px;
 }
 
-.custom-modal_1{
+.home-jewelry-custom-modal{
   width: 800px;
 }
 
-.size-button{
+.home-jewelry-size-button{
+  width: 100%;
+}
+.home-jewelry-pagination-container {
+  display: flex;
+  justify-content: flex-end; /* Căn chỉnh sang phải */
+  margin: 30px 0;
   width: 100%;
 }
 
-@media (max-width: 1024px) {
-  .filter {
+.home-jewelry-pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.home-jewelry-page-item {
+  margin: 0 5px;
+}
+
+.home-jewelry-page-link {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.home-jewelry-active .home-jewelry-page-link {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+}
+
+.home-jewelry-disabled .home-jewelry-page-link {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Sửa đổi cho Tablet */
+@media (max-width: 768px) {
+  .home-jewelry-filter {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .filter .search__input_jewelry{
+  .home-jewelry-filter .home-jewelry-search-input-jewelry {
     width: 100%;
     max-width: 100%;
   }
 
-  .filter select {
+  .home-jewelry-filter select {
     width: 100%;
     margin: 5px 0;
   }
-}
 
-@media (max-width: 768px) {
-  .filter {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .filter select,
-  .filter .search__input_jewelry {
-    width: 48%;
-    margin: 5px 0;
-  }
-
-  .product-card-container {
-    flex: 1 1 calc(50% - 20px);
-    max-width: calc(50% - 20px);
+  .home-jewelry-card-container {
+    flex: 1 1 calc(50% - 20px); /* Cập nhật để có 2 hàng sản phẩm */
+    max-width: calc(50% - 20px); /* Cập nhật để có 2 hàng sản phẩm */
   }
 }
 
+/* Sửa đổi cho Mobile */
 @media (max-width: 480px) {
-  .filter {
+  .home-jewelry-filter {
     flex-direction: column;
     align-items: center;
   }
 
-  .filter select,
-  .filter .search__input_jewelry {
+  .home-jewelry-filter select,
+  .home-jewelry-filter .home-jewelry-search-input-jewelry {
     width: 100%;
     margin: 5px 0;
   }
 
-  .product-card-container {
-    flex: 1 1 100%;
-    max-width: 100%;
+  .home-jewelry-card-container {
+    flex: 1 1 100%; /* Cập nhật để có 1 hàng sản phẩm */
+    max-width: 100%; /* Cập nhật để có 1 hàng sản phẩm */
   }
 }

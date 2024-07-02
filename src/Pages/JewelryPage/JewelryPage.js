@@ -54,18 +54,18 @@ export default function JewelryPage() {
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if(product.productPrice < 0){
-      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
+      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
       return;
     }
 
     if (existingItemIndex > -1) {
-      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
+      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {
       // Add new item to the cart
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       // Save updated cart items to local storage
-      showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-check-icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
     }
   };
 
@@ -87,17 +87,17 @@ export default function JewelryPage() {
   };
 
   return (
-    <div className="jewelry-page">
-      <div className='filter'>
+    <div className="home-jewelry-page">
+      <div className='home-jewelry-filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button onClick={() => setIsSizeModalVisible(true)} className="size-button">
+          <button onClick={() => setIsSizeModalVisible(true)} className="home-jewelry-size-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-rulers" viewBox="0 0 16 16">
               <path d="M2.23 0a.5.5 0 0 0-.5.5v1.75a.5.5 0 0 0 1 0V1H6v.25a.5.5 0 0 0 1 0V1h2v.25a.5.5 0 0 0 1 0V1h2.5v1.25a.5.5 0 0 0 1 0V.5a.5.5 0 0 0-.5-.5H2.23zM1 2.5v10.77a.5.5 0 0 0 .5.5h1.75a.5.5 0 0 0 0-1H2V10h.25a.5.5 0 0 0 0-1H2V7h.25a.5.5 0 0 0 0-1H2V4h.25a.5.5 0 0 0 0-1H2V2h.25a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0-.5.5zM13 2v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm-2-6v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm-2-6v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9z"/>
             </svg>
           </button>
         </div>
 
-        <div className='search__input_jewelry'>
+        <div className='home-jewelry-search-input-jewelry'>
           <textarea
             placeholder='Search by product code or name...'
             value={searchTerm}
@@ -110,25 +110,25 @@ export default function JewelryPage() {
           </svg>
         </div>
       </div>
-      <div className="product-container">
+      <div className="home-jewelry-container">
         {currentProducts.length > 0 ? (
           currentProducts.map((sp) => (
-            <div className="product-card-container" key={sp.productCode}>
+            <div className="home-jewelry-card-container" key={sp.productCode}>
               <Card
                 bodyStyle={{ padding: '8px' }}
                 style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
-                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '146px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
+                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '190px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
               >
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
-                <div className="product-info">
+                <div className="home-jewelry-info">
                   <h1>{sp.productCode}</h1>
                   <h2> {sp.productPrice < 1 ? 'Undefined' : `${sp.productPrice}  VND`} </h2>
                 </div>
-                <div className="overlay">
+                <div className="home-jewelry-overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-                    <button className="overlay-button">View</button>
+                    <button className="home-jewelry-overlay-button">View</button>
                   </NavLink>
-                  <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                  <button className="home-jewelry-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
                 </div>
               </Card>
             </div>
@@ -141,7 +141,7 @@ export default function JewelryPage() {
           </div>
         )}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+      <div className="home-jewelry-pagination-container">
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
@@ -150,24 +150,24 @@ export default function JewelryPage() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
-          pageClassName={'page-item'}
-          pageLinkClassName={'page-link'}
-          previousClassName={'page-item'}
+          containerClassName={'home-jewelry-pagination'}
+          activeClassName={'home-jewelry-active'}
+          pageClassName={'home-jewelry-page-item'}
+          pageLinkClassName={'home-jewelry-page-link'}
+          previousClassName={'home-jewelry-page-item'}
           previousLinkClassName={'page-link'}
           nextClassName={'page-item'}
           nextLinkClassName={'page-link'}
           breakClassName={'page-item'}
           breakLinkClassName={'page-link'}
-          disabledClassName={'disabled'}
+          disabledClassName={'home-jewelry-disabled'}
         />
       </div>
       <Modal
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}
-        className="custom-modal_1"
+        className="home-jewelry-custom-modal"
       >
         <div>{modalMessage}</div>
       </Modal>
@@ -175,7 +175,7 @@ export default function JewelryPage() {
         visible={isSizeModalVisible}
         footer={null}
         onCancel={() => setIsSizeModalVisible(false)}
-        className="custom-modal_1"
+        className="home-jewelry-custom-modal"
       >
         <div>
           <img src="https://vuanem.com/blog/wp-content/uploads/2022/09/bang-size-nhan-nam1-1.jpg" alt="Ring Sizes" style={{ width: '100%' }} />
