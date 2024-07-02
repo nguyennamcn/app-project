@@ -13,7 +13,7 @@ export default function ProductPieChart({ data }) {
   return (
     <div className="chart-content">
       <div className="chart-description">
-        <h2 className="chart-title">Product Distribution</h2>
+        {/* <h2 className="chart-title">Product Distribution</h2> */}
         <ul>
           {formattedData.map((entry, index) => (
             <li key={`item-${index}`}>

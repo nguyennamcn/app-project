@@ -2,7 +2,7 @@
   overflow-y: auto;
   padding: 20px;
   background-color: #f3e5f5; /* Màu tím nhạt */
-  max-height:80vh;
+  max-height: 80vh;
   color: #ffffff;
 }
 
@@ -16,23 +16,24 @@
 }
 
 .orders-sold-card {
-  background-color: #0088FE;
+  background-color: #67b1f2;
+  background-color: #7975ebe2;
 }
 
 .repeat-orders-card {
-  background-color: #00C49F;
+  background-color: #74f1db;
 }
 
 .top-employee-card {
-  background-color: #FFBB28;
+  background-color: #eaca85;
 }
 
 .diamond-sold-card {
-  background-color: #FF8042;
+  background-color: #f2a680;
 }
 
 .gold-sold-card {
-  background-color: #A569BD;
+  background-color: #efa5da;
 }
 
 .jewelry-sold-card {
@@ -106,16 +107,61 @@ li span {
 }
 
 /* Các tiêu đề có màu đen đậm và ánh sáng để nổi bật */
-h1, h2 {
+.dashboard-title {
   color: #000000;
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Ánh sáng */
 }
 
-h1 {
-  font-size: 30px;
+.dashboard-title-main {
+  font-size: 36px;
 }
 
-h2 {
-  font-size: 25px;
+.dashboard-title-sub {
+  font-size: 28px;
+}
+
+/* Responsive cho tablet và mobile */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  .stat-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .stat-card {
+    margin-bottom: 10px;
+  }
+
+  .chart-container {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .pie-chart,
+  .traffic-chart {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title-main {
+    font-size: 28px;
+  }
+
+  .dashboard-title-sub {
+    font-size: 22px;
+  }
+
+  .stat-card {
+    text-align: center;
+  }
+
+  .chart-container {
+    padding: 5px;
+  }
 }

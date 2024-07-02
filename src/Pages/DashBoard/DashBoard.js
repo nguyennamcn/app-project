@@ -87,8 +87,8 @@ export default function DashBoard() {
       return (
         <div className="custom-tooltip">
           <p className="label">{`${label}`}</p>
-          <p className="intro">{`Daily Revenue: ${dailyRevenue ? dailyRevenue.toLocaleString() + ' VND' : 'N/A'}`}</p>
-          {monthlyRevenue !== undefined && <p className="intro">{`Monthly Revenue: ${monthlyRevenue ? monthlyRevenue.toLocaleString() + ' VND' : 'N/A'}`}</p>}
+          {dailyRevenue !== undefined && <p className="intro">{`Daily Revenue: ${dailyRevenue.toLocaleString()} VND`}</p>}
+          {monthlyRevenue !== undefined && <p className="intro">{`Monthly Revenue: ${monthlyRevenue.toLocaleString()} VND`}</p>}
         </div>
       );
     }
@@ -97,58 +97,58 @@ export default function DashBoard() {
 
   return (
     <div className="dashboard-container">
-      <h1>DashBoard</h1>
+      <h1 className="dashboard-title dashboard-title-main">DashBoard</h1>
       <Row gutter={16} className="stat-row">
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card className="stat-card orders-sold-card">
             <Statistic title="Total Amount Yesterday" value={data.yesterday} />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card className="stat-card repeat-orders-card">
             <Statistic title="Total Amount Today" value={data.today} />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card className="stat-card top-employee-card">
             <Statistic title="Staff with Most Orders" value={data.staffMostOrders} />
           </Card>
         </Col>
       </Row>
       <Row gutter={16} className="stat-row">
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card className="stat-card gold-sold-card">
             <Statistic title="Total Amount Last Month" value={data.lastMonth} />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card className="stat-card diamond-sold-card">
             <Statistic title="Total Amount This Month" value={data.thisMonth} />
           </Card>
         </Col>
       </Row>
       <div className="chart-container">
-        <h2>Daily and Monthly Revenue</h2>
+        <h2 className="dashboard-title dashboard-title-sub">Daily and Monthly </h2>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={dailyAndMonthlyRevenueData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="period" />
             <Tooltip content={customTooltip} />
-            <Legend />
-            <Bar dataKey="dailyRevenue" fill="#8884d8" name="Daily"/>
-            <Bar dataKey="monthlyRevenue" fill="#82ca9d" name="Monthly" />
+            <Bar dataKey="dailyRevenue" fill="#67b1f2" name="Daily" />
+            <Bar dataKey="monthlyRevenue" fill="#74f1db" name="Monthly" />
           </BarChart>
         </ResponsiveContainer>
       </div>
       <div className="chart-container">
+        <h2 className="dashboard-title dashboard-title-sub">Product Distribution</h2>
         <ProductPieChart data={productData} />
       </div>
       <div className="chart-container">
-        <h2>Weekly Revenue</h2>
+        <h2 className="dashboard-title dashboard-title-sub">Weekly Revenue</h2>
         <WeeklyRevenueChart data={data.weeklyRevenue} />
       </div>
       <div className="chart-container">
-        <h2>Yearly Revenue</h2>
+        <h2 className="dashboard-title dashboard-title-sub">Yearly Revenue</h2>
         <YearlyRevenueChart data={data.yearlyRevenue} />
       </div>
     </div>
