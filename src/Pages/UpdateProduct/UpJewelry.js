@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, message, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
-import './AddJewelry.css';
+import './UpJewelry.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
 function UpJewelry() {
@@ -110,33 +110,33 @@ function UpJewelry() {
   };
 
   return (
-    <div className="add-jewelry-container">
-      <div className="add-jewelry-content">
-        <div className="add-jewelry-form">
-          <h2 className="add-jewelry-title">UPDATE JEWELRY</h2>
+    <div className="upjewelry-container">
+      <div className="upjewelry-content">
+        <div className="upjewelry-form">
+          <h2 className="upjewelry-title">UPDATE JEWELRY</h2>
           <form onSubmit={handleUpdate}>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Product Code:</label>
-                <h2  name="productCode">{sp.productCode}</h2>
+                <h2 name="productCode">{sp.productCode}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Product Name:</label>
                 <input type="text" name="productName" placeholder='Product name' value={sp.productName} onChange={handleInputChange} required />
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Gem Cost:</label>
                 <h2 name="gemCost">{sp.gemCost}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Production Cost:</label>
                 <input type="number" name="productionCost" placeholder='Production cost' value={sp.productionCost} onChange={handleInputChange} min={1} required />
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Gender:</label>
                 <select name="gender" value={sp.gender} onChange={handleInputChange}>
                   <option value={sp.gender}>{sp.gender}</option>
@@ -145,74 +145,59 @@ function UpJewelry() {
                   {sp.gender !== "UNISEX" && <option value="UNISEX">Unisex</option>}
                 </select>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Category:</label>
                 <h2 name="categoryId">{sp.category}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Material ID:</label>
-                <h2 name="id" >{sp.materials[0]?.name}</h2>
+                <h2 name="id">{sp.materials[0]?.name}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Material Weight (gram):</label>
                 <input type="number" name="weight" placeholder='Material weight' value={sp.materials[0]?.weight} onChange={(e) => handleMaterialInputChange(e, 0)} min={1} />
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              {/* <div className="add-jewelry-form-group">
-                <label>Gem ID:</label>
-                <input type="text" name="id" placeholder='Gem id' value={sp.gem[0]?.id} onChange={(e) => handleGemInputChange(e, 0)} min={0} readOnly />
-              </div> */}
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Gem Code:</label>
-                <h2  name="gemCode">{sp.gem[0]?.gemCode}</h2>
+                <h2 name="gemCode">{sp.gem[0]?.gemCode}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Diamond Name:</label>
-                <h2 name="gemName" >{sp.gem[0]?.gemName}</h2>
+                <h2 name="gemName">{sp.gem[0]?.gemName}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Origin:</label>
-                <h2 name="origin">
-                {sp.gem[0]?.origin}
-                </h2>
+                <h2 name="origin">{sp.gem[0]?.origin}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Color:</label>
-                <h2 name="color">
-                {sp.gem[0]?.color}
-
-                </h2>
+                <h2 name="color">{sp.gem[0]?.color}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Clarity:</label>
-                <h2 name="clarity">
-                {sp.gem[0]?.clarity}
-
-                </h2>
+                <h2 name="clarity">{sp.gem[0]?.clarity}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Cut:</label>
-                <h2 name="cut" >
-                {sp.gem[0]?.cut}
-
-                </h2>
+                <h2 name="cut">{sp.gem[0]?.cut}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Carat:</label>
-                <h2  name="carat">{sp.gem[0]?.carat}</h2>
+                <h2 name="carat">{sp.gem[0]?.carat}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upjewelry-form-row">
+              <div className="upjewelry-form-group">
                 <label>Size:</label>
                 <select name="size" value={sp.size} onChange={handleInputChange} required>
                   <option value={sp.size}>{sp.size}</option>
@@ -224,17 +209,14 @@ function UpJewelry() {
                   {sp.size !== "SIZE_6" && <option value="SIZE_6">Size 6</option>}
                 </select>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upjewelry-form-group">
                 <label>Jewelry Diamond:</label>
-                <h2 name="jewelryDiamond">
-                {sp.jewelryDiamond ? "true" : "false"}
-      
-                </h2>
+                <h2 name="jewelryDiamond">{sp.jewelryDiamond ? "true" : "false"}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-footer">
-              <NavLink to="/ManageJewelry" className="add-jewelry-back-button">BACK</NavLink>
-              <button className="add-jewelry-add-button" type="submit">
+            <div className="upjewelry-form-footer">
+              <NavLink to="/ManageJewelry" className="upjewelry-back-button">BACK</NavLink>
+              <button className="upjewelry-add-button" type="submit">
                 UPDATE JEWELRY
               </button>
             </div>

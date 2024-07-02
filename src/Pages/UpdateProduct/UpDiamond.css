@@ -1,0 +1,174 @@
+.updiamond-container {
+  display: flex;
+  height: calc(70vh); 
+  margin-top: 30px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.updiamond-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.updiamond-form {
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  border: 1px solid #FFCBA4; /* Màu cam nhạt */
+  border-radius: 8px;
+  background-color: #FFEFD5; /* Màu cam nhạt */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.updiamond-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 15px;
+  color: #FF8C00; /* Màu cam đậm */
+}
+
+.updiamond-form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.updiamond-form-group {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.updiamond-form-group:last-child {
+  margin-right: 0;
+}
+
+.updiamond-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.updiamond-form-group input[type="text"],
+.updiamond-form-group input[type="number"],
+.updiamond-form-group select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #FFCBA4; /* Màu cam nhạt */
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+}
+
+.updiamond-form-group input[type="text"]::placeholder,
+.updiamond-form-group input[type="number"]::placeholder {
+  color: #000000;
+}
+
+.updiamond-form-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.updiamond-back-button {
+  padding: 8px 16px;
+  background: #FFEFD5; /* Màu cam nhạt */
+  border: 1px solid #FFCBA4; /* Màu cam nhạt */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  color: #FF8C00; /* Màu cam đậm */
+}
+
+.updiamond-back-button:hover {
+  background: #FFCBA4; /* Màu
+cam nhạt */
+}
+
+.updiamond-add-button {
+padding: 8px 16px;
+background: #FFCBA4; /* Màu cam nhạt */
+color: #fff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 14px;
+font-weight: bold;
+transition: background 0.3s ease;
+}
+
+.updiamond-add-button
+{
+background: #FFCC99; /* Màu cam đậm hơn */
+}
+
+.custom-modal .ant-modal-content {
+border-radius: 10px;
+padding: 20px;
+background-color: #FFEFD5; /* Màu cam nhạt */
+}
+
+.custom-modal .ant-modal-header {
+border-bottom: none;
+}
+
+.custom-modal .ant-modal-footer {
+border-top: none;
+display: flex;
+justify-content: center;
+}
+
+.custom-modal .ant-modal-footer button {
+background: #FFCBA4; /* Màu cam nhạt */
+border: none;
+color: #fff;
+border-radius: 4px;
+padding: 5px 15px;
+}
+
+.custom-modal .ant-modal-footer button
+{
+background: #FFCC99; /* Màu cam đậm hơn */
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+.updiamond-title {
+font-size: 18px;
+}
+.updiamond-form-row {
+flex-direction: row;
+}
+
+.updiamond-form-group {
+margin-right: 9px;
+font-size: small;
+}
+}
+
+@media (max-width: 480px) {
+.updiamond-title {
+font-size: 20px;
+}
+
+.updiamond-form-group input[type="text"],
+.updiamond-form-group input[type="number"],
+.updiamond-form-group select {
+padding: 6px;
+}
+
+.updiamond-add-button,
+.updiamond-back-button {
+font-size: 12px;
+padding: 6px 12px;
+width: auto;
+margin-bottom: 0;
+}
+}

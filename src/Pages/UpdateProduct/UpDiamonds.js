@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
-import './AddJewelry.css';
+import './UpDiamond.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
-function UpDiamonds() {
+function UpDiamond() {
   const { productCode } = useParams();
   const [sp, setSp] = useState({
     productCode: '',
@@ -109,70 +109,62 @@ function UpDiamonds() {
   };
 
   return (
-    <div className="add-jewelry-container">
-      <div className="add-jewelry-content">
-        <div className="add-jewelry-form">
-          <h2 className="add-jewelry-title">UPDATE DIAMOND</h2>
+    <div className="updiamond-container">
+      <div className="updiamond-content">
+        <div className="updiamond-form">
+          <h2 className="updiamond-title">UPDATE DIAMOND</h2>
           <form onSubmit={handleUpdate}>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="updiamond-form-row">
+              <div className="updiamond-form-group">
                 <label>Product Code:</label>
                 <h2 name="productCode">{sp.productCode}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="updiamond-form-group">
                 <label>Product Name:</label>
                 <input type="text" name="productName" placeholder="Product name" value={sp.productName} onChange={handleInputChange} required />
               </div>
             </div>
-            <div className="add-jewelry-form-row">
+            <div className="updiamond-form-row">
      
-              <div className="add-jewelry-form-group">
+              <div className="updiamond-form-group">
                 <label>Gem Code:</label>
                 <h2 name="gemCode" >{sp.gem[0]?.gemCode || ''}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="updiamond-form-row">
+              <div className="updiamond-form-group">
                 <label>Diamond Name:</label>
                 <input type="text" name="gemName" placeholder="Diamond name" value={sp.gem[0].gemName} onChange={handleGemInputChange} required />
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="updiamond-form-group">
                 <label>Origin:</label>
-                <h2 name="origin" >{sp.gem[0].origin}
-                </h2>
+                <h2 name="origin" >{sp.gem[0].origin}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="updiamond-form-row">
+              <div className="updiamond-form-group">
                 <label>Color:</label>
-                <h2 name="color" >
-                 {sp.gem[0].color} 
-                </h2>
+                <h2 name="color">{sp.gem[0].color}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="updiamond-form-group">
                 <label>Clarity:</label>
-                <h2 name="clarity" >
-                  {sp.gem[0].clarity}
-                
-                </h2>
+                <h2 name="clarity">{sp.gem[0].clarity}</h2>
               </div>
             </div>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="updiamond-form-row">
+              <div className="updiamond-form-group">
                 <label>Cut:</label>
-                <h2 name="cut"  >
-                 {sp.gem[0].cut}
-                </h2>
+                <h2 name="cut">{sp.gem[0].cut}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="updiamond-form-group">
                 <label>Carat:</label>
-                <h2  name="carat" >{sp.gem[0].carat}</h2>
+                <h2 name="carat">{sp.gem[0].carat}</h2>
               </div>
             </div>
 
-            <div className="add-jewelry-form-footer">
-              <NavLink to="/ManageDiamond" className="add-jewelry-back-button">BACK</NavLink>
-              <button className="add-jewelry-add-button" type="submit">
+            <div className="updiamond-form-footer">
+              <NavLink to="/ManageDiamond" className="updiamond-back-button">BACK</NavLink>
+              <button className="updiamond-add-button" type="submit">
                 UPDATE DIAMOND
               </button>
             </div>
@@ -192,4 +184,4 @@ function UpDiamonds() {
   );
 }
 
-export default UpDiamonds;
+export default UpDiamond;
