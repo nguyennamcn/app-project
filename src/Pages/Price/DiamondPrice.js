@@ -23,6 +23,10 @@ const DiamondPrice = () => {
     };
 
     const currentDate = new Date().toLocaleDateString('vi-VN');
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+    
 
     return (
         <div className="DiamondPrice-container">
@@ -49,8 +53,8 @@ const DiamondPrice = () => {
                                 <td data-label="Clarity" className="DiamondPrice-td">{price.clarity}</td>
                                 <td data-label="Cut" className="DiamondPrice-td">{price.cut}</td>
                                 <td data-label="Carat" className="DiamondPrice-td">{price.carat}</td>
-                                <td data-label="Purchase (VND)" className="DiamondPrice-td">{price.gemBuyPrice}</td>
-                                <td data-label="Sell" className="DiamondPrice-td">{price.gemSellPrice}</td>
+                                <td data-label="Purchase (VND)" className="DiamondPrice-td">{formatPrice(price.gemBuyPrice)}</td>
+                                <td data-label="Sell" className="DiamondPrice-td">{formatPrice(price.gemSellPrice)}</td>
                                 <td data-label="Date Update" className="DiamondPrice-td">{formatDate(price.effectDate)}</td>
                             </tr>
                         ))}

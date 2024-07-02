@@ -40,6 +40,13 @@ export default function CustomerDetails() {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return new Date(date).toLocaleDateString('vi-VN', options);
   };
+  const formatPrice = (price) => {
+    if (price === null || price === undefined) {
+      return '0';
+    }
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  };
+  
 
   return (
     <div className="customer-container">
@@ -73,7 +80,7 @@ export default function CustomerDetails() {
                 <td className="customer-td" data-label="Address">{detail.address}</td>
                 <td className="customer-td" data-label="Birthday">{formatBirthday(detail.dateOfBirth)}</td>
                 <td className="customer-td" data-label="Discount (%)">{detail.percentDiscount}</td>
-                <td className="customer-td" data-label="Purchased (VND)">{detail.totalAmountPurchased}</td>
+                <td className="customer-td" data-label="Purchased (VND)">{formatPrice(detail.totalAmountPurchased)}</td>
               </tr>
             ))}
           </tbody>

@@ -478,32 +478,39 @@ const JewelrySelection = () => {
 
             {item.goldType && item.weight && item.weight >0 && (
               <>
-                <div style={styles.totalPrice}>{item.goldType}: Buy price {item.materialBuyPrice} VND - Sell price {item.materialSellPrice} VND</div>
+                <div style={styles.totalPrice}>
+                    {item.goldType}: Buy price {item.materialBuyPrice.toLocaleString('vi-VN')} VND - Sell price {item.materialSellPrice.toLocaleString('vi-VN')} VND
+                </div>
+
                 
                 <div style={styles.totalPrice}>Gold promotion: {goldPromotion}</div>
 
                 <div style={styles.totalPrice}>
-                  Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toFixed(0)} VND
+                    Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
+
               </>
             )}
 
             { item.clarity && item.color && item.cut && item.origin && (item.origin ==="NATURAL"|| item.origin ==="LAB_GROWN")  && formValid &&(
               <>
-               <div style={{
-                fontSize: '16px',
-                fontWeight: 'bold',
-                gridColumn: 'span 2',
-                textAlign: 'center',
-                marginTop: '30px',
-               }}>Diamond: Buy price {item.gemBuyPrice} VND - Sell price {item.gemSellPrice} VND
-               </div>
+                <div style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  gridColumn: 'span 2',
+                  textAlign: 'center',
+                  marginTop: '30px',
+                }}>
+                  Diamond: Buy price {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND
+                </div>
+
                
                <div style={styles.totalPrice}>Diamond promotion: {gemPromotion}</div>
 
-            <div style={styles.totalPrice}>
-              Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
-            </div>
+               <div style={styles.totalPrice}>
+                   Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND
+                </div>
+
               </>
             )}        
             
@@ -511,7 +518,7 @@ const JewelrySelection = () => {
         ))}
         <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Add Jewelry</button>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice.toFixed(0)} VND
+          Total price: {totalPrice.toLocaleString('vi-Vn')} VND
         </div>
         <button
           type="submit"

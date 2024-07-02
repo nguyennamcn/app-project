@@ -108,6 +108,12 @@ export default function ManageDiamond() {
   const firstItemIndex = currentPage * itemsPerPage;
   const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, diamondManage.length);
   const currentDiamonds = diamondManage.slice(firstItemIndex, lastItemIndex);
+  const formatPrice = (price) => {
+    if (price <= 0 || isNaN(price)) {
+      return 'Not yet been priced'; 
+    }
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  };
 
   return (
     <div className="diamond-container">
@@ -132,7 +138,7 @@ export default function ManageDiamond() {
               <td className="diamond-td" data-label="ID">{diamond.productId}</td>
               <td className="diamond-td" data-label="Code">{diamond.productCode}</td>
               <td className="diamond-td" data-label="Name">{diamond.productName}</td>
-              <td className="diamond-td" data-label="Price (VND)">{diamond.productPrice <= 0 ? 'Not yet been priced' : `${diamond.productPrice}`}</td>
+              <td className="gold-td" data-label="Price (VND)">{formatPrice(diamond.productPrice)}</td>
               <td className="diamond-td" data-label="Size">{diamond.size}</td>
               <td className="diamond-td" data-label="Action">
                 <NavLink to={`/update-diamond/${diamond.productId}`}>

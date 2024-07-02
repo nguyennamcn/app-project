@@ -99,14 +99,12 @@ const styles = {
 
 const DiamondSelection = () => {
   const [diamondItems, setDiamondItems] = useState([{ color: '', cut: '', clarity: '', carat: '', origin: '', gemBuyPrice: '0.00', gemSellPrice: '0.00' }]);
-
-  const [formValid, setFormValid] = useState(false); 
+  const [formValid, setFormValid] = useState(false);
   const [gemPromotion, setGemPromotion] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    validateForm(); 
-
+    validateForm();
   }, [diamondItems]);
 
   useEffect(() => {
@@ -190,7 +188,7 @@ const DiamondSelection = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (!formValid) {
       alert('Please fill out all required fields.');
@@ -203,7 +201,7 @@ const DiamondSelection = () => {
       clarity: item.clarity,
       color: item.color,
       origin: item.origin,
-      gemBuyPrice: ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)),
+      gemBuyPrice: parseFloat(item.gemBuyPrice),
       gemSellPrice: parseFloat(item.gemSellPrice),
     }));
 
@@ -283,21 +281,17 @@ const DiamondSelection = () => {
                 <option value="LAB_GROWN">LAB_GROWN</option>
               </select>
             </div>
-          {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
-            <>
-               <div style={styles.totalPrice}>Diamond: Buy price {item.gemBuyPrice} VND - Sell price {item.gemSellPrice} VND
-               </div>
-               
-               <div style={styles.totalPrice}>Diamond promotion: {gemPromotion}</div>
+            {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
+              <>
+                <div style={styles.totalPrice}>Diamond: Buy price {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND</div>
+                <div style={styles.totalPrice}>Diamond promotion: {gemPromotion}</div>
+                <div style={styles.totalPrice}>
+                    Diamond total: {parseFloat((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)).toLocaleString('en-US')} VND
+                </div>
 
-            <div style={styles.totalPrice}>
-              Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0))}
-            </div>
-            </>
-          )}
-            
-
-          </React.Fragment>
+              </>
+            )}
+          </React.Fragment>  
         ))}
         <button
           type="button"
@@ -306,7 +300,7 @@ const DiamondSelection = () => {
         >
           ADD DIAMOND
         </button>
-        <div style={styles.totalPrice}>Total price: {totalPrice} VND</div>
+        <div style={styles.totalPrice}>Total price: {parseFloat(totalPrice).toLocaleString('vi-VN')} VND</div>
         <button
           type="submit"
           style={{

@@ -20,7 +20,7 @@ function UpGold() {
         const productData = res.data.metadata;
         const firstMaterial = productData.materials.length > 0 ? productData.materials[0] : {};
         setSp({ ...productData, materials: [firstMaterial] });
-        console.log("Data from api: ",productData);
+        console.log("Data from api: ", productData);
       })
       .catch((err) => {
         console.log(err);
@@ -61,7 +61,7 @@ function UpGold() {
         weight: material.weight,
       })),
     };
-    console.log("productData sent: ",productData);
+    console.log("productData sent: ", productData);
     adornicaServ.updateProduct(productCode, productData)
       .then((response) => {
         notification.success({ message: 'Update product success' });
@@ -87,7 +87,7 @@ function UpGold() {
             <div className="upgold-form-row">
               <div className="upgold-form-group">
                 <label>Product Code:</label>
-                <h2 name="productCode">{sp.productCode}</h2>
+                <h2 className="upgold-static-input">{sp.productCode}</h2>
               </div>
               <div className="upgold-form-group">
                 <label>Product Name:</label>
@@ -98,7 +98,7 @@ function UpGold() {
             <div className="upgold-form-row">
               <div className="upgold-form-group">
                 <label>Material ID:</label>
-                <h2 name="id">{sp.materials[0]?.name || ''}</h2>
+                <h2 className="upgold-static-input">{sp.materials[0]?.name || ''}</h2>
               </div>
               <div className="upgold-form-group">
                 <label>Weight (gram):</label>
