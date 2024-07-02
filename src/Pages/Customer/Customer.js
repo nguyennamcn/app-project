@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
+import './Customer.css';
 
 export default function CustomerDetails() {
   const [customerDetails, setCustomerDetails] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 4;
+  const itemsPerPage = 7;
 
   useEffect(() => {
-    adornicaServ.getCustomerDetails() // Assuming this endpoint returns customer details
+    adornicaServ.getCustomerDetails()
       .then((res) => {
         console.log(res.data.metadata);
-        // Sắp xếp khách hàng theo thứ tự giảm dần của ID
-        const sortedDetails = res.data.metadata.sort((a, b) => b.customerId - a.customerId);
+        const sortedDetails = res.data.metadata.sort((a, b) => a.customerId - b.customerId);
         setCustomerDetails(sortedDetails);
       })
       .catch((err) => {
@@ -42,42 +42,44 @@ export default function CustomerDetails() {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.header}>CUSTOMER INFORMATION</h2>
+    <div className="customer-container">
+      <h2 className="customer-header">CUSTOMER INFORMATION</h2>
       <input 
         type="text"
         placeholder="Search by Name or Phone"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        style={styles.searchBar}
+        className="customer-searchBar"
       />
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            <th style={styles.th}>ID</th>
-            <th style={styles.th}>Name</th>
-            <th style={styles.th}>Phone</th>
-            <th style={styles.th}>Address</th>
-            <th style={styles.th}>Birthday</th>
-            <th style={styles.th}>Discount (%)</th>
-            <th style={styles.th}>Purchased (VND)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentPageData.map((detail, index) => (
-            <tr key={index} style={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
-              <td style={styles.td}>{detail.customerId}</td>
-              <td style={styles.td}>{detail.name}</td>
-              <td style={styles.td}>{detail.phone}</td>
-              <td style={styles.td}>{detail.address}</td>
-              <td style={styles.td}>{formatBirthday(detail.dateOfBirth)}</td>
-              <td style={styles.td}>{detail.percentDiscount}</td>
-              <td style={styles.td}>{detail.totalAmountPurchased}</td>
+      <div className="customer-tableContainer">
+        <table className="customer-table">
+          <thead>
+            <tr>
+              <th className="customer-th">ID</th>
+              <th className="customer-th">Name</th>
+              <th className="customer-th">Phone</th>
+              <th className="customer-th">Address</th>
+              <th className="customer-th">Birthday</th>
+              <th className="customer-th">Discount (%)</th>
+              <th className="customer-th">Purchased (VND)</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div style={styles.paginationContainer}>
+          </thead>
+          <tbody>
+            {currentPageData.map((detail, index) => (
+              <tr key={index} className={index % 2 === 0 ? 'customer-rowEven' : 'customer-rowOdd'}>
+                <td className="customer-td" data-label="ID">{detail.customerId}</td>
+                <td className="customer-td" data-label="Name">{detail.name}</td>
+                <td className="customer-td" data-label="Phone">{detail.phone}</td>
+                <td className="customer-td" data-label="Address">{detail.address}</td>
+                <td className="customer-td" data-label="Birthday">{formatBirthday(detail.dateOfBirth)}</td>
+                <td className="customer-td" data-label="Discount (%)">{detail.percentDiscount}</td>
+                <td className="customer-td" data-label="Purchased (VND)">{detail.totalAmountPurchased}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="customer-paginationContainer">
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
@@ -86,7 +88,7 @@ export default function CustomerDetails() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
-          containerClassName={'pagination'}
+          containerClassName={'customer-pagination'}
           activeClassName={'active'}
           pageClassName={'page-item'}
           pageLinkClassName={'page-link'}
@@ -101,132 +103,4 @@ export default function CustomerDetails() {
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxHeight: '70vh',
-    overflowY: 'auto',
-    margin: '20px auto',
-    fontFamily: 'Arial, sans-serif',
-    maxWidth: '1000px',
-    padding: '10px',
-    backgroundColor: '#fff',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    borderRadius: '8px',
-  },
-  header: {
-    backgroundColor: '#E46A25',
-    color: '#fff',
-    padding: '10px',
-    textAlign: 'center',
-    fontSize: '24px',
-    fontWeight: 'bold',
-    borderRadius: '8px 8px 0 0',
-  },
-  searchBar: {
-    width: '100%',
-    padding: '10px',
-    marginBottom: '10px',
-    fontSize: '16px',
-    borderRadius: '4px',
-    border: '1px solid #ddd',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  th: {
-    border: '1px solid #ddd',
-    padding: '12px',
-    textAlign: 'left',
-    backgroundColor: '#f2f2f2',
-    fontSize: '16px',
-  },
-  td: {
-    border: '1px solid #ddd',
-    padding: '12px',
-    textAlign: 'left',
-    fontSize: '16px',
-  },
-  rowEven: {
-    backgroundColor: '#f9f9f9',
-  },
-  rowOdd: {
-    backgroundColor: '#fff',
-  },
-  paginationContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    marginTop: '5px',
-  },
-  pagination: {
-    display: 'flex',
-    listStyle: 'none',
-    gap: '5px',
-  },
-  pageItem: {
-    display: 'inline-block',
-    padding: '10px',
-    cursor: 'pointer',
-  },
-  pageLink: {
-    textDecoration: 'none',
-    color: '#007bff',
-  },
-  active: {
-    fontWeight: 'bold',
-    borderBottom: '3px solid #007bff',
-  },
-  disabled: {
-    cursor: 'not-allowed',
-    color: '#ccc',
-  },
-  '@media (max-width: 1024px)': {
-    container: {
-      marginLeft: '20px',
-    },
-    table: {
-      fontSize: '14px',
-    },
-    th: {
-      padding: '10px',
-    },
-    td: {
-      padding: '10px',
-    },
-    searchBar: {
-      fontSize: '14px',
-      padding: '8px',
-    },
-    header: {
-      fontSize: '20px',
-      padding: '8px',
-    },
-    paginationContainer: {
-      justifyContent: 'center',
-    },
-  },
-  '@media (max-width: 480px)': {
-    table: {
-      fontSize: '12px',
-    },
-    th: {
-      padding: '8px',
-    },
-    td: {
-      padding: '8px',
-    },
-    searchBar: {
-      fontSize: '12px',
-      padding: '6px',
-    },
-    header: {
-      fontSize: '18px',
-      padding: '6px',
-    },
-    paginationContainer: {
-      justifyContent: 'center',
-    },
-  },
-};
+}
