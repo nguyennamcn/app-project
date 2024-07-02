@@ -19,6 +19,16 @@ export default function StoreProductDetail() {
     const [modalTitle, setModalTitle] = useState('');
     const [goldPrices, setGoldPrices] = useState([]);
     const [gemPrices, setGemPrices] = useState([]);
+    const [totalSelectedPrice, setTotalSelectedPrice] = useState(0);
+
+    useEffect(() => {
+        const totalPrice = selectedProducts.reduce((sum, product) => {
+            const materialPrice = calculateMaterialBuyPrice(product) || 0;
+            const gemPrice = calculateGemBuyPrice(product) || 0;
+            return sum + materialPrice + gemPrice;
+        }, 0);
+        setTotalSelectedPrice(totalPrice);
+    }, [selectedProducts, products]);
 
     useEffect(() => {
         adornicaServ.getPriceMaterial()
@@ -114,9 +124,9 @@ export default function StoreProductDetail() {
             list: selectedProducts.map(product => ({
                 name: product.productName,
                 productCode: product.productCode,
-                price: product.price
+                price: (product.materialBuyPrice || 0) + (product.gemBuyPrice || 0) 
             })),
-            totalPrice: calculateTotalPriceOfSelectedItems(),
+            totalPrice: totalSelectedPrice,
             productStore: true
         };
 
@@ -130,7 +140,7 @@ export default function StoreProductDetail() {
             setModalVisible(true);
             setTimeout(() => {
                 setModalVisible(false);
-                //navigate('/buyProduct');
+                navigate('/buyProduct');
             }, 2000);
         } catch (error) {
             console.error('There was an error sending the order:', error);
@@ -157,10 +167,6 @@ export default function StoreProductDetail() {
                 return [...prevSelectedProducts, product];
             }
         });
-    };
-
-    const calculateTotalPriceOfSelectedItems = () => {
-        return selectedProducts.reduce((sum, product) => sum + (product.materialBuyPrice + product.gemBuyPrice || 0), 0);
     };
 
     const columnsProductInBill = [
@@ -221,6 +227,12 @@ export default function StoreProductDetail() {
             render: (text) => `${text} VND`,
         },
         {
+            title: 'Total',
+            dataIndex: 'total',
+            key: 'total',
+            render: (_, record) => `${(record.materialBuyPrice + record.gemBuyPrice) || 0} VND`,
+        },
+        {
             title: 'Remove',
             dataIndex: 'remove',
             key: 'remove',
@@ -231,6 +243,7 @@ export default function StoreProductDetail() {
             ),
         },
     ];
+
 
     const dateSellFormatted = sp?.dateSell ? new Date(sp.dateSell).toLocaleDateString() : '';
 
@@ -308,7 +321,7 @@ export default function StoreProductDetail() {
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total:<span style={{ marginLeft: '4%' }}> {calculateTotalPriceOfSelectedItems()} VND</span>
+                                    Total:<span style={{ marginLeft: '4%' }}> {totalSelectedPrice} VND</span>
                                 </h1>
                             </div>
                         </div>
