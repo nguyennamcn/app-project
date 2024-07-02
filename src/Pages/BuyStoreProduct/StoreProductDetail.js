@@ -21,6 +21,35 @@ export default function StoreProductDetail() {
     const [gemPrices, setGemPrices] = useState([]);
     const [totalSelectedPrice, setTotalSelectedPrice] = useState(0);
 
+    const [goldPromotion, setGoldPromotion] = useState(0);
+  const [gemPromotion, setGemPromotion] = useState(0);
+
+  useEffect(() => {
+    adornicaServ.getAllCategoryBbp()
+      .then((res) => {
+        const diamondCategory = res.data.metadata.find(category => category.id === 6);
+        if (diamondCategory) {
+          setGemPromotion(diamondCategory.buyBackPromotion);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    adornicaServ.getAllCategoryBbp()
+      .then((res) => {
+        const goldCategory = res.data.metadata.find(category => category.id === 5);
+        if (goldCategory) {
+          setGoldPromotion(goldCategory.buyBackPromotion);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
     useEffect(() => {
         const totalPrice = selectedProducts.reduce((sum, product) => {
             const materialPrice = calculateMaterialBuyPrice(product) || 0;
@@ -94,9 +123,10 @@ export default function StoreProductDetail() {
     const calculateMaterialBuyPrice = (product) => {
         if (product.materials && product.materials.length > 0) {
             const material = product.materials[0]; // Assuming only one material for simplicity
-            const materialPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialBuyPrice || 0;
-            const materialBuyPrice = materialPrice * material.weight;
-            return materialBuyPrice;
+            const materialBuyPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialBuyPrice || 0;
+            const materialSellPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialSellPrice || 0;
+            const materialPrice = (materialBuyPrice + (materialSellPrice - materialBuyPrice) * parseFloat(goldPromotion || 0)) *  parseFloat(material.weight ||0);
+            return materialPrice;
         }
         return 0;
     };
@@ -104,7 +134,9 @@ export default function StoreProductDetail() {
     const calculateGemBuyPrice = (product) => {
         if (product.gem && product.gem.length > 0) {
             const gem = product.gem[0]; // Assuming only one gem for simplicity
-            const gemPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemBuyPrice || 0;
+            const gemBuyPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemBuyPrice || 0;
+            const gemSellPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemSellPrice || 0;
+            const gemPrice = ((gemBuyPrice + (gemSellPrice - gemBuyPrice) * parseFloat(gemPromotion))) || 0;
             return gemPrice;
         }
         return 0;
@@ -124,7 +156,7 @@ export default function StoreProductDetail() {
             list: selectedProducts.map(product => ({
                 name: product.productName,
                 productCode: product.productCode,
-                price: (product.materialBuyPrice || 0) + (product.gemBuyPrice || 0) 
+                price: product.materialBuyPrice + product.gemBuyPrice 
             })),
             totalPrice: totalSelectedPrice,
             productStore: true
@@ -164,7 +196,12 @@ export default function StoreProductDetail() {
                 console.log(isSelectedProduct);
                 return prevSelectedProducts.filter(p => p.productCode !== product.productCode);
             } else {
-                return [...prevSelectedProducts, product];
+                const updatedProduct = {
+                    ...product,
+                    materialBuyPrice: calculateMaterialBuyPrice(product),
+                    gemBuyPrice: calculateGemBuyPrice(product)
+                };
+                return [...prevSelectedProducts, updatedProduct];
             }
         });
     };
