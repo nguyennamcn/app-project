@@ -17,9 +17,9 @@
   width: 100%;
   max-width: 1000px;
   padding: 50px;
-  border: 10px solid #FFA07A; /* Màu cam nhạt */
+  border: 2px solid #FFCBA4; /* Màu cam nhạt */
   border-radius: 7px;
-  background-color: #fff7e6; /* Màu cam nhạt */
+  background-color: #FFEFD5; /* Màu cam nhạt */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -28,7 +28,7 @@
   font-weight: bold;
   font-size: 25px;
   margin-bottom: 15px;
-  color: #000000;
+  color: #FF8C00;
 }
 
 .add-gold-form-row {
@@ -59,9 +59,9 @@
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  border: 1px solid #FFA07A; /* Màu cam nhạt */
+  border: 1px solid #FFCBA4; /* Màu cam nhạt */
   border-radius: 4px;
-  background-color: #FFE4B5; /* Màu cam nhạt */
+  background-color: #FFFFFF; /* Màu cam nhạt */
   color: #333;
 }
 
@@ -78,13 +78,13 @@
 
 .back-button {
   padding: 8px 16px;
-  background: #FFDAB9; /* Màu cam nhạt */
-  border: 1px solid #FFA07A; /* Màu cam nhạt */
+  background: #FFEFD5; /* Màu cam nhạt */
+  border: 1px solid #FFCBA4; /* Màu cam nhạt */
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
   text-decoration: none;
-  color: #000000;
+  color: #FF8C00;
 }
 
 .back-button:hover {
@@ -93,8 +93,8 @@
 
 .add-gold-button {
   padding: 8px 16px;
-  background: #FFA07A; /* Màu cam nhạt */
-  color: #000000;
+  background: #FFCBA4; /* Màu cam nhạt */
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -104,13 +104,13 @@
 }
 
 .add-gold-button:hover {
-  background: #FF8C00; /* Màu cam đậm hơn */
+  background: #FFCC99; /* Màu cam đậm hơn */
 }
 
 .custom-modal .ant-modal-content {
   border-radius: 10px;
   padding: 20px;
-  background-color: #FFE4B5; /* Màu cam nhạt */
+  background-color: #FFEFD5; /* Màu cam nhạt */
 }
 
 .custom-modal .ant-modal-header {
@@ -124,7 +124,7 @@
 }
 
 .custom-modal .ant-modal-footer button {
-  background: #FFA07A; /* Màu cam nhạt */
+  background: #FFCBA4; /* Màu cam nhạt */
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -132,7 +132,7 @@
 }
 
 .custom-modal .ant-modal-footer button:hover {
-  background: #FF8C00; /* Màu cam đậm hơn */
+  background: #FFCC99; /* Màu cam đậm hơn */
 }
 
 /* Responsive styles */

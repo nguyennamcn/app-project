@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
-import './AddJewelry.css';
+import './UpGold.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
 function UpGold() {
@@ -79,35 +79,35 @@ function UpGold() {
   };
 
   return (
-    <div className="add-jewelry-container">
-      <div className="add-jewelry-content">
-        <div className="add-jewelry-form">
-          <h2 className="add-jewelry-title">UPDATE GOLD</h2>
+    <div className="upgold-container">
+      <div className="upgold-content">
+        <div className="upgold-form">
+          <h2 className="upgold-title">UPDATE GOLD</h2>
           <form onSubmit={handleUpdate}>
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upgold-form-row">
+              <div className="upgold-form-group">
                 <label>Product Code:</label>
-                <h2  name="productCode" >{sp.productCode}</h2>
+                <h2 name="productCode">{sp.productCode}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upgold-form-group">
                 <label>Product Name:</label>
                 <input type="text" name="productName" value={sp.productName} onChange={handleInputChange} required />
               </div>
             </div>
 
-            <div className="add-jewelry-form-row">
-              <div className="add-jewelry-form-group">
+            <div className="upgold-form-row">
+              <div className="upgold-form-group">
                 <label>Material ID:</label>
-                <h2  name="id"  >{sp.materials[0]?.name || ''}</h2>
+                <h2 name="id">{sp.materials[0]?.name || ''}</h2>
               </div>
-              <div className="add-jewelry-form-group">
+              <div className="upgold-form-group">
                 <label>Weight (gram):</label>
                 <input type="number" name="weight" value={sp.materials[0]?.weight || ''} onChange={handleMaterialChange} min={0.1} step={0.1} />
               </div>
             </div>
-            <div className="add-jewelry-form-footer">
-              <NavLink to="/ManageGold" className="add-jewelry-back-button">BACK</NavLink>
-              <button className="add-jewelry-add-button" type="submit">UPDATE GOLD</button>
+            <div className="upgold-form-footer">
+              <NavLink to="/ManageGold" className="upgold-back-button">BACK</NavLink>
+              <button className="upgold-add-button" type="submit">UPDATE GOLD</button>
             </div>
           </form>
         </div>
