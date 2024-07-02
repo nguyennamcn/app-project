@@ -4,6 +4,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import ReactPaginate from 'react-paginate';
+import './CashierListOrder.css'; // Đảm bảo rằng CSS này đã được cập nhật đúng với yêu cầu
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -150,8 +151,9 @@ export default function SellOrderPage() {
                                             View
                                         </Button>
                                     </NavLink>
+                                    <NavLink>
                                     <Button
-                                        style={{ marginRight: '14px' }}
+                                        style={{ marginRight: '14px',marginTop:'10px'}}
                                         type="primary"
                                         danger
                                         onClick={() => handleDeleteOrder(order.orderCode)}
@@ -159,6 +161,7 @@ export default function SellOrderPage() {
                                     >
                                         Delete
                                     </Button>
+                                    </NavLink>
                                     <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
                                         <Button
                                             type="primary"
@@ -223,91 +226,6 @@ export default function SellOrderPage() {
                     </div>
                 </div>
             </Modal>
-            <style>
-                {`
-                    .sell-order-container {
-                        padding: 20px;
-                        max-height: 70vh;
-                        overflow-y: auto;
-                    }
-
-                    .sell-order-title {
-                        font-size: 2rem;
-                        margin-bottom: 0px;
-                        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-                    }
-
-                    .search-add-container {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        flex-wrap: wrap;
-                        margin-bottom: 5px;
-                        width: 26%;
-                    }
-
-                    .sell-order-search-input {
-                        flex-grow: 1;
-                        padding: 8px;
-                        font-size: 1rem;
-                        margin-right: 10px;
-                    }
-
-                    .sell-order-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-
-                    .sell-order-table th,
-                    .sell-order-table td {
-                        border: 1.5px solid #ddd;
-                        padding: 8px;
-                    }
-
-                    .sell-order-table th {
-                        background-color: #f2f2f2;
-                        text-align: left;
-                    }
-
-                    .sell-order-table td {
-                        text-align: left;
-                    }
-
-                    .sell-order-pagination-container {
-                        display: flex;
-                        justify-content: flex-end;
-                        margin-top: 20px;
-                    }
-
-                    .pagination {
-                        display: flex;
-                        list-style: none;
-                        padding: 0;
-                    }
-
-                    .page-item {
-                        margin: 0 5px;
-                    }
-
-                    .page-link {
-                        padding: 8px 16px;
-                        border: 1px solid #ddd;
-                        background-color: white;
-                        cursor: pointer;
-                    }
-
-                    .page-link.active {
-                        background-color: #008cba;
-                        color: white;
-                    }
-
-                    .page-link.disabled {
-                        color: #ccc;
-                        cursor: not-allowed;
-                    }
-                `}
-            </style>
         </div>
     );
 }
