@@ -235,12 +235,12 @@ const GoldSelection = () => {
             </div>
             {item.goldType && (
               <>
-                <div style={styles.totalPrice}>{item.goldType}: Buy price {item.materialBuyPrice} VND - Sell price {item.materialSellPrice} VND</div>
+                <div style={styles.totalPrice}>{item.goldType}: Buy price {parseFloat(item.materialBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.materialSellPrice).toLocaleString('vi-VN')} VND</div>
                 
                 <div style={styles.totalPrice}>Gold promotion: {buyBackPromotion}</div>
 
                 <div style={styles.totalPrice}>
-                  Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toFixed(0)} VND
+                  Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
               </>
             )}
@@ -249,7 +249,7 @@ const GoldSelection = () => {
         <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>ADD GOLD</button>
         
         <div style={styles.totalPrice}>
-          Total price: {totalPrice > 0 ? totalPrice : 0.00} VND
+          Total price: {totalPrice > 0 ? parseFloat(totalPrice).toLocaleString('vi-VN') : '0.00'} VND
         </div>
         <button
           type="submit"

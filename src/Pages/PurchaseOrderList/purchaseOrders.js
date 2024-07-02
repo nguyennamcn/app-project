@@ -108,6 +108,10 @@ export default function PurchaseOrder() {
     const currentOrders = filteredData.slice(indexOfFirstOrder, indexOfLastOrder);
 
     const pageCount = Math.ceil(filteredData.length / ordersPerPage);
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+    
 
     return (
         <div className="purchase-order-container">
@@ -140,7 +144,7 @@ export default function PurchaseOrder() {
                             <td data-label="Order ID">{order.orderId}</td>
                             <td data-label="Staff name">{order.salesStaffName}</td>
                             <td data-label="Purchase Code">{order.orderCode}</td>
-                            <td data-label="Total Price">{order.totalPrice}</td>
+                            <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>
                             <td data-label="Date Order">{order.dateOrder}</td>
                             <td data-label="Action">
                                 <div className="action-buttons">

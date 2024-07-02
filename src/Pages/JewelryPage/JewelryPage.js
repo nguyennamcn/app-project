@@ -85,6 +85,9 @@ export default function JewelryPage() {
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
+  const formatPrice = (price) => {
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+};
 
   return (
     <div className="home-jewelry-page">
@@ -122,7 +125,8 @@ export default function JewelryPage() {
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
                 <div className="home-jewelry-info">
                   <h1>{sp.productCode}</h1>
-                  <h2> {sp.productPrice < 1 ? 'Undefined' : `${sp.productPrice}  VND`} </h2>
+                  <h2>{sp.productPrice < 1 ? 'Not yet been priced' : `${sp.productPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`}</h2>
+
                 </div>
                 <div className="home-jewelry-overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>

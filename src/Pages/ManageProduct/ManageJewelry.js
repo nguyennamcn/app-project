@@ -113,7 +113,12 @@ const JewelryInventoryPage = () => {
   const firstItemIndex = currentPage * itemsPerPage;
   const lastItemIndex = Math.min(firstItemIndex + itemsPerPage, jewelry.length);
   const currentJewelry = jewelry.slice(firstItemIndex, lastItemIndex);
-
+  const formatPrice = (price) => {
+    if (price <= 0 || isNaN(price)) {
+      return 'Not yet been priced'; 
+    }
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  };
 
   return (
     <div  className="jewelry-container">
@@ -138,7 +143,7 @@ const JewelryInventoryPage = () => {
               <td className="jewelry-td" data-label="ID">{item.productId}</td>
               <td className="jewelry-td" data-label="Code">{item.productCode}</td>
               <td className="jewelry-td" data-label="Name">{item.productName}</td>
-              <td className="jewelry-td" data-label="Price (VND)">{item.productPrice <= 0 ? 'Not yet been priced' : (item.productPrice + "$")}</td>
+              <td className="gold-td" data-label="Price (VND)">{formatPrice(item.productPrice)}</td>
               <td className="jewelry-td" data-label="Size">{item.size}</td>
               <td className="jewelry-td" data-label="Action">
                 <NavLink to={`/update-jewelry/${item.productId}`}>

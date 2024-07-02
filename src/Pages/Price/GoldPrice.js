@@ -16,6 +16,9 @@ useEffect(() => {
 }, []);
 
   const currentDate = new Date().toLocaleDateString();
+  const formatPrice = (price) => {
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+};
 
   return (
     <div style={styles.container}>
@@ -32,8 +35,8 @@ useEffect(() => {
           {goldPrices.map((price, index) => (
             <tr key={index} style={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
               <td style={styles.td}>{price.materialName}</td>
-              <td style={styles.td}>{price.materialBuyPrice}</td>
-              <td style={styles.td}>{price.materialSellPrice}</td>
+              <td style={styles.td}>{formatPrice(price.materialBuyPrice)}</td>
+              <td style={styles.td}>{formatPrice(price.materialSellPrice)}</td>
             </tr>
           ))}
         </tbody>

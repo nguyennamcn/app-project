@@ -102,6 +102,10 @@ export default function SellOrderPage() {
     const currentOrders = filteredData.slice(indexOfFirstOrder, indexOfLastOrder);
 
     const pageCount = Math.ceil(filteredData.length / ordersPerPage);
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+    
 
     return (
         <div className="sell-order-container">
@@ -131,50 +135,50 @@ export default function SellOrderPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentOrders.map(order => (
-                        <tr key={order.orderId}>
-                            <td data-label="Order ID">{order.orderId}</td>
-                            <td data-label="Staff name">{order.salesStaffName}</td>
-                            <td data-label="Order Code">{order.orderCode}</td>
-                            <td data-label="Total Price">{order.totalPrice}</td>
-                            <td data-label="Date Order">{order.dateOrder}</td>
-                            <td data-label="Payment method">{order.paymentMethod}</td>
-                            <td data-label="Delivery Status">{order.deliveryStatus}</td>
-                            <td data-label="Action">
-                                <div className="action-buttons">
-                                    <NavLink to={`/cashierOrderDetail/${order.orderCode}`}>
-                                        <Button
-                                            style={{ marginRight: '14px' }}
-                                            type="primary"
-                                            onClick={() => handleViewOrder(order.orderCode)}
-                                        >
-                                            View
-                                        </Button>
-                                    </NavLink>
-                                    <NavLink>
-                                    <Button
-                                        style={{ marginRight: '14px',marginTop:'10px'}}
-                                        type="primary"
-                                        danger
-                                        onClick={() => handleDeleteOrder(order.orderCode)}
-                                        disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
-                                    >
-                                        Delete
-                                    </Button>
-                                    </NavLink>
-                                    <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
-                                        <Button
-                                            type="primary"
-                                            disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
-                                        >
-                                            Update
-                                        </Button>
-                                    </NavLink>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
+    {currentOrders.map(order => (
+        <tr key={order.orderId}>
+            <td data-label="Order ID">{order.orderId}</td>
+            <td data-label="Staff name">{order.salesStaffName}</td>
+            <td data-label="Order Code">{order.orderCode}</td>
+            <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>
+            <td data-label="Date Order">{order.dateOrder}</td>
+            <td data-label="Payment method">{order.paymentMethod}</td>
+            <td data-label="Delivery Status">{order.deliveryStatus}</td>
+            <td data-label="Action">
+                <div className="action-buttons">
+                    <NavLink to={`/cashierOrderDetail/${order.orderCode}`}>
+                        <Button
+                            style={{ marginRight: '14px' }}
+                            type="primary"
+                            onClick={() => handleViewOrder(order.orderCode)}
+                        >
+                            View
+                        </Button>
+                    </NavLink>
+                    <NavLink>
+                    <Button
+                        style={{ marginRight: '14px', marginTop: '10px' }}
+                        type="primary"
+                        danger
+                        onClick={() => handleDeleteOrder(order.orderCode)}
+                        disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
+                    >
+                        Delete
+                    </Button>
+                    </NavLink>
+                    <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
+                        <Button
+                            type="primary"
+                            disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
+                        >
+                            Update
+                        </Button>
+                    </NavLink>
+                </div>
+            </td>
+        </tr>
+    ))}
+</tbody>
             </table>
             <div className="pagination-container">
                 <ReactPaginate

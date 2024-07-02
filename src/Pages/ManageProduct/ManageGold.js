@@ -134,6 +134,13 @@ export default function ManageGold() {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return date.toLocaleDateString('vi-VN', options);
   };
+  const formatPrice = (price) => {
+    if (price <= 0 || isNaN(price)) {
+      return 'Not yet been priced';
+    }
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  };
+  
 
   return (
     <div className="gold-container">
@@ -158,7 +165,7 @@ export default function ManageGold() {
               <td className="gold-td" data-label="ID">{product.productId}</td>
               <td className="gold-td" data-label="Code">{product.productCode}</td>
               <td className="gold-td" data-label="Name">{product.productName}</td>
-              <td className="gold-td" data-label="Price (VND)">{product.productPrice <= 0 ? 'undefined' : product.productPrice}</td>
+              <td className="gold-td" data-label="Price (VND)">{formatPrice(product.productPrice)}</td>
               <td className="gold-td" data-label="Size">{product.size}</td>
               <td className="gold-td" data-label="Action">
                 <NavLink to={`/update-gold/${product.productId}`}>
