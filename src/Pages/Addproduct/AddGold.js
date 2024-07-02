@@ -35,7 +35,7 @@ function AddGold() {
       productName: newJewelry.productName,
       gemCost: Number(newJewelry.gemCost),
       productionCost: Number(newJewelry.productionCost),
-      gender: newJewelry.gender,
+      gender: "UNISEX",
       categoryId: Number(newJewelry.categoryId),
       materialProductRequests: [
         {

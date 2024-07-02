@@ -1,4 +1,4 @@
-import { Table, Button, Modal, Input } from 'antd';
+import { Table, Button, Modal, Input, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
@@ -41,10 +41,12 @@ export default function PurchaseOrder() {
 
                 setDataSource(orders);
                 setFilteredData(orders);
+                console.log(orders);
             })
             .catch((err) => {
                 console.log(err);
             });
+            
     }, []);
 
     const showModal = (message, orderCode = null) => {
@@ -60,9 +62,12 @@ export default function PurchaseOrder() {
                 setDataSource(newDataSource);
                 setFilteredData(newDataSource);
                 setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Order was deleted!</h1></div>);
+                notification.success({ message: "Order was deleted !" });
             })
             .catch((err) => {
-                console.log("Error deleting order:", err);
+                const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+                notification.error({ message: errorMessage });
+                console.log(err);
             });
         setModalVisible(false);
     };
