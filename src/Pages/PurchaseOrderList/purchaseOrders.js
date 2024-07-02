@@ -4,6 +4,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import ReactPaginate from 'react-paginate';
+import './purchaseOrders.css';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -20,7 +21,7 @@ export default function PurchaseOrder() {
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState([]);
-    const ordersPerPage = 5;
+    const ordersPerPage = 4;
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
@@ -103,20 +104,20 @@ export default function PurchaseOrder() {
     const pageCount = Math.ceil(filteredData.length / ordersPerPage);
 
     return (
-        <div className="order-list-container">
-            <h1 className="order-list-title">Purchase List</h1>
+        <div className="purchase-order-container">
+            <h1 className="purchase-order-title">Purchase List</h1>
             <div className="search-add-container">
                 <Input
                     type="text"
                     placeholder="Search by Staff name or Order Code"
-                    className="order-list-search-input"
+                    className="purchase-order-search-input"
                     value={searchText}
                     onChange={handleSearch}
                     prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
                     size="small"
                 />
             </div>
-            <table className="order-list-table">
+            <table className="purchase-order-table">
                 <thead>
                     <tr>
                         <th>Order ID</th>
@@ -139,28 +140,29 @@ export default function PurchaseOrder() {
                                 <div className="action-buttons">
                                     <NavLink to={`/payment-history/${order.orderCode}`}>
                                         <Button
-                                            style={{ marginRight: '14px' }}
+                                            style={{ marginRight: '14px',marginTop:'10px' }}
                                             type="primary"
                                             onClick={() => handleView(order.orderCode)}
                                         >
                                             View
                                         </Button>
                                     </NavLink>
-                                    <Button
+                                    {/* <Button
+                                        className=''
                                         style={{ marginRight: '14px' }}
                                         type="primary"
                                         danger
                                         onClick={() => handleDelete(order.orderCode)}
                                     >
                                         Delete
-                                    </Button>
+                                    </Button> */}
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <div className="pagination-container">
+            <div className="purchase-pagination-container">
                 <ReactPaginate
                     previousLabel={'Previous'}
                     nextLabel={'Next'}
@@ -210,91 +212,7 @@ export default function PurchaseOrder() {
                     </div>
                 </div>
             </Modal>
-            <style>
-                {`
-                    .order-list-container {
-                        padding: 20px;
-                        max-height: 70vh;
-                        overflow-y: auto;
-                    }
-
-                    .order-list-title {
-                        font-size: 2rem;
-                        margin-bottom: 0px;
-                        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-                    }
-
-                    .search-add-container {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        flex-wrap: wrap;
-                        margin-bottom: 5px;
-                        width: 26%;
-                    }
-
-                    .order-list-search-input {
-                        flex-grow: 1;
-                        padding: 8px;
-                        font-size: 1rem;
-                        margin-right: 10px;
-                    }
-
-                    .order-list-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 10px;
-                    }
-
-                    .order-list-table th,
-                    .order-list-table td {
-                        border: 1.5px solid #ddd;
-                        padding: 8px;
-                    }
-
-                    .order-list-table th {
-                        background-color: #f2f2f2;
-                        text-align: left;
-                    }
-
-                    .order-list-table td {
-                        text-align: left;
-                    }
-
-                    .pagination-container {
-                        display: flex;
-                        justify-content: flex-end;
-                        margin-top: 0px;
-                    }
-
-                    .pagination {
-                        display: flex;
-                        list-style: none;
-                        padding: 0;
-                    }
-
-                    .page-item {
-                        margin: 0 5px;
-                    }
-
-                    .page-link {
-                        padding: 8px 16px;
-                        border: 1px solid #ddd;
-                        background-color: white;
-                        cursor: pointer;
-                    }
-
-                    .page-link.active {
-                        background-color: #008cba;
-                        color: white;
-                    }
-
-                    .page-link.disabled {
-                        color: #ccc;
-                        cursor: not-allowed;
-                    }
-                `}
-            </style>
+            
         </div>
     );
 }

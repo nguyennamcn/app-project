@@ -1,11 +1,11 @@
-.sell-order-container {
-    padding: 5px;
+.purchase-order-container {
+    padding: 20px;
     font-family: Arial, sans-serif;
     max-height: 70vh;
     overflow-y: auto;
 }
 
-.sell-order-title {
+.purchase-order-title {
     font-size: 23px;
     margin-bottom: 1px;
     font-weight: bold;
@@ -13,7 +13,7 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Hiệu ứng đổ bóng */
 }
 
-.sell-order-search-input {
+.purchase-order-search-input {
     padding: 3px;
     margin-bottom: 10px;
     border: 2px solid black;
@@ -23,32 +23,31 @@
     width: 22%; /* Điều chỉnh độ rộng cho ô input */
 }
 
-.sell-order-search-input:focus {
+.purchase-order-search-input:focus {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.sell-order-table {
+.purchase-order-table {
     width: 100%;
     border-collapse: collapse;
-
 }
 
-.sell-order-table th,
-.sell-order-table td {
-    padding: 6px 16px;
+.purchase-order-table th,
+.purchase-order-table td {
+    padding: 7px 14px;
     border: 2px solid #ddd;
 }
 
-.sell-order-table th {
+.purchase-order-table th {
     background-color: #f2f2f2;
     text-align: left;
 }
 
-.sell-order-table td {
+.purchase-order-table td {
     text-align: left;
 }
 
-.pagination-container {
+.purchase-pagination-container {
     display: flex;
     justify-content: flex-end;
 }
@@ -91,7 +90,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .sell-order-search-input {
+    .purchase-order-search-input {
         padding: 6px;
         margin-bottom: 20px;
         border: 2px solid black;
@@ -102,31 +101,31 @@
         margin-top: 10px;
     }
 
-    .sell-order-table thead {
+    .purchase-order-table thead {
         display: none;
         font-size: 10px;
     }
 
-    .sell-order-table,
-    .sell-order-table tbody,
-    .sell-order-table tr,
-    .sell-order-table td {
+    .purchase-order-table,
+    .purchase-order-table tbody,
+    .purchase-order-table tr,
+    .purchase-order-table td {
         display: block;
         width: 100%;
         font-size: 14px;
     }
 
-    .sell-order-table tr {
+    .purchase-order-table tr {
         margin-bottom: 15px;
     }
 
-    .sell-order-table td {
+    .purchase-order-table td {
         text-align: right;
         padding-left: 50%;
         position: relative;
     }
 
-    .sell-order-table td::before {
+    .purchase-order-table td::before {
         content: attr(data-label);
         position: absolute;
         left: 15px;
@@ -153,7 +152,7 @@
 }
 
 @media only screen and (max-width: 480px) {
-    .sell-order-search-input {
+    .purchase-order-search-input {
         width: calc(50% - 10px);
         display: inline-block;
         margin-bottom: 10px;
