@@ -15,7 +15,7 @@ export default function DiamondPage() {
   const [modalMessage, setModalMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5; // Số sản phẩm mỗi trang
+  const itemsPerPage = 5;
 
   useEffect(() => {
     adornicaServ.getListDiamond()
@@ -49,7 +49,7 @@ export default function DiamondPage() {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
-    if(product.productPrice < 0){
+    if (product.productPrice < 0) {
       showModal(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
       return;
     }
@@ -81,12 +81,12 @@ export default function DiamondPage() {
   const currentItems = filteredProducts.slice(offset, offset + itemsPerPage);
 
   return (
-    <div className='diamond-page'>
-      <div className='filter'>
+    <div className='home-diamond-page'>
+      <div className='home-diamond-filter'>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
         </div>
-
-        <div className='search__input_diamond'>
+  
+        <div className='home-diamond-search-input-diamond'>
           <textarea 
             placeholder='Search by product code or name...' 
             value={searchTerm} 
@@ -99,26 +99,26 @@ export default function DiamondPage() {
           </svg>
         </div>
       </div>
-
-      <div className="product-container">
+  
+      <div className="home-diamond--container">
         {currentItems.length > 0 ? (
           currentItems.map((sp) => (
-            <div className="product-card-container" key={sp.productCode}>
+            <div className="home-diamond-card-container" key={sp.productCode}>
               <Card
                 bodyStyle={{ padding: '8px' }}
                 style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
-                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '146px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
+                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '190px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
               >
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
-                <div className="product-info">
+                <div className="home-diamond--info">
                   <h1>{sp.productCode}</h1>
                   <h2> {sp.productPrice < 1 ? 'Undefined' : `${sp.productPrice}  VND`} </h2>
                 </div>
-                <div className="overlay">
+                <div className="home-diamond-overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-                    <button className="overlay-button">View</button>
+                    <button className="home-diamond-overlay-button">View</button>
                   </NavLink>
-                  <button className="overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                  <button className="home-diamond-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
                 </div>
               </Card>
             </div>
@@ -131,7 +131,8 @@ export default function DiamondPage() {
           </div>
         )}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+  
+      <div className="home-diamond-pagination-container">
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
@@ -140,19 +141,20 @@ export default function DiamondPage() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
-          pageClassName={'page-item'}
-          pageLinkClassName={'page-link'}
+          containerClassName={'home-diamond-pagination'}
+          activeClassName={'home-diamond-active'}
+          pageClassName={'home-diamond-page-item'}
+          pageLinkClassName={'home-diamond-page-link'}
           previousClassName={'page-item'}
           previousLinkClassName={'page-link'}
           nextClassName={'page-item'}
           nextLinkClassName={'page-link'}
           breakClassName={'page-item'}
           breakLinkClassName={'page-link'}
-          disabledClassName={'disabled'}
+          disabledClassName={'home-diamond-disabled'}
         />
       </div>
+  
       <Modal
         visible={isModalVisible}
         footer={null}

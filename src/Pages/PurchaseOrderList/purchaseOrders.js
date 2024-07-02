@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
-// import './PurchaseOrder.css'; // Thêm file CSS riêng nếu cần
 import ReactPaginate from 'react-paginate';
 
 const formatDate = (timestamp) => {
@@ -147,14 +146,14 @@ export default function PurchaseOrder() {
                                             View
                                         </Button>
                                     </NavLink>
-                                    {/* <Button
+                                    <Button
                                         style={{ marginRight: '14px' }}
                                         type="primary"
                                         danger
                                         onClick={() => handleDelete(order.orderCode)}
                                     >
                                         Delete
-                                    </Button> */}
+                                    </Button>
                                 </div>
                             </td>
                         </tr>
@@ -162,7 +161,7 @@ export default function PurchaseOrder() {
                 </tbody>
             </table>
             <div className="pagination-container">
-            <ReactPaginate
+                <ReactPaginate
                     previousLabel={'Previous'}
                     nextLabel={'Next'}
                     breakLabel={'...'}
@@ -215,7 +214,7 @@ export default function PurchaseOrder() {
                 {`
                     .order-list-container {
                         padding: 20px;
-                        max-height:70vh;
+                        max-height: 70vh;
                         overflow-y: auto;
                     }
 
@@ -230,7 +229,7 @@ export default function PurchaseOrder() {
                         justify-content: space-between;
                         align-items: center;
                         flex-wrap: wrap;
-                        margin-bottom: 10px;
+                        margin-bottom: 5px;
                         width: 26%;
                     }
 
@@ -241,20 +240,10 @@ export default function PurchaseOrder() {
                         margin-right: 10px;
                     }
 
-                    .add-order-list-button {
-                        padding: 8px 16px;
-                        font-size: 1rem;
-                        background-color: #4caf50;
-                        color: white;
-                        border: none;
-                        cursor: pointer;
-                        white-space: nowrap;
-                    }
-
                     .order-list-table {
                         width: 100%;
                         border-collapse: collapse;
-                        margin-top: 5px;
+                        margin-top: 10px;
                     }
 
                     .order-list-table th,
@@ -280,19 +269,29 @@ export default function PurchaseOrder() {
 
                     .pagination {
                         display: flex;
+                        list-style: none;
+                        padding: 0;
                     }
 
-                    .pagination button {
+                    .page-item {
+                        margin: 0 5px;
+                    }
+
+                    .page-link {
                         padding: 8px 16px;
-                        margin: 0 4px;
                         border: 1px solid #ddd;
                         background-color: white;
                         cursor: pointer;
                     }
 
-                    .pagination button.active {
+                    .page-link.active {
                         background-color: #008cba;
                         color: white;
+                    }
+
+                    .page-link.disabled {
+                        color: #ccc;
+                        cursor: not-allowed;
                     }
                 `}
             </style>

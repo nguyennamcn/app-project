@@ -1,6 +1,5 @@
-/* Overlay Styles */
-
-.gold-page {
+/* General Styles */
+.home-gold-page {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -8,12 +7,62 @@
   max-height: 70vh;
   overflow-y: auto;
 }
-.product-card-container {
+
+.home-gold-filter {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 10px; 
+}
+
+.home-gold-filter select,
+.home-gold-filter .home-gold-search-input-gold {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border: solid black 1px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.home-gold-filter .home-gold-search-input-gold textarea {
+  border: none;
+  outline: none;
+  margin-left: 8px;
+  font-size: 16px;
+  flex: 1;
+  resize: none;
+}
+
+.home-gold-filter .home-gold-search-input-gold svg {
+  flex-shrink: 0;
+}
+
+.home-gold--container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 70vh; 
+  overflow-y: auto; 
+}
+
+.home-gold-card-container {
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: 200px;
+  box-sizing: border-box;
   position: relative;
   overflow: hidden;
 }
 
-.product-card-container .overlay {
+.home-gold-card-container .home-gold-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -27,12 +76,15 @@
   transition: opacity 0.3s ease;
   border-radius: 10px;
 }
+.page-item {
+  margin: 0 5px;
+}
 
-.product-card-container:hover .overlay {
+.home-gold-card-container:hover .home-gold-overlay {
   opacity: 1;
 }
 
-.overlay-button {
+.home-gold-overlay-button {
   background: white;
   border: none;
   padding: 10px 20px;
@@ -43,177 +95,44 @@
   transition: background-color 0.3s;
 }
 
-.overlay-button:hover {
+.home-gold-overlay-button:hover {
   background-color: #ddd;
 }
 
-/* General Styles */
-.filter {
+/* Pagination Styles */
+.home-gold-pagination-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end; /* Căn chỉnh sang phải */
+  margin: 30px 0;
   width: 100%;
-  margin-bottom: 20px;
 }
 
-.filter select {
-  margin-left: 10px;
-  border: solid 1px;
-  border-radius: 10px;
-  padding: 2px;
-  flex: 1;
-}
-
-.filter .search__input_gold {
-  display: flex;
-  align-items: center;
-  padding: 6px;
-  border: solid black 1px;
-  border-radius: 20px;
-  flex: 3;
-  max-width: 350px;
-}
-
-.filter .search__input_gold input {
-  border: none;
-  outline: none;
-  margin-left: 8px;
-  font-size: 16px;
-  flex: 1;
-}
-
-.filter .search__input_gold svg {
-  flex-shrink: 0;
-}
-.pagination {
+.home-gold-pagination {
   display: flex;
   list-style: none;
   padding: 0;
 }
 
-.page-item {
+.home-gold-page-item {
   margin: 0 5px;
 }
 
-.page-link {
+.home-gold-page-link {
   padding: 5px 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.active .page-link {
+.home-gold-active .home-gold-page-link {
   background-color: #007bff;
   color: white;
   border: 1px solid #007bff;
 }
 
-.disabled .page-link {
+.home-gold-disabled .home-gold-page-link {
   color: #ccc;
   cursor: not-allowed;
-}
-
-
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .filter {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .filter .search__input_gold {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .filter select {
-    width: 100%;
-    margin: 5px 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .filter {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .filter select {
-    width: 100%;
-    margin: 5px 0;
-  }
-
-  .filter .search__input_gold{
-    width: 100%;
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .filter {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .filter select,
-  .filter .search__input_gold{
-    width: 100%;
-    margin: 5px 0;
-  }
-
-  .filter select {
-    order: 1;
-  }
-
-  .filter .search__input_gold{
-    order: 2;
-  }
-}
-
-/* New Responsive Grid Layout */
-.product-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  padding: 20px 20px 0 20px;
-}
-
-@media (max-width: 1024px) {
-  .product-container {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .product-container {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .product-container {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  }
-}
-
-/* No Products Message Styles */
-.no-products-message-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60vh;
-  width: 100%;
-  text-align: center;
-}
-
-.no-products-message {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
 }
 
 /* Modal Styles */
@@ -258,4 +177,64 @@
 .error__icon {
   color: #e60a0a;
   font-size: 80px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .home-gold-filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-gold-filter .home-gold-search-input-gold {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .home-gold-filter select {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .home-gold-card-container {
+    flex: 1 1 calc(50% - 20px); /* 2 sản phẩm trên mỗi hàng */
+    max-width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-gold-filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home-gold-filter select {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .home-gold-filter .home-gold-search-input-gold {
+    width: 100%;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-gold-filter {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-gold-filter select,
+  .home-gold-filter .home-gold-search-input-gold {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .home-gold-card-container {
+    flex: 1 1 100%; /* 1 sản phẩm trên mỗi hàng */
+    max-width: 100%;
+  }
 }
