@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
-import { Modal, notification, message } from 'antd';
+import { Modal, notification } from 'antd';
 import ReactPaginate from 'react-paginate';
 
+import './ManageGold.css'; // Import CSS file for styling
 
 export default function ManageGold() {
   const [goldManage, setGoldManage] = useState([]);
@@ -13,7 +14,6 @@ export default function ManageGold() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4; // Số lượng mục trên mỗi trang
   const totalPages = Math.ceil(goldManage.length / itemsPerPage);
-  
 
   useEffect(() => {
     adornicaServ.getListGold()
@@ -52,10 +52,10 @@ export default function ManageGold() {
         console.log(err);
       });
   };
+
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
-  
 
   const handleInputChange = (e, productId) => {
     const { name, value } = e.target;
@@ -98,17 +98,16 @@ export default function ManageGold() {
       setIsModalVisible(false);
       setSelectedImages([]);
       setCurrentGoldId(null);
-      notification.success({message: 'Images updated successfully'});
+      notification.success({ message: 'Images updated successfully' });
 
       adornicaServ.getListGold()
-      .then((res) => {
-        console.log(res.data.metadata.data);
-        setGoldManage(res.data.metadata.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+        .then((res) => {
+          console.log(res.data.metadata.data);
+          setGoldManage(res.data.metadata.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
     }).catch((err) => {
       console.log("Error uploading images:", err.response.data);
@@ -125,8 +124,6 @@ export default function ManageGold() {
   const firstItemIndex = currentPage * itemsPerPage;
   const lastItemIndex = firstItemIndex + itemsPerPage;
   const currentGold = goldManage.slice(firstItemIndex, lastItemIndex);
-  
-
 
   const changePage = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -139,50 +136,50 @@ export default function ManageGold() {
   };
 
   return (
-    <div style={styles.container}>
-      <header style={styles.header}>
-        <h1 style={styles.title}>GOLD</h1>
-        <NavLink to="/add-gold" style={styles.addButton}>ADD GOLD</NavLink>
+    <div className="gold-container">
+      <header className="gold-header">
+        <h1 className="gold-title">GOLD</h1>
+        <NavLink to="/add-gold" className="addButton">ADD GOLD</NavLink>
       </header>
-      <table style={styles.table}>
+      <table className="gold-table">
         <thead>
           <tr>
-            <th style={styles.th}>ID</th>
-            <th style={styles.th}>Code</th>
-            <th style={styles.th}>Name</th>
-            <th style={styles.th}>Price (VND)</th>
-            <th style={styles.th}>Size</th>
-            <th style={styles.th}>Action</th>
+            <th className="gold-th">ID</th>
+            <th className="gold-th">Code</th>
+            <th className="gold-th">Name</th>
+            <th className="gold-th">Price (VND)</th>
+            <th className="gold-th">Size</th>
+            <th className="gold-th">Action</th>
           </tr>
         </thead>
         <tbody>
           {currentGold.map((product) => (
             <tr key={product.productId}>
-              <td style={styles.td}>{product.productId}</td>
-              <td style={styles.td}>{product.productCode}</td>
-              <td style={styles.td}>{product.productName}</td>
-              <td style={styles.td}>{product.productPrice <= 0 ? 'undefined' : product.productPrice}</td>
-              <td style={styles.td}>{product.size}</td>
-              <td style={styles.td}>
+              <td className="gold-td" data-label="ID">{product.productId}</td>
+              <td className="gold-td" data-label="Code">{product.productCode}</td>
+              <td className="gold-td" data-label="Name">{product.productName}</td>
+              <td className="gold-td" data-label="Price (VND)">{product.productPrice <= 0 ? 'undefined' : product.productPrice}</td>
+              <td className="gold-td" data-label="Size">{product.size}</td>
+              <td className="gold-td" data-label="Action">
                 <NavLink to={`/update-gold/${product.productId}`}>
                   <button
-                    style={styles.updateButton}
+                    className="updateButton"
                     onClick={() => handleUpdate(product.productCode)}
                   >
                     Update
                   </button>
                 </NavLink>
                 <button
-                  style={styles.deleteButton}
+                  className="deleteButton"
                   onClick={() => showDeleteConfirm(product.productCode)}
                 >
                   Delete
                 </button>
                 <button
-                 style={product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? styles.updateButton : styles.disabledButton}
-                 onClick={() => product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(product.productId)}
-                 disabled={product.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
-               >
+                  className={product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
+                  onClick={() => product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(product.productId)}
+                  disabled={product.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
+                >
                   Img
                 </button>
               </td>
@@ -190,29 +187,28 @@ export default function ManageGold() {
           ))}
         </tbody>
       </table>
-      <div style={styles.footer}>
-        <NavLink to="/inventory" style={styles.backButton}>BACK</NavLink>
+      <div className="gold-footer">
+        <NavLink to="/inventory" className="backButton">BACK</NavLink>
         <ReactPaginate
-  previousLabel={'Previous'}
-  nextLabel={'Next'}
-  breakLabel={'...'}
-  pageCount={totalPages}
-  marginPagesDisplayed={2}
-  pageRangeDisplayed={5}
-  onPageChange={handlePageClick}
-  containerClassName={'pagination'}
-  activeClassName={'active'}
-  pageClassName={'page-item'}
-  pageLinkClassName={'page-link'}
-  previousClassName={'page-item'}
-  previousLinkClassName={'page-link'}
-  nextClassName={'page-item'}
-  nextLinkClassName={'page-link'}
-  breakClassName={'page-item'}
-  breakLinkClassName={'page-link'}
-  disabledClassName={'disabled'}
-/>
-
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={totalPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link'}
+          breakClassName={'page-item'}
+          breakLinkClassName={'page-link'}
+          disabledClassName={'disabled'}
+        />
       </div>
       <Modal
         title={`Update Images of product ID: ${currentGoldId}`}
@@ -236,114 +232,3 @@ export default function ManageGold() {
     </div>
   );
 };
-
-const styles = {
-  container: {
-    margin : '30px 20px 20px 20px',
-    padding: '20px',
-    fontFamily: 'Arial, sans-serif',
-    maxHeight: '70vh',
-    overflowY: 'auto',
-    backgroundColor: '#fff7e6',
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 1)',
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '20px',
-    paddingRight: '20px'
-  },
-  title: {
-    margin: 0,
-    fontSize: '25px',
-    color: '#d97d0d'
-  },
-  addButton: {
-    backgroundColor: '#d97d0d',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    padding: '8px 16px',
-    cursor: 'pointer',
-    marginLeft: 'auto'
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    boxShadow: '0 2px 15px rgba(0,0,0,0.1)'
-  },
-  th: {
-    border: '2px solid #ffcc99',
-    padding: '8px',
-    textAlign: 'left',
-    backgroundColor: '#ffe0b3',
-    color: '#d97d0d'
-  },
-  td: {
-    border: '2px solid #ddd',
-    padding: '8px',
-    textAlign: 'left'
-  },
-  updateButton: {
-    padding: '5px 10px',
-    marginRight: '5px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginBottom: '4px',
-  },
-  deleteButton: {
-    marginRight: '5px',
-    padding: '5px 10px',
-    backgroundColor: '#f44336',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginBottom: '4px',
-  },
-  disabledButton: {
-    padding: '5px 10px',
-    marginRight: '5px',
-    backgroundColor: '#f0f0f0',
-    color: '#888',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'not-allowed',
-    marginBottom: '4px',
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '20px'
-  },
-  backButton: {
-    padding: '8px 16px',
-    backgroundColor: '#f0f0f0',
-    color: '#333',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    textDecoration: 'none',
-    cursor: 'pointer'
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '10px 20px'
-  },
-  pageButton: {
-    padding: '5px 10px',
-    margin: '0 5px',
-    backgroundColor: '#000000',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer'
-  }
-};
-

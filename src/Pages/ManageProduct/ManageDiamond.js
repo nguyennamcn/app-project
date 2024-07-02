@@ -3,6 +3,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { Modal, notification } from 'antd';
 import ReactPaginate from 'react-paginate';
+import './ManageDiamond.css'; 
 
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
@@ -109,42 +110,42 @@ export default function ManageDiamond() {
   const currentDiamonds = diamondManage.slice(firstItemIndex, lastItemIndex);
 
   return (
-    <div style={styles.container}>
-      <header style={styles.header}>
-        <h1 style={styles.title}>DIAMOND INVENTORY</h1>
-        <NavLink to="/add-diamond" style={styles.addButton}>ADD DIAMOND</NavLink>
+    <div className="diamond-container">
+      <header className="diamond-header">
+        <h1 className="diamond-title">DIAMOND INVENTORY</h1>
+        <NavLink to="/add-diamond" className="addButton">ADD DIAMOND</NavLink>
       </header>
-      <table style={styles.table}>
+      <table className="diamond-table">
         <thead>
           <tr>
-            <th style={styles.th}>ID</th>
-            <th style={styles.th}>Code</th>
-            <th style={styles.th}>Name</th>
-            <th style={styles.th}>Price (VND)</th>
-            <th style={styles.th}>Size</th>
-            <th style={styles.th}>Action</th>
+            <th  className="diamond-th">ID</th>
+            <th  className="diamond-th">Code</th>
+            <th  className="diamond-th">Name</th>
+            <th  className="diamond-th">Price (VND)</th>
+            <th  className="diamond-th">Size</th>
+            <th  className="diamond-th">Action</th>
           </tr>
         </thead>
         <tbody>
           {currentDiamonds.map((diamond) => (
             <tr key={diamond.productId}>
-              <td style={styles.td}>{diamond.productId}</td>
-              <td style={styles.td}>{diamond.productCode}</td>
-              <td style={styles.td}>{diamond.productName}</td>
-              <td style={styles.td}>{diamond.productPrice <= 0 ? 'Not yet been priced' : `${diamond.productPrice}`}</td>
-              <td style={styles.td}>{diamond.size}</td>
-              <td style={styles.td}>
+              <td className="diamond-td" data-label="ID">{diamond.productId}</td>
+              <td className="diamond-td" data-label="Code">{diamond.productCode}</td>
+              <td className="diamond-td" data-label="Name">{diamond.productName}</td>
+              <td className="diamond-td" data-label="Price (VND)">{diamond.productPrice <= 0 ? 'Not yet been priced' : `${diamond.productPrice}`}</td>
+              <td className="diamond-td" data-label="Size">{diamond.size}</td>
+              <td className="diamond-td" data-label="Action">
                 <NavLink to={`/update-diamond/${diamond.productId}`}>
-                  <button style={styles.updateButton}>Update</button>
+                  <button  className="updateButton">Update</button>
                 </NavLink>
                 <button
-                  style={styles.deleteButton}
+                  className="deleteButton"
                   onClick={() => handleDelete(diamond.productCode)}
                 >
                   Delete
                 </button>
                 <button
-                  style={diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? styles.updateButton : styles.disabledButton}
+                   className={diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
                   onClick={() => diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(diamond.productId)}
                   disabled={diamond.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
@@ -155,8 +156,8 @@ export default function ManageDiamond() {
           ))}
         </tbody>
       </table>
-      <div style={styles.footer}>
-        <NavLink to="/inventory" style={styles.backButton}>BACK</NavLink>
+      <div  className="diamond-footer">
+        <NavLink to="/inventory" className="backButton">BACK</NavLink>
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
@@ -201,111 +202,3 @@ export default function ManageDiamond() {
   );
 }
 
-const styles = {
-  container: {
-    margin:'30px 20px 20px 20px',
-    padding: '20px',
-    fontFamily: 'Arial, sans-serif',
-    maxHeight: '70vh',
-    overflowY: 'auto',
-    backgroundColor: '#f7f3fc', // Màu tím nhạt
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 1)'
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '20px'
-  },
-  title: {
-    margin: 0,
-    fontSize: '25px',
-    color: '#6b46c1' // Màu tím đậm
-  },
-  addButton: {
-    backgroundColor: '#6b46c1', // Màu tím đậm
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    padding: '8px 16px',
-    cursor: 'pointer',
-    textDecoration: 'none'
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    boxShadow: '0 2px 15px rgba(0,0,0,0.1)'
-  },
-  th: {
-    border: '2px solid #d3b5ff', // Màu viền tím nhạt
-    padding: '8px',
-    textAlign: 'left',
-    backgroundColor: '#e9d8fd', // Màu nền tím nhạt
-    color: '#6b46c1'
-  },
-  td: {
-    border: '2px solid #ddd',
-    padding: '8px',
-    textAlign: 'left'
-  },
-  updateButton: {
-    padding: '5px 10px',
-    marginRight: '5px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginBottom: '4px',
-  },
-  deleteButton: {
-    marginRight: '5px',
-    padding: '5px 10px',
-    backgroundColor: '#f44336',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginBottom: '4px',
-  },
-  disabledButton: {
-    padding: '5px 10px',
-    marginRight: '5px',
-    backgroundColor: '#f0f0f0',
-    color: '#888',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'not-allowed',
-    marginBottom: '4px',
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '20px'
-  },
-  backButton: {
-    padding: '8px 16px',
-    backgroundColor: '#f0f0f0',
-    color: '#333',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    textDecoration: 'none',
-    cursor: 'pointer'
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '10px 20px'
-  },
-  pageButton: {
-    padding: '5px 10px',
-    margin: '0 5px',
-    backgroundColor: '#000000',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer'
-  }
-};
