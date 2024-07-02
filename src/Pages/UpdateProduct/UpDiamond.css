@@ -14,6 +14,8 @@
 }
 
 .updiamond-form {
+  overflow-y: auto;
+  max-height: 70vh;
   width: 100%;
   max-width: 900px;
   padding: 20px;
@@ -36,7 +38,15 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
-
+.updiamond-static-input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #FFCBA4; /* Màu cam nhạt */
+  border-radius: 4px;
+  background-color: #d8d8d8;
+  color: #333;
+}
 .updiamond-form-group {
   flex: 1;
   margin-right: 15px;

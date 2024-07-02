@@ -118,7 +118,7 @@ function UpJewelry() {
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
                 <label>Product Code:</label>
-                <h2 name="productCode">{sp.productCode}</h2>
+                <h2 className="upjewelry-static-input">{sp.productCode}</h2>
               </div>
               <div className="upjewelry-form-group">
                 <label>Product Name:</label>
@@ -128,7 +128,7 @@ function UpJewelry() {
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
                 <label>Gem Cost:</label>
-                <h2 name="gemCost">{sp.gemCost}</h2>
+                <h2 className="upjewelry-static-input">{sp.gemCost}</h2>
               </div>
               <div className="upjewelry-form-group">
                 <label>Production Cost:</label>
@@ -147,13 +147,13 @@ function UpJewelry() {
               </div>
               <div className="upjewelry-form-group">
                 <label>Category:</label>
-                <h2 name="categoryId">{sp.category}</h2>
+                <h2 className="upjewelry-static-input">{sp.category}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
                 <label>Material ID:</label>
-                <h2 name="id">{sp.materials[0]?.name}</h2>
+                <h2 className="upjewelry-static-input">{sp.materials[0]?.name}</h2>
               </div>
               <div className="upjewelry-form-group">
                 <label>Material Weight (gram):</label>
@@ -163,37 +163,37 @@ function UpJewelry() {
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
                 <label>Gem Code:</label>
-                <h2 name="gemCode">{sp.gem[0]?.gemCode}</h2>
+                <h2 className="upjewelry-static-input">{sp.gem[0]?.gemCode}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
                 <label>Diamond Name:</label>
-                <h2 name="gemName">{sp.gem[0]?.gemName}</h2>
+                <h2 className="upjewelry-static-input">{sp.gem[0]?.gemName}</h2>
               </div>
               <div className="upjewelry-form-group">
                 <label>Origin:</label>
-                <h2 name="origin">{sp.gem[0]?.origin}</h2>
+                <h2 className="upjewelry-static-input">{sp.gem[0]?.origin}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
                 <label>Color:</label>
-                <h2 name="color">{sp.gem[0]?.color}</h2>
+                <h2 className="upjewelry-static-input">{sp.gem[0]?.color}</h2>
               </div>
               <div className="upjewelry-form-group">
                 <label>Clarity:</label>
-                <h2 name="clarity">{sp.gem[0]?.clarity}</h2>
+                <h2 className="upjewelry-static-input">{sp.gem[0]?.clarity}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
                 <label>Cut:</label>
-                <h2 name="cut">{sp.gem[0]?.cut}</h2>
+                <h2 className="upjewelry-static-input">{sp.gem[0]?.cut}</h2>
               </div>
               <div className="upjewelry-form-group">
                 <label>Carat:</label>
-                <h2 name="carat">{sp.gem[0]?.carat}</h2>
+                <h2 className="upjewelry-static-input">{sp.gem[0]?.carat}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
@@ -211,7 +211,7 @@ function UpJewelry() {
               </div>
               <div className="upjewelry-form-group">
                 <label>Jewelry Diamond:</label>
-                <h2 name="jewelryDiamond">{sp.jewelryDiamond ? "true" : "false"}</h2>
+                <h2 className="upjewelry-static-input">{sp.jewelryDiamond ? "true" : "false"}</h2>
               </div>
             </div>
             <div className="upjewelry-form-footer">

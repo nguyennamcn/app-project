@@ -25,7 +25,6 @@ function UpDiamond() {
     }],
     gemId: '',
     gemCode: '',
-
     origin: '',
     color: '',
     clarity: '',
@@ -48,22 +47,17 @@ function UpDiamond() {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const [productImages, setProductImages] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSp({ ...sp, [name]: value });
-    console.log(sp)
+    console.log(sp);
   };
 
   const handleGemInputChange = (e) => {
     const { name, value } = e.target;
     const updatedGem = { ...sp.gem[0], [name]: value };
     setSp({ ...sp, gem: [updatedGem] });
-  };
-
-  const handleImageUpload = (e) => {
-    setProductImages(Array.from(e.target.files));
   };
 
   const handleUpdate = (e) => {
@@ -117,7 +111,7 @@ function UpDiamond() {
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
                 <label>Product Code:</label>
-                <h2 name="productCode">{sp.productCode}</h2>
+                <h2 className="updiamond-static-input" name="productCode">{sp.productCode}</h2>
               </div>
               <div className="updiamond-form-group">
                 <label>Product Name:</label>
@@ -125,10 +119,9 @@ function UpDiamond() {
               </div>
             </div>
             <div className="updiamond-form-row">
-     
               <div className="updiamond-form-group">
                 <label>Gem Code:</label>
-                <h2 name="gemCode" >{sp.gem[0]?.gemCode || ''}</h2>
+                <h2 className="updiamond-static-input" name="gemCode">{sp.gem[0]?.gemCode || ''}</h2>
               </div>
             </div>
             <div className="updiamond-form-row">
@@ -138,27 +131,27 @@ function UpDiamond() {
               </div>
               <div className="updiamond-form-group">
                 <label>Origin:</label>
-                <h2 name="origin" >{sp.gem[0].origin}</h2>
+                <h2 className="updiamond-static-input" name="origin">{sp.gem[0].origin}</h2>
               </div>
             </div>
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
                 <label>Color:</label>
-                <h2 name="color">{sp.gem[0].color}</h2>
+                <h2 className="updiamond-static-input" name="color">{sp.gem[0].color}</h2>
               </div>
               <div className="updiamond-form-group">
                 <label>Clarity:</label>
-                <h2 name="clarity">{sp.gem[0].clarity}</h2>
+                <h2 className="updiamond-static-input" name="clarity">{sp.gem[0].clarity}</h2>
               </div>
             </div>
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
                 <label>Cut:</label>
-                <h2 name="cut">{sp.gem[0].cut}</h2>
+                <h2 className="updiamond-static-input" name="cut">{sp.gem[0].cut}</h2>
               </div>
               <div className="updiamond-form-group">
                 <label>Carat:</label>
-                <h2 name="carat">{sp.gem[0].carat}</h2>
+                <h2 className="updiamond-static-input" name="carat">{sp.gem[0].carat}</h2>
               </div>
             </div>
 
