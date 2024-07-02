@@ -8,7 +8,7 @@ export default function RevenueChart({ data }) {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="day" />
         <YAxis />
-        <Tooltip />
+        <Tooltip  />
         <Line type="monotone" dataKey="revenue" stroke="#8884d8" activeDot={{ r: 8 }} />
       </LineChart>
     </ResponsiveContainer>
