@@ -17,6 +17,28 @@ export default function StoreProductDetail() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [modalTitle, setModalTitle] = useState('');
+    const [goldPrices, setGoldPrices] = useState([]);
+    const [gemPrices, setGemPrices] = useState([]);
+
+    useEffect(() => {
+        adornicaServ.getPriceMaterial()
+            .then((res) => {
+                setGoldPrices(res.data.metadata);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
+    useEffect(() => {
+        adornicaServ.getPriceDiamond()
+            .then((res) => {
+                setGemPrices(res.data.metadata);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     useEffect(() => {
         adornicaServ.getOrderDetail(orderCode)
@@ -26,21 +48,27 @@ export default function StoreProductDetail() {
                 setProducts(orderDetail.list);
                 const calculatedTotalPrice = orderDetail.list.reduce((sum, product) => sum + (product.price || 0), 0);
                 setTotalPrice(calculatedTotalPrice);
-                
+
                 fetchProductDetails(orderDetail.list);
             })
             .catch((err) => {
                 console.log(err);
             });
-            console.log("List item from bill: ",products);
     }, [orderCode]);
 
     const fetchProductDetails = (productsList) => {
         const promises = productsList.map(product =>
-            adornicaServ.getDetailProduct(product.productId)
+            adornicaServ.getDetailProductNotActive(product.productId)
                 .then((res) => {
-                    console.log('Product details for', product.productId, ':', res.data.metadata);
-                    return res.data.metadata;
+                    const detailedProduct = res.data.metadata;
+                    const updatedProduct = {
+                        ...product,
+                        ...detailedProduct,
+                        materialBuyPrice: calculateMaterialBuyPrice(detailedProduct),
+                        gemBuyPrice: calculateGemBuyPrice(detailedProduct)
+                    };
+                    console.log('Product details for', product.productId, ':', updatedProduct);
+                    return updatedProduct;
                 })
                 .catch((err) => {
                     console.error('Error fetching details for product', product.productId, ':', err);
@@ -48,10 +76,28 @@ export default function StoreProductDetail() {
                 })
         );
 
-        Promise.all(promises).then((details) => {
-            // You can do something with the product details if needed
-            console.log('All product details:', details);
+        Promise.all(promises).then((detailedProducts) => {
+            setProducts(detailedProducts.filter(p => p !== null)); // Update products with detailed information
         });
+    };
+
+    const calculateMaterialBuyPrice = (product) => {
+        if (product.materials && product.materials.length > 0) {
+            const material = product.materials[0]; // Assuming only one material for simplicity
+            const materialPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialBuyPrice || 0;
+            const materialBuyPrice = materialPrice * material.weight;
+            return materialBuyPrice;
+        }
+        return 0;
+    };
+
+    const calculateGemBuyPrice = (product) => {
+        if (product.gem && product.gem.length > 0) {
+            const gem = product.gem[0]; // Assuming only one gem for simplicity
+            const gemPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemBuyPrice || 0;
+            return gemPrice;
+        }
+        return 0;
     };
 
     const generateRandomOrderCode = () => {
@@ -70,7 +116,7 @@ export default function StoreProductDetail() {
                 productCode: product.productCode,
                 price: product.price
             })),
-            totalPrice: totalPrice,
+            totalPrice: calculateTotalPriceOfSelectedItems(),
             productStore: true
         };
 
@@ -84,7 +130,7 @@ export default function StoreProductDetail() {
             setModalVisible(true);
             setTimeout(() => {
                 setModalVisible(false);
-                navigate('/buyProduct');
+                //navigate('/buyProduct');
             }, 2000);
         } catch (error) {
             console.error('There was an error sending the order:', error);
@@ -103,12 +149,18 @@ export default function StoreProductDetail() {
 
     const handleCheckboxChange = (product) => {
         setSelectedProducts((prevSelectedProducts) => {
-            if (prevSelectedProducts.find(p => p.productCode === product.productCode)) {
+            const isSelectedProduct = prevSelectedProducts.find(p => p.productCode === product.productCode);
+            if (isSelectedProduct) {
+                console.log(isSelectedProduct);
                 return prevSelectedProducts.filter(p => p.productCode !== product.productCode);
             } else {
                 return [...prevSelectedProducts, product];
             }
         });
+    };
+
+    const calculateTotalPriceOfSelectedItems = () => {
+        return selectedProducts.reduce((sum, product) => sum + (product.materialBuyPrice + product.gemBuyPrice || 0), 0);
     };
 
     const columnsProductInBill = [
@@ -157,9 +209,15 @@ export default function StoreProductDetail() {
             key: 'productCode',
         },
         {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
+            title: 'Material Buy Price',
+            dataIndex: 'materialBuyPrice',
+            key: 'materialBuyPrice',
+            render: (text) => `${text} VND`,
+        },
+        {
+            title: 'Gem Buy Price',
+            dataIndex: 'gemBuyPrice',
+            key: 'gemBuyPrice',
             render: (text) => `${text} VND`,
         },
         {
@@ -200,7 +258,7 @@ export default function StoreProductDetail() {
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Phone:<span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
+                                    Phone number:<span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
@@ -237,7 +295,23 @@ export default function StoreProductDetail() {
                             padding: '0',
                         }}>
                         <div className='col-sm-12 mt-2'><h1>Buy back items</h1></div>
-                        <Table style={{ width: '94%', border: '1px solid #ccc', }} dataSource={selectedProducts} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
+                        <Table style={{ width: '94%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
+                            ...product,
+                            materialBuyPrice: calculateMaterialBuyPrice(product),
+                            gemBuyPrice: calculateGemBuyPrice(product)
+                        }))} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
+                        <div className='col-sm-1' >
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                    Total items:<span style={{ marginLeft: '4%' }}> {selectedProducts.length}</span>
+                                </h1>
+                            </div>
+                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                    Total:<span style={{ marginLeft: '4%' }}> {calculateTotalPriceOfSelectedItems()} VND</span>
+                                </h1>
+                            </div>
+                        </div>
                     </div>
                     <div className="col-sm-12 flex justify-center mt-1">
                         <NavLink to={"/buyProduct"}>

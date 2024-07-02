@@ -247,6 +247,17 @@ const PurchaseDetailHistory = () => {
           value={sp?.customerAddress}
           disabled
         />
+
+        <label style={pageStyles.detailLabel}>Payment methods:</label>
+        <select
+          style={pageStyles.paymentSelect}
+          name="paymentMethod"
+          value={customerDetails.paymentMethod}
+          onChange={handleDetailChange}
+        >
+          <option value="CASH">Cash</option>
+
+        </select>
       </div>
       <div>
         <h1>Order Code : {sp?.orderCode}</h1>

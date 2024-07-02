@@ -57,6 +57,7 @@ export default function PurchaseOrder() {
     };
 
     const confirmDelete = () => {
+        
         adornicaServ.deletePurchaseOrder(orderCodeToDelete)
             .then(() => {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
@@ -152,15 +153,16 @@ export default function PurchaseOrder() {
                                             View
                                         </Button>
                                     </NavLink>
-                                    {/* <Button
+                                    <Button
                                         className=''
                                         style={{ marginRight: '14px' }}
                                         type="primary"
                                         danger
                                         onClick={() => handleDelete(order.orderCode)}
+                                        disabled={order.paymentMethod !== "NONE"}
                                     >
                                         Delete
-                                    </Button> */}
+                                    </Button>
                                 </div>
                             </td>
                         </tr>

@@ -467,7 +467,7 @@ const BillJewelry = () => {
           onChange={handleDetailChange}
         />
 
-        <label style={pageStyles.detailLabel}>Payment methods:</label>
+        {/* <label style={pageStyles.detailLabel}>Payment methods:</label>
         <select
           style={pageStyles.paymentSelect}
           name="paymentMethod"
@@ -476,7 +476,7 @@ const BillJewelry = () => {
         >
           <option value="Cash">Cash</option>
           <option value="Card">Banking</option>
-        </select>
+        </select> */}
       </div>
       
 
