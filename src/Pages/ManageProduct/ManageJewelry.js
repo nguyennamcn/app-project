@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Button, notification, message } from 'antd';
 import ReactPaginate from 'react-paginate';
+import './ManageJewelry.css'; 
 
 const JewelryInventoryPage = () => {
   const [jewelry, setJewelry] = useState([]);
@@ -115,47 +116,47 @@ const JewelryInventoryPage = () => {
 
 
   return (
-    <div style={styles.container}>
-      <header style={styles.header}>
-        <h1 style={styles.title}>JEWELRY INVENTORY</h1>
-        <NavLink to="/add-jewelry" style={styles.addButton}>ADD PRODUCT</NavLink>
+    <div  className="jewelry-container">
+      <header className="jewelry-header">
+        <h1 className="jewelry-title">JEWELRY INVENTORY</h1>
+        <NavLink to="/add-jewelry"  className="addButton">ADD PRODUCT</NavLink>
       </header>
-      <table style={styles.table}>
+      <table className="jewelry-table">
         <thead>
           <tr>
-            <th style={styles.th}>ID</th>
-            <th style={styles.th}>Code</th>
-            <th style={styles.th}>Name</th>
-            <th style={styles.th}>Price (VND) </th>
-            <th style={styles.th}>Size</th>
-            <th style={styles.th}>Action</th>
+            <th className="jewelry-th">ID</th>
+            <th className="jewelry-th">Code</th>
+            <th className="jewelry-th">Name</th>
+            <th className="jewelry-th">Price (VND) </th>
+            <th className="jewelry-th">Size</th>
+            <th className="jewelry-th">Action</th>
           </tr>
         </thead>
         <tbody>
           {currentJewelry.map((item) => (
             <tr key={item.productId}>
-              <td style={styles.td}>{item.productId}</td>
-              <td style={styles.td}>{item.productCode}</td>
-              <td style={styles.td}>{item.productName}</td>
-              <td style={styles.td}>{item.productPrice <= 0 ? 'Not yet been priced' : (item.productPrice + "$")}</td>
-              <td style={styles.td}>{item.size}</td>
-              <td style={styles.td}>
+              <td className="jewelry-td" data-label="ID">{item.productId}</td>
+              <td className="jewelry-td" data-label="Code">{item.productCode}</td>
+              <td className="jewelry-td" data-label="Name">{item.productName}</td>
+              <td className="jewelry-td" data-label="Price (VND)">{item.productPrice <= 0 ? 'Not yet been priced' : (item.productPrice + "$")}</td>
+              <td className="jewelry-td" data-label="Size">{item.size}</td>
+              <td className="jewelry-td" data-label="Action">
                 <NavLink to={`/update-jewelry/${item.productId}`}>
                   <button
-                    style={styles.updateButton}
+                    className="updateButton"
                     onClick={() => handleUpdate(item.productCode)}
                   >
                     Update
                   </button>
                 </NavLink>
                 <button
-                  style={styles.deleteButton}
+                  className="deleteButton"
                   onClick={() => showDeleteConfirm(item.productCode)}
                 >
                   Delete
                 </button>
                 <button
-                  style={item.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? styles.updateButton : styles.disabledButton}
+                  className={jewelry.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
                   onClick={() => item.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(item.productId)}
                   disabled={item.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
@@ -166,8 +167,8 @@ const JewelryInventoryPage = () => {
           ))}
         </tbody>
       </table>
-      <div style={styles.footer}>
-        <NavLink to="/inventory" style={styles.backButton}>BACK</NavLink>
+      <div className="jewelry-footer">
+        <NavLink to="/inventory" className="backButton">BACK</NavLink>
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
@@ -212,120 +213,5 @@ const JewelryInventoryPage = () => {
   );
 };
 
-const styles = {
-  container: {
-    margin: '30px 20px 20px 20px',
-    padding: '25px',
-    fontFamily: 'Arial, sans-serif',
-    maxHeight: '70vh',
-    overflowY: 'auto',
-    backgroundColor: '#F8E5F4', // Màu hồng nhạt
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 1)'
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '20px'
-  },
-  title: {
-    margin: 0,
-    fontSize: '25px',
-    color: '#FF69B4' // Màu hồng đậm
-  },
-  addButton: {
-    backgroundColor: '#FF69B4', // Màu hồng đậm
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    padding: '8px 16px',
-    cursor: 'pointer',
-    textDecoration: 'none'
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-    boxShadow: '0 2px 15px rgba(0,0,0,0.1)'
-  },
-  th: {
-    border: '3px solid #FFB6C1', // Màu viền hồng nhạt
-    padding: '8px',
-    textAlign: 'left',
-    backgroundColor: '#FFC0CB', // Màu nền hồng nhạt
-    color: '#FF69B4'
-  },
-  td: {
-    border: '3px solid #ddd',
-    padding: '8px',
-    textAlign: 'left',
-  },
-  input: {
-    width: '100%',
-    padding: '5px',
-    boxSizing: 'border-box',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-  },
-  updateButton: {
-    padding: '5px 10px',
-    marginRight: '5px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginBottom: '4px',
-  },
-  deleteButton: {
-    marginRight: '5px',
-    padding: '5px 10px',
-    backgroundColor: '#f44336',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    marginBottom: '4px',
-  },
-  disabledButton: {
-    padding: '5px 10px',
-    marginRight: '5px',
-    backgroundColor: '#d3d3d3',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: '',
-    marginBottom: '4px',
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '20px',
-  },
-  backButton: {
-    padding: '8px 16px',
-    backgroundColor: '#f0f0f0',
-    color: '#333',
-    border: '1px solid #ccc',
-    borderRadius: '3px',
-    textDecoration: 'none',
-    cursor: 'pointer',
-  },
-  pagination: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '10px 20px',
-  },
-  pageButton: {
-    padding: '5px 10px',
-    margin: '0 5px',
-    backgroundColor: '#000000',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-};
 
 export default JewelryInventoryPage;
