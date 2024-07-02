@@ -231,6 +231,12 @@ export const adornicaServ = {
     getCategoryType: () => {
         return https.get(`/api/v1/dashboard/category-type-most-orders`);
     },
+    getWeeklyRevenue: () => {
+        return https.get(`/api/v1/dashboard/sales-total-amounts-week`);
+    },
+    getYearlyRevenue: () => {
+        return https.get(`/api/v1/dashboard/sales-total-amount-year?year=2024`);
+    },
 
     postNewEmployee: (form) => {
         console.log(form)

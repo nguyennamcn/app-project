@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Statistic } from 'antd';
-import RevenueChart from './RevenueChart';
-import MonthlyRevenueChart from './MonthlyRevenueChart';
 import ProductPieChart from './ProductPieChart';
-import './DashBoard.css';
+import WeeklyRevenueChart from './WeeklyRevenueChart';
+import YearlyRevenueChart from './YearlyRevenueChart';
 import { adornicaServ } from '../../service/adornicaServ';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import './DashBoard.css';
 
 export default function DashBoard() {
+
   const [data, setData] = useState({
     yesterday: 0,
     today: 0,
@@ -18,6 +20,8 @@ export default function DashBoard() {
       gold: 0,
       diamond: 0,
     },
+    weeklyRevenue: [],
+    yearlyRevenue: [],
   });
 
   useEffect(() => {
@@ -29,6 +33,8 @@ export default function DashBoard() {
         const yesterdayRes = await adornicaServ.getTotalYesterday();
         const staffRes = await adornicaServ.getMostStaff();
         const productsRes = await adornicaServ.getCategoryType();
+        const weeklyRes = await adornicaServ.getWeeklyRevenue();
+        const yearlyRes = await adornicaServ.getYearlyRevenue();
 
         const productsData = productsRes.data.metadata.reduce((acc, item) => {
           if (item.categoryType === 'JEWELRY') {
@@ -49,6 +55,8 @@ export default function DashBoard() {
           yesterday: yesterdayRes.data.metadata,
           staffMostOrders: staffRes.data.metadata.staffName,
           products: productsData,
+          weeklyRevenue: weeklyRes.data.metadata,
+          yearlyRevenue: yearlyRes.data.metadata,
         }));
       } catch (err) {
         console.log(err);
@@ -58,14 +66,11 @@ export default function DashBoard() {
     fetchData();
   }, []);
 
-  const dailyRevenueData = [
-    { day: 'Yesterday', revenue: data.yesterday },
-    { day: 'Today', revenue: data.today },
-  ];
-
-  const monthlyRevenueData = [
-    { month: 'Last Month', revenue: data.lastMonth },
-    { month: 'This Month', revenue: data.thisMonth },
+  const dailyAndMonthlyRevenueData = [
+    { period: 'Yesterday', dailyRevenue: data.yesterday, monthlyRevenue: null },
+    { period: 'Today', dailyRevenue: data.today, monthlyRevenue: null },
+    { period: 'Last Month', monthlyRevenue: data.lastMonth },
+    { period: 'This Month', monthlyRevenue: data.thisMonth },
   ];
 
   const productData = [
@@ -73,6 +78,22 @@ export default function DashBoard() {
     { name: 'Gold', value: data.products.gold },
     { name: 'Diamond', value: data.products.diamond },
   ];
+
+  const customTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const dailyRevenue = payload.find(p => p.dataKey === 'dailyRevenue')?.value;
+      const monthlyRevenue = payload.find(p => p.dataKey === 'monthlyRevenue')?.value;
+
+      return (
+        <div className="custom-tooltip">
+          <p className="label">{`${label}`}</p>
+          <p className="intro">{`Daily Revenue: ${dailyRevenue ? dailyRevenue.toLocaleString() + ' VND' : 'N/A'}`}</p>
+          {monthlyRevenue !== undefined && <p className="intro">{`Monthly Revenue: ${monthlyRevenue ? monthlyRevenue.toLocaleString() + ' VND' : 'N/A'}`}</p>}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="dashboard-container">
@@ -107,15 +128,28 @@ export default function DashBoard() {
         </Col>
       </Row>
       <div className="chart-container">
-        <h2>Daily Revenue</h2>
-        <RevenueChart data={dailyRevenueData} />
-      </div>
-      <div className="chart-container">
-        <h2>Monthly Revenue</h2>
-        <MonthlyRevenueChart data={monthlyRevenueData} />
+        <h2>Daily and Monthly Revenue</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={dailyAndMonthlyRevenueData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="period" />
+            <Tooltip content={customTooltip} />
+            <Legend />
+            <Bar dataKey="dailyRevenue" fill="#8884d8" name="Daily"/>
+            <Bar dataKey="monthlyRevenue" fill="#82ca9d" name="Monthly" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
       <div className="chart-container">
         <ProductPieChart data={productData} />
+      </div>
+      <div className="chart-container">
+        <h2>Weekly Revenue</h2>
+        <WeeklyRevenueChart data={data.weeklyRevenue} />
+      </div>
+      <div className="chart-container">
+        <h2>Yearly Revenue</h2>
+        <YearlyRevenueChart data={data.yearlyRevenue} />
       </div>
     </div>
   );
