@@ -103,7 +103,7 @@
   background: #FFCBA4; /* Màu cam nhạt */
 }
 
-.upjewelry-add-button {
+.updiamond-add-button {
   padding: 8px 16px;
   background: #FFCBA4; /* Màu cam nhạt */
   color: #fff;
@@ -115,8 +115,8 @@
   transition: background 0.3s ease;
 }
 
-.upjewelry-add-button:hover {
-  background: #FFCC99; /* Màu cam đậm hơn */
+.updiamond-add-button:hover {
+  background: #f69535; /* Màu cam đậm hơn */
 }
 
 .custom-modal .ant-modal-content {
