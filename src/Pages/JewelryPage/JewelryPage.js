@@ -4,6 +4,7 @@ import './JewelryCss.css';
 import { NavLink } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
+import QrScanner from 'react-qr-scanner';
 
 const { Meta } = Card;
 
@@ -16,7 +17,8 @@ export default function JewelryPage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [productsPerPage] = useState(5);
   const [isSizeModalVisible, setIsSizeModalVisible] = useState(false);
-  
+  const [isQRModalVisible, setIsQRModalVisible] = useState(false);
+  const [scannedData, setScannedData] = useState('');
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -47,10 +49,7 @@ export default function JewelryPage() {
     };
     console.log(item);
 
-    // Get existing cart items from local storage
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    // Check if the item is already in the cart
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if(product.productPrice < 0){
@@ -61,16 +60,26 @@ export default function JewelryPage() {
     if (existingItemIndex > -1) {
       showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
     } else {
-      // Add new item to the cart
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      // Save updated cart items to local storage
       showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-check-icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
     }
   };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleScan = (data) => {
+    if (data) {
+      setScannedData(data);
+      setSearchTerm(data); // Set search term to scanned data
+      setIsQRModalVisible(false); // Close QR modal after scan
+    }
+  };
+
+  const handleError = (err) => {
+    console.error(err);
   };
 
   const filteredProducts = products.filter(product =>
@@ -85,19 +94,21 @@ export default function JewelryPage() {
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
+
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-};
+  };
 
   return (
     <div className="home-jewelry-page">
       <div className='home-jewelry-filter'>
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div style={{ display: 'flex', gap: '5px' }}>
           <button onClick={() => setIsSizeModalVisible(true)} className="home-jewelry-size-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-rulers" viewBox="0 0 16 16">
               <path d="M2.23 0a.5.5 0 0 0-.5.5v1.75a.5.5 0 0 0 1 0V1H6v.25a.5.5 0 0 0 1 0V1h2v.25a.5.5 0 0 0 1 0V1h2.5v1.25a.5.5 0 0 0 1 0V.5a.5.5 0 0 0-.5-.5H2.23zM1 2.5v10.77a.5.5 0 0 0 .5.5h1.75a.5.5 0 0 0 0-1H2V10h.25a.5.5 0 0 0 0-1H2V7h.25a.5.5 0 0 0 0-1H2V4h.25a.5.5 0 0 0 0-1H2V2h.25a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0-.5.5zM13 2v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm-2-6v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm-2-6v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9z"/>
             </svg>
           </button>
+          <button onClick={() => setIsQRModalVisible(true)} className="home-jewelry-scan-button">Scan QR Code</button>
         </div>
 
         <div className='home-jewelry-search-input-jewelry'>
@@ -184,6 +195,19 @@ export default function JewelryPage() {
         <div>
           <img src="https://vuanem.com/blog/wp-content/uploads/2022/09/bang-size-nhan-nam1-1.jpg" alt="Ring Sizes" style={{ width: '100%' }} />
         </div>
+      </Modal>
+      <Modal
+        visible={isQRModalVisible}
+        footer={null}
+        onCancel={() => setIsQRModalVisible(false)}
+        className="home-jewelry-custom-modal"
+      >
+        <QrScanner
+          delay={300}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: '100%' }}
+        />
       </Modal>
     </div>
   );
