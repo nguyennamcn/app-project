@@ -358,6 +358,7 @@ const BillJewelry = () => {
 
       list: products.map((product) => ({
         name: product.goldType,
+        materialId: product.materialId ?product.materialId  : '',
         weight: parseFloat(product.weight),
         color: product.color, // You need to provide the color
         clarity: product.clarity, // You need to provide the clarity
@@ -394,6 +395,7 @@ const BillJewelry = () => {
     // Retrieve data from local storage
     const savedProducts = JSON.parse(localStorage.getItem('jewelryData')) || [];
     setProducts(savedProducts);
+    console.log('Product from cart',savedProducts);
   }, []);
 
   const handlePrintClick = () => {
