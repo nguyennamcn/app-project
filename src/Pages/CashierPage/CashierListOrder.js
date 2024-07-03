@@ -21,7 +21,7 @@ export default function SellOrderPage() {
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState([]);
-    const ordersPerPage = 4;
+    const ordersPerPage = 3;
     const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {

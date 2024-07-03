@@ -1,116 +1,153 @@
 import React, { useEffect, useState } from 'react';
-import './Inventory.css';
+import './Material.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import Modal from 'react-modal';
+import ReactPaginate from 'react-paginate';
 
 const Material = () => {
     const [items, setItems] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [editName, setEditName] = useState('');
     const [newItemName, setNewItemName] = useState('');
 
+    const itemsPerPage = 4;
+
     useEffect(() => {
         adornicaServ.getMaterial()
             .then((res) => {
                 console.log(res.data.metadata);
+                const sortedItems = res.data.metadata.sort((a, b) => a.id - b.id);
                 setItems(res.data.metadata);
+                setPageCount(Math.ceil(res.data.metadata.length / itemsPerPage));
             })
             .catch((err) => {
                 console.log(err);
             });
     }, []);
 
-    const openModal = (item) => {
+    const openMaterialModal = (item) => {
         setSelectedItem(item);
-        setEditName(item.name); // Change this to item.name
+        setEditName(item.name);
         setModalIsOpen(true);
     };
 
-    const closeModal = () => {
+    const closeMaterialModal = () => {
         setModalIsOpen(false);
         setSelectedItem(null);
         setEditName('');
     };
 
-    const openCreateModal = () => {
+    const openCreateMaterialModal = () => {
         setCreateModalIsOpen(true);
     };
 
-    const closeCreateModal = () => {
+    const closeCreateMaterialModal = () => {
         setCreateModalIsOpen(false);
         setNewItemName('');
     };
 
-    const handleCreateItem = () => {
-        const newItemData = { name: newItemName }; // Use the new item name data
+    const handleCreateMaterial = () => {
+        const newItemData = { name: newItemName };
         adornicaServ.createMaterial(newItemData)
             .then((res) => {
                 console.log(`Created new material with id: ${res.data.id}`);
                 setItems(prevItems => [...prevItems, { id: res.data.id, name: newItemName }]);
-                closeCreateModal();
-                window.location.reload();
+                setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
+                closeCreateMaterialModal();
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    const handleDelete = (id) => {
+    const handleDeleteMaterial = (id) => {
         adornicaServ.deleteMaterial(id)
             .then((res) => {
                 console.log(`Deleted material with id: ${id}`);
-                setItems(prevItems => prevItems.filter(item => item.id !== id));
+                const newItems = items.filter(item => item.id !== id);
+                setItems(newItems);
+                setPageCount(Math.ceil(newItems.length / itemsPerPage));
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    const handleUpdate = (id) => {
-        const updatedData = { name: editName }; // Use the edited name data
+    const handleUpdateMaterial = (id) => {
+        const updatedData = { name: editName };
         adornicaServ.updateMaterial(id, updatedData)
             .then((res) => {
                 console.log(`Updated material with id: ${id}`);
                 setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, ...updatedData } : item));
-                closeModal();
+                closeMaterialModal();
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected);
+    };
+
+    const currentItems = items.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
     return (
-        <div className="inventory-container">
-            <h2 className="inventory-title">Material</h2>
-            <button onClick={openCreateModal}>Create</button>
-            <div className="inventory-table-container">
-                <table className="inventory-table">
+        <div className="material-container">
+            <h2 className="material-title">Material</h2>
+            <button onClick={openCreateMaterialModal}>Create</button>
+            <div className="material-table-container">
+                <table className="material-table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th> {/* Change Material to Name */}
+                            <th>Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {items?.map(item => (
+                        {currentItems.map(item => (
                             <tr key={item.id}>
                                 <td>{item.id}</td>
-                                <td>{item.material}</td> {/* Change item.material to item.name */}
+                                <td>{item.material}</td>
                                 <td>
-                                    <button onClick={() => openModal(item)}>Update</button>
-                                    <button onClick={() => handleDelete(item.id)}>Delete</button>
+                                    <button onClick={() => openMaterialModal(item)}>Update</button>
+                                    <button onClick={() => handleDeleteMaterial(item.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+            <div className="material-paginationContainer">
+                <ReactPaginate
+                    previousLabel={'Previous'}
+                    nextLabel={'Next'}
+                    breakLabel={'...'}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={'material-pagination'}
+                    activeClassName={'active'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    disabledClassName={'disabled'}
+                />
+            </div>
             <Modal
                 isOpen={modalIsOpen}
-                onRequestClose={closeModal}
+                onRequestClose={closeMaterialModal}
                 contentLabel="Update Modal"
             >
                 {selectedItem && (
@@ -124,14 +161,14 @@ const Material = () => {
                                 onChange={(e) => setEditName(e.target.value)}
                             />
                         </label>
-                        <button onClick={() => handleUpdate(selectedItem.id)}>Save</button>
-                        <button onClick={closeModal}>Close</button>
+                        <button onClick={() => handleUpdateMaterial(selectedItem.id)}>Save</button>
+                        <button onClick={closeMaterialModal}>Close</button>
                     </div>
                 )}
             </Modal>
             <Modal
                 isOpen={createModalIsOpen}
-                onRequestClose={closeCreateModal}
+                onRequestClose={closeCreateMaterialModal}
                 contentLabel="Create Modal"
             >
                 <h2>Create New Material</h2>
@@ -143,8 +180,8 @@ const Material = () => {
                         onChange={(e) => setNewItemName(e.target.value)}
                     />
                 </label>
-                <button onClick={handleCreateItem}>Create</button>
-                <button onClick={closeCreateModal}>Cancel</button>
+                <button onClick={handleCreateMaterial}>Create</button>
+                <button onClick={closeCreateMaterialModal}>Cancel</button>
             </Modal>
         </div>
     );
