@@ -18,6 +18,7 @@ function ViewEmployee() {
         console.log(err);
       });
   }, [staffId]);
+
   const handleDelete = () => {
     adornicaServ.delectAccount(staffId)
       .then((res) => {
@@ -31,6 +32,19 @@ function ViewEmployee() {
       });
     console.log('Employee deleted');
   };
+
+  const showDeleteConfirm = () => {
+    Modal.confirm({
+        title: 'Confirm Delete',
+        content: 'Are you sure you want to delete this employee?',
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        onOk() {
+            handleDelete();
+        }
+    });
+};
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
@@ -92,7 +106,7 @@ function ViewEmployee() {
             <button className="back-button">Back</button>
           </NavLink>
           <NavLink >
-            <button className="delete-button" onClick={handleDelete}>Delete</button>
+            <button className="delete-button" onClick={showDeleteConfirm}>Delete</button>
           </NavLink>
         </div>
       </div>

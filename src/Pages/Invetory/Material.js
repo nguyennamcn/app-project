@@ -3,6 +3,8 @@ import './Material.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import Modal from 'react-modal';
 import ReactPaginate from 'react-paginate';
+import { Modal as AntdModal, notification } from 'antd';
+
 
 const Material = () => {
     const [items, setItems] = useState([]);
@@ -10,7 +12,9 @@ const Material = () => {
     const [pageCount, setPageCount] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
+    const [confirmationModalIsOpen, setConfirmationModalIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [itemToDelete, setItemToDelete] = useState(null);
     const [editName, setEditName] = useState('');
     const [newItemName, setNewItemName] = useState('');
 
@@ -58,8 +62,12 @@ const Material = () => {
                 setItems(prevItems => [...prevItems, { id: res.data.id, name: newItemName }]);
                 setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
                 closeCreateMaterialModal();
+                notification.success({ message: "Create successfully !" });
+
             })
             .catch((err) => {
+                const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+                notification.error({ message: errorMessage });
                 console.log(err);
             });
     };
@@ -71,10 +79,14 @@ const Material = () => {
                 const newItems = items.filter(item => item.id !== id);
                 setItems(newItems);
                 setPageCount(Math.ceil(newItems.length / itemsPerPage));
+                notification.success({ message: "Delete successfully !" });
             })
             .catch((err) => {
+                const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+                notification.error({ message: errorMessage });
                 console.log(err);
             });
+        closeConfirmationModal();
     };
 
     const handleUpdateMaterial = (id) => {
@@ -83,11 +95,32 @@ const Material = () => {
             .then((res) => {
                 console.log(`Updated material with id: ${id}`);
                 setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, ...updatedData } : item));
+                notification.success({ message: "Update successfully !" });
                 closeMaterialModal();
             })
             .catch((err) => {
+                const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+                notification.error({ message: errorMessage });
                 console.log(err);
             });
+    };
+
+    const showDeleteConfirm = (id) => {
+        AntdModal.confirm({
+            title: 'Confirm Delete',
+            content: 'Are you sure you want to delete this material?',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                handleDeleteMaterial(id);
+            }
+        });
+    };
+
+    const closeConfirmationModal = () => {
+        setConfirmationModalIsOpen(false);
+        setItemToDelete(null);
     };
 
     const handlePageClick = (data) => {
@@ -116,7 +149,7 @@ const Material = () => {
                                 <td>{item.material}</td>
                                 <td>
                                     <button onClick={() => openMaterialModal(item)}>Update</button>
-                                    <button onClick={() => handleDeleteMaterial(item.id)}>Delete</button>
+                                    <button onClick={() => showDeleteConfirm(item.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
@@ -182,6 +215,15 @@ const Material = () => {
                 </label>
                 <button onClick={handleCreateMaterial}>Create</button>
                 <button onClick={closeCreateMaterialModal}>Cancel</button>
+            </Modal>
+            <Modal
+                isOpen={confirmationModalIsOpen}
+                onRequestClose={closeConfirmationModal}
+                contentLabel="Confirmation Modal"
+            >
+                <h2>Are you sure you want to delete this material ?</h2>
+                <button onClick={() => handleDeleteMaterial(itemToDelete.id)}>Yes</button>
+                <button onClick={closeConfirmationModal}>No</button>
             </Modal>
         </div>
     );
