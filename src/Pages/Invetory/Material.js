@@ -5,7 +5,6 @@ import Modal from 'react-modal';
 import ReactPaginate from 'react-paginate';
 import { Modal as AntdModal, notification } from 'antd';
 
-
 const Material = () => {
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -18,7 +17,7 @@ const Material = () => {
     const [editName, setEditName] = useState('');
     const [newItemName, setNewItemName] = useState('');
 
-    const itemsPerPage = 4;
+    const itemsPerPage = 3;
 
     useEffect(() => {
         adornicaServ.getMaterial()
@@ -132,7 +131,7 @@ const Material = () => {
     return (
         <div className="material-container">
             <h2 className="material-title">Material</h2>
-            <button onClick={openCreateMaterialModal}>Create</button>
+            <button className="material-modal-button-create" onClick={openCreateMaterialModal}>Create</button>
             <div className="material-table-container">
                 <table className="material-table">
                     <thead>
@@ -181,40 +180,50 @@ const Material = () => {
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeMaterialModal}
-                contentLabel="Update Modal"
+                contentLabel="Material-update"
+                className="material-modal"
             >
                 {selectedItem && (
-                    <div>
-                        <h2>Update Material</h2>
-                        <label>
+                    <div className="material-modal-content">
+                        <h2 className="material-modal-header">Update Material</h2>
+                        <label className="material-modal-label">
                             Name:
                             <input
+                                className="material-modal-input"
                                 type="text"
                                 value={editName}
                                 onChange={(e) => setEditName(e.target.value)}
                             />
                         </label>
-                        <button onClick={() => handleUpdateMaterial(selectedItem.id)}>Save</button>
-                        <button onClick={closeMaterialModal}>Close</button>
+                        <div className="material-modal-buttons">
+                            <button className="material-modal-button-save" onClick={() => handleUpdateMaterial(selectedItem.id)}>Save</button>
+                            <button className="material-modal-button cancel" onClick={closeMaterialModal}>Close</button>
+                        </div>
                     </div>
                 )}
             </Modal>
             <Modal
                 isOpen={createModalIsOpen}
                 onRequestClose={closeCreateMaterialModal}
-                contentLabel="Create Modal"
+                contentLabel="Material-create"
+                className="material-modal"
             >
-                <h2>Create New Material</h2>
-                <label>
-                    Name:
-                    <input
-                        type="text"
-                        value={newItemName}
-                        onChange={(e) => setNewItemName(e.target.value)}
-                    />
-                </label>
-                <button onClick={handleCreateMaterial}>Create</button>
-                <button onClick={closeCreateMaterialModal}>Cancel</button>
+                <div className="material-modal-content">
+                    <h2 className="material-modal-header">Create New Material</h2>
+                    <label className="material-modal-label">
+                        Name:
+                        <input
+                            className="material-modal-input"
+                            type="text"
+                            value={newItemName}
+                            onChange={(e) => setNewItemName(e.target.value)}
+                        />
+                    </label>
+                    <div className="material-modal-buttons">
+                        <button className="material-modal-button-create" onClick={handleCreateMaterial}>Create</button>
+                        <button className="material-modal-button cancel" onClick={closeCreateMaterialModal}>Cancel</button>
+                    </div>
+                </div>
             </Modal>
             <Modal
                 isOpen={confirmationModalIsOpen}
