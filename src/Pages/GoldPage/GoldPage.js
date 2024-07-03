@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import './GoldPage.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
+import QrScanner from 'react-qr-scanner';
 
 const { Meta } = Card;
 
@@ -15,6 +16,8 @@ export default function GoldPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
+  const [isQRModalVisible, setIsQRModalVisible] = useState(false);
+  const [scannedData, setScannedData] = useState('');
 
   useEffect(() => {
     adornicaServ.getListGold()
@@ -66,6 +69,18 @@ export default function GoldPage() {
     setSearchTerm(e.target.value);
   };
 
+  const handleScan = (data) => {
+    if (data) {
+      setScannedData(data);
+      setSearchTerm(data); // Set search term to scanned data
+      setIsQRModalVisible(false); // Close QR modal after scan
+    }
+  };
+
+  const handleError = (err) => {
+    console.error(err);
+  };
+
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
@@ -83,6 +98,7 @@ export default function GoldPage() {
     <div className="home-gold-page">
       <div className='home-gold-filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
+          <button onClick={() => setIsQRModalVisible(true)} className="home-gold-scan-button">Scan Code</button>
         </div>
         <div className='home-gold-search-input-gold'>
           <textarea
@@ -158,6 +174,19 @@ export default function GoldPage() {
         className="custom-modal"
       >
         <div>{modalMessage}</div>
+      </Modal>
+      <Modal
+        visible={isQRModalVisible}
+        footer={null}
+        onCancel={() => setIsQRModalVisible(false)}
+        className="custom-modal"
+      >
+        <QrScanner
+          delay={300}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: '100%' }}
+        />
       </Modal>
     </div>
   );
