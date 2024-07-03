@@ -105,6 +105,7 @@ const JewelrySelection = () => {
   const [jewelryItems, setJewelryItems] = useState([{
     name:'',
     goldType: '',
+    materialId:0,
     weight: '',
     origin:'',
     carat: '',
@@ -183,7 +184,7 @@ const JewelrySelection = () => {
         // Clear and disable related fields
         updatedItems[index] = {
           ...updatedItems[index],
-          weight: '',
+          weight: 0,
         };
       } else {
         // Fetch and update gold price for the selected item
@@ -191,6 +192,7 @@ const JewelrySelection = () => {
         if (selectedGold) {
           updatedItems[index] = {
             ...updatedItems[index],
+            materialId: selectedGold.materialId,
             materialBuyPrice: selectedGold.materialBuyPrice,
             materialSellPrice: selectedGold.materialSellPrice,
           };
@@ -233,8 +235,9 @@ const JewelrySelection = () => {
   
     setJewelryItems(updatedItems);
     validateForm(updatedItems);
+    console.log('updated item',updatedItems);
   };  
-  console.log(jewelryItems);
+  
 
   useEffect(() => {
     const calculateTotalPrice = async () => {
@@ -334,6 +337,7 @@ const JewelrySelection = () => {
       return {
         name: item.name,
         goldType: item.goldType,
+        materialId: item.materialId,
         weight: item.weight,
         cut: item.cut,
         carat: item.carat,
@@ -476,7 +480,7 @@ const JewelrySelection = () => {
               </select>
             </div>
 
-            {item.goldType && item.weight && item.weight >0 && (
+            {item.goldType  && item.weight >0 && (
               <>
                 <div style={styles.totalPrice}>
                     {item.goldType}: Buy price {item.materialBuyPrice.toLocaleString('vi-VN')} VND - Sell price {item.materialSellPrice.toLocaleString('vi-VN')} VND
