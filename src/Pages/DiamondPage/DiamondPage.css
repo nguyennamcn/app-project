@@ -1,4 +1,18 @@
 /* General Styles */
+.home-diamond-scan-button {
+  background-color: #28a745; /* Màu xanh lá cho nút Scan QR Code */
+  color: white;
+  border: none;
+  padding: 3px 20px;
+  font-size: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.home-diamond-scan-button:hover {
+  background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+}
 .home-diamond-page {
   padding: 10px;
   display: flex;

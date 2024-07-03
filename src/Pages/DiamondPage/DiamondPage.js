@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import './DiamondPage.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
+import QrScanner from 'react-qr-scanner';
 const { Meta } = Card;
 
 export default function DiamondPage() {
@@ -16,6 +17,8 @@ export default function DiamondPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
+  const [isQRModalVisible, setIsQRModalVisible] = useState(false);
+  const [scannedData, setScannedData] = useState('');
 
   useEffect(() => {
     adornicaServ.getListDiamond()
@@ -67,6 +70,18 @@ export default function DiamondPage() {
     setSearchTerm(e.target.value);
   };
 
+  const handleScan = (data) => {
+    if (data) {
+      setScannedData(data);
+      setSearchTerm(data); // Set search term to scanned data
+      setIsQRModalVisible(false); // Close QR modal after scan
+    }
+  };
+
+  const handleError = (err) => {
+    console.error(err);
+  };
+
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
@@ -84,6 +99,7 @@ export default function DiamondPage() {
     <div className='home-diamond-page'>
       <div className='home-diamond-filter'>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+        <button onClick={() => setIsQRModalVisible(true)} className="home-diamond-scan-button">Scan Code</button>
         </div>
   
         <div className='home-diamond-search-input-diamond'>
@@ -163,6 +179,19 @@ export default function DiamondPage() {
         className="custom-modal"
       >
         <div>{modalMessage}</div>
+      </Modal>
+      <Modal
+        visible={isQRModalVisible}
+        footer={null}
+        onCancel={() => setIsQRModalVisible(false)}
+        className="custom-modal"
+      >
+        <QrScanner
+          delay={300}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: '100%' }}
+        />
       </Modal>
     </div>
   );
