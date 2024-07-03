@@ -1,540 +1,198 @@
 .customer-container {
-    max-height: 70vh;
-    overflow-y: auto;
-    margin: 10px auto;
-    font-family: Arial, sans-serif;
-    max-width: 1000px;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  max-height: 70vh;
+  overflow-y: auto;
+  margin: 30px auto;
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .customer-header {
-    background-color: #E46A25;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 8px 8px 0 0;
+  background-color: #E46A25;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+
 }
 
 .customer-searchBar {
-    width: 50%;
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
 }
 
 .customer-tableContainer {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .customer-table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customer-th, .customer-td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
 }
 
 .customer-th {
-    border: 1px solid #ddd;
-    padding: 6px;
-    text-align: left;
-    background-color: #f2f2f2;
-    font-size: 14px;
-}
-
-.customer-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
+  background-color: #f2f2f2;
 }
 
 .customer-rowEven {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 .customer-rowOdd {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .customer-paginationContainer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .customer-pagination {
-    display: flex;
-    list-style: none;
-    gap: 5px;
+  display: flex;
+  list-style: none;
+  gap: 5px;
 }
 
 .customer-page-item {
-    display: inline-block;
-    padding: 10px;
-    cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .customer-page-link {
-    text-decoration: none;
-    color: #007bff;
+  text-decoration: none;
+  color: #007bff;
 }
 
 .customer-active {
-    font-weight: bold;
-    border-bottom: 3px solid #007bff;
+  font-weight: bold;
+  border-bottom: 3px solid #007bff;
 }
 
 .customer-disabled {
-    cursor: not-allowed;
-    color: #ccc;
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+.customer-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  width: 600px;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.customer-modal-content {
+  position: relative;
+}
+
+.customer-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #aaa;
+}
+
+.customer-modal-close:hover {
+  color: #000;
+}
+
+.customer-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 @media only screen and (max-width: 1024px) {
-    .customer-header {
-        font-size: 20px;
-        padding: 7px;
-    }
-    .customer-th {
-        font-size: 14px;
-        padding: 10px;
-    }
-    .customer-td {
-        font-size: 14px;
-        padding: 10px;
-    }
+  .customer-header {
+      font-size: 20px;
+      padding: 7px;
+  }
 
-    /* Responsive table styles */
-    .customer-table thead {
-        display: none;
-    }
+  .customer-th, .customer-td {
+      font-size: 14px;
+      padding: 10px;
+  }
 
-    .customer-table,
-    .customer-table tbody,
-    .customer-table tr,
-    .customer-table td {
-        display: block;
-        width: 100%;
-        font-size: 14px;
-    }
+  /* Responsive table styles */
+  .customer-table thead {
+      display: none;
+  }
 
-    .customer-table tr {
-        margin-bottom: 20px;
-    }
+  .customer-table,
+  .customer-table tbody,
+  .customer-table tr,
+  .customer-table td {
+      display: block;
+      width: 100%;
+      font-size: 14px;
+  }
 
-    .customer-table td {
-        text-align: right;
-        padding-left: 50%;
-        position: relative;
-    }
+  .customer-table tr {
+      margin-bottom: 20px;
+  }
 
-    .customer-table td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 15px;
-        width: calc(50% - 30px);
-        padding-right: 10px;
-        text-align: left;
-        font-weight: bold;
-    }
-    .customer-paginationContainer {
-        display: flex;
-        justify-content: center;
-        margin-top:10px;
-    }
-    
+  .customer-table td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+  }
+
+  .customer-table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 15px;
+      width: calc(50% - 30px);
+      padding-right: 10px;
+      text-align: left;
+      font-weight: bold;
+  }
+
+  .customer-paginationContainer {
+      justify-content: center;
+      margin-top: 10px;
+      display: flex;
+  }
 }
 
 @media only screen and (max-width: 480px) {
-    .customer-header {
-        font-size: 18px;
-        padding: 6px;
-    }
-    .customer-th {
-        font-size: 12px;
-        padding: 8px;
-    }
-    .customer-td {
-        font-size: 12px;
-        padding: 8px;
-    }
+  .customer-header {
+      font-size: 18px;
+      padding: 6px;
+  }
+
+  .customer-th, .customer-td {
+      font-size: 12px;
+      padding: 8px;
+  }
 }
-
-
-/* Customer.css */
-.customer-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .customer-header {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .customer-searchBar {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 16px;
-  }
-  
-  .customer-tableContainer {
-    overflow-x: auto;
-  }
-  
-  .customer-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .customer-th, .customer-td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .customer-th {
-    background-color: #f2f2f2;
-  }
-  
-  .customer-rowEven {
-    background-color: #f9f9f9;
-  }
-  
-  .customer-rowOdd {
-    background-color: #ffffff;
-  }
-  
-  .customer-paginationContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .customer-pagination {
-    display: inline-block;
-    padding-left: 0;
-    margin: 20px 0;
-  }
-  
-  .customer-pagination .page-item {
-    display: inline;
-    margin-right: 5px;
-  }
-  
-  .customer-pagination .page-link {
-    cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .customer-pagination .page-link:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .customer-pagination .active .page-link {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  .customer-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    max-width: 80%;
-    width: 600px;
-    max-height: 80%;
-    overflow-y: auto;
-  }
-  
-  .customer-modal-content {
-    position: relative;
-  }
-  
-  .customer-modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #aaa;
-  }
-  
-  .customer-modal-close:hover {
-    color: #000;
-  }
-  
-  .customer-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-  }
-/* Customer.css */
-.customer-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .customer-header {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .customer-searchBar {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 16px;
-  }
-  
-  .customer-tableContainer {
-    overflow-x: auto;
-  }
-  
-  .customer-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .customer-th, .customer-td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .customer-th {
-    background-color: #f2f2f2;
-  }
-  
-  .customer-rowEven {
-    background-color: #f9f9f9;
-  }
-  
-  .customer-rowOdd {
-    background-color: #ffffff;
-  }
-  
-  .customer-paginationContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .customer-pagination {
-    display: inline-block;
-    padding-left: 0;
-    margin: 20px 0;
-  }
-  
-  .customer-pagination .page-item {
-    display: inline;
-    margin-right: 5px;
-  }
-  
-  .customer-pagination .page-link {
-    cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .customer-pagination .page-link:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .customer-pagination .active .page-link {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  .customer-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    max-width: 80%;
-    width: 600px;
-    max-height: 80%;
-    overflow-y: auto;
-  }
-  
-  .customer-modal-content {
-    position: relative;
-  }
-  
-  .customer-modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #aaa;
-  }
-  
-  .customer-modal-close:hover {
-    color: #000;
-  }
-  
-  .customer-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-  }
-/* Customer.css */
-.customer-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .customer-header {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .customer-searchBar {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 16px;
-  }
-  
-  .customer-tableContainer {
-    overflow-x: auto;
-  }
-  
-  .customer-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .customer-th, .customer-td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .customer-th {
-    background-color: #f2f2f2;
-  }
-  
-  .customer-rowEven {
-    background-color: #f9f9f9;
-  }
-  
-  .customer-rowOdd {
-    background-color: #ffffff;
-  }
-  
-  .customer-paginationContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .customer-pagination {
-    display: inline-block;
-    padding-left: 0;
-    margin: 20px 0;
-  }
-  
-  .customer-pagination .page-item {
-    display: inline;
-    margin-right: 5px;
-  }
-  
-  .customer-pagination .page-link {
-    cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .customer-pagination .page-link:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .customer-pagination .active .page-link {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  .customer-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    max-width: 80%;
-    width: 600px;
-    max-height: 80%;
-    overflow-y: auto;
-  }
-  
-  .customer-modal-content {
-    position: relative;
-  }
-  
-  .customer-modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #aaa;
-  }
-  
-  .customer-modal-close:hover {
-    color: #000;
-  }
-  
-  .customer-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-  }
-      
