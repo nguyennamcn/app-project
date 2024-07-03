@@ -1,8 +1,9 @@
-#header{
+#header {
     height: 10vh;
     background-color: black;
     color: white;
 }
+
 .header__login {
     display: flex;
     align-items: center;
@@ -10,14 +11,18 @@
 
 .header__login__left {
     margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .header__login__right {
     display: flex;
     align-items: center;
-    gap: 15px; 
+    gap: 15px;
 }
-.userName{
+
+.userName {
     background-color: white;
     color: black;
     height: 35px;
@@ -27,25 +32,30 @@
     font-size: 20px;
 }
 
-a:hover{
+a:hover {
     color: rgb(133, 123, 123);
     transition: 0.4s all;
 }
 
+.hidden-links {
+    display: flex;
+    gap: 35px;
+}
 
 @media (max-width: 1024px) {
-    #header {
-        height: auto;
-        padding: 8px 16px;
+    .hidden-links {
+        display: none;
     }
 
-    .header__login__right a {
-        font-size: 10px;
+    .header__login__right button {
+        width: 100px;
+        height: 30px;
+        font-size: 14px;
     }
-
-    .header__login__right svg {
-        width: 20px;
-        height: 20px;
+}
+@media (max-width: 768px) {
+    .hidden-links {
+        display: none;
     }
 
     .header__login__right button {
@@ -60,15 +70,6 @@ a:hover{
     #header {
         height: auto;
         padding: 10px 10px;
-    }
-
-    .header__login__right a {
-        font-size: 10px;
-    }
-
-    .header__login__right svg {
-        width: 20px;
-        height: 20px;
     }
 
     .header__login__right button {
