@@ -155,8 +155,22 @@ function AddDiamond() {
               </div>
             </div>
             <div className="add-diamond-form-footer">
-              <NavLink to="/ManageDiamond" className="add-diamond-back-button">BACK</NavLink>
-              <button className="add-diamond-add-button" type="submit">ADD DIAMOND</button>
+              <NavLink to="/ManageDiamond" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
+              <button style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }} type="submit">ADD DIAMOND</button>
             </div>
           </form>
         </div>

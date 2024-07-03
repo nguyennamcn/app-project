@@ -95,8 +95,22 @@ function AddGold() {
               </div>
             </div>
             <div className="form-footer">
-              <NavLink to="/ManageGold" className="back-button">BACK</NavLink>
-              <button className="add-gold-button" type="submit">ADD GOLD</button>
+              <NavLink to="/ManageGold" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
+              <button style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }} type="submit">ADD GOLD</button>
             </div>
           </form>
         </div>

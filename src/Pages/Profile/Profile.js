@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
-import { Input, Button, Select, DatePicker, Modal, notification } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Input, Button, DatePicker, Modal, notification } from 'antd';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import './Profile.css';
-import { useSelector } from 'react-redux';
 
 export default function EditEmployee() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
 
   const [profile, setProfile] = useState({});
-  const [fileAvatar, setFileAvatar] = useState();
+  const [fileAvatar, setFileAvatar] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAvatarVisible, setIsAvatarVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,9 +26,14 @@ export default function EditEmployee() {
   }, [userInfo.id]);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'phone' && (!/^\d*$/.test(value) || value.length > 10)) {
+      notification.error({ message: 'Phone number must be digits only and max 10 digits.' });
+      return;
+    }
     setProfile({
       ...profile,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -43,13 +47,6 @@ export default function EditEmployee() {
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleDateChange = (date, dateString) => {
-    setProfile({
-      ...profile,
-      birthday: dateString,
-    });
   };
 
   const handleSubmit = () => {
@@ -66,31 +63,29 @@ export default function EditEmployee() {
       roleUser: profile.roleUser
     };
 
-    adornicaServ.postImg(userInfo.id, fileAvatar)
+    const updateAvatar = fileAvatar ? adornicaServ.postImg(userInfo.id, fileAvatar)
       .then((res) => {
-        console.log('Profile updated:', data);
         notification.success({ message: 'Avatar updated successfully!' });
       })
       .catch((err) => {
         console.log(err);
-        //notification.error({ message: 'Error updating profile. Please try again.' });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+        notification.error({ message: 'Error updating avatar. Please try again.' });
+      }) : Promise.resolve();
 
-      return adornicaServ.postUserUpdate(userInfo.id, data)
-                .then((res) => {
-                  setProfile(data);
-                  notification.success({ message: 'Profile updated successfully!' });
-                })
-                .catch((err) => {
-                  console.log(err);
-                  notification.error({ message: 'Error updating profile. Please try again.' });
-                })
-                .finally(() => {
-                  setLoading(false);
-                });     
+    updateAvatar.finally(() => {
+      adornicaServ.postUserUpdate(userInfo.id, data)
+        .then((res) => {
+          setProfile(data);
+          notification.success({ message: 'Profile updated successfully!' });
+        })
+        .catch((err) => {
+          console.log(err);
+          notification.error({ message: 'Error updating profile. Please try again.' });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
   };
 
   const showModal = () => {
@@ -99,7 +94,7 @@ export default function EditEmployee() {
 
   const showAvatar = () => {
     setIsAvatarVisible(true);
-  };  
+  };
 
   return (
     <div className="profile-container">
@@ -116,16 +111,16 @@ export default function EditEmployee() {
             </label>
           </div>
           <div className="profile-info">
-            <Input className="input-field" placeholder="Full Name" name="name" value={profile.name} onChange={handleChange} />
+            <Input className="input-field" placeholder="Full Name" name="name" value={profile.name} disabled />
             <Input className="input-field" placeholder="Phone number" name="phone" value={profile.phone} onChange={handleChange} />
             <Input className="input-field" placeholder="Email" name="email" value={profile.email} onChange={handleChange} />
-            <Input className="input-field" placeholder="Gender" name="gender" value={profile.gender} onChange={handleChange} />
+            <Input className="input-field" placeholder="Gender" name="gender" value={profile.gender} disabled />
             <Input className="input-field" placeholder="Address" name="address" value={profile.address} onChange={handleChange} />
             <DatePicker
               className="input-field"
               placeholder="Birthday"
               value={profile.birthday ? moment(profile.birthday) : null}
-              onChange={handleDateChange}
+              disabled
               format="YYYY-MM-DD"
               style={{ width: '100%' }}
             />

@@ -15,7 +15,7 @@
 
 
 .add-employee-list-button {
-  background-color: black;
+  background-color: rgba(23, 165, 42, 0.991);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -48,7 +48,7 @@
 }
 
 .employee-list-view-button {
-  background-color: green;
+  background-color: rgba(23, 165, 42, 0.991);
   color: white;
   padding: 5px 10px;
   border: none;

@@ -242,8 +242,22 @@ function AddJewelry() {
             </div>
 
             <div className="add-gem-form-footer">
-              <NavLink to="/ManageJewelry" className="add-gem-back-button">BACK</NavLink>
-              <button className="add-gem-add-button" type="submit">ADD JEWELRY</button>
+              <NavLink to="/ManageJewelry" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
+              <button style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }} type="submit">ADD JEWELRY</button>
             </div>
           </form>
         </div>

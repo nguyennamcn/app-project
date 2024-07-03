@@ -96,6 +96,7 @@ export default function ListOrderPage() {
             title: 'Price (VND)',
             dataIndex: 'price',
             key: 'price',
+            render: (text) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text)
         },
     ];
 
@@ -114,7 +115,7 @@ export default function ListOrderPage() {
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 10px 0', }}>Order code: {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
             </div>
-            <div className="container" style={{boxShadow:'rgba(0, 0, 0, 0.24) 2px 2px', borderRadius:'10px'}}>
+            <div className="detailOrderSended">
                 <div className="row justify-content-md-center" style={{backgroundColor:'white', padding:'6px', borderRadius:'10px',}}>
 
                     <div className='order__info col-sm-5'
@@ -144,23 +145,35 @@ export default function ListOrderPage() {
                         <div className="row" style={{position: 'absolute', bottom:'16px'}}>
                             <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item:<span style={{ marginLeft: '4%' }}>{products.length}</span></h1></div>
                             <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount:<span style={{ marginLeft: '4%' }}>{discount}%</span></h1></div>
-                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
-                                <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{(totalPrice).toFixed(2)} VND</span>
-                                <span style={{ marginLeft: '4%', color: 'orange' }}>{(totalPrice - (totalPrice * discount / 100)).toFixed(2)} VND </span></h1></div>
+                            {discount > 0 && (
+                                <div className="col-sm-12">
+                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
+                                        <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)}</span>
+                                        <span style={{ marginLeft: '4%', color: 'orange' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice - (totalPrice * discount / 100))}</span>
+                                    </h1>
+                                </div>
+                            )}
+                            {discount === 0 && (
+                                <div className="col-sm-12">
+                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
+                                        <span style={{ marginLeft: '4%', color: 'orange' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)}</span>
+                                    </h1>
+                                </div>
+                            )}
                         </div>
                     </div>
 
                     <div className="col-sm-12 flex justify-center mt-6">
                         <NavLink to={"/homePage"}>
                             <Button
-                                style={{ padding: '0 56px 0 56px', marginRight: '30px' }}
+                                style={{ padding: '0 56px 0 56px', marginRight: '30px',marginBottom:'20px' }}
                                 size="large"
                                 danger
                             >Back</Button>
                         </NavLink>
 
                         <Button
-                            style={{ padding: '0 56px 0 56px', marginLeft: '30px' }}
+                            style={{ padding: '0 56px 0 56px', marginLeft: '30px' ,marginBottom:'20px'}}
                             size="large"
                             type='primary'
                             onClick={() => handleSubmit(orderKey)}

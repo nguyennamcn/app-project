@@ -177,8 +177,8 @@ const PurchaseDetailHistory = () => {
       .catch((error) => console.error('Error fetching PDF:', error));
   };
 
-  const calculateTotalPrice = () => {
-    return products.reduce((total, product) => total + product.price, 0).toFixed(2);
+  const formatPrice = (price) => {
+    return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'N/A';
   };
 
   const handleFinishClick = () => {
@@ -256,13 +256,11 @@ const PurchaseDetailHistory = () => {
           onChange={handleDetailChange}
         >
           <option value="CASH">Cash</option>
-
         </select>
       </div>
       <div>
-        <h1>Order Code : {sp?.orderCode}</h1>
-        {/* <h1>Order ID : {sp?.orderId}</h1> */}
-        <h1>Total Amount : {sp?.totalAmount}</h1>
+        <h1>Order Code: {sp?.orderCode}</h1>
+        <h1>Total Amount: {formatPrice(sp?.totalAmount)}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>

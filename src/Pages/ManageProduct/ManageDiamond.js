@@ -119,7 +119,14 @@ export default function ManageDiamond() {
     <div className="diamond-container">
       <header className="diamond-header">
         <h1 className="diamond-title">DIAMOND INVENTORY</h1>
-        <NavLink to="/add-diamond" className="addButton">ADD DIAMOND</NavLink>
+        <NavLink to="/add-diamond" style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>ADD DIAMOND</NavLink>
       </header>
       <table className="diamond-table">
         <thead>

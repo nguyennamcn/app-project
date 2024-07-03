@@ -71,6 +71,10 @@ export default function DetailPage() {
         }
     };
 
+    const formatPrice = (price) => {
+        return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Undefined';
+    };
+
     return (
         <div className="detail-page">
             <div className="main-section">
@@ -139,7 +143,7 @@ export default function DetailPage() {
                     </div>
                     {   product.totalPrice < 1 ? 
                         <p className="product-price">The product is: <span className="price-amount">Undefined</span></p> :
-                        <p className="product-price">Price of the product: <span className="price-amount">{product.totalPrice} VND</span></p>
+                        <p className="product-price">Price of the product: <span className="price-amount">{formatPrice(product.totalPrice)}</span></p>
                     }
                    
                     <div className="product-description">

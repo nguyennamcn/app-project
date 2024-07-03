@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import Modal from 'react-modal';
+import { notification, DatePicker } from 'antd';
+import moment from 'moment';
 import './Customer.css';
-import { notification } from 'antd';
 
 Modal.setAppElement('#root'); // Đặt app element cho modal
 
@@ -13,10 +14,9 @@ export default function CustomerDetails() {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [editName, setEditName] = useState('');
   const [editPhone, setEditPhone] = useState('');
   const [editAddress, setEditAddress] = useState('');
-  const [editDateOfBirth, setEditDateOfBirth] = useState('');
+  const [editDateOfBirth, setEditDateOfBirth] = useState(null); // Change to null
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -61,54 +61,57 @@ export default function CustomerDetails() {
   const openCustomerModal = (customerId) => {
     const selected = customerDetails.find(detail => detail.customerId === customerId);
     setSelectedCustomer(selected);
-    setEditName(selected.name);
     setEditPhone(selected.phone);
     setEditAddress(selected.address);
-    setEditDateOfBirth(selected.dateOfBirth);
+    setEditDateOfBirth(moment(selected.dateOfBirth));
     setModalIsOpen(true);
   };
 
   const closeModal = () => {
     setSelectedCustomer(null);
-    setEditName('');
     setEditPhone('');
     setEditAddress('');
-    setEditDateOfBirth('');
+    setEditDateOfBirth(null);
     setModalIsOpen(false);
   };
 
   const updateCustomer = () => {
+    const dateOfBirth = editDateOfBirth ? moment(editDateOfBirth) : null;
     const newData = {
-      customerName: editName,
       customerPhone: editPhone,
       address: editAddress,
-      dateOfBirth: editDateOfBirth
+      dateOfBirth: dateOfBirth ? dateOfBirth.format('YYYY-MM-DD') : null,
     };
 
     adornicaServ.updateCustomer(selectedCustomer.customerId, newData)
       .then((res) => {
         console.log(`Updated customer with id ${selectedCustomer.customerId}`, res.data);
-        // Update customerDetails state or perform any necessary actions after update
-        // For example:
-        // setCustomerDetails(prevDetails => {
-        //   return prevDetails.map(detail => detail.customerId === selectedCustomer.customerId ? { ...detail, ...newData } : detail);
-        // });
-        notification.success({message: "Update successfully !"});
-        closeModal(); // Close modal after successful update if desired
+        setCustomerDetails(prevDetails => {
+          return prevDetails.map(detail => detail.customerId === selectedCustomer.customerId ? { ...detail, ...newData } : detail);
+        });
+        notification.success({ message: "Update successfully !" });
+        closeModal();
       })
       .catch((err) => {
         console.error(`Error updating customer with id ${selectedCustomer.customerId}`, err);
-        // Handle error scenarios
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
         notification.error({ message: errorMessage });
-        console.error(`Error updating customer with id ${selectedCustomer.customerId}`, err);
       });
+  };
+
+  const handlePhoneChange = (e) => {
+    const { value } = e.target;
+    if (/^\d*$/.test(value) && value.length <= 10) {
+      setEditPhone(value);
+    } else {
+      notification.error({ message: 'Phone number must be digits only and max 10 digits.' });
+    }
   };
 
   return (
     <div className="customer-container">
       <h2 className="customer-header">CUSTOMER INFORMATION</h2>
-      <input 
+      <input
         type="text"
         placeholder="Search by Name or Phone"
         value={searchTerm}
@@ -132,8 +135,8 @@ export default function CustomerDetails() {
             {currentPageData.map((detail, index) => (
               <tr key={index} className={index % 2 === 0 ? 'customer-rowEven' : 'customer-rowOdd'}>
                 <td className="customer-td" data-label="ID">{detail.customerId}</td>
-                <td 
-                  className="customer-td" 
+                <td
+                  className="customer-td"
                   data-label="Name"
                   onClick={() => openCustomerModal(detail.customerId)}
                   style={{ cursor: 'pointer', textDecoration: 'underline' }}
@@ -172,55 +175,49 @@ export default function CustomerDetails() {
           disabledClassName={'disabled'}
         />
       </div>
-        <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            contentLabel="Customer Modal"
-            className="customer-modal"
-            overlayClassName="customer-modal-overlay"
-          >
-            <div className="customer-modal-content">
-              <span className="customer-modal-close" onClick={closeModal}>&times;</span>
-              <h2>Customer Details</h2>
-              <p><strong>ID:</strong> {selectedCustomer?.customerId}</p>
-              <div className="customer-edit-form">
-                <label>
-                  <strong>Name:</strong>
-                  <input
-                    type="text"
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                  />
-                </label>
-                <label>
-                  <strong>Phone:</strong>
-                  <input
-                    type="text"
-                    value={editPhone}
-                    onChange={(e) => setEditPhone(e.target.value)}
-                  />
-                </label>
-                <label>
-                  <strong>Address:</strong>
-                  <input
-                    type="text"
-                    value={editAddress}
-                    onChange={(e) => setEditAddress(e.target.value)}
-                  />
-                </label>
-                <label>
-                  <strong>Birthday:</strong>
-                  <input
-                    type="text"
-                    value={editDateOfBirth}
-                    onChange={(e) => setEditDateOfBirth(e.target.value)}
-                  />
-                </label>
-              </div>
-              <button onClick={updateCustomer}>Update</button>
-            </div>
-    </Modal>
-
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Customer Modal"
+        className="customer-modal"
+        overlayClassName="customer-modal-overlay"
+      >
+        <div className="customer-modal-content">
+          <span className="customer-modal-close" onClick={closeModal}>&times;</span>
+          <h2>Customer Details</h2>
+          <p><strong>ID:</strong> {selectedCustomer?.customerId}</p>
+          <div className="customer-edit-form">
+            <label>
+              <strong>Phone:</strong>
+              <input
+                type="text"
+                value={editPhone}
+                onChange={handlePhoneChange}
+              />
+            </label>
+            <label>
+              <strong>Address:</strong>
+              <input
+                type="text"
+                value={editAddress}
+                onChange={(e) => setEditAddress(e.target.value)}
+              />
+            </label>
+            <label>
+              <strong>Birthday:</strong>
+              <DatePicker
+                value={editDateOfBirth ? moment(editDateOfBirth, 'DD-MM-YYY') : null}
+                onChange={(date) => setEditDateOfBirth(date ? date : null)}
+                format="DD-MM-YYYY"
+                className="input-field"
+                style={{ width: '100%' }}
+                inputReadOnly={true} // Chỉ cho phép chọn từ picker, không cho nhập chữ
+              />
+            </label>
+          </div>
+          <button onClick={updateCustomer}>Update</button>
+        </div>
+      </Modal>
     </div>
   );
 }

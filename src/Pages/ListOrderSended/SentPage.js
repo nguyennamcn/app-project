@@ -1,82 +1,10 @@
-import { Table, Button, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-const columns = (handleView, handleDelete) => [
-    {
-        title: 'ID',
-        dataIndex: 'orderId',
-        key: 'orderId',
-    },
-    {
-        title: 'Order code',
-        dataIndex: 'orderCode',
-        key: 'orderCode',
-    },
-    {
-        title: 'Phone',
-        dataIndex: 'phone',
-        key: 'phone',
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-    },    
-    {
-        title: 'Delivery status',
-        dataIndex: 'deliveryStatus',
-        key: 'deliveryStatus',
-    },    
-    {
-        title: 'Payment method',
-        dataIndex: 'paymentMethod',
-        key: 'paymentMethod',
-    },    
-    {
-        title: 'Total',
-        dataIndex: 'totalPrice',
-        key: 'totalPrice',
-    },
-    {
-        title: 'Discount',
-        dataIndex: 'discount',
-        key: 'discount',
-    },
-    {
-        title: 'Create at',
-        dataIndex: 'createAt',
-        key: 'createAt',
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        width: 180,
-        render: (_, record) => (
-            <div style={{ width: '50%', display: 'flex' }}>
-                <NavLink to={`/detailOrderSended/${record.orderCode}`}>
-                    <Button
-                        style={{ marginRight: '14px' }}
-                        type="primary"
-                        onClick={() => handleView(record.orderCode)}
-                    >
-                        View
-                    </Button>
-                </NavLink>
-                <Button 
-                    type="primary" 
-                    danger 
-                    onClick={() => handleDelete(record.orderCode)}
-                    disabled={record.deliveryStatus === 'SUCCESS' || record.paymentMethod !== 'NONE'}
-                >
-                    Cancel
-                </Button>
-            </div>
-        ),
-    },
-];
+import ReactPaginate from 'react-paginate';
+import { Button, Modal } from 'antd';
+import './SentPage.css';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -87,7 +15,7 @@ const formatDate = (timestamp) => {
 };
 
 const checkDiscount = (discount) => {
-    if(discount === null){
+    if (discount === null) {
         discount = "NONE";
     }
     return discount;
@@ -98,6 +26,8 @@ export default function SentPage() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 4;
 
     let userInfo = useSelector((state) => state.userReducer.userInfo);
 
@@ -156,18 +86,98 @@ export default function SentPage() {
             });
     };
 
+    const handlePageClick = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
+    const indexOfLastItem = (currentPage + 1) * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = dataSource.slice(indexOfFirstItem, indexOfLastItem);
+    const pageCount = Math.ceil(dataSource.length / itemsPerPage);
+    const formatPrice = (price) => {
+        return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Undefined';
+    };
+
     return (
-        <div style={{maxHeight:'70vh',overflowY:'auto'}}>
+        <div className="sent-page-container">
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 10px 0' }}>List order sended</h1>
-                <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
+                <h1>List order sended</h1>
+                <div className="separator"></div>
             </div>
-            <div>
-                <Table
-                    style={{ margin: '10px 60px 0 60px' }}
-                    dataSource={dataSource}
-                    columns={columns(handleView, handleDelete)}
-                    pagination={{ className: 'custom__pagination', pageSize: 4 }}
+            <div className="table-container">
+                <table className="custom-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Order code</th>
+                            <th>Phone</th>
+                            <th>Name</th>
+                            <th>Delivery status</th>
+                            <th>Payment method</th>
+                            <th>Total</th>
+                            <th>Discount</th>
+                            <th>Create at</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentItems.map(order => (
+                            <tr key={order.orderId}>
+                                <td data-label="ID">{order.orderId}</td>
+                                <td data-label="Order code">{order.orderCode}</td>
+                                <td data-label="Phone">{order.phone}</td>
+                                <td data-label="Name">{order.name}</td>
+                                <td data-label="Delivery status">{order.deliveryStatus}</td>
+                                <td data-label="Payment method">{order.paymentMethod}</td>
+                                <td data-label="Total">{formatPrice(order.totalPrice)}</td>
+                                <td data-label="Discount">{order.discount}</td>
+                                <td data-label="Create at">{order.createAt}</td>
+                                <td data-label="Action">
+                                    <div className="action-buttons">
+                                        <NavLink to={`/detailOrderSended/${order.orderCode}`}>
+                                            <Button
+                                                style={{ marginRight: '14px' }}
+                                                type="primary"
+                                                onClick={() => handleView(order.orderCode)}
+                                            >
+                                                View
+                                            </Button>
+                                        </NavLink>
+                                        <Button
+                                            type="primary"
+                                            danger
+                                            onClick={() => handleDelete(order.orderCode)}
+                                            disabled={order.deliveryStatus === 'SUCCESS' || order.paymentMethod !== 'NONE'}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="sent-pagination-container">
+                <ReactPaginate
+                    previousLabel={'Previous'}
+                    nextLabel={'Next'}
+                    breakLabel={'...'}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                    pageClassName={'page-item'}
+                    pageLinkClassName={'page-link'}
+                    previousClassName={'page-item'}
+                    previousLinkClassName={'page-link'}
+                    nextClassName={'page-item'}
+                    nextLinkClassName={'page-link'}
+                    breakClassName={'page-item'}
+                    breakLinkClassName={'page-link'}
+                    disabledClassName={'disabled'}
                 />
             </div>
             <Modal
@@ -179,20 +189,17 @@ export default function SentPage() {
             >
                 {orderCodeToDelete ? (
                     <div>
-                        <p style={{ fontSize: '20px', marginBottom: '50px' }}>{modalMessage}</p>
-                        <div style={{ textAlign: 'center' }}>
-                            <Button 
-                                onClick={() => setIsModalVisible(false)} 
-                                style={{ marginRight: '40px' }}
-                                size='large'
+                        <p>{modalMessage}</p>
+                        <div className="modal-buttons">
+                            <Button
+                                onClick={() => setIsModalVisible(false)}
                             >
                                 No
                             </Button>
-                            <Button 
-                                type="primary" 
-                                danger 
+                            <Button
+                                type="primary"
+                                danger
                                 onClick={confirmDelete}
-                                size='large'
                             >
                                 Yes
                             </Button>

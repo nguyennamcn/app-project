@@ -124,7 +124,14 @@ const JewelryInventoryPage = () => {
     <div  className="jewelry-container">
       <header className="jewelry-header">
         <h1 className="jewelry-title">JEWELRY INVENTORY</h1>
-        <NavLink to="/add-jewelry"  className="addButton">ADD PRODUCT</NavLink>
+        <NavLink to="/add-jewelry"  style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>ADD JEWELRY</NavLink>
       </header>
       <table className="jewelry-table">
         <thead>

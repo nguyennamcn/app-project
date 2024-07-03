@@ -10,7 +10,7 @@ const pageStyles = {
   container: {
     maxHeight: '70vh',
     overflowY: 'auto',
-    background: '#f0f8ff', 
+    background: '#e0f7fa', 
     padding: '20px',
     maxWidth: '1000px',
     margin: '20px auto',
@@ -26,7 +26,7 @@ const pageStyles = {
     textAlign: 'center',
     fontSize: '25px',
     fontWeight: 'bold',
-    color: '#4682b4', 
+    color: '#2e7d32', 
   },
   customerDetails: {
     display: 'flex',
@@ -34,13 +34,13 @@ const pageStyles = {
   },
   detailLabel: {
     fontSize: '12px',
-    color: '#333',
+    color: '#2e7d32',
     marginBottom: '5px',
     fontWeight: 'bold',
   },
   detailInput: {
     padding: '10px',
-    border: '2px solid #4682b4', 
+    border: '2px solid #388e3c', 
     borderRadius: '5px',
     fontSize: '12px',
     marginBottom: '5px',
@@ -51,13 +51,13 @@ const pageStyles = {
   },
   paymentSelect: {
     padding: '10px',
-    border: '2px solid #4682b4', 
+    border: '2px solid #388e3c', 
     borderRadius: '5px',
     fontSize: '12px',
   },
   productTable: {
     width: '200%',
-    border: '2px solid #4682b4', 
+    border: '2px solid #388e3c', 
     borderRadius: '5px',
     padding: '10px',
     marginTop: '21px',
@@ -70,7 +70,7 @@ const pageStyles = {
     borderBottom: '1px solid #4682b4', 
     paddingBottom: '5px',
     textAlign: 'center',
-    color: '#4682b4', 
+    color: '#2e7d32', 
     display: 'contents', 
   },
   tableRow: {
@@ -84,21 +84,23 @@ const pageStyles = {
     display: 'grid',
     gridTemplateColumns: 'repeat(6, 1fr)',
     fontWeight: 'bold',
-    borderTop: '1px solid #4682b4',
+    borderTop: '1px solid #388e3c',
     paddingTop: '5px',
     textAlign: 'center',
     marginTop: '10px',
-    color: '#4682b4',
+    color: '#2e7d32',
   },
   footerInfo: {
     gridColumn: 'span 2',
     textAlign: 'right',
     fontSize: '14px',
     marginTop: '70px',
+    color: '#2e7d32', 
   },
   totalSummary: {
     fontWeight: 'bold',
     textAlign: 'center',
+    color: '#2e7d32',
   },
   buttonWrapper: {
     gridColumn: 'span 2',
@@ -122,8 +124,16 @@ const pageStyles = {
     border: 'none',
   },
   finishButton: {
-    backgroundColor: '#4682b4', 
+    backgroundColor: '#388e3c', // Màu nền lục
     color: 'white',
+    border: 'none',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '15px',
+    transition: 'background-color 0.3s',
+    textDecoration: 'none',
+    textAlign: 'center',
   },
   backButton: {
     backgroundColor: '#cccccc',
@@ -135,7 +145,7 @@ const pageStyles = {
   },
   modal: {
     content: {
-      backgroundColor: '#4682b4', 
+      backgroundColor: '#388e3c', 
       borderRadius: '10px',
       padding: '20px',
       maxWidth: '300px',
@@ -173,6 +183,7 @@ const BillDiamond = () => {
 
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isCreated, setIsCreated] = useState(false); // Trạng thái đã tạo hóa đơn
 
   useEffect(() => {
     if (customerPhone) {
@@ -208,14 +219,18 @@ const BillDiamond = () => {
     setter(value);
   };
 
-  const totalItems = products.reduce((sum, product) => sum + 1, 0);
+  const totalItems = products.length;
+
+  const formatPrice = (price) => {
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  };
 
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     products.forEach((product) => {
       totalPrice += parseFloat(product.gemBuyPrice);
     });
-    return parseFloat(totalPrice).toFixed(2);
+    return totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
   };
 
   const handleMouseDown = (e) => {
@@ -253,6 +268,7 @@ const BillDiamond = () => {
       .postPurchaseOrderCode(purchaseData)
       .then((res) => {
         console.log('Order submitted successfully:', res.data);
+        setIsCreated(true); // Đặt trạng thái đã tạo hóa đơn thành true
       })
       .catch((err) => {
         console.error('Error submitting order:', err.response);
@@ -276,7 +292,7 @@ const BillDiamond = () => {
     // window.print();
   };
 
-  const isFinishButtonDisabled = !customerName || !customerPhone || !address;
+  const isFinishButtonDisabled = !customerName || !customerPhone || !address || isCreated;
 
   return (
     <div style={pageStyles.container}>
@@ -318,7 +334,7 @@ const BillDiamond = () => {
               <span>{product.color}</span>
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
-              <span>{product.gemBuyPrice + ' VND'}</span>
+              <span>{formatPrice(product.gemBuyPrice)}</span>
             </div>
           ))}
         </div>
@@ -333,23 +349,11 @@ const BillDiamond = () => {
           value={address}
           onChange={handleInputChange(setAddress)}
         />
-
-        {/* <label style={pageStyles.detailLabel}>Payment methods:</label>
-        <select
-          style={pageStyles.paymentSelect}
-          name="paymentMethod"
-          value={paymentMethod}
-          onChange={handleInputChange(setPaymentMethod)}
-        >
-          <option value="Cash">Cash</option>
-          <option value="Banking">Banking</option>
-          
-        </select> */}
       </div>
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()} VND </div>
+        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}</div>
       </div>
 
       <div style={pageStyles.buttonWrapper}>
@@ -358,7 +362,7 @@ const BillDiamond = () => {
         </NavLink>
 
         <button
-          style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+          style={{ ...pageStyles.button, ...pageStyles.finishButton, ...(isFinishButtonDisabled ? { backgroundColor: 'gray', cursor: 'not-allowed' } : {}) }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onClick={handleFinishClick}
