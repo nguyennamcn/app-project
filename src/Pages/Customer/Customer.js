@@ -3,6 +3,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import Modal from 'react-modal';
 import './Customer.css';
+import { notification } from 'antd';
 
 Modal.setAppElement('#root'); // Đặt app element cho modal
 
@@ -92,11 +93,15 @@ export default function CustomerDetails() {
         // setCustomerDetails(prevDetails => {
         //   return prevDetails.map(detail => detail.customerId === selectedCustomer.customerId ? { ...detail, ...newData } : detail);
         // });
+        notification.success({message: "Update successfully !"});
         closeModal(); // Close modal after successful update if desired
       })
       .catch((err) => {
         console.error(`Error updating customer with id ${selectedCustomer.customerId}`, err);
         // Handle error scenarios
+        const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.error(`Error updating customer with id ${selectedCustomer.customerId}`, err);
       });
   };
 
