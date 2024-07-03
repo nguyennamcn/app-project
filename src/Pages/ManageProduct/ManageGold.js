@@ -146,7 +146,14 @@ export default function ManageGold() {
     <div className="gold-container">
       <header className="gold-header">
         <h1 className="gold-title">GOLD</h1>
-        <NavLink to="/add-gold" className="addButton">ADD GOLD</NavLink>
+        <NavLink to="/add-gold" style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>ADD GOLD</NavLink>
       </header>
       <table className="gold-table">
         <thead>

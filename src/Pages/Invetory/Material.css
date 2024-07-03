@@ -79,28 +79,6 @@
     gap: 5px;
   }
 
-/* material.css */
-/* .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    max-width: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-} */
-
 .material-modal-content {
     display: flex;
     flex-direction: column;
@@ -145,6 +123,7 @@
     gap: 10px;
 }
 
+
 .material-modal-button {
     background-color: #007bff;
     color: white;
@@ -185,20 +164,20 @@
     transition: background-color 0.3s ease;
     margin-bottom: 10px;
 }
-.material-modal-button-update {
-    background-color: #ff0000;
+.material-modal-button-delete {
+    background-color: red;
     color: white;
     border: none;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
     transition: background-color 0.3s ease;
-    margin-bottom: 10px;
 }
+
+.material-modal-button-delete:hover {
+    background-color: darkred;
+}
+
 .material-modal-button:hover {
     background-color: #0056b3;
 }
@@ -210,4 +189,3 @@
 .material-modal-button.cancel:hover {
     background-color: #5a6268;
 }
-
