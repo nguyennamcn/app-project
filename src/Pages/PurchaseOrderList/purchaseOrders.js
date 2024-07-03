@@ -22,7 +22,7 @@ export default function PurchaseOrder() {
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState([]);
     const ordersPerPage = 4;
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
         adornicaServ.getPurchaseHistoryOrders()
@@ -42,12 +42,10 @@ export default function PurchaseOrder() {
 
                 setDataSource(orders);
                 setFilteredData(orders);
-                console.log(orders);
             })
             .catch((err) => {
                 console.log(err);
             });
-            
     }, []);
 
     const showModal = (message, orderCode = null) => {
@@ -57,14 +55,13 @@ export default function PurchaseOrder() {
     };
 
     const confirmDelete = () => {
-        
         adornicaServ.deletePurchaseOrder(orderCodeToDelete)
             .then(() => {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
                 setFilteredData(newDataSource);
                 setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Order was deleted!</h1></div>);
-                notification.success({ message: "Order was deleted !" });
+                notification.success({ message: "Order was deleted!" });
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
@@ -91,12 +88,12 @@ export default function PurchaseOrder() {
     const handleSearch = (e) => {
         const { value } = e.target;
         setSearchText(value);
-        setCurrentPage(0);
         const filtered = dataSource.filter((entry) =>
             entry.salesStaffName.toLowerCase().includes(value.toLowerCase()) ||
             entry.orderCode.toLowerCase().includes(value.toLowerCase())
         );
         setFilteredData(filtered);
+        setCurrentPage(0);
     };
 
     const handlePageClick = ({ selected }) => {
@@ -111,7 +108,6 @@ export default function PurchaseOrder() {
     const formatPrice = (price) => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
-    
 
     return (
         <div className="purchase-order-container">
@@ -150,7 +146,7 @@ export default function PurchaseOrder() {
                                 <div className="action-buttons">
                                     <NavLink to={`/payment-history/${order.orderCode}`}>
                                         <Button
-                                            style={{ marginRight: '14px',marginTop:'10px' }}
+                                            style={{ marginRight: '14px', marginTop:'0px' }}
                                             type="primary"
                                             onClick={() => handleView(order.orderCode)}
                                         >
@@ -158,7 +154,6 @@ export default function PurchaseOrder() {
                                         </Button>
                                     </NavLink>
                                     <Button
-                                        className=''
                                         style={{ marginRight: '14px' }}
                                         type="primary"
                                         danger
@@ -223,7 +218,6 @@ export default function PurchaseOrder() {
                     </div>
                 </div>
             </Modal>
-            
         </div>
     );
 }
