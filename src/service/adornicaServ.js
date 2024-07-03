@@ -252,5 +252,28 @@ export const adornicaServ = {
         console.log(id)
         return https.get(`/api/v1/products/active/${id}`);
     },
-    
+
+    getMaterial: () =>{
+        return https.get(`/api/v1/materials`);
+    },
+
+    deleteMaterial: (id) =>{
+        console.log(id);
+        return https.delete(`/api/v1/materials/${id}`);
+    },
+
+    updateMaterial: (id, data) =>{
+        console.log(id, data);
+        return https.put(`/api/v1/materials/${id}`, data);
+    },
+
+    createMaterial: (newItemData) =>{
+        console.log(newItemData);
+        return https.post(`/api/v1/materials`, newItemData);
+    },
+
+    updateCustomer: (id, newItemData) =>{
+        console.log(id, newItemData);
+        return https.post(`/api/v1/customers/${id}`, newItemData);
+    }
 }

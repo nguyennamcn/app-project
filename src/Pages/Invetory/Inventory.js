@@ -1,5 +1,6 @@
 import React from 'react';
 import './Inventory.css';
+import { NavLink } from 'react-router-dom';
 
 const Inventory = () => {
     const items = [
@@ -26,6 +27,13 @@ const Inventory = () => {
 
     return (
         <div className="inventory-container">
+            <NavLink to={'/inventory/material'}>
+                <h2 style={{
+                    textAlign:'right',
+                    position: 'absolute',
+                    right:'5%'
+                }}>Material</h2>
+            </NavLink>
             <h2 className="inventory-title">Inventory</h2>
             <div className="inventory-table-container">
                 <table className="inventory-table">

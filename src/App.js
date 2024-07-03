@@ -52,6 +52,7 @@ import UpGold from './Pages/UpdateProduct/UpGold';
 import UpDiamonds from './Pages/UpdateProduct/UpDiamonds';
 import UpJewelry from './Pages/UpdateProduct/UpJewelry';
 import purchaseDetailHistory from './Pages/PurchaseOrderList/purchaseDetailHistory';
+import Material from './Pages/Invetory/Material';
 
 function App() {
   const dispatch = useDispatch();
@@ -94,6 +95,7 @@ function App() {
               <Route path="/buyDetail" element={<Layout Component={BuyDetail} />} />
               <Route path="/cashierUpdateOrder/:orderKey" element={<Layout Component={CashierUpdateOrder} />} />
               <Route path="/inventory" element={<Layout Component={Inventory} />} />
+              <Route path="/inventory/material" element={<Layout Component={Material} />} />
               <Route path="/manageGold" element={<Layout Component={ManageGold} />} />
               <Route path="/manageDiamond" element={<Layout Component={ManageDiamond} />} />
               <Route path="/manageJewelry" element={<Layout Component={ManageJewelry} />} />
