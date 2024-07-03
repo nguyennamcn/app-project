@@ -108,7 +108,64 @@
 
 .customer-modal-content {
   position: relative;
+  padding: 20px;
 }
+
+.customer-modal-content h2 {
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.customer-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.customer-edit-form label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.customer-edit-form label input {
+  flex: 1;
+  margin-left: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.customer-modal button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.customer-modal button:hover {
+  background-color: #218838;
+}
+
+.customer-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #aaa;
+}
+
+.customer-modal-close:hover {
+  color: #000;
+}
+
 
 .customer-modal-close {
   position: absolute;

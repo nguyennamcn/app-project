@@ -27,11 +27,11 @@ const Inventory = () => {
 
     return (
         <div className="inventory-container">
-            <NavLink to={'/inventory/material'}>
+            <NavLink to={'/inventory/material'} className="inventory-material">
                 <h2 style={{
-                    textAlign:'right',
+                    textAlign: 'right',
                     position: 'absolute',
-                    right:'5%'
+                    right: '5%'
                 }}>Material</h2>
             </NavLink>
             <h2 className="inventory-title">Inventory</h2>
