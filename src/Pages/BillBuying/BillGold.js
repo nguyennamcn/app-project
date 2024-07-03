@@ -173,6 +173,7 @@ const BillGold = () => {
   const [address, setAddress] = useState('');
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
 
   useEffect(() => {
     if (customerPhone) {
@@ -236,6 +237,8 @@ const BillGold = () => {
   };
 
   const handleFinishClick = () => {
+    setIsCreatingOrder(true);
+
     const purchaseData = {
       purchaseOrderCode: generateRandomOrderCode(),
       staffId: userInfo.id,
@@ -273,7 +276,7 @@ const BillGold = () => {
     // window.print();
   };
 
-  const isFinishButtonDisabled = !customerName || !customerPhone || !address;
+  const isFinishButtonDisabled = !customerName || !customerPhone || !address || isCreatingOrder;
 
   return (
     <div style={pageStyles.container}>
@@ -316,7 +319,7 @@ const BillGold = () => {
       </div>
 
       <div style={pageStyles.customerDetails}>
-      <label style={pageStyles.detailLabel}>Address:</label>
+        <label style={pageStyles.detailLabel}>Address:</label>
         <input
           type="text"
           style={pageStyles.detailInput}

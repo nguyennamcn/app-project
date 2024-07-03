@@ -278,6 +278,8 @@ const BillJewelry = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [phoneError, setPhoneError] = useState('');
 
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+
   useEffect(() => {
     if (customerDetails.phone) {
       adornicaServ.getPhoneCustomer(customerDetails.phone)
@@ -348,10 +350,11 @@ const BillJewelry = () => {
   };
 
   const handleFinishClick = () => {
-    // Prepare data to send
+    setIsCreatingOrder(true);
+
     const purchaseData = {
-      purchaseOrderCode: generateRandomOrderCode(), // You need to provide a purchase order code
-      staffId: userInfo.id, // Set to the staff ID you want to associate with the purchase
+      purchaseOrderCode: generateRandomOrderCode(), 
+      staffId: userInfo.id, 
       customerName: customerDetails.name,
       phone: customerDetails.phone,
       address: customerDetails.address,
@@ -360,10 +363,10 @@ const BillJewelry = () => {
         name: product.goldType,
         materialId: product.materialId ?product.materialId  : '',
         weight: parseFloat(product.weight),
-        color: product.color, // You need to provide the color
-        clarity: product.clarity, // You need to provide the clarity
-        cut: product.cut, // You need to provide the cut
-        carat: parseFloat(product.carat), // You need to provide the carat
+        color: product.color, 
+        clarity: product.clarity, 
+        cut: product.cut, 
+        carat: parseFloat(product.carat), 
         price: parseFloat(product.total),
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
@@ -379,11 +382,8 @@ const BillJewelry = () => {
         console.error('Error submitting order:', err.response);
         alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
       });
-
-    // Send the purchase data to the server or do whatever you need to do with it
     console.log('Purchase data:', purchaseData);
 
-    // Show modal
     setModalIsOpen(true);
   };
 
@@ -392,18 +392,15 @@ const BillJewelry = () => {
   };
 
   useEffect(() => {
-    // Retrieve data from local storage
     const savedProducts = JSON.parse(localStorage.getItem('jewelryData')) || [];
     setProducts(savedProducts);
     console.log('Product from cart',savedProducts);
   }, []);
 
-  const handlePrintClick = () => {
-    // window.print();
-  };
+
 
   const isFinishButtonDisabled =
-    !customerDetails.name || !customerDetails.phone || !customerDetails.address;
+    !customerDetails.name || !customerDetails.phone || !customerDetails.address || isCreatingOrder;
 
   return (
     <div style={pageStyles.container}>

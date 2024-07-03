@@ -116,7 +116,7 @@ export default function PurchaseOrderByStaffId() {
     return (
         <div className="purchase-order-container">
             <h1 className="purchase-order-title">Purchase List</h1>
-            <div className="search-add-container">
+            {/* <div className="search-add-container">
                 <Input
                     type="text"
                     placeholder="Search by Staff name or Order Code"
@@ -126,7 +126,7 @@ export default function PurchaseOrderByStaffId() {
                     prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
                     size="small"
                 />
-            </div>
+            </div> */}
             <table className="purchase-order-table">
                 <thead>
                     <tr>
