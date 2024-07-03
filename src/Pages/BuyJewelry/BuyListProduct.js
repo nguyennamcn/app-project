@@ -5,7 +5,7 @@ import BuyJewelry from './BuyJewelry';
 import BuyGold from '../BuyGold/BuyGold';
 import BuyDiamond from '../BuyDiamond/BuyDiamond';
 import StoreSelection from '../BuyStoreProduct/BuyStoreProduct';
-import PurchaseOrder from '../PurchaseOrderList/purchaseOrders';
+import PurchaseOrderByStaffId from '../PurchaseOrderList/purchaseOrdersByStaffId';
 
 export default function BuyListProduct({ product }) {
     const [isActive, setIsActive] = useState('Jewelry');
@@ -58,7 +58,7 @@ export default function BuyListProduct({ product }) {
                 {isActive === 'Gold' && <BuyGold />}
                 {isActive === 'Diamond' && <BuyDiamond />}
                 {isActive === 'StoreSelection' && <StoreSelection />}
-                {isActive === 'History' && <PurchaseOrder />}
+                {isActive === 'History' && <PurchaseOrderByStaffId />}
             </div>
         </div>
     );

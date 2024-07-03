@@ -33,6 +33,11 @@ export const adornicaServ = {
         return https.get(`/api/v1/orders/order/${staffID}`);
     },
 
+    getPurchaseOrderByStaffID: (staffID) => {
+        console.log(staffID)
+        return https.get(`/api/v1/purchases/staff/${staffID}`);
+    },
+
     getListOrderDetail: (orderKey) => {
         console.log(orderKey)
         return https.get(`/api/v1/orders/detail/${orderKey}`);
