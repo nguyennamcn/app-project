@@ -172,54 +172,55 @@ export default function CustomerDetails() {
           disabledClassName={'disabled'}
         />
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Customer Modal"
-        className="customer-modal"
-        overlayClassName="customer-modal-overlay"
-      >
-        <div className="customer-modal-content">
-          <span className="customer-modal-close" onClick={closeModal}>&times;</span>
-          <h2>Customer Details</h2>
-          <p><strong>ID:</strong> {selectedCustomer?.customerId}</p>
-          <div className="customer-edit-form">
-            <label>
-              <strong>Name:</strong>
-              <input
-                type="text"
-                value={editName}
-                onChange={(e) => setEditName(e.target.value)}
-              />
-            </label>
-            <label>
-              <strong>Phone:</strong>
-              <input
-                type="text"
-                value={editPhone}
-                onChange={(e) => setEditPhone(e.target.value)}
-              />
-            </label>
-            <label>
-              <strong>Address:</strong>
-              <input
-                type="text"
-                value={editAddress}
-                onChange={(e) => setEditAddress(e.target.value)}
-              />
-            </label>
-            <label>
-              <strong>Birthday:</strong>
-              <input
-                type="text"
-                value={editDateOfBirth}
-                onChange={(e) => setEditDateOfBirth(e.target.value)}
-              />
-            </label>
-          </div>
-          <button onClick={updateCustomer}>Update</button>
-        </div>
-      </Modal>
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            contentLabel="Customer Modal"
+            className="customer-modal"
+            overlayClassName="customer-modal-overlay"
+          >
+            <div className="customer-modal-content">
+              <span className="customer-modal-close" onClick={closeModal}>&times;</span>
+              <h2>Customer Details</h2>
+              <p><strong>ID:</strong> {selectedCustomer?.customerId}</p>
+              <div className="customer-edit-form">
+                <label>
+                  <strong>Name:</strong>
+                  <input
+                    type="text"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                  />
+                </label>
+                <label>
+                  <strong>Phone:</strong>
+                  <input
+                    type="text"
+                    value={editPhone}
+                    onChange={(e) => setEditPhone(e.target.value)}
+                  />
+                </label>
+                <label>
+                  <strong>Address:</strong>
+                  <input
+                    type="text"
+                    value={editAddress}
+                    onChange={(e) => setEditAddress(e.target.value)}
+                  />
+                </label>
+                <label>
+                  <strong>Birthday:</strong>
+                  <input
+                    type="text"
+                    value={editDateOfBirth}
+                    onChange={(e) => setEditDateOfBirth(e.target.value)}
+                  />
+                </label>
+              </div>
+              <button onClick={updateCustomer}>Update</button>
+            </div>
+    </Modal>
+
     </div>
   );
 }
