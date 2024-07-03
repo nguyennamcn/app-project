@@ -4,7 +4,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import Modal from 'react-modal';
 import ReactPaginate from 'react-paginate';
 import { Modal as AntdModal, notification } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 
 const Material = () => {
     const [items, setItems] = useState([]);
@@ -17,6 +17,7 @@ const Material = () => {
     const [itemToDelete, setItemToDelete] = useState(null);
     const [editName, setEditName] = useState('');
     const [newItemName, setNewItemName] = useState('');
+    const navigate = useNavigate();
 
     const itemsPerPage = 3;
 
@@ -63,6 +64,7 @@ const Material = () => {
                 setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
                 closeCreateMaterialModal();
                 notification.success({ message: "Create successfully !" });
+                navigate(0); // Reload lại trang
 
             })
             .catch((err) => {
@@ -80,6 +82,7 @@ const Material = () => {
                 setItems(newItems);
                 setPageCount(Math.ceil(newItems.length / itemsPerPage));
                 notification.success({ message: "Delete successfully !" });
+                navigate(0); // Reload lại trang
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
@@ -96,6 +99,7 @@ const Material = () => {
                 console.log(`Updated material with id: ${id}`);
                 setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, ...updatedData } : item));
                 notification.success({ message: "Update successfully !" });
+                navigate(0); // Reload lại trang
                 closeMaterialModal();
             })
             .catch((err) => {
