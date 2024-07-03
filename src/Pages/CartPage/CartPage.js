@@ -103,6 +103,7 @@ const CartPage = () => {
     const generateOrderCode = () => {
         return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
     };
+
     // Handle sending the order
     const handleSendOrder = () => {
         if(dataSource.length === 0){
@@ -164,13 +165,16 @@ const CartPage = () => {
             });
     };
 
+    const formatPrice = (price) => {
+        return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Undefined';
+    };
+
     const columns = [
         {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
         },
-
         {
             title: 'Product Code',
             dataIndex: 'productCode',
@@ -180,12 +184,13 @@ const CartPage = () => {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
+            render: (text, record) => formatPrice(record.totalPrice),
         },
         {
             title: 'Total Price',
             dataIndex: 'totalPrice',
             key: 'totalPrice',
-            render: (text, record) => <span>{record.totalPrice}</span>,
+            render: (text, record) => formatPrice(record.totalPrice),
         },
         {
             title: 'Delete',
@@ -200,8 +205,8 @@ const CartPage = () => {
     ];
 
     return (
-        <div style={{maxHeight:'70vh',overflowY:'auto'}}>
-            <Table style={{ minHeight: '230px' }} dataSource={dataSource} columns={columns} pagination={false} scroll={{ y: 170 }} />
+        <div style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+            <Table dataSource={dataSource} columns={columns} pagination={false} />
             <hr />
             <div>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order detail</h1>
@@ -212,7 +217,7 @@ const CartPage = () => {
                 }}>
                     <div style={{ marginTop: '0%' }}>
                         <p>Quantity: {totalQuantity}</p>
-                        <p>Total Price: {totalAllPrice}</p>
+                        <p>Total Price: {formatPrice(totalAllPrice)}</p>
                         <p>Discount: {discount}%</p>
                     </div>
                     <div style={{ marginTop: '0%', width: '20%' }}>

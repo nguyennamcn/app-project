@@ -50,7 +50,14 @@ const Inventory = () => {
                                 <td>{item.id}</td>
                                 <td>{item.category}</td>
                                 <td>
-                                    <button onClick={() => handleViewClick(item.category)}>View</button>
+                                    <button style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }} onClick={() => handleViewClick(item.category)}>View</button>
                                 </td>
                             </tr>
                         ))}

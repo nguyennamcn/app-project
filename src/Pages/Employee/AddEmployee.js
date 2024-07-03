@@ -12,13 +12,14 @@ const AddEmployee = () => {
     name: '',
     phone: '',
     gender: '',
-    dateOfBirth: 0,
+    dateOfBirth: null,
     address: '',
     password: '',
     confirmPassword: '',
     role: '',
   });
   const [phoneError, setPhoneError] = useState('');
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,10 +56,13 @@ const AddEmployee = () => {
       dateOfBirth: birthdayTimestamp,
     });
   };
-  
+
+  const handleDatePickerClick = () => {
+    setDatePickerOpen(true);
+  };
+
   const handleSubmit = () => {
     if (isFormValid()) {
-      console.log(form)
       adornicaServ.postNewEmployee(form)
         .then(() => {
           showModal();
@@ -76,7 +80,7 @@ const AddEmployee = () => {
       form.name.trim() !== '' &&
       form.phone.trim() !== '' &&
       form.gender.trim() !== '' &&
-      form.dateOfBirth !== 0 &&
+      form.dateOfBirth !== null &&
       form.address.trim() !== '' &&
       form.password.trim() !== '' &&
       form.confirmPassword.trim() !== '' &&
@@ -126,6 +130,9 @@ const AddEmployee = () => {
             placeholder="Date of Birth"
             onChange={handleDateChange}
             style={{ width: '100%' }}
+            open={datePickerOpen}
+            onOpenChange={(open) => setDatePickerOpen(open)}
+            onClick={handleDatePickerClick}
           />
           <Input
             className="input-field"

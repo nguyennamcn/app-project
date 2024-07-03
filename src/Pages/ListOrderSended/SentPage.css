@@ -1,0 +1,139 @@
+/* SentPage.css */
+
+.sent-page-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0 10px; /* Thêm padding cho responsiveness */
+}
+
+.title h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 10px 0;
+}
+
+.separator {
+    background-color: black;
+    width: 96%;
+    height: 1px;
+    margin-left: 2%; /* Thay đổi margin-left để đảm bảo responsive */
+}
+
+.table-container {
+    margin: 10px 0; /* Thay đổi margin cho responsive */
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th, .custom-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table th {
+    background-color: #f2f2f2;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Thay đổi justify-content cho responsive */
+}
+
+.sent-pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center; /* Thay đổi justify-content cho responsive */
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+}
+
+.modal-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.modal-buttons Button {
+    margin-right: 20px;
+}
+
+.custom-modal .ant-modal-content {
+    border-radius: 10px;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+    .action-buttons {
+        justify-content: space-around; /* Điều chỉnh justify-content cho responsive */
+    }
+
+    .custom-table thead {
+        display: none; /* Ẩn phần header của table */
+    }
+
+    .custom-table, .custom-table tbody, .custom-table tr, .custom-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .custom-table tr {
+        margin-bottom: 15px;
+    }
+
+    .custom-table td {
+        text-align: left; /* Thay đổi alignment cho responsive */
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .custom-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: calc(50% - 30px);
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .action-buttons {
+        flex-direction: column; /* Điều chỉnh flex-direction cho responsive */
+        align-items: center; /* Điều chỉnh align-items cho responsive */
+    }
+
+    .pagination {
+        justify-content: center; /* Điều chỉnh justify-content cho responsive */
+    }
+}

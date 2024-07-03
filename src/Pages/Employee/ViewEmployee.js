@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import { Modal, notification } from 'antd';
 import './ViewEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
@@ -7,6 +7,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 function ViewEmployee() {
   const [employee, setEmployee] = useState();
   const { staffId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     adornicaServ.getViewEmployee(staffId)
@@ -24,27 +25,32 @@ function ViewEmployee() {
       .then((res) => {
         console.log('Employee deleted', res);
         notification.success({ message: "Delete user successfully" });
+        navigate(0); // Reload lại trang
       })
       .catch((err) => {
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
         notification.error({ message: errorMessage });
         console.log(err);
       });
-    console.log('Employee deleted');
   };
 
   const showDeleteConfirm = () => {
+    if (!employee?.active) {
+      notification.warning({ message: "Cannot delete an offline employee" });
+      return;
+    }
+
     Modal.confirm({
-        title: 'Confirm Delete',
-        content: 'Are you sure you want to delete this employee?',
-        okText: 'Yes',
-        okType: 'danger',
-        cancelText: 'No',
-        onOk() {
-            handleDelete();
-        }
+      title: 'Confirm Delete',
+      content: 'Are you sure you want to delete this employee?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        handleDelete();
+      }
     });
-};
+  };
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
@@ -105,9 +111,7 @@ function ViewEmployee() {
           <NavLink to="/employee">
             <button className="back-button">Back</button>
           </NavLink>
-          <NavLink >
-            <button className="delete-button" onClick={showDeleteConfirm}>Delete</button>
-          </NavLink>
+          <button className="delete-button" onClick={showDeleteConfirm}>Delete</button>
         </div>
       </div>
     </div>

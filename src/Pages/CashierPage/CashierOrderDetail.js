@@ -162,6 +162,10 @@ export default function ListOrderPage() {
             .catch(error => console.error('Error fetching PDF:', error));
     };
 
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+
     const columns = [
         {
             title: 'Product Name',
@@ -177,6 +181,7 @@ export default function ListOrderPage() {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
+            render: (text) => formatPrice(text),
         },
     ];
 
@@ -191,7 +196,7 @@ export default function ListOrderPage() {
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div className="container" style={{margin:'15px 0px', width:'100%', minHeight:'400px'}}>
+            <div className="CashierOrderDetail" style={{margin:'15px 0px', width:'100%', minHeight:'400px'}}>
                 <div className="row justify-content-md-center" style={{width:'100%'}}>
                     <div className="customer__info col-sm-5" style={{
                         marginRight: '20px',
@@ -237,8 +242,14 @@ export default function ListOrderPage() {
                             </div>
                             <div className="col-sm-12">
                                 <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
-                                    <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{totalPrice.toFixed(2)} VND</span>
-                                    <span style={{ marginLeft: '4%', color: 'orange' }}>{(totalPrice - (totalPrice * discount / 100)).toFixed(2)} VND</span>
+                                    {discount !== 0 ? (
+                                        <>
+                                            <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{formatPrice(totalPrice)}</span>
+                                            <span style={{ marginLeft: '4%', color: 'orange' }}>{formatPrice(totalPrice - (totalPrice * discount / 100))}</span>
+                                        </>
+                                    ) : (
+                                        <span style={{ marginLeft: '4%', color: 'orange' }}>{formatPrice(totalPrice)}</span>
+                                    )}
                                 </h1>
                             </div>
                         </div>

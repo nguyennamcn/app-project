@@ -84,7 +84,7 @@ const pageStyles = {
     paddingBottom: '5px',
     textAlign: 'center',
     color: '#333',
-    fontSize : '15px'
+    fontSize: '15px',
   },
   tableFooter: {
     display: 'grid',
@@ -270,37 +270,37 @@ const BillJewelry = () => {
   const [customerDetails, setCustomerDetails] = useState({
     name: formData?.customerName || '',
     phone: formData?.phone || '',
-    address: formData?.address||'',
+    address: formData?.address || '',
     paymentMethod: 'Cash',
   });
 
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [phoneError, setPhoneError] = useState('');
-
-  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+  const [isCreated, setIsCreated] = useState(false); // Trạng thái đã tạo hóa đơn
 
   useEffect(() => {
     if (customerDetails.phone) {
-      adornicaServ.getPhoneCustomer(customerDetails.phone)
-        .then(response => {
+      adornicaServ
+        .getPhoneCustomer(customerDetails.phone)
+        .then((response) => {
           if (response.data) {
-            setCustomerDetails(prevDetails => ({
+            setCustomerDetails((prevDetails) => ({
               ...prevDetails,
               name: response.data.metadata.name,
               address: response.data.metadata.address,
             }));
           } else {
-            setCustomerDetails(prevDetails => ({
+            setCustomerDetails((prevDetails) => ({
               ...prevDetails,
               name: '',
               address: '',
             }));
           }
         })
-        .catch(error => {
-          console.error("Error fetching customer data:", error);
-          setCustomerDetails(prevDetails => ({
+        .catch((error) => {
+          console.error('Error fetching customer data:', error);
+          setCustomerDetails((prevDetails) => ({
             ...prevDetails,
             name: '',
             address: '',
@@ -327,14 +327,18 @@ const BillJewelry = () => {
     }));
   };
 
-  const totalItems = products.reduce((sum, product) => sum + 1, 0);
+  const totalItems = products.length;
+
+  const formatPrice = (price) => {
+    return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  };
 
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     products.forEach((product) => {
       totalPrice += product.total;
     });
-    return totalPrice.toFixed(2);
+    return totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
   };
 
   const handleMouseDown = (e) => {
@@ -350,23 +354,22 @@ const BillJewelry = () => {
   };
 
   const handleFinishClick = () => {
-    setIsCreatingOrder(true);
-
+    // Prepare data to send
     const purchaseData = {
-      purchaseOrderCode: generateRandomOrderCode(), 
-      staffId: userInfo.id, 
+      purchaseOrderCode: generateRandomOrderCode(), // You need to provide a purchase order code
+      staffId: userInfo.id, // Set to the staff ID you want to associate with the purchase
       customerName: customerDetails.name,
       phone: customerDetails.phone,
       address: customerDetails.address,
 
       list: products.map((product) => ({
         name: product.goldType,
-        materialId: product.materialId ?product.materialId  : '',
+        materialId: product.materialId ? product.materialId : '',
         weight: parseFloat(product.weight),
-        color: product.color, 
-        clarity: product.clarity, 
-        cut: product.cut, 
-        carat: parseFloat(product.carat), 
+        color: product.color, // You need to provide the color
+        clarity: product.clarity, // You need to provide the clarity
+        cut: product.cut, // You need to provide the cut
+        carat: parseFloat(product.carat), // You need to provide the carat
         price: parseFloat(product.total),
       })),
       totalPrice: parseFloat(calculateTotalPrice()),
@@ -377,13 +380,17 @@ const BillJewelry = () => {
       .postPurchaseOrderCode(purchaseData)
       .then((res) => {
         console.log('Order submitted successfully:', res.data);
+        setIsCreated(true); // Đặt trạng thái đã tạo hóa đơn thành true
       })
       .catch((err) => {
         console.error('Error submitting order:', err.response);
         alert(`Error submitting order: ${err.response?.data?.message || 'Unknown error'}`);
       });
+
+    // Send the purchase data to the server or do whatever you need to do with it
     console.log('Purchase data:', purchaseData);
 
+    // Show modal
     setModalIsOpen(true);
   };
 
@@ -392,15 +399,17 @@ const BillJewelry = () => {
   };
 
   useEffect(() => {
+    // Retrieve data from local storage
     const savedProducts = JSON.parse(localStorage.getItem('jewelryData')) || [];
     setProducts(savedProducts);
-    console.log('Product from cart',savedProducts);
+    console.log('Product from cart', savedProducts);
   }, []);
 
+  const handlePrintClick = () => {
+    // window.print();
+  };
 
-
-  const isFinishButtonDisabled =
-    !customerDetails.name || !customerDetails.phone || !customerDetails.address || isCreatingOrder;
+  const isFinishButtonDisabled = !customerDetails.name || !customerDetails.phone || !customerDetails.address || isCreated;
 
   return (
     <div style={pageStyles.container}>
@@ -426,7 +435,6 @@ const BillJewelry = () => {
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
 
-        
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
             <span>Name</span>
@@ -449,15 +457,14 @@ const BillJewelry = () => {
               <span>{product.color}</span>
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
-              <span>{product.total + ' VND'}</span>
+              <span>{formatPrice(product.total)}</span>
             </div>
           ))}
         </div>
       </div>
-      
 
       <div style={pageStyles.customerDetails}>
-      <label style={pageStyles.detailLabel}>Address:</label>
+        <label style={pageStyles.detailLabel}>Address:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -477,14 +484,11 @@ const BillJewelry = () => {
           <option value="Card">Banking</option>
         </select> */}
       </div>
-      
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()} VND</div>
+        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}</div>
       </div>
-
-      
 
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>
@@ -492,7 +496,7 @@ const BillJewelry = () => {
         </NavLink>
 
         <button
-          style={pageStyles.finishButton}
+          style={{ ...pageStyles.finishButton, ...(isFinishButtonDisabled ? { backgroundColor: 'gray', cursor: 'not-allowed' } : {}) }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onClick={handleFinishClick}
@@ -501,7 +505,6 @@ const BillJewelry = () => {
           CREATE
         </button>
       </div>
-      
 
       <Modal
         isOpen={modalIsOpen}
@@ -513,9 +516,7 @@ const BillJewelry = () => {
         <h2>Successfully</h2>
       </Modal>
     </div>
-    
   );
 };
 
 export default BillJewelry;
-
