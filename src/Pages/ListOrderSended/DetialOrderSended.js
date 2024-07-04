@@ -184,11 +184,10 @@ export default function ListOrderPage() {
                 </div>
             </div>
             <Modal
-                title="Notification"
                 visible={isModalVisible}
                 footer={null}
                 onCancel={() => setIsModalVisible(false)}
-                className="custom-modal"
+                className="custom-modal-detail-order-send"
             >
                 <div>{modalMessage}</div>
             </Modal>

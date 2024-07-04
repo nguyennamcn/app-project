@@ -1,0 +1,25 @@
+.custom-modal-send .ant-modal-content {
+    border-radius: 10px;
+    text-align: center;
+    height: 310px;
+  }
+  
+  .custom-modal-send  .ant-modal-header {
+    border-bottom: none;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .custom-modal-send  .ant-modal-title {
+    font-size: 30px;
+  }
+  
+  .custom-modal-send  .ant-modal-body {
+    padding: 16px;
+    font-size: 16px;
+  }
+  
+  .custom-modal-send  .ant-modal-footer {
+    display: none;
+  }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { Modal } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
+import './DetailPage.css'
 
 export default function DetailPage() {
     const [product, setProduct] = useState({});
@@ -156,11 +157,10 @@ export default function DetailPage() {
                 </div>
             </div>
             <Modal
-                title="Notification"
                 visible={isModalVisible}
                 footer={null}
                 onCancel={() => setIsModalVisible(false)}
-                className="custom-modal"
+                className="custom-modal-detail"
             >
                 <div>{modalMessage}</div>
             </Modal>

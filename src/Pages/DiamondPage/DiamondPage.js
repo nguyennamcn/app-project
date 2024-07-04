@@ -176,7 +176,7 @@ export default function DiamondPage() {
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}
-        className="custom-modal"
+        className="custom-modal-diamond"
       >
         <div>{modalMessage}</div>
       </Modal>
@@ -184,7 +184,7 @@ export default function DiamondPage() {
         visible={isQRModalVisible}
         footer={null}
         onCancel={() => setIsQRModalVisible(false)}
-        className="custom-modal"
+        className="custom-modal-diamond"
       >
         <QrScanner
           delay={300}

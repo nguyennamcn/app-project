@@ -89,7 +89,31 @@
 .action-buttons > * {
     margin-bottom: 10px; /* Khoảng cách dưới giữa các nút */
 }
-
+.custom-modal-list .ant-modal-content {
+    border-radius: 10px;
+    text-align: center;
+    height: 250px;
+  }
+  
+  .custom-modal-list  .ant-modal-header {
+    border-bottom: none;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .custom-modal-list  .ant-modal-title {
+    font-size: 30px;
+  }
+  
+  .custom-modal-list  .ant-modal-body {
+    padding: 40px;
+    font-size: 20px;
+  }
+  
+  .custom-modal-list  .ant-modal-footer {
+    display: none;
+  }
 @media only screen and (max-width: 768px) {
     .sell-order-search-input {
         padding: 6px;

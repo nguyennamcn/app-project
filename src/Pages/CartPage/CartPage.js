@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, notification } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
+import './CartPage.css';
 
 const CartPage = () => {
     const [dataSource, setDataSource] = useState([]);
@@ -20,10 +21,10 @@ const CartPage = () => {
 
     const handleInputChange1 = (event) => {
         const input = event.target.value;
-        if (/^\d*$/.test(input) && input.length <= 11) {
+        if (/^\d*$/.test(input) && input.length <= 10) {
             setCustomerPhone(input);
         } else {
-            notification.error({ message: 'Phone incorrect (11 digits).' });
+            notification.error({ message: 'Phone incorrect (10 digits).' });
         }
     };
 
@@ -267,11 +268,10 @@ const CartPage = () => {
                 }}>Send order</button>
             </div>
             <Modal
-                title="Notification"
                 visible={isModalVisible}
                 footer={null}
                 onCancel={() => setIsModalVisible(false)}
-                className="custom-modal"
+                className="custom-modal-send"
             >
                 <div>{modalMessage}</div>
             </Modal>

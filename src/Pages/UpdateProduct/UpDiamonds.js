@@ -165,11 +165,10 @@ function UpDiamond() {
         </div>
       </div>
       <Modal
-        title="Notification"
         visible={isModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
-        className="custom-modal"
+        className="custom-modal-updiamond"
       >
         <div>{modalMessage}</div>
       </Modal>

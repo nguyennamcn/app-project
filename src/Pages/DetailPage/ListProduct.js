@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './ListProduct.css'
+import './ListProduct.css';
 import CartPage from '../CartPage/CartPage';      // Import the CartPage component
 import DiamondPage from '../DiamondPage/DiamondPage';
 import GoldPage from '../GoldPage/GoldPage';

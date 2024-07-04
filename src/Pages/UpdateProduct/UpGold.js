@@ -117,7 +117,7 @@ function UpGold() {
         visible={isModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalOk}
-        className="custom-modal"
+        className="custom-modal-upgold"
       >
         <div>{modalMessage}</div>
       </Modal>

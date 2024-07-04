@@ -195,11 +195,10 @@ export default function PurchaseOrderByStaffId() {
                 />
             </div>
             <Modal
-                title="Notification"
                 visible={modalVisible}
                 footer={null}
                 onCancel={() => setModalVisible(false)}
-                className="custom-modal"
+                className="custom-modal-purchased"
             >
                 <div>
                     <p style={{ fontSize: '20px', marginBottom: '50px' }}>{modalMessage}</p>

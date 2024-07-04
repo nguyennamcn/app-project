@@ -119,33 +119,30 @@ cam nhạt */
 }
 
 
-.custom-modal .ant-modal-content {
-border-radius: 10px;
-padding: 20px;
-background-color: #FFEFD5; /* Màu cam nhạt */
+.custom-modal-updiamond .ant-modal-content {
+  border-radius: 10px;
+  text-align: center;
+  height: 250px;
 }
 
-.custom-modal .ant-modal-header {
-border-bottom: none;
+.custom-modal-updiamond  .ant-modal-header {
+  border-bottom: none;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.custom-modal .ant-modal-footer {
-border-top: none;
-display: flex;
-justify-content: center;
+.custom-modal-updiamond  .ant-modal-title {
+  font-size: 30px;
 }
 
-.custom-modal .ant-modal-footer button {
-background: #FFCBA4; /* Màu cam nhạt */
-border: none;
-color: #fff;
-border-radius: 4px;
-padding: 5px 15px;
+.custom-modal-updiamond  .ant-modal-body {
+  padding: 20px;
+  font-size: 16px;
 }
 
-.custom-modal .ant-modal-footer button
-{
-background: #FFCC99; /* Màu cam đậm hơn */
+.custom-modal-updiamond  .ant-modal-footer {
+  display: none;
 }
 
 /* Responsive styles */

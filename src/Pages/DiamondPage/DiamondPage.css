@@ -148,29 +148,29 @@
 }
 
 /* Modal Styles */
-.custom-modal .ant-modal-content {
+.custom-modal-diamond .ant-modal-content {
   border-radius: 10px;
   text-align: center;
   height: 310px;
 }
 
-.custom-modal .ant-modal-header {
+.custom-modal-diamond  .ant-modal-header {
   border-bottom: none;
   padding: 16px;
   font-size: 18px;
   font-weight: bold;
 }
 
-.custom-modal .ant-modal-title {
+.custom-modal-diamond  .ant-modal-title {
   font-size: 30px;
 }
 
-.custom-modal .ant-modal-body {
+.custom-modal-diamond  .ant-modal-body {
   padding: 16px;
   font-size: 16px;
 }
 
-.custom-modal .ant-modal-footer {
+.custom-modal-diamond  .ant-modal-footer {
   display: none;
 }
 
