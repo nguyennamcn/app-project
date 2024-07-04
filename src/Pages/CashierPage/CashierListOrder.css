@@ -6,8 +6,8 @@
 }
 
 .sell-order-title {
-    font-size: 23px;
-    margin-bottom: 1px;
+    font-size: 25px;
+    margin-bottom: 10px;
     font-weight: bold;
     color: #001f3f; /* Màu chữ đậm */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Hiệu ứng đổ bóng */
@@ -15,7 +15,7 @@
 
 .sell-order-search-input {
     padding: 3px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 2px solid black;
     border-radius: 5px;
     outline: none;

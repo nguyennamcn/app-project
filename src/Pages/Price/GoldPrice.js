@@ -63,6 +63,7 @@ const styles = {
     fontSize: '24px',
     fontWeight: 'bold',
     borderRadius: '8px 8px 0 0',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'
   },
   table: {
     width: '100%',

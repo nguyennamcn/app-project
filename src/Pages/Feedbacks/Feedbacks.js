@@ -80,6 +80,7 @@ const styles = {
   heading: {
     marginBottom: '10px',
     fontSize: '30px',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'
   },
   textarea: {
     border: '1px solid #000',

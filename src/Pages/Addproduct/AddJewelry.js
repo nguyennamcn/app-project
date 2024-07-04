@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, message, notification } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink , useNavigate } from 'react-router-dom';
 import './AddJewelry.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
@@ -29,6 +29,7 @@ function AddJewelry() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [productImages, setProductImages] = useState([]);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -65,8 +66,9 @@ function AddJewelry() {
 
     adornicaServ.postCreateProduct(productData)
       .then(response => {
-        notification.success({message: "Add product success"})
         console.log(response.data.metadata);
+        notification.success({message: "Add product success"})
+        navigate(0);
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";

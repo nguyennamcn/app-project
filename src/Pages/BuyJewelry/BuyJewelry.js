@@ -9,8 +9,8 @@ const styles = {
   container: {
     maxHeight: '70vh', // Adjust this value as needed
     overflowY: 'auto', // Add this line to enable vertical scrolling
-    background: '#AFBEF9',
-    padding: '20px',
+    background: '#f0f8ff',
+    padding: '25px',
     maxWidth: '900px',
     margin: '0px auto',
     borderRadius: '10px',
@@ -24,7 +24,8 @@ const styles = {
   },
   formGroup: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginLeft:'10px',
   },
   label: {
     fontSize: '15px',
@@ -54,30 +55,30 @@ const styles = {
     backgroundColor: '#000000'
   },
   addButtonJewelry: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#00ca4d',
     color: 'white',
     border: 'none',
-    padding: '5px 10px',
+    padding: '10px 20px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    textAlign: 'center',
+    gridColumn: 'span 2',
+    justifySelf: 'center',
+    marginTop: '20px'
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    color: 'white',
+    border: 'none',
+    padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '12px',
     textAlign: 'center',
-    gridColumn: 'span 2',
-    justifySelf: 'center',
-    marginTop: '10px'
-  },
-  deleteButton: {
-    backgroundColor: '#FF6347',
-    color: 'white',
-    border: 'none',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '10px',
-    textAlign: 'center',
     position: 'absolute',
     top: '5px',
-    right: '5px'
+    right: '5px',
   },
   totalPrice: {
     fontSize: '16px',
@@ -92,7 +93,8 @@ const styles = {
     gridColumn: 'span 2',
     textAlign: 'center',
     marginTop: '2px',
-    position: 'relative'
+    position: 'relative',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'
   },
   subPrice: {
     width:'100%',
@@ -520,7 +522,7 @@ const JewelrySelection = () => {
             
           </React.Fragment>
         ))}
-        <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Add Jewelry</button>
+        <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>ADD JEWELRY</button>
         <div style={styles.totalPrice}>
           Total price: {totalPrice.toLocaleString('vi-Vn')} VND
         </div>
