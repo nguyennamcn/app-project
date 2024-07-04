@@ -156,8 +156,23 @@ function UpDiamond() {
             </div>
 
             <div className="updiamond-form-footer">
-              <NavLink to="/ManageDiamond" className="updiamond-back-button">BACK</NavLink>
-              <button className="updiamond-add-button" type="submit">
+              <NavLink to="/ManageDiamond" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
+              <button style={{
+                    backgroundColor: '#00ca4d',
+                    border: '1px solid purple',
+                    color: 'white',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    marginRight:'5px'
+                }} type="submit">
                 UPDATE DIAMOND
               </button>
             </div>

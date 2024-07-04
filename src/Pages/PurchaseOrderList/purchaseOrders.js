@@ -146,7 +146,13 @@ export default function PurchaseOrder() {
                                 <div className="action-buttons">
                                     <NavLink to={`/payment-history/${order.orderCode}`}>
                                         <Button
-                                            style={{ marginRight: '14px', marginTop:'0px' }}
+                                            style={{ backgroundColor: '#00ca4d',
+                                                border: '1px solid purple',
+                                                color: 'white',
+                                                // padding: '10px 20px',
+                                                borderRadius: '5px',
+                                                cursor: 'pointer',
+                                                marginRight:'5px' }}
                                             type="primary"
                                             onClick={() => handleView(order.orderCode)}
                                         >
@@ -154,7 +160,12 @@ export default function PurchaseOrder() {
                                         </Button>
                                     </NavLink>
                                     <Button
-                                        style={{ marginRight: '14px' }}
+                                        style={{ backgroundColor: 'red',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            marginRight:'5px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer' }}
                                         type="primary"
                                         danger
                                         onClick={() => handleDelete(order.orderCode)}

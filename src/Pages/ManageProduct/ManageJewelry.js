@@ -155,14 +155,30 @@ const JewelryInventoryPage = () => {
               <td className="jewelry-td" data-label="Action">
                 <NavLink to={`/update-jewelry/${item.productId}`}>
                   <button
-                    className="updateButton"
+                    style={{
+                      backgroundColor: '#00ca4d',
+                      border: '1px solid purple',
+                      color: 'white',
+                      padding: '5px 10px',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      marginRight:'5px'
+                  }}
                     onClick={() => handleUpdate(item.productCode)}
                   >
                     Update
                   </button>
                 </NavLink>
                 <button
-                  className="deleteButton"
+                  style={{
+                    backgroundColor: 'red',
+                    border: '1px solid purple',
+                    color: 'white',
+                    padding: '6px 15px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    marginRight:'5px'
+                }}
                   onClick={() => showDeleteConfirm(item.productCode)}
                 >
                   Delete
@@ -180,7 +196,14 @@ const JewelryInventoryPage = () => {
         </tbody>
       </table>
       <div className="jewelry-footer">
-        <NavLink to="/inventory" className="backButton">BACK</NavLink>
+        <NavLink to="/inventory" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}

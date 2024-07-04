@@ -106,8 +106,23 @@ function UpGold() {
               </div>
             </div>
             <div className="upgold-form-footer">
-              <NavLink to="/ManageGold" className="upgold-back-button">BACK</NavLink>
-              <button className="upgold-add-button" type="submit">UPDATE GOLD</button>
+              <NavLink to="/ManageGold" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
+              <button style={{
+                    backgroundColor: '#00ca4d',
+                    border: '1px solid purple',
+                    color: 'white',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    marginRight:'5px'
+                }} type="submit">UPDATE GOLD</button>
             </div>
           </form>
         </div>

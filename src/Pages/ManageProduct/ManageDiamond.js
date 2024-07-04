@@ -149,16 +149,32 @@ export default function ManageDiamond() {
               <td className="diamond-td" data-label="Size">{diamond.size}</td>
               <td className="diamond-td" data-label="Action">
                 <NavLink to={`/update-diamond/${diamond.productId}`}>
-                  <button  className="updateButton">Update</button>
+                  <button  style={{
+                                            backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '5px 10px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                            marginRight:'5px'
+                                        }}>Update</button>
                 </NavLink>
                 <button
-                  className="deleteButton"
+                  style={{
+                    backgroundColor: 'red',
+                    border: '1px solid purple',
+                    color: 'white',
+                    padding: '6px 15px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    marginRight:'5px'
+                }}
                   onClick={() => handleDelete(diamond.productCode)}
                 >
                   Delete
                 </button>
                 <button
-                   className={diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
+                  className={diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
                   onClick={() => diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(diamond.productId)}
                   disabled={diamond.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
@@ -170,7 +186,14 @@ export default function ManageDiamond() {
         </tbody>
       </table>
       <div  className="diamond-footer">
-        <NavLink to="/inventory" className="backButton">BACK</NavLink>
+        <NavLink to="/inventory" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}

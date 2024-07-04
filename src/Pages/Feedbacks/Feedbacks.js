@@ -110,7 +110,7 @@ const styles = {
     border: '2px solid #000',
     padding: '10px 20px',
     cursor: 'pointer',
-    backgroundColor: 'green',
+    backgroundColor: '#00ca4d',
     fontSize: '20px',
     color: 'white',
   },

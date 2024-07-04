@@ -177,14 +177,31 @@ export default function ManageGold() {
               <td className="gold-td" data-label="Action">
                 <NavLink to={`/update-gold/${product.productId}`}>
                   <button
-                    className="updateButton"
+                   style={{
+                    backgroundColor: '#00ca4d',
+                    border: '1px solid purple',
+                    color: 'white',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    marginRight:'5px'
+                }}
                     onClick={() => handleUpdate(product.productCode)}
+
                   >
                     Update
                   </button>
                 </NavLink>
                 <button
-                  className="deleteButton"
+                  style={{
+                    backgroundColor: 'red',
+                    border: '1px solid purple',
+                    color: 'white',
+                    padding: '6px 15px',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    marginRight:'5px'
+                }}
                   onClick={() => showDeleteConfirm(product.productCode)}
                 >
                   Delete
@@ -202,7 +219,14 @@ export default function ManageGold() {
         </tbody>
       </table>
       <div className="gold-footer">
-        <NavLink to="/inventory" className="backButton">BACK</NavLink>
+        <NavLink to="/inventory" style={{
+                                            backgroundColor: 'gray',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer'
+                                        }}>BACK</NavLink>
         <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}

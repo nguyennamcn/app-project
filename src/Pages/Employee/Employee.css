@@ -15,7 +15,7 @@
 
 
 .add-employee-list-button {
-  background-color: rgba(23, 165, 42, 0.991);
+  background-color: #00ca4d;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -48,7 +48,7 @@
 }
 
 .employee-list-view-button {
-  background-color: rgba(23, 165, 42, 0.991);
+  background-color: #00ca4d;
   color: white;
   padding: 5px 10px;
   border: none;
@@ -63,7 +63,7 @@
 }
 
 .employee-list-status.online {
-  background-color: green;
+  background-color: #00ca4d;
 }
 
 .employee-list-status.offline {
