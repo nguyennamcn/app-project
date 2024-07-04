@@ -78,7 +78,7 @@ const DiamondPrice = () => {
                             <tr key={index} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
                                 <td 
                                     data-label="STT" 
-                                    className="DiamondPrice-td"
+                                    className="DiamondPrice-td-toClick"
                                     onClick={() => showModal(price)}
                                 >
                                     {index + 1}
@@ -98,10 +98,31 @@ const DiamondPrice = () => {
             </div>
 
             <Modal title="Update Prices" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <h1>Current price</h1>
                 <div>
                     <label>Purchase (VND): </label>
                     <Input 
                         value={updatedPurchase} 
+                        //onChange={(e) => setUpdatedPurchase(e.target.value)} 
+                        type="number"
+                        readOnly
+                    />
+                </div>
+                <div style={{ marginTop: '10px', marginBottom:'14px' }}>
+                    <label>Sell (VND): </label>
+                    <Input 
+                        value={updatedSell} 
+                        //onChange={(e) => setUpdatedSell(e.target.value)} 
+                        type="number"
+                        readOnly
+                    />
+                </div>
+
+                <h1>New price</h1>
+                <div>
+                    <label>Purchase (VND): </label>
+                    <Input 
+                      
                         onChange={(e) => setUpdatedPurchase(e.target.value)} 
                         type="number"
                     />
@@ -109,7 +130,7 @@ const DiamondPrice = () => {
                 <div style={{ marginTop: '10px' }}>
                     <label>Sell (VND): </label>
                     <Input 
-                        value={updatedSell} 
+                      
                         onChange={(e) => setUpdatedSell(e.target.value)} 
                         type="number"
                     />

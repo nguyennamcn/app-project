@@ -22,33 +22,33 @@ export default function StoreProductDetail() {
     const [totalSelectedPrice, setTotalSelectedPrice] = useState(0);
 
     const [goldPromotion, setGoldPromotion] = useState(0);
-  const [gemPromotion, setGemPromotion] = useState(0);
+    const [gemPromotion, setGemPromotion] = useState(0);
 
-  useEffect(() => {
-    adornicaServ.getAllCategoryBbp()
-      .then((res) => {
-        const diamondCategory = res.data.metadata.find(category => category.id === 6);
-        if (diamondCategory) {
-          setGemPromotion(diamondCategory.buyBackPromotion);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    useEffect(() => {
+        adornicaServ.getAllCategoryBbp()
+            .then((res) => {
+                const diamondCategory = res.data.metadata.find(category => category.id === 6);
+                if (diamondCategory) {
+                    setGemPromotion(diamondCategory.buyBackPromotion);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
-  useEffect(() => {
-    adornicaServ.getAllCategoryBbp()
-      .then((res) => {
-        const goldCategory = res.data.metadata.find(category => category.id === 5);
-        if (goldCategory) {
-          setGoldPromotion(goldCategory.buyBackPromotion);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    useEffect(() => {
+        adornicaServ.getAllCategoryBbp()
+            .then((res) => {
+                const goldCategory = res.data.metadata.find(category => category.id === 5);
+                if (goldCategory) {
+                    setGoldPromotion(goldCategory.buyBackPromotion);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     useEffect(() => {
         const totalPrice = selectedProducts.reduce((sum, product) => {
@@ -125,7 +125,7 @@ export default function StoreProductDetail() {
             const material = product.materials[0]; // Assuming only one material for simplicity
             const materialBuyPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialBuyPrice || 0;
             const materialSellPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialSellPrice || 0;
-            const materialPrice = (materialBuyPrice + (materialSellPrice - materialBuyPrice) * parseFloat(goldPromotion || 0)) *  parseFloat(material.weight ||0);
+            const materialPrice = (materialBuyPrice + (materialSellPrice - materialBuyPrice) * parseFloat(goldPromotion || 0)) * parseFloat(material.weight || 0);
             return materialPrice;
         }
         return 0;
@@ -146,6 +146,10 @@ export default function StoreProductDetail() {
         return 'SP' + Math.random().toString(36).substring(2, 10).toUpperCase();
     };
 
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = {
@@ -156,11 +160,21 @@ export default function StoreProductDetail() {
             list: selectedProducts.map(product => ({
                 name: product.productName,
                 productCode: product.productCode,
-                price: product.materialBuyPrice + product.gemBuyPrice 
+                price: product.materialBuyPrice + product.gemBuyPrice,
+
+                materialId: product.materials[0].id ? product.materials[0].id : "",
+                weight: product.materials[0].weight,
+                color: product.gem[0].color,
+                clarity: product.gem[0].clarity,
+                cut: product.gem[0].cut,
+                origin: product.gem[0].origin,
+                carat: product.gem[0].carat,
             })),
             totalPrice: totalSelectedPrice,
             productStore: true
         };
+
+        console.log('SelectedProduct:', selectedProducts);
 
         console.log('Form Data Submitted:', formData);
 
@@ -172,7 +186,7 @@ export default function StoreProductDetail() {
             setModalVisible(true);
             setTimeout(() => {
                 setModalVisible(false);
-                navigate('/buyProduct');
+                //navigate('/buyProduct');
             }, 2000);
         } catch (error) {
             console.error('There was an error sending the order:', error);
@@ -198,6 +212,13 @@ export default function StoreProductDetail() {
             } else {
                 const updatedProduct = {
                     ...product,
+                    materialId: product.materials[0].id ? product.materials[0].id : "",
+                    weight: product.materials[0].weight,
+                    color: product.gem[0].color, 
+                        clarity: product.gem[0].clarity, 
+                        cut: product.gem[0].cut, 
+                        origin: product.gem[0].origin,
+                        carat: product.carat, 
                     materialBuyPrice: calculateMaterialBuyPrice(product),
                     gemBuyPrice: calculateGemBuyPrice(product)
                 };
@@ -221,7 +242,7 @@ export default function StoreProductDetail() {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
-            render: (text) => `${text} VND`,
+            render: (text) => `${formatPrice(text)} `,
         },
         {
             title: 'Choose',
@@ -255,19 +276,19 @@ export default function StoreProductDetail() {
             title: 'Material Buy Price',
             dataIndex: 'materialBuyPrice',
             key: 'materialBuyPrice',
-            render: (text) => `${text} VND`,
+            render: (text) => `${formatPrice(text)} `,
         },
         {
             title: 'Gem Buy Price',
             dataIndex: 'gemBuyPrice',
             key: 'gemBuyPrice',
-            render: (text) => `${text} VND`,
+            render: (text) => `${formatPrice(text)} `,
         },
         {
             title: 'Total',
             dataIndex: 'total',
             key: 'total',
-            render: (_, record) => `${(record.materialBuyPrice + record.gemBuyPrice) || 0} VND`,
+            render: (_, record) => `${formatPrice((record.materialBuyPrice + record.gemBuyPrice)) || 0} `,
         },
         {
             title: 'Remove',
@@ -331,7 +352,7 @@ export default function StoreProductDetail() {
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total:<span style={{ marginLeft: '4%' }}> {totalPrice} VND</span>
+                                    Total:<span style={{ marginLeft: '4%' }}> {formatPrice(totalPrice)} </span>
                                 </h1>
                             </div>
                         </div>
@@ -358,7 +379,7 @@ export default function StoreProductDetail() {
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total:<span style={{ marginLeft: '4%' }}> {totalSelectedPrice} VND</span>
+                                    Total:<span style={{ marginLeft: '4%' }}> {formatPrice(totalSelectedPrice)} </span>
                                 </h1>
                             </div>
                         </div>

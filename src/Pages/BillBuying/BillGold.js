@@ -250,7 +250,8 @@ const BillGold = () => {
       totalPrice += product.materialBuyPrice;
     });
     return totalPrice;
-  };
+    };
+
 
   const handleMouseDown = (e) => {
     e.target.style.backgroundColor = '#888888';
@@ -273,10 +274,16 @@ const BillGold = () => {
       address: address,
       list: products.map((product) => ({
         name: product.goldType,
-        weight: parseFloat(product.weight),
-        price: parseFloat(product.materialBuyPrice),
+        materialId: product.materialId,
+        weight: product.weight,
+        price: product.materialBuyPrice,
+        origin: "NONE",
+        color: "NONE",
+        clarity: "NONE",
+        cut: "NONE",
+        carat: 0,
       })),
-      totalPrice: parseFloat(calculateTotalPrice()),
+      totalPrice: calculateTotalPrice(),
       productStore: false,
     };
 
@@ -358,7 +365,7 @@ const BillGold = () => {
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()} </div>
+        <div style={pageStyles.totalPrice}>Total price: {formatPrice(calculateTotalPrice())} </div>
       </div>
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>

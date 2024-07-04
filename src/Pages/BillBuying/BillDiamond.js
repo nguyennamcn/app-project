@@ -253,6 +253,9 @@ const BillDiamond = () => {
       phone: customerPhone,
       address: address,
       list: products.map((product) => ({
+        name: "NONE",
+        materialId: "",
+        weight: 0,
         origin: product.origin,
         color: product.color,
         clarity: product.clarity,
@@ -353,7 +356,7 @@ const BillDiamond = () => {
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}</div>
+        <div style={pageStyles.totalPrice}>Total price: {formatPrice(calculateTotalPrice())}</div>
       </div>
 
       <div style={pageStyles.buttonWrapper}>
