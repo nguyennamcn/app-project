@@ -177,9 +177,9 @@ const PurchaseDetailHistory = () => {
       .catch((error) => console.error('Error fetching PDF:', error));
   };
 
-  const formatPrice = (price) => {
-    return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'N/A';
-  };
+  // const formatPrice = (price) => {
+  //   return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'N/A';
+  // };
 
   const handleFinishClick = () => {
     const data = {
@@ -195,9 +195,11 @@ const PurchaseDetailHistory = () => {
     adornicaServ.postPayment(data)
       .then((res) => {
         console.log('Order updated successfully:', res);
+        console.log('Order Created :', data);
       })
       .catch((err) => {
         console.error('Error updating order:', err.response);
+        console.log('Order Created :', data);
       });
     setModalIsOpen(true);
   };
@@ -260,7 +262,7 @@ const PurchaseDetailHistory = () => {
       </div>
       <div>
         <h1>Order Code: {sp?.orderCode}</h1>
-        <h1>Total Amount: {formatPrice(sp?.totalAmount)}</h1>
+        <h1>Total Amount: {sp?.totalAmount}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>

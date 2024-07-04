@@ -5,7 +5,7 @@ export default function GoldPrice() {
 const [goldPrices, setGoldPrices] = useState([]);
 
 useEffect(() => {
-  adornicaServ. getPriceMaterial()
+  adornicaServ.getPriceMaterial()
     .then((res) => {
       console.log(res.data.metadata);
       setGoldPrices(res.data.metadata);
