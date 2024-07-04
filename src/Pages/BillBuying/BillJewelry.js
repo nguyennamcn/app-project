@@ -370,7 +370,7 @@ const BillJewelry = () => {
         color: product.color, // You need to provide the color
         clarity: product.clarity, // You need to provide the clarity
         cut: product.cut,
-        origin:product.cut,
+        origin:product.origin,
         carat: parseFloat(product.carat), // You need to provide the carat
         price: parseFloat(product.total),
       })),
