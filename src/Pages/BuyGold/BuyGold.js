@@ -160,6 +160,7 @@ const GoldSelection = () => {
       newGoldItems[index] = {
         ...newGoldItems[index],
         goldType: value,
+        materialId: selectedGold.materialId,
         materialBuyPrice: selectedGold.materialBuyPrice,
         materialSellPrice: selectedGold.materialSellPrice
       };
@@ -202,13 +203,14 @@ const GoldSelection = () => {
       const total = (item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight;
       return {
         goldType: item.goldType,
+        materialId: item.materialId,
         weight: item.weight,
         materialBuyPrice: total,
       };
     });
 
     localStorage.setItem('goldData', JSON.stringify(goldData));
-
+    console.log(goldData);
     navigate('/bill-gold');
   };
 

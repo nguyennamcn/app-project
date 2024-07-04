@@ -339,7 +339,6 @@ const BillJewelry = () => {
       totalPrice += product.total;
     });
     return totalPrice;
-    // ('vi-VN', { style: 'currency', currency: 'VND' })
   };
 
   const handleMouseDown = (e) => {
@@ -365,12 +364,12 @@ const BillJewelry = () => {
 
       list: products.map((product) => ({
         name: product.goldType,
-        materialId: product.materialId ? product.materialId : '',
+        materialId: product.materialId ? product.materialId : "",
         weight: parseFloat(product.weight),
         color: product.color, // You need to provide the color
         clarity: product.clarity, // You need to provide the clarity
-        cut: product.cut,
-        origin:product.origin,
+        cut: product.cut, // You need to provide the cut
+        origin: product.origin,
         carat: parseFloat(product.carat), // You need to provide the carat
         price: parseFloat(product.total),
       })),
@@ -460,7 +459,6 @@ const BillJewelry = () => {
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
               <span>{formatPrice(product.total)}</span>
-              {/* formatPrice */}
             </div>
           ))}
         </div>
@@ -490,7 +488,7 @@ const BillJewelry = () => {
 
       <div style={pageStyles.summary}>
         <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {calculateTotalPrice()}</div>
+        <div style={pageStyles.totalPrice}>Total price: {formatPrice(calculateTotalPrice())}</div>
       </div>
 
       <div style={pageStyles.buttonWrapper}>
