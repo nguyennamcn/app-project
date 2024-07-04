@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, notification } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink , useNavigate } from 'react-router-dom';
 import './AddDiamond.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
@@ -32,7 +32,7 @@ function AddDiamond() {
       [name]: name === 'carat' ? parseFloat(value) : value,
     }));
   };
-
+  const navigate = useNavigate();
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
@@ -53,8 +53,9 @@ function AddDiamond() {
 
     adornicaServ.postCreateProduct(productData)
       .then(response => {
-        notification.success({ message: "Add product successfully" });
         console.log(response.data.metadata);
+        notification.success({ message: "Add product successfully" });
+        navigate(0);
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";

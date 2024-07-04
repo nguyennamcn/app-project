@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, notification } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './AddGold.css';
 import { adornicaServ } from '../../service/adornicaServ';
 
@@ -26,6 +26,7 @@ function AddGold() {
   const handleImageUpload = (e) => {
     setProductImages(Array.from(e.target.files));
   };
+  const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -49,8 +50,9 @@ function AddGold() {
 
     adornicaServ.postCreateProduct(productData)
       .then(response => {
-        notification.success({message: "Add product success"})
         console.log(response.data.metadata);
+        notification.success({message: "Add product success"})
+        navigate(0);
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";

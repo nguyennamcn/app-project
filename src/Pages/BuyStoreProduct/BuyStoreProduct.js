@@ -6,7 +6,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 // Define styles as objects
 const styles = {
   container: {
-    background: '#A2F4EF',
+    background: '#f0f8ff',
     padding: '30px',
     maxWidth: '900px',
     margin: '50px auto',

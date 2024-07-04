@@ -8,8 +8,8 @@ const styles = {
   container: {
     maxHeight: '70vh', // Adjust this value as needed
     overflowY: 'auto', // Add this line to enable vertical scrolling
-    background: '#7FDBF8',
-    padding: '20px 20px',
+    background: '#f0f8ff',
+    padding: '30px 30px',
     maxWidth: '900px',
     margin: 'auto',
     borderRadius: '10px',
@@ -49,23 +49,23 @@ const styles = {
     textAlign: 'center',
   },
   addButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#00ca4d',
     color: 'white',
     border: 'none',
-    padding: '5px 10px',
+    padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
-    fontSize: '14px',
+    fontSize: '16px',
     textAlign: 'center',
     gridColumn: 'span 2',
     justifySelf: 'center',
-    marginTop: '2px',
+    marginTop: '20px'
   },
   deleteButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: 'red',
     color: 'white',
     border: 'none',
-    padding: '5px 10px',
+    padding: '10px 20px',
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '12px',
@@ -84,11 +84,13 @@ const styles = {
     textAlign: 'center',
   },
   productTitle: {
-    gridColumn: 'span 2',
-    fontSize: '15px',
+    fontSize: '18px',
     fontWeight: 'bold',
-    color: '#333',
+    gridColumn: 'span 2',
+    textAlign: 'center',
+    marginTop: '2px',
     position: 'relative',
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'
   },
   subPrice: {
     width:'100%',

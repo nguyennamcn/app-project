@@ -7,8 +7,8 @@ const styles = {
   container: {
     maxHeight: '70vh',
     overflowY: 'auto',
-    background: '#F7F0B6',
-    padding: '20px',
+    background: '#f0f8ff',
+    padding: '30px',
     maxWidth: '900px',
     margin: '0px auto',
     borderRadius: '10px',
@@ -54,7 +54,7 @@ const styles = {
     backgroundColor: '#000000'
   },
   addButtonGold: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#00ca4d',
     color: 'white',
     border: 'none',
     padding: '10px 20px',
@@ -67,7 +67,7 @@ const styles = {
     marginTop: '20px'
   },
   deleteButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: 'red',
     color: 'white',
     border: 'none',
     padding: '10px 20px',
