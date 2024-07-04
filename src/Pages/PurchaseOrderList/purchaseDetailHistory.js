@@ -268,9 +268,15 @@ const PurchaseDetailHistory = () => {
           <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
           <button
             onClick={handleFinishClick}
-            style={{ ...pageStyles.button, ...pageStyles.finishButton }}
+            style={{ backgroundColor: '#00ca4d',
+              border: '1px solid purple',
+              color: 'white',
+              padding: '9px 24px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              marginRight:'5px' }}
           >
-            Finish
+            FINISH
           </button>
         </div>
       </div>
@@ -283,12 +289,24 @@ const PurchaseDetailHistory = () => {
         <h2>Order Completed!</h2>
         <p>Your order has been successfully submitted.</p>
         <div style={pageStyles.modalButtonWrapper}>
-          <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+          <NavLink to="/historyOrder" style={{ backgroundColor: 'gray',
+              border: '1px solid purple',
+              color: 'white',
+              padding: '12px 20px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              marginRight:'5px' }}>BACK</NavLink>
           <button
             onClick={handleDownloadPDF}
-            style={{ ...pageStyles.button, ...pageStyles.downloadButton }}
+            style={{ backgroundColor: '#00ca4d',
+              border: '1px solid purple',
+              color: 'white',
+              padding: '0px 20px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              marginRight:'5px' }}
           >
-            Download PDF
+            PRINT PDF
           </button>
         </div>
       </Modal>

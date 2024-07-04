@@ -56,7 +56,7 @@ const styles = {
     borderRadius: '8px',
   },
   header: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: 'yellow',
     color: '#fff',
     padding: '10px',
     textAlign: 'center',

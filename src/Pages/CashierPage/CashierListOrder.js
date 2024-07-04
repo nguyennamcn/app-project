@@ -148,7 +148,13 @@ export default function SellOrderPage() {
                 <div className="action-buttons">
                     <NavLink to={`/cashierOrderDetail/${order.orderCode}`}>
                         <Button
-                            style={{ marginRight: '14px' }}
+                            style={{ backgroundColor: '#00ca4d',
+                                            border: '1px solid purple',
+                                            color: 'white',
+                                            // padding: '10px 20px',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                            marginRight:'5px' }}
                             type="primary"
                             onClick={() => handleViewOrder(order.orderCode)}
                         >
@@ -157,7 +163,13 @@ export default function SellOrderPage() {
                     </NavLink>
                     <NavLink>
                     <Button
-                        style={{ marginRight: '14px', marginTop: '10px' }}
+                        style={{ backgroundColor: 'red',
+                            border: '1px solid purple',
+                            color: 'white',
+                            marginTop:'10px',
+                            marginRight:'5px',
+                            borderRadius: '5px',
+                            cursor: 'pointer' }}
                         type="primary"
                         danger
                         onClick={() => handleDeleteOrder(order.orderCode)}
@@ -168,6 +180,11 @@ export default function SellOrderPage() {
                     </NavLink>
                     <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
                         <Button
+                            style={{ 
+                                border: '1px solid purple',
+                                marginRight:'5px',
+                                borderRadius: '5px',
+                                cursor: 'pointer' }}
                             type="primary"
                             disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
                         >
