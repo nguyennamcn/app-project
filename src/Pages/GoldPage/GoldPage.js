@@ -167,11 +167,12 @@ export default function GoldPage() {
           disabledClassName={'home-gold-disabled'}
         />
       </div>
+      
       <Modal
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}
-        className="custom-modal"
+        className="custom-modal-gold"
       >
         <div>{modalMessage}</div>
       </Modal>
@@ -179,7 +180,7 @@ export default function GoldPage() {
         visible={isQRModalVisible}
         footer={null}
         onCancel={() => setIsQRModalVisible(false)}
-        className="custom-modal"
+        className="custom-modal-gold"
       >
         <QrScanner
           delay={300}

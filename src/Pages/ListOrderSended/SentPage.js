@@ -181,11 +181,10 @@ export default function SentPage() {
                 />
             </div>
             <Modal
-                title="Notification"
                 visible={isModalVisible}
                 footer={null}
                 onCancel={() => setIsModalVisible(false)}
-                className="custom-modal"
+                className="custom-modal-sent-page"
             >
                 {orderCodeToDelete ? (
                     <div>

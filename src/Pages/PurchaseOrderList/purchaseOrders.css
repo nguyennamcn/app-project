@@ -88,6 +88,31 @@
 .action-buttons > * {
     margin-bottom: 10px; /* Khoảng cách dưới giữa các nút */
 }
+.custom-modal-purchased .ant-modal-content {
+    border-radius: 10px;
+    text-align: center;
+    height: 250px;
+  }
+  
+  .custom-modal-purchased  .ant-modal-header {
+    border-bottom: none;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .custom-modal-purchased  .ant-modal-title {
+    font-size: 30px;
+  }
+  
+  .custom-modal-purchased  .ant-modal-body {
+    padding: 20px;
+    font-size: 16px;
+  }
+  
+  .custom-modal-purchased  .ant-modal-footer {
+    display: none;
+  }
 
 @media only screen and (max-width: 768px) {
     .purchase-order-search-input {

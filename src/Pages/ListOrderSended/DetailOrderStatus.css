@@ -8,3 +8,28 @@
     max-height: 70vh;
     padding: 50px;
 }
+.custom-modal-detail-order-send .ant-modal-content {
+    border-radius: 10px;
+    text-align: center;
+    height: 250px;
+  }
+  
+  .custom-modal-detail-order-send  .ant-modal-header {
+    border-bottom: none;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .custom-modal-detail-order-send  .ant-modal-title {
+    font-size: 30px;
+  }
+  
+  .custom-modal-detail-order-send  .ant-modal-body {
+    padding: 20px;
+    font-size: 16px;
+  }
+  
+  .custom-modal-detail-order-send  .ant-modal-footer {
+    display: none;
+  }

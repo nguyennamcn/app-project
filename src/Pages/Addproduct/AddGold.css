@@ -110,7 +110,6 @@
 .custom-modal .ant-modal-content {
   border-radius: 10px;
   padding: 20px;
-  background-color: #FFEFD5; /* Màu cam nhạt */
 }
 
 .custom-modal .ant-modal-header {
@@ -124,7 +123,6 @@
 }
 
 .custom-modal .ant-modal-footer button {
-  background: #FFCBA4; /* Màu cam nhạt */
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -132,7 +130,6 @@
 }
 
 .custom-modal .ant-modal-footer button:hover {
-  background: #FFCC99; /* Màu cam đậm hơn */
 }
 
 /* Responsive styles */

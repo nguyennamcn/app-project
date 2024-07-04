@@ -119,32 +119,30 @@
   background: #f69535; /* Màu cam đậm hơn */
 }
 
-.custom-modal .ant-modal-content {
+.custom-modal-purchased .ant-modal-content {
   border-radius: 10px;
-  padding: 20px;
-  background-color: #FFEFD5; /* Màu cam nhạt */
+  text-align: center;
+  height: 250px;
 }
 
-.custom-modal .ant-modal-header {
+.custom-modal-purchased  .ant-modal-header {
   border-bottom: none;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.custom-modal .ant-modal-footer {
-  border-top: none;
-  display: flex;
-  justify-content: center;
+.custom-modal-purchased  .ant-modal-title {
+  font-size: 30px;
 }
 
-.custom-modal .ant-modal-footer button {
-  background: #FFCBA4; /* Màu cam nhạt */
-  border: none;
-  color: #fff;
-  border-radius: 4px;
-  padding: 5px 15px;
+.custom-modal-purchased  .ant-modal-body {
+  padding: 20px;
+  font-size: 16px;
 }
 
-.custom-modal .ant-modal-footer button:hover {
-  background: #FFCC99; /* Màu cam đậm hơn */
+.custom-modal-purchased  .ant-modal-footer {
+  display: none;
 }
 
 /* Responsive styles */
