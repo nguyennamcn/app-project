@@ -230,7 +230,7 @@ const BillDiamond = () => {
     products.forEach((product) => {
       totalPrice += parseFloat(product.gemBuyPrice);
     });
-    return totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    return totalPrice;
   };
 
   const handleMouseDown = (e) => {

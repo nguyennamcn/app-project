@@ -338,7 +338,8 @@ const BillJewelry = () => {
     products.forEach((product) => {
       totalPrice += product.total;
     });
-    return totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    return totalPrice;
+    // ('vi-VN', { style: 'currency', currency: 'VND' })
   };
 
   const handleMouseDown = (e) => {
@@ -368,7 +369,8 @@ const BillJewelry = () => {
         weight: parseFloat(product.weight),
         color: product.color, // You need to provide the color
         clarity: product.clarity, // You need to provide the clarity
-        cut: product.cut, // You need to provide the cut
+        cut: product.cut,
+        origin:product.cut,
         carat: parseFloat(product.carat), // You need to provide the carat
         price: parseFloat(product.total),
       })),
@@ -458,6 +460,7 @@ const BillJewelry = () => {
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
               <span>{formatPrice(product.total)}</span>
+              {/* formatPrice */}
             </div>
           ))}
         </div>

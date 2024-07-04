@@ -249,7 +249,7 @@ const BillGold = () => {
     products.forEach((product) => {
       totalPrice += product.materialBuyPrice;
     });
-    return totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    return totalPrice;
   };
 
   const handleMouseDown = (e) => {
