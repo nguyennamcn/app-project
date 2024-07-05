@@ -105,6 +105,16 @@ export const adornicaServ = {
     getPriceMaterial: () => {
         return https.get(`/api/v1/prices/materials`);
     },
+
+    getPriceMaterialExceptEffectDate: (id) => {
+        return https.get(`/api/v1/prices/materials/all/${id}`);
+    },
+
+    postMaterialPriceWithEffectDate: (materialID, dataPrice) => {
+        console.log(materialID)
+        return https.post(`/api/v1/prices/materials/create/${materialID}`, dataPrice);
+    },
+
     getPriceDiamond: () => {
         return https.get(`/api/v1/prices/gems`);
     },
@@ -116,7 +126,6 @@ export const adornicaServ = {
     postUpdateDeliveryOrder: (orderID) => {
         console.log(orderID)
         return https.post(`/api/v1/orders/delivery/${orderID}`);
-
     },
 
     getPurchaseDiamondPrice: (cut, carat, clarity, color, origin) => {

@@ -103,22 +103,22 @@ const DiamondPrice = () => {
                     <label>Purchase (VND): </label>
                     <Input 
                         value={updatedPurchase} 
-                        //onChange={(e) => setUpdatedPurchase(e.target.value)} 
+                        onChange={(e) => setUpdatedPurchase(e.target.value)} 
                         type="number"
                         readOnly
                     />
                 </div>
-                <div style={{ marginTop: '10px', marginBottom:'14px' }}>
+                <div style={{ marginTop: '10px',}}>
                     <label>Sell (VND): </label>
                     <Input 
                         value={updatedSell} 
-                        //onChange={(e) => setUpdatedSell(e.target.value)} 
+                        onChange={(e) => setUpdatedSell(e.target.value)} 
                         type="number"
                         readOnly
                     />
                 </div>
 
-                <h1>New price</h1>
+                {/* <h1>New price</h1>
                 <div>
                     <label>Purchase (VND): </label>
                     <Input 
@@ -134,7 +134,7 @@ const DiamondPrice = () => {
                         onChange={(e) => setUpdatedSell(e.target.value)} 
                         type="number"
                     />
-                </div>
+                </div> */}
             </Modal>
         </div>
     );
