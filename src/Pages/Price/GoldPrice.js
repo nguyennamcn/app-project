@@ -1,24 +1,75 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
+import { Modal, Input, DatePicker, notification } from 'antd';
+import moment from 'moment';
 
 export default function GoldPrice() {
-const [goldPrices, setGoldPrices] = useState([]);
+  const [goldPrices, setGoldPrices] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedMaterial, setSelectedMaterial] = useState({});
+  const [updatedBuyPrice, setUpdatedBuyPrice] = useState(0);
+  const [updatedSellPrice, setUpdatedSellPrice] = useState(0);
+  const [effectDate, setEffectDate] = useState(null);
 
-useEffect(() => {
-  adornicaServ.getPriceMaterial()
-    .then((res) => {
-      console.log(res.data.metadata);
-      setGoldPrices(res.data.metadata);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}, []);
+  useEffect(() => {
+    adornicaServ.getPriceMaterial()
+      .then((res) => {
+        console.log(res.data.metadata);
+        setGoldPrices(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    adornicaServ.getPriceMaterialExceptEffectDate()
+      .then((res) => {
+        console.log(res.data.metadata);
+        setGoldPrices(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleOk = () => {
+    const dataUpdateWithEffectDate = {
+      priceSell: updatedSellPrice,
+      priceBuy: updatedBuyPrice,
+      effectDate: effectDate ? effectDate.valueOf() : 0
+    };
+
+    adornicaServ.postMaterialPriceWithEffectDate(selectedMaterial.materialId, dataUpdateWithEffectDate)
+      .then(response => {
+        console.log(response.data.metadata);
+        notification.success({ message: "Add product successfully" });
+      })
+      .catch(error => {
+        const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
+        notification.error({ message: errorMessage });
+        console.log(error);
+      });
+
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const showModal = (material) => {
+    setSelectedMaterial(material);
+    setUpdatedBuyPrice(material.materialBuyPrice);
+    setUpdatedSellPrice(material.materialSellPrice);
+    setEffectDate(moment());
+    setIsModalVisible(true);
+  };
 
   const currentDate = new Date().toLocaleDateString();
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-};
+  };
 
   return (
     <div style={styles.container}>
@@ -32,15 +83,51 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-          {goldPrices.map((price, index) => (
+          {goldPrices.map((material, index) => (
             <tr key={index} style={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
-              <td style={styles.td}>{price.materialName}</td>
-              <td style={styles.td}>{formatPrice(price.materialBuyPrice)}</td>
-              <td style={styles.td}>{formatPrice(price.materialSellPrice)}</td>
+              <td onClick={() => showModal(material)} style={styles.td}>{material.materialName}</td>
+              <td style={styles.td}>{formatPrice(material.materialBuyPrice)}</td>
+              <td style={styles.td}>{formatPrice(material.materialSellPrice)}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal
+        title="Create new price for future"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <h1>Material ID: {selectedMaterial.materialId}</h1>
+        <h2>Material Name: {selectedMaterial.materialName}</h2>
+        <div>
+          <label>Purchase (VND): </label>
+          <Input 
+            value={updatedBuyPrice}
+            onChange={(e) => setUpdatedBuyPrice(e.target.value)} 
+            type="number"
+            step={1000}
+          />
+        </div>
+        <div style={{ marginTop: '10px', marginBottom:'0px'}}>
+          <label>Sell (VND): </label>
+          <Input 
+            value={updatedSellPrice}
+            onChange={(e) => setUpdatedSellPrice(e.target.value)}
+            type="number" 
+            step={1000}
+          />
+        </div>
+        <div style={{ marginTop: '10px', marginBottom:'0px'}}>
+          <label>Effect date:</label>
+          <DatePicker 
+            style={{marginLeft:'10px'}}
+            showTime={{ format: 'HH:mm' }}
+            format="YYYY-MM-DD HH:mm"
+            onChange={(date, dateString) => setEffectDate(date)}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

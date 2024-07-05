@@ -163,7 +163,7 @@ export default function SellOrderPage() {
                     </NavLink>
                     <NavLink>
                     <Button
-                        style={{ backgroundColor: 'red',
+                        style={{ backgroundColor: order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === 'cash' || order.paymentMethod.toLowerCase() === 'banking' ? 'gray' : 'red',
                             border: '1px solid purple',
                             color: 'white',
                             marginTop:'10px',

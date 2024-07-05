@@ -162,13 +162,13 @@ export default function StoreProductDetail() {
                 productCode: product.productCode,
                 price: product.materialBuyPrice + product.gemBuyPrice,
 
-                materialId: product.materials[0].id ? product.materials[0].id : "",
-                weight: product.materials[0].weight,
-                color: product.gem[0].color,
-                clarity: product.gem[0].clarity,
-                cut: product.gem[0].cut,
-                origin: product.gem[0].origin,
-                carat: product.gem[0].carat,
+                materialId: product.materials?.[0]?.id || "",
+                weight: product.materials?.[0]?.weight || 0,
+                color: product.gem?.[0]?.color || "NONE",
+                clarity: product.gem?.[0]?.clarity || "NONE",
+                cut: product.gem?.[0]?.cut || "NONE",
+                origin: product.gem?.[0]?.origin || "NONE",
+                carat: product.gem?.[0]?.carat || 0,
             })),
             totalPrice: totalSelectedPrice,
             productStore: true
@@ -186,7 +186,7 @@ export default function StoreProductDetail() {
             setModalVisible(true);
             setTimeout(() => {
                 setModalVisible(false);
-                //navigate('/buyProduct');
+                navigate('/buyProduct');
             }, 2000);
         } catch (error) {
             console.error('There was an error sending the order:', error);
@@ -212,13 +212,13 @@ export default function StoreProductDetail() {
             } else {
                 const updatedProduct = {
                     ...product,
-                    materialId: product.materials[0].id ? product.materials[0].id : "",
-                    weight: product.materials[0].weight,
-                    color: product.gem[0].color, 
-                        clarity: product.gem[0].clarity, 
-                        cut: product.gem[0].cut, 
-                        origin: product.gem[0].origin,
-                        carat: product.carat, 
+                    materialId: product.materials?.[0]?.id || "",
+                    weight: product.materials?.[0]?.weight || 0,
+                    color: product.gem?.[0]?.color || "NONE",
+                    clarity: product.gem?.[0]?.clarity || "NONE",
+                    cut: product.gem?.[0]?.cut || "NONE",
+                    origin: product.gem?.[0]?.origin || "NONE",
+                    carat: product.gem?.[0]?.carat || 0,
                     materialBuyPrice: calculateMaterialBuyPrice(product),
                     gemBuyPrice: calculateGemBuyPrice(product)
                 };
