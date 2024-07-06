@@ -177,7 +177,7 @@ export default function SettingGoldPrice() {
         onOk={handleUpdate}
         onCancel={handleCancel}
       >
-        <h2>Material ID: {selectedMaterial.materialId}</h2>
+        <h2>Price ID: {selectedMaterial.id}</h2>
         <h2>Material Name: {selectedMaterial.materialName}</h2>
         <div>
           <label>Purchase (VND): </label>

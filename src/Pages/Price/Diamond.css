@@ -52,19 +52,24 @@
     font-size: 16px;
 }
 
-.DiamondPrice-td-toClick:hover{
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-    transition: 0.4s;
-}
-
 .DiamondPrice-rowEven {
     background-color: #f9f9f9;
+    transition: 0.3s;
+}
+
+.DiamondPrice-rowEven:hover{
+    cursor: pointer;
+    background-color: #ccc;
 }
 
 .DiamondPrice-rowOdd {
     background-color: #fff;
+    transition: 0.3s;
+}
+
+.DiamondPrice-rowOdd:hover{
+    cursor: pointer;
+    background-color: #ccc;
 }
 
 @media only screen and (max-width: 768px) {
