@@ -288,6 +288,6 @@ export const adornicaServ = {
 
     updateCustomer: (id, newItemData) =>{
         console.log(id, newItemData);
-        return https.post(`/api/v1/customers/${id}`, newItemData);
+        return https.put(`/api/v1/customers/${id}`, newItemData);
     }
 }
