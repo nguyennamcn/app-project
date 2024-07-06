@@ -115,6 +115,11 @@ export const adornicaServ = {
         return https.post(`/api/v1/prices/materials/create/${materialID}`, dataPrice);
     },
 
+    putMaterialPrice: (priceId, dataUpdate) => {
+        console.log(priceId)
+        return https.put(`/api/v1/prices/materials/${priceId}`, dataUpdate);
+    },
+
     getPriceDiamond: () => {
         return https.get(`/api/v1/prices/gems`);
     },
