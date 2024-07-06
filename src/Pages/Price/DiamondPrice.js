@@ -1,49 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Input, Button } from 'antd';
-import './Diamond.css'; // Import CSS file
+import './Diamond.css';
+import { useNavigate } from 'react-router-dom';
 
 const DiamondPrice = () => {
-    const [goldPrices, setGoldPrices] = useState([]);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [currentPrice, setCurrentPrice] = useState(null);
-    const [updatedPurchase, setUpdatedPurchase] = useState('');
-    const [updatedSell, setUpdatedSell] = useState('');
+    const [diamondPrices, setDiamondPrices] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         adornicaServ.getPriceDiamond()
             .then((res) => {
                 const filteredData = res.data.metadata.filter(price => price.gemBuyPrice && price.gemSellPrice);
                 console.log(filteredData);
-                setGoldPrices(filteredData);
+                setDiamondPrices(filteredData);
             })
             .catch((err) => {
                 console.log(err);
             });
     }, []);
 
-    const showModal = (price) => {
-        setCurrentPrice(price);
-        setUpdatedPurchase(price.gemBuyPrice);
-        setUpdatedSell(price.gemSellPrice);
-        setIsModalVisible(true);
-    };
-
-    const handleOk = () => {
-        // Update the price information here
-        const updatedPrices = goldPrices.map(price => {
-            if (price === currentPrice) {
-                return { ...price, gemBuyPrice: updatedPurchase, gemSellPrice: updatedSell };
-            }
-            return price;
-        });
-        setGoldPrices(updatedPrices);
-        setIsModalVisible(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
+    const handleSetting = () => {
+        navigate('/settingDiamondPrice');
+      };
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -57,6 +36,7 @@ const DiamondPrice = () => {
 
     return (
         <div className="DiamondPrice-container">
+        <button className="btnSetting" onClick={handleSetting}>Setting</button>
             <h2 className="DiamondPrice-header">DIAMOND PRICE - {currentDate}</h2>
             <div className="DiamondPrice-tableContainer">
                 <table className="DiamondPrice-table">
@@ -74,12 +54,11 @@ const DiamondPrice = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {goldPrices.map((price, index) => (
-                            <tr key={index} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
+                        {diamondPrices.map((price, index) => (
+                            <tr key={index} style={{cursor:'auto'}} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
                                 <td 
                                     data-label="STT" 
                                     className="DiamondPrice-td-toClick"
-                                    onClick={() => showModal(price)}
                                 >
                                     {index + 1}
                                 </td>
@@ -96,46 +75,6 @@ const DiamondPrice = () => {
                     </tbody>
                 </table>
             </div>
-
-            <Modal title="Update Prices" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <h1>Current price</h1>
-                <div>
-                    <label>Purchase (VND): </label>
-                    <Input 
-                        value={updatedPurchase} 
-                        onChange={(e) => setUpdatedPurchase(e.target.value)} 
-                        type="number"
-                        readOnly
-                    />
-                </div>
-                <div style={{ marginTop: '10px',}}>
-                    <label>Sell (VND): </label>
-                    <Input 
-                        value={updatedSell} 
-                        onChange={(e) => setUpdatedSell(e.target.value)} 
-                        type="number"
-                        readOnly
-                    />
-                </div>
-
-                {/* <h1>New price</h1>
-                <div>
-                    <label>Purchase (VND): </label>
-                    <Input 
-                      
-                        onChange={(e) => setUpdatedPurchase(e.target.value)} 
-                        type="number"
-                    />
-                </div>
-                <div style={{ marginTop: '10px' }}>
-                    <label>Sell (VND): </label>
-                    <Input 
-                      
-                        onChange={(e) => setUpdatedSell(e.target.value)} 
-                        type="number"
-                    />
-                </div> */}
-            </Modal>
         </div>
     );
 };

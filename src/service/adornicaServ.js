@@ -128,6 +128,15 @@ export const adornicaServ = {
         return https.get(`/api/v1/prices/gems`);
     },
 
+    putDiamondPrice: (priceId, dataUpdate) => {
+        console.log(priceId)
+        return https.put(`/api/v1/prices/gems/${priceId}`, dataUpdate);
+    },
+
+    getPriceDiamondExceptEffectDate: (id) => {
+        return https.get(`/api/v1/prices/gems/all/${id}`);
+    },
+        
     postUpdateDeliveryOrder: (orderID) => {
         console.log(orderID)
         return https.post(`/api/v1/orders/delivery/${orderID}`);
