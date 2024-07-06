@@ -19,16 +19,19 @@ export default function CustomerDetails() {
   const itemsPerPage = 7;
 
   useEffect(() => {
+    fetchCustomerDetails();
+  }, []);
+
+  const fetchCustomerDetails = () => {
     adornicaServ.getCustomerDetails()
       .then((res) => {
-        console.log(res.data.metadata);
         const sortedDetails = res.data.metadata.sort((a, b) => a.customerId - b.customerId);
         setCustomerDetails(sortedDetails);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
 
   const currentDate = new Date().toLocaleDateString();
 
@@ -83,22 +86,18 @@ export default function CustomerDetails() {
       address: editAddress,
       dateOfBirth: editDateOfBirth
     };
-
+  
     adornicaServ.updateCustomer(selectedCustomer.customerId, newData)
       .then((res) => {
         console.log(`Updated customer with id ${selectedCustomer.customerId}`, res.data);
-        // Update customerDetails state or perform any necessary actions after update
-        // For example:
-        // setCustomerDetails(prevDetails => {
-        //   return prevDetails.map(detail => detail.customerId === selectedCustomer.customerId ? { ...detail, ...newData } : detail);
-        // });
-        closeModal(); // Close modal after successful update if desired
+        closeModal();
+        window.location.reload(); 
       })
       .catch((err) => {
         console.error(`Error updating customer with id ${selectedCustomer.customerId}`, err);
-        // Handle error scenarios
       });
   };
+  
 
   return (
     <div className="customer-container">
