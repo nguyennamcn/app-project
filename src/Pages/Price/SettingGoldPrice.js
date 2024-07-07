@@ -136,18 +136,14 @@ export default function SettingGoldPrice() {
   const sortedGoldPrices = [...goldPrices].sort((a, b) => new Date(a.effectDate) - new Date(b.effectDate));
 
   return (
-    <div className="container">
-      <select className='selectMaterial' onChange={(e) => handleMaterialChange(e.target.value)}>
+    <div className="container-gold">
+      <h2 className="header">SETTING GOLD PRICE</h2>
+      <select className='selectMaterial-gold' onChange={(e) => handleMaterialChange(e.target.value)}>
         {listMaterial.map((material) => (
           <option key={material.id} value={material.id}>{material.material}</option>
         ))}
       </select>
-
       <button className="btnCreate" onClick={showCreateModal}>Create</button>
-
-      <button className="btnBack" onClick={() => navigate("/gold-price")}>Back</button>
-
-      <h2 className="header">SETTING GOLD PRICE</h2>
       <table className="table">
         <thead>
           <tr>
@@ -170,7 +166,7 @@ export default function SettingGoldPrice() {
           ))}
         </tbody>
       </table>
-
+      <button className="btnBack" onClick={() => navigate("/gold-price")}>Back</button>
       <Modal
         title="Update price"
         visible={isModalVisible}
@@ -206,7 +202,7 @@ export default function SettingGoldPrice() {
         onOk={handleCreate}
         onCancel={handleCancel}
       >
-        <select className='selectMaterial' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
+        <select className='selectMaterial-gold' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
           <option value="">Select Material</option>
           {listMaterial.map((material) => (
             <option key={material.id} value={material.id}>{material.material}</option>

@@ -102,15 +102,14 @@ export default function SettingDiamondPrice() {
 
   return (
     <div className="DiamondPrice-container">
-      <select className='selectMaterial' onChange={(e) => handleDiamondChange(e.target.value)}>
+      <h2 className="DiamondPrice-header">SETTING DIAMOND PRICE</h2>
+      <select className='selectMaterial-diamond' onChange={(e) => handleDiamondChange(e.target.value)}>
         {listDiamond.map((diamond) => (
           <option key={diamond.gemId} value={diamond.gemId}>
             {diamond.color} - {diamond.clarity} - {diamond.cut} - {diamond.origin} - {diamond.carat}
           </option>
         ))}
       </select>
-      <button className="btnBack" onClick={handleBack}>Back</button>
-      <h2 className="DiamondPrice-header">SETTING DIAMOND PRICE</h2>
       <div className="DiamondPrice-tableContainer">
         <table className="DiamondPrice-table">
           <thead>
@@ -142,6 +141,7 @@ export default function SettingDiamondPrice() {
             ))}
           </tbody>
         </table>
+        <button className="btnBack-diamond" onClick={handleBack}>Back</button>
       </div>
 
       <Modal

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useNavigate } from 'react-router-dom';
-import './GoldPrice.css'; 
+import './GoldPrice.css';
 
 export default function GoldPrice() {
   const [goldPrices, setGoldPrices] = useState([]);
@@ -30,7 +30,7 @@ export default function GoldPrice() {
   return (
     <div className="gold-price-container">
       <h2 className="gold-price-header">GOLD PRICE - {currentDate}</h2>
-      <table className="table">
+      <table className="gold-price-table">
         <thead>
           <tr>
             <th className="gold-price-th">Name</th>
@@ -40,10 +40,10 @@ export default function GoldPrice() {
         </thead>
         <tbody>
           {goldPrices.map((material, index) => (
-            <tr style={{cursor:'auto'}} key={index} className={index % 2 === 0 ? 'rowEven' : 'rowOdd'}>
-              <td className="gold-price-td">{material.materialName}</td>
-              <td className="gold-price-td">{formatPrice(material.materialBuyPrice)}</td>
-              <td className="gold-price-td">{formatPrice(material.materialSellPrice)}</td>
+            <tr key={index} className={index % 2 === 0 ? 'rowEven' : 'rowOdd'}>
+              <td data-label="Name" className="gold-price-td">{material.materialName}</td>
+              <td data-label="Purchase (VND)" className="gold-price-td">{formatPrice(material.materialBuyPrice)}</td>
+              <td data-label="Sell (VND)" className="gold-price-td">{formatPrice(material.materialSellPrice)}</td>
             </tr>
           ))}
         </tbody>
