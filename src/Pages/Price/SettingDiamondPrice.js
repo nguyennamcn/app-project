@@ -145,7 +145,7 @@ export default function SettingDiamondPrice() {
       </div>
 
       <Modal
-        title="Update price"
+        title={<center><h1>UPDATE PRICE</h1></center>}
         visible={isModalVisible}
         onOk={handleUpdate}
         onCancel={() => setIsModalVisible(false)}
@@ -153,7 +153,7 @@ export default function SettingDiamondPrice() {
         <h2>Price ID: {selectedDiamond.id}</h2>
         <h2>Diamond: {selectedDiamond.color} - {selectedDiamond.clarity} - {selectedDiamond.cut} - {selectedDiamond.origin} - {selectedDiamond.carat}</h2>
         <div>
-          <label>Purchase (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Purchase (VND): </label>
           <Input
             value={updatedBuyPrice}
             onChange={(e) => setUpdatedBuyPrice(e.target.value)}
@@ -162,7 +162,7 @@ export default function SettingDiamondPrice() {
           />
         </div>
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label>Sell (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Sell (VND): </label>
           <Input
             value={updatedSellPrice}
             onChange={(e) => setUpdatedSellPrice(e.target.value)}
