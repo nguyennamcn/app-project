@@ -16,7 +16,7 @@ export default function CustomerDetails() {
   const [editPhone, setEditPhone] = useState('');
   const [editAddress, setEditAddress] = useState('');
   const [editDateOfBirth, setEditDateOfBirth] = useState('');
-  const itemsPerPage = 7;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     fetchCustomerDetails();
