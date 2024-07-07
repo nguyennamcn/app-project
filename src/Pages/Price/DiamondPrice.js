@@ -3,10 +3,17 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Input, Button } from 'antd';
 import './Diamond.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const DiamondPrice = () => {
     const [diamondPrices, setDiamondPrices] = useState([]);
     const navigate = useNavigate();
+
+    const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+    const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+    const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+    const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
     useEffect(() => {
         adornicaServ.getPriceDiamond()
@@ -22,7 +29,7 @@ const DiamondPrice = () => {
 
     const handleSetting = () => {
         navigate('/settingDiamondPrice');
-      };
+    };
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -54,9 +61,9 @@ const DiamondPrice = () => {
                     </thead>
                     <tbody>
                         {diamondPrices.map((price, index) => (
-                            <tr key={index} style={{cursor:'auto'}} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
-                                <td 
-                                    data-label="STT" 
+                            <tr key={index} style={{ cursor: 'auto' }} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
+                                <td
+                                    data-label="STT"
                                     className="DiamondPrice-td-toClick"
                                 >
                                     {index + 1}
@@ -73,7 +80,7 @@ const DiamondPrice = () => {
                         ))}
                     </tbody>
                 </table>
-                <button className="btnSetting-diamond" onClick={handleSetting}>Setting</button>
+                {isManager ? (<button className="btnSetting-diamond" onClick={handleSetting}>Setting</button>) : null}
             </div>
 
 

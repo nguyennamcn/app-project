@@ -3,6 +3,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import Modal from 'react-modal';
 import './Customer.css';
+import { useSelector } from 'react-redux';
 
 Modal.setAppElement('#root'); // Đặt app element cho modal
 
@@ -17,6 +18,12 @@ export default function CustomerDetails() {
   const [editAddress, setEditAddress] = useState('');
   const [editDateOfBirth, setEditDateOfBirth] = useState('');
   const itemsPerPage = 5;
+
+    const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+    const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+    const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+    const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
   useEffect(() => {
     fetchCustomerDetails();
@@ -126,14 +133,24 @@ export default function CustomerDetails() {
             {currentPageData.map((detail, index) => (
               <tr key={index} className={index % 2 === 0 ? 'customer-rowEven' : 'customer-rowOdd'}>
                 <td className="customer-td" data-label="ID">{detail.customerId}</td>
-                <td 
+                {isManager ? (<td 
                   className="customer-td" 
                   data-label="Name"
+                  
                   onClick={() => openCustomerModal(detail.customerId)}
                   style={{ cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   {detail.name}
                 </td>
+                ) : 
+                <td 
+                className="customer-td" 
+                data-label="Name"
+              >
+                {detail.name}
+              </td>
+                }
+                
                 <td className="customer-td" data-label="Phone">{detail.phone}</td>
                 <td className="customer-td" data-label="Address">{detail.address}</td>
                 <td className="customer-td" data-label="Birthday">{formatBirthday(detail.dateOfBirth)}</td>
