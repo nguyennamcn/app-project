@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { Modal } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
-import './DetailPage.css'
+import './DetailPage.css';
 
 export default function DetailPage() {
     const [product, setProduct] = useState({});
@@ -107,6 +107,23 @@ export default function DetailPage() {
                             alt="Main product image"
                         />
                     </div>
+                    <div className="info-section">
+                        <div className="product-header" style={{whiteSpace:'no'}}>
+                            <p className="product-name">{product.productName}</p>
+                            <button className="close-button" type="button" onClick={() => navigate(-1)}>
+                                X
+                            </button>
+                        </div>
+                        {product.totalPrice < 1 ?
+                            <p className="product-price">The product is: <span className="price-amount">Undefined</span></p> :
+                            <p className="product-price">Price of the product: <span className="price-amount">{formatPrice(product.totalPrice)}</span></p>
+                        }
+                        <div className="product-description">
+                        </div>
+                        <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
+                            ADD
+                        </button>
+                    </div>
                     <div className="product-information">
                         <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
                         <div style={{ display: 'flex', marginTop: '5px' }}>
@@ -135,27 +152,8 @@ export default function DetailPage() {
                         </div>
                     </div>
                 </div>
-                <div className="info-section" style={{ position: 'absolute', right: '8%', top: '9%' }}>
-                    <div className="product-header">
-                        <p className="product-name">{product.productName}</p>
-                        <button className="close-button" type="button" onClick={() => navigate(-1)}>
-                            X
-                        </button>
-                    </div>
-                    {   product.totalPrice < 1 ? 
-                        <p className="product-price">The product is: <span className="price-amount">Undefined</span></p> :
-                        <p className="product-price">Price of the product: <span className="price-amount">{formatPrice(product.totalPrice)}</span></p>
-                    }
-                   
-                    <div className="product-description">
-                        {/* <p className="description-title">Description</p>
-                        <span>Model XMXMw000128 is designed with a youthful, pure white tone and is studded with luxurious ECZ stones.</span> */}
-                    </div>
-                    <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
-                        ADD
-                    </button>
-                </div>
             </div>
+
             <Modal
                 visible={isModalVisible}
                 footer={null}
@@ -164,300 +162,6 @@ export default function DetailPage() {
             >
                 <div>{modalMessage}</div>
             </Modal>
-            <style jsx>{`
-                .detail-page {
-                    display: flex;
-                    flex-direction: column;
-                    margin: 1% 5%;
-                }
-
-                .main-section {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
-                }
-
-                .image-info-section {
-                    display: flex;
-                    flex-direction: column;
-                    margin-right: 20px;
-                }
-
-                .image-section {
-                    display: flex;
-                }
-
-                .thumbnail-images {
-                    display: flex;
-                    flex-direction: column;
-                    margin-right: 10px;
-                }
-
-                .thumbnail {
-                    cursor: pointer;
-                    max-width: 100px;
-                    height: 100px;
-                    border: 1px solid #000;
-                    margin-bottom: 10px;
-                }
-
-                .main-image {
-                    max-width: 350px;
-                    height: 350px;
-                }
-
-                .info-section {
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
-                    padding: 20px;
-                    max-width: 600px;
-                }
-
-                .product-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-
-                .product-name {
-                    font-size: 30px;
-                    font-weight: 500;
-                }
-
-                .close-button {
-                    background: red;
-                    border-radius: 100%;
-                    width: 40px;
-                    height: 40px;
-                    color: white;
-                    font-weight: bold;
-                    cursor: pointer;
-                }
-
-                .product-price {
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-
-                .price-amount {
-                    font-size: 45px;
-                    color: red;
-                    font-weight: bold;
-                }
-
-                .product-description {
-                    margin: 10px 0;
-                }
-
-                .description-title {
-                    font-weight: bold;
-                }
-
-                .product-size-quantity {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                }
-
-                .product-size {
-                    margin: 20px 0;
-                }
-
-                .size-title {
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-
-                .size-buttons {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                }
-
-                .size-button {
-                    width: 30px;
-                    height: 30px;
-                    border: 1px solid #000;
-                    margin: 5px;
-                    cursor: pointer;
-                    background-color: white;
-                    color: black;
-                }
-
-                .size-button.selected {
-                    background-color: black;
-                    color: white;
-                }
-
-                .available-stock {
-                    margin-top: 10px;
-                    font-size: 18px;
-                }
-
-                .product-quantity {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                }
-
-                .quantity-title {
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-
-                .quantity-controls {
-                    display: flex;
-                    align-items: center;
-                }
-
-                .quantity-button {
-                    width: 30px;
-                    height: 30px;
-                    border: 1px solid #000;
-                    margin: 0 5px;
-                    cursor: pointer;
-                }
-
-                .quantity-input {
-                    width: 50px;
-                    text-align: center;
-                    border: 1px solid #000;
-                }
-
-                .add-to-cart-button {
-                    background: red;
-                    color: #fff;
-                    font-size: 16px; /* Reduced font size */
-                    padding: 5px 5px; /* Reduced padding */
-                    border: none;
-                    cursor: pointer;
-                    margin-top: 10px;
-                    border-radius: 5px; /* Add border radius for smoother look */
-                }
-
-                .product-information {
-                    margin-top: 3px;
-                }
-
-                @media (max-width: 768px) {
-                    .main-section {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .image-info-section {
-                        align-items: center;
-                    }
-
-                    .image-section {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .thumbnail-images {
-                        flex-direction: row;
-                        margin-bottom: 10px;
-                    }
-
-                    .thumbnail {
-                        margin-right: 10px;
-                    }
-
-                    .main-image {
-                        margin-bottom: 20px;
-                    }
-
-                    .info-section {
-                        align-items: center;
-                        text-align: center;
-                    }
-
-                    .product-header {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .product-name {
-                        margin-bottom: 10px;
-                    }
-
-                    .close-button {
-                        margin-top: 10px;
-                    }
-
-                    .product-description, .product-size, .product-quantity {
-                        text-align: center;
-                    }
-
-                    .product-size-quantity {
-                        flex-direction: column;
-                    }
-
-                    .add-to-cart-button {
-                        align-self: center;
-                    }
-                }
-
-                @media (min-width: 769px) and (max-width: 1024px) {
-                    .main-section {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .image-info-section {
-                        align-items: center;
-                    }
-
-                    .image-section {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .thumbnail-images {
-                        flex-direction: row;
-                        margin-bottom: 10px;
-                    }
-
-                    .thumbnail {
-                        margin-right: 10px;
-                    }
-
-                    .main-image {
-                        margin-bottom: 20px;
-                    }
-
-                    .info-section {
-                        align-items: center;
-                        text-align: center;
-                    }
-
-                    .product-header {
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .product-name {
-                        margin-bottom: 10px;
-                    }
-
-                    .close-button {
-                        margin-top: 10px;
-                    }
-
-                    .product-description, .product-size, .product-quantity {
-                        text-align: center;
-                    }
-
-                    .product-size-quantity {
-                        flex-direction: column;
-                    }
-
-                    .add-to-cart-button {
-                        align-self: center;
-                    }
-                }
-            `}</style>
         </div>
     );
 }
