@@ -461,7 +461,6 @@ const BillJewelry = () => {
               <span>{product.clarity}</span>
               <span>{product.origin}</span>
               <span>{formatPrice(product.total)}</span>
-              {/* formatPrice */}
             </div>
           ))}
         </div>

@@ -3,10 +3,17 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Input, Button } from 'antd';
 import './Diamond.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const DiamondPrice = () => {
     const [diamondPrices, setDiamondPrices] = useState([]);
     const navigate = useNavigate();
+
+    const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+    const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+    const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+    const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
     useEffect(() => {
         adornicaServ.getPriceDiamond()
@@ -22,7 +29,7 @@ const DiamondPrice = () => {
 
     const handleSetting = () => {
         navigate('/settingDiamondPrice');
-      };
+    };
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -54,9 +61,9 @@ const DiamondPrice = () => {
                     </thead>
                     <tbody>
                         {diamondPrices.map((price, index) => (
-                            <tr key={index} style={{cursor:'auto'}} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
-                                <td 
-                                    data-label="STT" 
+                            <tr key={index} style={{ cursor: 'auto' }} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
+                                <td
+                                    data-label="STT"
                                     className="DiamondPrice-td-toClick"
                                 >
                                     {index + 1}
@@ -73,8 +80,50 @@ const DiamondPrice = () => {
                         ))}
                     </tbody>
                 </table>
-                <button className="btnSetting-diamond" onClick={handleSetting}>Setting</button>
+                {isManager ? (<button className="btnSetting-diamond" onClick={handleSetting}>Setting</button>) : null}
             </div>
+
+
+            {/* <Modal title="Update Prices" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <h1>Current price</h1>
+                <div>
+                    <label>Purchase (VND): </label>
+                    <Input 
+                        value={updatedPurchase} 
+                        //onChange={(e) => setUpdatedPurchase(e.target.value)} 
+                        type="number"
+                        readOnly
+                    />
+                </div>
+                <div style={{ marginTop: '10px', marginBottom:'14px' }}>
+                    <label>Sell (VND): </label>
+                    <Input 
+                        value={updatedSell} 
+                        //onChange={(e) => setUpdatedSell(e.target.value)} 
+                        type="number"
+                        readOnly
+                    />
+                </div>
+
+                <h1>New price</h1>
+                <div>
+                    <label>Purchase (VND): </label>
+                    <Input 
+                      
+                        onChange={(e) => setUpdatedPurchase(e.target.value)} 
+                        type="number"
+                    />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                    <label>Sell (VND): </label>
+                    <Input 
+                      
+                        onChange={(e) => setUpdatedSell(e.target.value)} 
+                        type="number"
+                    />
+                </div>
+            </Modal> */}
+
         </div>
     );
 };

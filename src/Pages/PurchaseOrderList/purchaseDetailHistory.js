@@ -266,7 +266,7 @@ const PurchaseDetailHistory = () => {
       </div>
       <div>
         <h1>Order Code: {sp?.orderCode}</h1>
-        <h1>Total Amount: {formatPrice(sp?.totalAmount)}</h1>
+        <h1>Total Amount: {sp?.totalAmount}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>

@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useNavigate } from 'react-router-dom';
 import './GoldPrice.css';
+import { useSelector } from 'react-redux';
 
 export default function GoldPrice() {
   const [goldPrices, setGoldPrices] = useState([]);
   const navigate = useNavigate();
+
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+  const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+  const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+  const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
   useEffect(() => {
     adornicaServ.getPriceMaterial()
@@ -48,7 +55,9 @@ export default function GoldPrice() {
           ))}
         </tbody>
       </table>
-      <button className="btnSetting-gold" onClick={handleSetting}>Setting</button>
+      {isManager ? (<button className="btnSetting-gold" onClick={handleSetting}>Setting</button>) : null}  
     </div>
   );
 };
+
+
