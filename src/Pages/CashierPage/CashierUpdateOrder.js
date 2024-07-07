@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, notification } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -64,20 +64,25 @@ export default function CashierUpdateOrder() {
             totalPrice: totalAllPrice
         };
 
-        console.log(orderData);
+        console.log("order data",orderData);
         adornicaServ.updatePreOrder(orderData)
             .then((res) => {
                 console.log('Order updated successfully:', res);
                 console.log(orderData);
+                notification.success({message: "Update successfully"});
             })
             .catch((err) => {
-                console.error('Error updating order:', err.response); // Log error details
+                console.error('Error updating order:', err.response);
+                notification.error({message: "Update fail"});
             });
 
-        alert("Update successfully");
+
     };
 
-    // Define table columns
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+      };
+
     const columns = [
         {
             title: 'Product ID',
@@ -93,6 +98,7 @@ export default function CashierUpdateOrder() {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
+            render: (text) => `${formatPrice(text)} `,
         },
         {
             title: 'Action',
@@ -115,7 +121,7 @@ export default function CashierUpdateOrder() {
                         <Table dataSource={products} columns={columns} pagination={false} scroll={{ y: 320 }} style={{maxHeight:'300px'}}/>
                     </div>
 
-                    <div style={{position:'absolute', bottom:'130px'}} className='col-sm-12'><h1>Total: {totalAllPrice}</h1></div>
+                    <div style={{position:'absolute', bottom:'130px'}} className='col-sm-12'><h1>Total: {formatPrice(totalAllPrice)}</h1></div>
                     <hr />
                     <div className='row col-sm-12 justify-center' style={{position:'absolute', bottom:'74px'}}>
                         <NavLink to='/cashierListOrder'>
