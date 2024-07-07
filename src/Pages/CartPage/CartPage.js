@@ -209,7 +209,7 @@ const CartPage = () => {
 
     return (
         <div style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-            <Table dataSource={dataSource} columns={columns} pagination={false} />
+            <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{y:200}} />
             <hr />
             <div>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order detail</h1>
