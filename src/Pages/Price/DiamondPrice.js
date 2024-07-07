@@ -36,7 +36,6 @@ const DiamondPrice = () => {
 
     return (
         <div className="DiamondPrice-container">
-        <button className="btnSetting" onClick={handleSetting}>Setting</button>
             <h2 className="DiamondPrice-header">DIAMOND PRICE - {currentDate}</h2>
             <div className="DiamondPrice-tableContainer">
                 <table className="DiamondPrice-table">
@@ -74,6 +73,7 @@ const DiamondPrice = () => {
                         ))}
                     </tbody>
                 </table>
+                <button className="btnSetting-diamond" onClick={handleSetting}>Setting</button>
             </div>
         </div>
     );

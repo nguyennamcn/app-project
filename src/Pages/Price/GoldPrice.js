@@ -28,27 +28,27 @@ export default function GoldPrice() {
   };
 
   return (
-    <div className="container">
-      <button className="btnSetting" onClick={handleSetting}>Setting</button>
-      <h2 className="header">GOLD PRICE - {currentDate}</h2>
+    <div className="gold-price-container">
+      <h2 className="gold-price-header">GOLD PRICE - {currentDate}</h2>
       <table className="table">
         <thead>
           <tr>
-            <th className="th">Name</th>
-            <th className="th">Purchase (VND)</th>
-            <th className="th">Sell (VND)</th>
+            <th className="gold-price-th">Name</th>
+            <th className="gold-price-th">Purchase (VND)</th>
+            <th className="gold-price-th">Sell (VND)</th>
           </tr>
         </thead>
         <tbody>
           {goldPrices.map((material, index) => (
             <tr style={{cursor:'auto'}} key={index} className={index % 2 === 0 ? 'rowEven' : 'rowOdd'}>
-              <td className="td">{material.materialName}</td>
-              <td className="td">{formatPrice(material.materialBuyPrice)}</td>
-              <td className="td">{formatPrice(material.materialSellPrice)}</td>
+              <td className="gold-price-td">{material.materialName}</td>
+              <td className="gold-price-td">{formatPrice(material.materialBuyPrice)}</td>
+              <td className="gold-price-td">{formatPrice(material.materialSellPrice)}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button className="btnSetting-gold" onClick={handleSetting}>Setting</button>
     </div>
   );
 };

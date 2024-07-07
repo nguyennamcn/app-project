@@ -72,6 +72,25 @@
     background-color: #ccc;
 }
 
+.btnSetting-diamond {
+    background-color: #000;
+    color: white;
+    margin: 0 0 6px 0;
+    padding: 4px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    padding: 10px 20px;
+  }
+  
+  .btnSetting-diamond:hover {
+    background-color: #ccc;
+    color: #000;
+  }
+  
+
 @media only screen and (max-width: 768px) {
     .DiamondPrice-header {
         font-size: 20px;
