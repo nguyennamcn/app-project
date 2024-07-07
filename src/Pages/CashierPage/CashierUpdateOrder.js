@@ -121,9 +121,9 @@ export default function CashierUpdateOrder() {
                         <Table dataSource={products} columns={columns} pagination={false} scroll={{ y: 320 }} style={{maxHeight:'300px'}}/>
                     </div>
 
-                    <div style={{position:'absolute', bottom:'130px'}} className='col-sm-12'><h1>Total: {formatPrice(totalAllPrice)}</h1></div>
+                    <div style={{position:'absolute', bottom:'130px'}} className='col-sm-10'><h1>Total: {formatPrice(totalAllPrice)}</h1></div>
                     <hr />
-                    <div className='row col-sm-12 justify-center' style={{position:'absolute', bottom:'74px'}}>
+                    <div className='row col-sm-10 justify-center' style={{position:'absolute', bottom:'74px'}}>
                         <NavLink to='/cashierListOrder'>
                             <button style={{
                                 padding: '15px 40px',

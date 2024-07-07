@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Modal } from 'antd';
+import { Button, Table, Modal, notification } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import "./StoreProductDetail.css";
@@ -152,6 +152,15 @@ export default function StoreProductDetail() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (selectedProducts.length === 0) {
+            notification.error({
+                message: 'No Products Selected',
+                description: 'You need to choose at least one product to purchase.',
+            });
+            return;
+        }
+
         const formData = {
             staffId: userInfo.id,
             purchaseOrderCode: generateRandomOrderCode(),
@@ -184,7 +193,7 @@ export default function StoreProductDetail() {
             const response = await adornicaServ.postPurchaseOrderCode(formData);
             console.log('Order sent successfully:', response.data);
             setModalTitle('Success');
-            setModalMessage('Order sent successfully');
+            setModalMessage(<center><i className="home-jewelry-check-icon fa-solid fa-circle-check" ></i><h1 style={{marginTop:'20px'}}>Purchased successfully !</h1></center>);
             setModalVisible(true);
             setTimeout(() => {
                 setModalVisible(false);
@@ -280,19 +289,31 @@ export default function StoreProductDetail() {
             title: 'Material Buy Price',
             dataIndex: 'materialBuyPrice',
             key: 'materialBuyPrice',
-            render: (text) => `${formatPrice(text)} `,
+            render: (text, record) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{formatPrice(record.materialBuyPrice)}</span>
+                </div>
+            ),
         },
         {
             title: 'Gem Buy Price',
             dataIndex: 'gemBuyPrice',
             key: 'gemBuyPrice',
-            render: (text) => `${formatPrice(text)} `,
+            render: (text, record) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{formatPrice(record.gemBuyPrice)}</span>
+                </div>
+            ),
         },
         {
             title: 'Total',
             dataIndex: 'total',
             key: 'total',
-            render: (_, record) => `${formatPrice((record.materialBuyPrice + record.gemBuyPrice)) || 0} `,
+            render: (text, record) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{`${formatPrice((record.materialBuyPrice + record.gemBuyPrice)) || 0} `}</span>
+                </div>
+            ),
         },
         {
             title: 'Remove',
@@ -370,7 +391,7 @@ export default function StoreProductDetail() {
                             padding: '0',
                         }}>
                         <div className='col-sm-12 mt-2'><h1>Buy back items</h1></div>
-                        <Table style={{ width: '94%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
+                        <Table style={{ width: '95.5%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
                             ...product,
                             materialBuyPrice: calculateMaterialBuyPrice(product),
                             gemBuyPrice: calculateGemBuyPrice(product)
@@ -406,10 +427,9 @@ export default function StoreProductDetail() {
                 </div>
             </div>
             <Modal
-                title={modalTitle}
+                title={<center><h1>{modalTitle}</h1></center>}
                 visible={modalVisible}
-                onOk={() => setModalVisible(false)}
-                onCancel={() => setModalVisible(false)}
+                footer={null}
             >
                 <p>{modalMessage}</p>
             </Modal>
