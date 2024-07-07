@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import QrScanner from 'react-qr-scanner';
+import braceletImage from '../../asset/img/Lactay.png';
+import necklaceImage from '../../asset/img/Daychuyen.png';
 
 const { Meta } = Card;
 
@@ -214,8 +216,8 @@ export default function JewelryPage() {
         onCancel={() => setIsBraceletSizeModalVisible(false)}
         className="home-jewelry-custom-modal-bracelet"
       >
-        <div>
-          <img src="https://media.discordapp.net/attachments/1161276908433063946/1258774320109322320/image.png?ex=66894470&is=6687f2f0&hm=ce8f80cea8ed0bf69be9ac9506d17e385293591d0deca3dd1c6b3e48673d755a&=&format=webp&quality=lossless&width=791&height=743" alt="Bracelet Sizes" style={{ width: '100%' }} />
+        <div className='size_img_bracelet'>
+          <img src={braceletImage} alt="Bracelet Sizes" style={{ width: '100%' }} />
         </div>
       </Modal>
       <Modal
@@ -225,7 +227,7 @@ export default function JewelryPage() {
         className="home-jewelry-custom-modal-necklace"
       >
         <div>
-          <img src="https://media.discordapp.net/attachments/1161276908433063946/1258775025020960788/image.png?ex=66894518&is=6687f398&hm=2a4e239fee7162cd0d29596963aca936305b7ae7fec12a86563167805ecc8a4d&=&format=webp&quality=lossless&width=1116&height=743" alt="Necklace Sizes" style={{ width: '100%' }} />
+          <img src={necklaceImage} alt="Necklace Sizes" style={{ width: '100%' }} />
         </div>
       </Modal>
 
