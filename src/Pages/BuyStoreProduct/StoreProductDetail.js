@@ -188,7 +188,7 @@ export default function StoreProductDetail() {
             setModalVisible(true);
             setTimeout(() => {
                 setModalVisible(false);
-                //navigate('/buyProduct');
+                navigate('/buyProduct');
             }, 2000);
         } catch (error) {
             console.error('There was an error sending the order:', error);

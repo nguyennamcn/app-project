@@ -131,6 +131,7 @@ export default function PurchaseOrder() {
                         <th>Purchase Code</th>
                         <th>Total Price</th>
                         <th>Date Order</th>
+                        <th>Payment status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -142,6 +143,7 @@ export default function PurchaseOrder() {
                             <td data-label="Purchase Code">{order.orderCode}</td>
                             <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>
                             <td data-label="Date Order">{order.dateOrder}</td>
+                            <td data-label="Payment status">{order.paymentMethod}</td>
                             <td data-label="Action">
                                 <div className="action-buttons">
                                     <NavLink to={`/payment-history/${order.orderCode}`}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Input } from 'antd';
+import { Table, Button, Modal, Input, notification } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
@@ -61,6 +61,7 @@ export default function SellOrderPage() {
                 setDataSource(newDataSource);
                 setFilteredData(newDataSource);
                 setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Order was deleted!</h1></div>);
+                notification.success({ message: "Order was deleted!" });
             })
             .catch((err) => {
                 console.log("Error deleting order:", err);

@@ -45,7 +45,7 @@ function UpGold() {
       return material;
     });
     setSp({ ...sp, materials: updatedMaterials });
-    console.log(sp);
+    console.log("Material to update",updatedMaterials);
   };
 
   const handleUpdate = (e) => {
