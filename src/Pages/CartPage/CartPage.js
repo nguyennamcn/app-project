@@ -11,7 +11,7 @@ const CartPage = () => {
     const [timeoutId, setTimeoutId] = useState(null);
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
-    const [discount, setDiscount] = useState('');
+    const [discount, setDiscount] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
@@ -47,11 +47,13 @@ const CartPage = () => {
                         console.log(response)
                     } else {
                         setCustomerName('');
+                        setDiscount(0);
                     }
                 })
                 .catch(error => {
                     console.error("Error fetching customer data:", error);
-                    setCustomerName(''); 
+                        setDiscount(0);
+                        setCustomerName(''); 
                 });
         }
     }, [customerPhone]);
@@ -167,7 +169,7 @@ const CartPage = () => {
     };
 
     const formatPrice = (price) => {
-        return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Undefined';
+        return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : '0';
     };
 
     const columns = [

@@ -53,6 +53,8 @@ import UpDiamonds from './Pages/UpdateProduct/UpDiamonds';
 import UpJewelry from './Pages/UpdateProduct/UpJewelry';
 import purchaseDetailHistory from './Pages/PurchaseOrderList/purchaseDetailHistory';
 import Material from './Pages/Invetory/Material';
+import SettingGoldPrice from './Pages/Price/SettingGoldPrice';
+import SettingDiamondPrice from './Pages/Price/SettingDiamondPrice'
 
 function App() {
   const dispatch = useDispatch();
@@ -129,6 +131,8 @@ function App() {
               <Route path="/shop-login" element={<Layout Component={ShopLogin} />} />
               <Route path="/about-system-login" element={<Layout Component={AboutSystemLogin} />} />
               <Route path="/historyOrder" element={<Layout Component={HistoryOrder} />} />
+              <Route path="/settingGoldPrice" element={<Layout Component={SettingGoldPrice} />} />
+              <Route path="/settingDiamondPrice" element={<Layout Component={SettingDiamondPrice} />} />
             </>
           )}
 

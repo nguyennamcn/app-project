@@ -252,6 +252,7 @@ const BillGold = () => {
     return totalPrice;
     };
 
+
   const handleMouseDown = (e) => {
     e.target.style.backgroundColor = '#888888';
   };

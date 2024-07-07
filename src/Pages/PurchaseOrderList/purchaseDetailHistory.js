@@ -162,6 +162,10 @@ const PurchaseDetailHistory = () => {
     }));
   };
 
+  const formatPrice = (price) => {
+    return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Undefined';
+};
+
   const handleDownloadPDF = () => {
     console.log(orderCode);
     adornicaServ.postPurchaseExport(orderCode)

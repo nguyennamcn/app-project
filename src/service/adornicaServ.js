@@ -105,6 +105,21 @@ export const adornicaServ = {
     getPriceMaterial: () => {
         return https.get(`/api/v1/prices/materials`);
     },
+
+    getPriceMaterialExceptEffectDate: (id) => {
+        return https.get(`/api/v1/prices/materials/all/${id}`);
+    },
+
+    postMaterialPriceWithEffectDate: (materialID, dataPrice) => {
+        console.log(materialID)
+        return https.post(`/api/v1/prices/materials/create/${materialID}`, dataPrice);
+    },
+
+    putMaterialPrice: (priceId, dataUpdate) => {
+        console.log(priceId)
+        return https.put(`/api/v1/prices/materials/${priceId}`, dataUpdate);
+    },
+
     getPriceDiamond: () => {
         return https.get(`/api/v1/prices/gems`);
     },
@@ -113,10 +128,18 @@ export const adornicaServ = {
         return https.get(`/api/v1/prices/gems`);
     },
 
+    putDiamondPrice: (priceId, dataUpdate) => {
+        console.log(priceId)
+        return https.put(`/api/v1/prices/gems/${priceId}`, dataUpdate);
+    },
+
+    getPriceDiamondExceptEffectDate: (id) => {
+        return https.get(`/api/v1/prices/gems/all/${id}`);
+    },
+        
     postUpdateDeliveryOrder: (orderID) => {
         console.log(orderID)
         return https.post(`/api/v1/orders/delivery/${orderID}`);
-
     },
 
     getPurchaseDiamondPrice: (cut, carat, clarity, color, origin) => {
@@ -279,6 +302,6 @@ export const adornicaServ = {
 
     updateCustomer: (id, newItemData) =>{
         console.log(id, newItemData);
-        return https.post(`/api/v1/customers/${id}`, newItemData);
+        return https.put(`/api/v1/customers/${id}`, newItemData);
     }
 }

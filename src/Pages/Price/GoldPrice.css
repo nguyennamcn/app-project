@@ -1,0 +1,132 @@
+.gold-price-container {
+  max-height: 70vh;
+  overflow: auto;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  max-width: 1000px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.gold-price-header {
+  background-color: rgb(255, 234, 99);
+  color: #3b3b3b;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 5px;
+}
+
+.gold-price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.gold-price-th {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  background-color: #f2f2f2;
+  font-size: 16px;
+}
+
+.gold-price-td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.rowEven {
+  background-color: #f9f9f9;
+}
+
+.rowOdd {
+  background-color: #fff;
+}
+
+.btnSetting-gold {
+  background-color: #000;
+  color: white;
+  margin: 10px 0 6px 0;
+  padding: 4px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  padding: 10px 20px;
+}
+
+.btnSetting-gold:hover {
+  background-color: #ccc;
+  color: #000;
+}
+
+@media only screen and (max-width: 768px) {
+  .gold-price-header {
+      font-size: 20px;
+      padding: 8px;
+  }
+  .gold-price-th {
+      font-size: 14px;
+      padding: 10px;
+  }
+  .gold-price-td {
+      font-size: 14px;
+      padding: 10px;
+  }
+
+  .gold-price-table thead {
+      display: none;
+  }
+
+  .gold-price-table,
+  .gold-price-table tbody,
+  .gold-price-table tr,
+  .gold-price-table td {
+      display: block;
+      width: 100%;
+      font-size: 13px;
+  }
+
+  .gold-price-table tr {
+      margin-bottom: 20px;
+  }
+
+  .gold-price-table td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+  }
+
+  .gold-price-table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 15px;
+      width: calc(50% - 30px);
+      padding-right: 10px;
+      text-align: left;
+      font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .gold-price-header {
+      font-size: 18px;
+      padding: 6px;
+  }
+  .gold-price-th {
+      font-size: 12px;
+      padding: 8px;
+  }
+  .gold-price-td {
+      font-size: 12px;
+      padding: 8px;
+  }
+}

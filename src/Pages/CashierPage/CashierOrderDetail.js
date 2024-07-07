@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, DatePicker, Modal } from 'antd';
+import { Button, Table, DatePicker, Modal, notification } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import './CashierOrderDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -95,7 +95,7 @@ export default function ListOrderPage() {
 
         if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod) {
             console.error('Missing required fields');
-            alert('Please fill all the required fields');
+            notification.error({message:'Please fill all the required fields'});
             return;
         }
 

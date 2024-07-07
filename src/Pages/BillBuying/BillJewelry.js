@@ -339,6 +339,7 @@ const BillJewelry = () => {
       totalPrice += product.total;
     });
     return totalPrice;
+
   };
 
   const handleMouseDown = (e) => {
@@ -370,6 +371,7 @@ const BillJewelry = () => {
         clarity: product.clarity, // You need to provide the clarity
         cut: product.cut, // You need to provide the cut
         origin: product.origin,
+
         carat: parseFloat(product.carat), // You need to provide the carat
         price: parseFloat(product.total),
       })),
