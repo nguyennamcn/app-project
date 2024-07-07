@@ -195,11 +195,13 @@ const BillDiamond = () => {
             console.log(response)
           } else {
             setCustomerName('');
+            setAddress('');
           }
         })
         .catch(error => {
           console.error("Error fetching customer data:", error);
-          setCustomerName(''); // Clear the customer name if there's an error
+          setCustomerName('');
+          setAddress('');
         });
     }
   }, [customerPhone]);

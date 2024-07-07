@@ -223,8 +223,9 @@ export default function CustomerDetails() {
               <strong>Birthday:</strong>
               <input
                 type="text"
-                value={editDateOfBirth}
+                value={formatBirthday(editDateOfBirth)}
                 onChange={(e) => setEditDateOfBirth(e.target.value)}
+                readOnly
               />
             </label>
           </div>
