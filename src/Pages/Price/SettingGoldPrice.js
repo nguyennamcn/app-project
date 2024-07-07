@@ -168,7 +168,7 @@ export default function SettingGoldPrice() {
       </table>
       <button className="btnBack" onClick={() => navigate("/gold-price")}>Back</button>
       <Modal
-        title="Update price"
+        title={<center><h1>UPDATE PRICE</h1></center>}
         visible={isModalVisible}
         onOk={handleUpdate}
         onCancel={handleCancel}
@@ -176,7 +176,7 @@ export default function SettingGoldPrice() {
         <h2>Price ID: {selectedMaterial.id}</h2>
         <h2>Material Name: {selectedMaterial.materialName}</h2>
         <div>
-          <label>Purchase (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Purchase (VND): </label>
           <Input
             value={updatedBuyPrice}
             onChange={(e) => setUpdatedBuyPrice(e.target.value)}
@@ -185,7 +185,7 @@ export default function SettingGoldPrice() {
           />
         </div>
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label>Sell (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Sell (VND): </label>
           <Input
             value={updatedSellPrice}
             onChange={(e) => setUpdatedSellPrice(e.target.value)}
@@ -197,12 +197,12 @@ export default function SettingGoldPrice() {
       </Modal>
 
       <Modal
-        title="Create new price for future"
+        title={<center><h1>CREATE NEW PRICE</h1></center>}
         visible={isCreateModalVisible}
         onOk={handleCreate}
         onCancel={handleCancel}
       >
-        <select className='selectMaterial-gold' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
+        <select className='selectMaterial' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
           <option value="">Select Material</option>
           {listMaterial.map((material) => (
             <option key={material.id} value={material.id}>{material.material}</option>
@@ -210,17 +210,17 @@ export default function SettingGoldPrice() {
         </select>
 
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label>Effect date:</label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Effect date:</label>
           <DatePicker
             style={{ marginLeft: '10px' }}
-            showTime={{ format: 'HH:mm' }}
-            format="YYYY-MM-DD HH:mm"
+            // showTime={{ format: 'HH:mm' }}
+            // format="YYYY-MM-DD HH:mm"
             onChange={(date) => setCreateEffectDate(date)}
           />
         </div>
 
         <div>
-          <label>Purchase (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Purchase (VND): </label>
           <Input
             value={createBuyPrice}
             onChange={(e) => setCreateBuyPrice(e.target.value)}
@@ -230,7 +230,7 @@ export default function SettingGoldPrice() {
           />
         </div>
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label>Sell (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Sell (VND): </label>
           <Input
             value={createSellPrice}
             onChange={(e) => setCreateSellPrice(e.target.value)}
