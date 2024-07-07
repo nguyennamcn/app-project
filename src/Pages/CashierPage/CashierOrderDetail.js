@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, DatePicker, Modal, notification } from 'antd';
+import { Button, Table, DatePicker, Modal, notification, message } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import './CashierOrderDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -93,7 +93,13 @@ export default function ListOrderPage() {
 
         console.log('Order Data:', orderData);
 
-        if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod) {
+        const phoneFormat = /^\d{10}$/;
+    if (!phoneFormat.test(customerPhone)) {
+        notification.error({message: 'Phone number must be a 10-digit number.'});
+        return;
+    }
+
+        if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod || !customerBirthday) {
             console.error('Missing required fields');
             notification.error({message:'Please fill all the required fields'});
             return;
@@ -143,7 +149,7 @@ export default function ListOrderPage() {
             })
             .catch((err) => {
                 console.error('Error submitting order:', err.response || err);
-                alert('Error submitting order. Please check the server logs for more details.');
+                notification.error({message:'Error submitting order. Please check the server logs for more details.'});
             });
     };
 
@@ -255,7 +261,7 @@ export default function ListOrderPage() {
                         </div>
                     </div>
                     <div className="col-sm-12 flex justify-center mt-6">
-                        <a href='/cashierListOrder'>
+                        <a href='/historyOrder'>
                             <Button
                                 style={{ padding: '0 56px 0 56px', marginRight: '30px' }}
                                 size="large"
