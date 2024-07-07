@@ -202,7 +202,7 @@ export default function SettingGoldPrice() {
         onOk={handleCreate}
         onCancel={handleCancel}
       >
-        <select className='selectMaterial' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
+        <select style={{border:'1px solid'}} className='selectMaterial' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
           <option value="">Select Material</option>
           {listMaterial.map((material) => (
             <option key={material.id} value={material.id}>{material.material}</option>
