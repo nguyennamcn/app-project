@@ -3,6 +3,7 @@ import { Input, Button, Radio, DatePicker, Modal } from 'antd';
 import { useNavigate, NavLink } from 'react-router-dom';
 import './AddEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import { useSelector } from 'react-redux';
 
 const { confirm } = Modal;
 
@@ -20,6 +21,13 @@ const AddEmployee = () => {
   });
   const [phoneError, setPhoneError] = useState('');
   const [datePickerOpen, setDatePickerOpen] = useState(false);
+
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+  const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+  const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+  const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
+
 
   const navigate = useNavigate();
 
@@ -177,6 +185,21 @@ const AddEmployee = () => {
             onChange={handleChange}
           />
           <div className="store-role-section">
+          {isAdmin ? (
+            <div className="role-group">
+            <h3>Role :</h3>
+            <Radio.Group
+              name="role"
+              value={form.role}
+              onChange={handleChange}
+            >
+              <Radio value="ROLE_SALES_STAFF">Sales Staff</Radio>
+              <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
+              <Radio value="ROLE_MANAGER">Manager</Radio>
+              <Radio value="ROLE_ADMIN">Admin</Radio>
+            </Radio.Group>
+          </div>
+          ) : (
             <div className="role-group">
               <h3>Role :</h3>
               <Radio.Group
@@ -188,6 +211,7 @@ const AddEmployee = () => {
                 <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
               </Radio.Group>
             </div>
+          )}
           </div>
         </div>
       </div>
