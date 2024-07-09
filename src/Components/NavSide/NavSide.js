@@ -33,7 +33,7 @@ export default function NavSide() {
           <p>Employees</p>
         </NavLink>
         ): null }
-        {!isStaff && (
+        {!isStaff && !isAdmin && (
           <NavLink to='/historyOrder' 
           className='nav-item'
         >
@@ -79,12 +79,15 @@ export default function NavSide() {
           <i className="fa fa-star"></i>
           <p>Feedback</p>
         </NavLink>
-        <NavLink to='/buyProduct' 
+        {isAdmin ? (null) : (
+          <NavLink to='/buyProduct' 
           className='nav-item'
         >
           <i className="fa fa-hand-holding-usd"></i>
           <p>Buy</p>
         </NavLink>
+        )}
+        
     </div>
   )
 }

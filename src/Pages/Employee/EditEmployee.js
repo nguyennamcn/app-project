@@ -3,11 +3,18 @@ import { Input, Button, Radio, Modal, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
 import './EditEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import { useSelector } from 'react-redux';
 
 export default function EditEmployee() {
   const [form, setForm] = useState({});
   const [employee, setEmployee] = useState({});
   const { id } = useParams();
+
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+  const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+  const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+  const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
   useEffect(() => {
     adornicaServ.getViewStaff(id)
@@ -111,13 +118,25 @@ export default function EditEmployee() {
         <div className="edit-details">
           {/* <h3>Work Information</h3> */}
           <h3>Role:</h3>
-          <div className="role-group-edit">
+          {isAdmin ? (
+            <div className="role-group-edit">
+            {/* <h3>Role:</h3> */}
+            <Radio.Group name="role" onChange={handleChange} value={form.role} style={{ marginLeft: '10px' }}>
+              <Radio value="ROLE_SALES_STAFF">Sales staff</Radio>
+              <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
+                <Radio value="ROLE_MANAGER">Manager</Radio>
+                <Radio value="ROLE_ADMIN">Admin</Radio>
+            </Radio.Group>
+          </div>
+          ) : (
+            <div className="role-group-edit">
             {/* <h3>Role:</h3> */}
             <Radio.Group name="role" onChange={handleChange} value={form.role} style={{ marginLeft: '10px' }}>
               <Radio value="ROLE_SALES_STAFF">Sales staff</Radio>
               <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
             </Radio.Group>
           </div>
+          )}        
         </div>
         <hr />
         <div className="edit-actions">

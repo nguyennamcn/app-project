@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
-import { Modal } from 'antd';
+import { Descriptions, Modal, notification } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './DetailPage.css';
 
 export default function DetailPage() {
@@ -12,6 +13,12 @@ export default function DetailPage() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const navigate = useNavigate();
+
+    const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+    const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+    const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+    const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
     useEffect(() => {
         adornicaServ.getDetailProduct(productCode)
@@ -38,6 +45,14 @@ export default function DetailPage() {
         setModalMessage(message);
         setIsModalVisible(true);
     };
+
+    const handleNotificationAddToCart = () => {
+        notification.warning({
+            message: 'You cannot execute that feature !',
+            description:'Only sale staff can execute that feature.',
+        });
+        
+    }
 
     const handleAddToCart = () => {
         const item = {
@@ -120,9 +135,17 @@ export default function DetailPage() {
                         }
                         <div className="product-description">
                         </div>
-                        <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
+                        {isAdmin || isCashier || isManager ? (
+                            <button className="add-to-cart-button" type="button" onClick={handleNotificationAddToCart}>
                             ADD
                         </button>
+                        ) : (
+                            <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
+                            ADD
+                        </button>
+                        )}
+                        
+
                     </div>
                     <div className="product-information">
                         <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>

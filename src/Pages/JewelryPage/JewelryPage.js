@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate';
 import QrScanner from 'react-qr-scanner';
 import braceletImage from '../../asset/img/Lactay.png';
 import necklaceImage from '../../asset/img/Daychuyen.png';
+import { useSelector } from 'react-redux';
 
 const { Meta } = Card;
 
@@ -23,6 +24,12 @@ export default function JewelryPage() {
   const [isNecklaceSizeModalVisible, setIsNecklaceSizeModalVisible] = useState(false);
   const [isQRModalVisible, setIsQRModalVisible] = useState(false);
   const [scannedData, setScannedData] = useState('');
+
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+    const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+    const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+    const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -157,7 +164,11 @@ export default function JewelryPage() {
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
                     <button className="home-jewelry-overlay-button">View</button>
                   </NavLink>
-                  <button className="home-jewelry-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+
+                  {isAdmin || isCashier || isManager ? ( null
+                  ) : (
+                    <button className="home-jewelry-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                  )}
                 </div>
               </Card>
             </div>

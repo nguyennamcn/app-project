@@ -5,6 +5,8 @@ import './DiamondPage.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import QrScanner from 'react-qr-scanner';
+import { useSelector } from 'react-redux';
+
 const { Meta } = Card;
 
 export default function DiamondPage() {
@@ -19,6 +21,12 @@ export default function DiamondPage() {
   const itemsPerPage = 5;
   const [isQRModalVisible, setIsQRModalVisible] = useState(false);
   const [scannedData, setScannedData] = useState('');
+
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+  const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+  const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+  const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+  const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
   useEffect(() => {
     adornicaServ.getListDiamond()
@@ -135,7 +143,11 @@ export default function DiamondPage() {
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
                     <button className="home-diamond-overlay-button">View</button>
                   </NavLink>
+
+                  {isAdmin || isCashier || isManager ? ( null
+                  ) : (
                   <button className="home-diamond-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                  )}
                 </div>
               </Card>
             </div>
