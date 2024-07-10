@@ -5,6 +5,7 @@ import './CashierOrderDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function ListOrderPage() {
     const [products, setProducts] = useState([]);
@@ -26,7 +27,7 @@ export default function ListOrderPage() {
     const [modalMessage, setModalMessage] = useState('');
     const [pdfUrl, setPdfUrl] = useState('');
     const [paymentUpdated, setPaymentUpdated] = useState(false);
-
+    const [loading, setLoading] = useState(true);
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     console.log(userInfo);
 
@@ -65,7 +66,10 @@ export default function ListOrderPage() {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
     }, [orderKey, paymentUpdated]);
 
     useEffect(() => {
@@ -197,6 +201,10 @@ export default function ListOrderPage() {
     };
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div className='cashierOrderDetail'>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
@@ -297,5 +305,9 @@ export default function ListOrderPage() {
                 )}
             </div>
         </div>
+      )
+    }
+</>
+        
     );
 }

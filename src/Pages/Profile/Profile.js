@@ -4,6 +4,7 @@ import { Input, Button, DatePicker, Modal, notification } from 'antd';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import './Profile.css';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function EditEmployee() {
   let userInfo = useSelector((state) => state.userReducer.userInfo);
@@ -13,7 +14,6 @@ export default function EditEmployee() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAvatarVisible, setIsAvatarVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     adornicaServ.getProfile(userInfo.id)
       .then((res) => {
@@ -22,6 +22,9 @@ export default function EditEmployee() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, [userInfo.id]);
 
@@ -97,7 +100,11 @@ export default function EditEmployee() {
   };
 
   return (
-    <div className="profile-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="profile-container">
       <h1 className="profile-title">Profile</h1>
       <div className="profile-card">
         <div className="profile-header">
@@ -182,5 +189,9 @@ export default function EditEmployee() {
         </div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }

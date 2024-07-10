@@ -4,6 +4,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Button, notification, message } from 'antd';
 import ReactPaginate from 'react-paginate';
 import './ManageJewelry.css'; 
+import Spinner from '../../Components/Spinner/Spinner';
 
 const JewelryInventoryPage = () => {
   const [jewelry, setJewelry] = useState([]);
@@ -13,6 +14,7 @@ const JewelryInventoryPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4; // Số lượng mục trên mỗi trang
   const totalPages = Math.ceil(jewelry.length / itemsPerPage);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -22,6 +24,9 @@ const JewelryInventoryPage = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, []);
 
@@ -121,7 +126,11 @@ const JewelryInventoryPage = () => {
   };
 
   return (
-    <div  className="jewelry-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div  className="jewelry-container">
       <header className="jewelry-header">
         <h1 className="jewelry-title">JEWELRY INVENTORY</h1>
         <NavLink to="/add-jewelry"  style={{
@@ -245,6 +254,10 @@ const JewelryInventoryPage = () => {
         </div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 };
 

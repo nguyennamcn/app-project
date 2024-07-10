@@ -3,9 +3,13 @@ import { Modal, message, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
 import './UpJewelry.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import Spinner from '../../Components/Spinner/Spinner';
 
 function UpJewelry() {
   const { productCode } = useParams();
+  const [loading, setLoading] = useState(true);
+
+
   const [sp, setSp] = useState({
     productCode: '',
     productName: '',
@@ -36,6 +40,9 @@ function UpJewelry() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, [productCode]);
 
@@ -110,7 +117,11 @@ function UpJewelry() {
   };
 
   return (
-    <div className="upjewelry-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="upjewelry-container">
       <div className="upjewelry-content">
         <div className="upjewelry-form">
           <h2 className="upjewelry-title">UPDATE JEWELRY</h2>
@@ -242,6 +253,10 @@ function UpJewelry() {
         <p>{modalMessage}</p>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }
 

@@ -3,11 +3,13 @@ import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import { Modal, notification } from 'antd';
 import './ViewEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import Spinner from '../../Components/Spinner/Spinner';
 
 function ViewEmployee() {
   const [employee, setEmployee] = useState();
   const { staffId } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     adornicaServ.getViewEmployee(staffId)
@@ -17,6 +19,9 @@ function ViewEmployee() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, [staffId]);
 
@@ -64,7 +69,11 @@ function ViewEmployee() {
   };
 
   return (
-    <div className="profile-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="profile-container">
       <h1 className="profile-title">Profile of {employee?.name}</h1>
       <div className="profile-card">
         <div className="profile-header">
@@ -115,6 +124,10 @@ function ViewEmployee() {
         </div>
       </div>
     </div>
+      )
+    }
+</>
+    
   );
 }
 

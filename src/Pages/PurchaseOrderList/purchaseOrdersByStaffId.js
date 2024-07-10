@@ -6,6 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import ReactPaginate from 'react-paginate';
 import './purchaseOrders.css';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -24,7 +25,7 @@ export default function PurchaseOrderByStaffId() {
     const [filteredData, setFilteredData] = useState([]);
     const ordersPerPage = 4;
     const [currentPage, setCurrentPage] = useState(0);
-
+    const [loading, setLoading] = useState(true);
     let userInfo = useSelector((state) => state.userReducer.userInfo);
 
 
@@ -49,7 +50,11 @@ export default function PurchaseOrderByStaffId() {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
+        
     }, [userInfo.id]);
 
     const showModal = (message, orderCode = null) => {
@@ -114,6 +119,10 @@ export default function PurchaseOrderByStaffId() {
     };
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div className="purchase-order-container">
             <h1 className="purchase-order-title">Purchase List</h1>
             {/* <div className="search-add-container">
@@ -222,5 +231,9 @@ export default function PurchaseOrderByStaffId() {
                 </div>
             </Modal>
         </div>
+      )
+    }
+</>
+        
     );
 }

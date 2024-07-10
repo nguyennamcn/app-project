@@ -5,6 +5,7 @@ import { Modal, notification } from 'antd';
 import ReactPaginate from 'react-paginate';
 
 import './ManageGold.css'; // Import CSS file for styling
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function ManageGold() {
   const [goldManage, setGoldManage] = useState([]);
@@ -14,7 +15,7 @@ export default function ManageGold() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4; // Số lượng mục trên mỗi trang
   const totalPages = Math.ceil(goldManage.length / itemsPerPage);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     adornicaServ.getListGold()
       .then((res) => {
@@ -23,6 +24,9 @@ export default function ManageGold() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, []);
 
@@ -143,7 +147,11 @@ export default function ManageGold() {
   
 
   return (
-    <div className="gold-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="gold-container">
       <header className="gold-header">
         <h1 className="gold-title">GOLD</h1>
         <NavLink to="/add-gold" style={{
@@ -268,5 +276,9 @@ export default function ManageGold() {
         </div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 };

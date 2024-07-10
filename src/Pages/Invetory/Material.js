@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import ReactPaginate from 'react-paginate';
 import { Modal as AntdModal, notification } from 'antd';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const Material = () => {
     const [items, setItems] = useState([]);
@@ -18,6 +19,7 @@ const Material = () => {
     const [editName, setEditName] = useState('');
     const [newItemName, setNewItemName] = useState('');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     const itemsPerPage = 3;
 
@@ -31,7 +33,11 @@ const Material = () => {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
+        
     }, []);
 
     const openMaterialModal = (item) => {
@@ -134,6 +140,10 @@ const Material = () => {
     const currentItems = items.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div className="material-container">
             <h2 className="material-title">Material</h2>
             <NavLink to="/inventory" style={{
@@ -320,6 +330,10 @@ const Material = () => {
                 <button onClick={closeConfirmationModal}>No</button>
             </Modal>
         </div>
+      )
+    }
+</>
+        
     );
 };
 

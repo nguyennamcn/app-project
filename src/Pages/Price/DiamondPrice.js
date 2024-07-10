@@ -4,11 +4,12 @@ import { Modal, Input, Button } from 'antd';
 import './Diamond.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const DiamondPrice = () => {
     const [diamondPrices, setDiamondPrices] = useState([]);
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(true);
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
     const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
@@ -24,7 +25,10 @@ const DiamondPrice = () => {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
     }, []);
 
     const handleSetting = () => {
@@ -42,6 +46,10 @@ const DiamondPrice = () => {
     };
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div className="DiamondPrice-container">
             <h2 className="DiamondPrice-header">DIAMOND PRICE - {currentDate}</h2>
             <div className="DiamondPrice-tableContainer">
@@ -125,6 +133,10 @@ const DiamondPrice = () => {
             </Modal> */}
 
         </div>
+      )
+    }
+</>
+        
     );
 };
 

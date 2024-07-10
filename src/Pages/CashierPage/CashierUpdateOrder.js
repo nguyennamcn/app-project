@@ -3,6 +3,7 @@ import { Table, Button, notification } from 'antd';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function CashierUpdateOrder() {
     const [products, setProducts] = useState([]);
@@ -10,6 +11,8 @@ export default function CashierUpdateOrder() {
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [totalAllPrice, setTotalAllPrice] = useState(0);
     const { orderKey } = useParams();
+    const [loading, setLoading] = useState(true);
+
     console.log(products);
 
     let userInfo = useSelector((state) => {
@@ -30,7 +33,10 @@ export default function CashierUpdateOrder() {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
     }, [orderKey]);
 
     const handlRemove = (productId) => {
@@ -111,6 +117,10 @@ export default function CashierUpdateOrder() {
     ];
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div>
             <div className='container'>
                 <div className='row justify-center'>
@@ -145,5 +155,9 @@ export default function CashierUpdateOrder() {
                 </div>
             </div>
         </div>
+      )
+    }
+</>
+        
     );
 }

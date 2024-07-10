@@ -6,6 +6,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import QrScanner from 'react-qr-scanner';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const { Meta } = Card;
 
@@ -21,6 +22,7 @@ export default function DiamondPage() {
   const itemsPerPage = 5;
   const [isQRModalVisible, setIsQRModalVisible] = useState(false);
   const [scannedData, setScannedData] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const userInfo = useSelector((state) => state.userReducer.userInfo);
   const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
@@ -35,7 +37,11 @@ export default function DiamondPage() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
+      ;
   }, []);
 
   const showModal = (message) => {
@@ -103,7 +109,11 @@ export default function DiamondPage() {
   const currentItems = filteredProducts.slice(offset, offset + itemsPerPage);
 
   return (
-    <div className='home-diamond-page'>
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className='home-diamond-page'>
       <div className='home-diamond-filter'>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
         <button onClick={() => setIsQRModalVisible(true)} className="home-diamond-scan-button">Scan Code</button>
@@ -205,5 +215,9 @@ export default function DiamondPage() {
         />
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }

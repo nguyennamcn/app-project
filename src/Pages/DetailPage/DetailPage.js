@@ -4,6 +4,7 @@ import { Descriptions, Modal, notification } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import './DetailPage.css';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function DetailPage() {
     const [product, setProduct] = useState({});
@@ -18,6 +19,7 @@ export default function DetailPage() {
     const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
     const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
     const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         adornicaServ.getDetailProduct(productCode)
@@ -27,7 +29,10 @@ export default function DetailPage() {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
     }, [productCode]);
 
     useEffect(() => {
@@ -91,6 +96,10 @@ export default function DetailPage() {
     };
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div className="detail-page">
             <div className="main-section">
                 <div className="image-info-section">
@@ -185,5 +194,9 @@ export default function DetailPage() {
                 <div>{modalMessage}</div>
             </Modal>
         </div>
+      )
+    }
+</>
+        
     );
 }

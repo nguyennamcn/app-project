@@ -55,6 +55,7 @@ import purchaseDetailHistory from './Pages/PurchaseOrderList/purchaseDetailHisto
 import Material from './Pages/Invetory/Material';
 import SettingGoldPrice from './Pages/Price/SettingGoldPrice';
 import SettingDiamondPrice from './Pages/Price/SettingDiamondPrice'
+import Spinner from './Components/Spinner/Spinner';
 
 function App() {
   const dispatch = useDispatch();

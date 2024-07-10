@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import ReactPaginate from 'react-paginate';
 import './CashierListOrder.css'; // Đảm bảo rằng CSS này đã được cập nhật đúng với yêu cầu
+import Spinner from '../../Components/Spinner/Spinner';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -23,7 +24,7 @@ export default function SellOrderPage() {
     const [filteredData, setFilteredData] = useState([]);
     const ordersPerPage = 3;
     const [currentPage, setCurrentPage] = useState(0);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         adornicaServ.getHistoryOrders()
             .then((res) => {
@@ -45,7 +46,10 @@ export default function SellOrderPage() {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
     }, []);
 
     const showDeleteModal = (message, orderCode = null) => {
@@ -109,6 +113,10 @@ export default function SellOrderPage() {
     
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div className="sell-order-container">
             <h1 className="sell-order-title">Orders</h1>
             <div className="search-add-container">
@@ -248,5 +256,9 @@ export default function SellOrderPage() {
                 </div>
             </Modal>
         </div>
+      )
+    }
+</>
+        
     );
 }

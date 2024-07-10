@@ -1,18 +1,30 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { ClimbingBoxLoader } from 'react-spinners'
-
-export default function Spinner() {
-  let {isLoading} = useSelector((state)=>state.spinnerSlice);
-  return isLoading ? (
-    <div
-    style={{background:"#E74646"}}
-    className="h-screen w-screen fixed top-0 left-0 flex justify-center items-center z-50">
-      <ClimbingBoxLoader color="#FFE5CA" size={50}
-      speedMultiplier={2}
-      />
-    </div>
-  ) : (
-    <></>
-  )
-}
+import React from 'react';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Space, Spin } from 'antd';
+const Spinner = () => (
+  <Space
+    style={{
+      background: "black",
+      opacity: '0.5',
+      position: 'absolute',
+      top : '0',
+      left: '0',
+      width:'100%',
+      height:'100%',
+      display: 'flex',
+      justifyContent: 'center'
+    }}
+  >
+    <Spin
+      indicator={
+        <LoadingOutlined
+          style={{
+            fontSize: 160,
+          }}
+          spin
+        />
+      }
+    />
+  </Space>
+);
+export default Spinner;
