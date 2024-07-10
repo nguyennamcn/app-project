@@ -303,5 +303,10 @@ export const adornicaServ = {
     updateCustomer: (id, newItemData) =>{
         console.log(id, newItemData);
         return https.put(`/api/v1/customers/${id}`, newItemData);
+    },
+
+    updatePriceMaterial: (id, newPriceData) =>{
+        console.log(id, newPriceData);
+        return https.post(`/api/v1/prices/materials/create/${id}`, newPriceData);
     }
 }

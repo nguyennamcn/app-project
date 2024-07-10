@@ -18,6 +18,9 @@ const Material = () => {
     const [itemToDelete, setItemToDelete] = useState(null);
     const [editName, setEditName] = useState('');
     const [newItemName, setNewItemName] = useState('');
+    const [priceSell, setPriceSell] = useState('');
+    const [priceBuy, setPriceBuy] = useState('');
+    const effdate = Date.now();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
@@ -36,8 +39,8 @@ const Material = () => {
             })
             .finally(() => {
                 setLoading(false); // Đánh dấu đã tải xong
-              });
-        
+            });
+
     }, []);
 
     const openMaterialModal = (item) => {
@@ -63,6 +66,8 @@ const Material = () => {
 
     const handleCreateMaterial = () => {
         const newItemData = { name: newItemName };
+        
+        console.log(effdate)
         adornicaServ.createMaterial(newItemData)
             .then((res) => {
                 console.log(`Created new material with id: ${res.data.id}`);
@@ -70,7 +75,7 @@ const Material = () => {
                 setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
                 closeCreateMaterialModal();
                 notification.success({ message: "Create successfully !" });
-                navigate(0); // Reload lại trang
+                // navigate(0); // Reload lại trang
 
             })
             .catch((err) => {
@@ -78,6 +83,8 @@ const Material = () => {
                 notification.error({ message: errorMessage });
                 console.log(err);
             });
+
+        
     };
 
     const handleDeleteMaterial = (id) => {
@@ -88,7 +95,7 @@ const Material = () => {
                 setItems(newItems);
                 setPageCount(Math.ceil(newItems.length / itemsPerPage));
                 notification.success({ message: "Delete successfully !" });
-                navigate(0); // Reload lại trang
+                // navigate(0); // Reload lại trang
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
@@ -100,6 +107,11 @@ const Material = () => {
 
     const handleUpdateMaterial = (id) => {
         const updatedData = { name: editName };
+        const newPriceData = {
+            priceBuy: priceBuy,
+            priceSell: priceSell,
+            effectDate: effdate,
+        };
         adornicaServ.updateMaterial(id, updatedData)
             .then((res) => {
                 console.log(`Updated material with id: ${id}`);
@@ -107,6 +119,23 @@ const Material = () => {
                 notification.success({ message: "Update successfully !" });
                 navigate(0); // Reload lại trang
                 closeMaterialModal();
+            })
+            .catch((err) => {
+                const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
+                notification.error({ message: errorMessage });
+                console.log(err);
+            });
+
+    
+            adornicaServ.updatePriceMaterial(id, newPriceData)
+            .then((res) => {
+                console.log(`Created new material with id: ${res.data.id}`);
+                setItems(prevItems => [...prevItems, { id: res.data.id, name: newItemName }]);
+                setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
+                closeCreateMaterialModal();
+                notification.success({ message: "Create successfully !" });
+                navigate(0); // Reload lại trang
+
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
@@ -141,75 +170,75 @@ const Material = () => {
 
     return (
         <>
-      {loading ? (
-        <Spinner />
-      ) :(
-        <div className="material-container">
-            <h2 className="material-title">Material</h2>
-            <NavLink to="/inventory" style={{
-                                                    backgroundColor: 'gray',
+            {loading ? (
+                <Spinner />
+            ) : (
+                <div className="material-container">
+                    <h2 className="material-title">Material</h2>
+                    <NavLink to="/inventory" style={{
+                        backgroundColor: 'gray',
+                        border: '1px solid purple',
+                        color: 'white',
+                        padding: '13px 20px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        justifyContent: 'flex-start',
+                        margin: 'auto',
+                    }}>BACK</NavLink>
+                    <button style={{
+                        backgroundColor: '#00ca4d',
+                        border: '1px solid purple',
+                        color: 'white',
+                        padding: '10px 20px',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        marginBottom: '20px',
+                        marginLeft: '20px'
+                    }} onClick={openCreateMaterialModal}>Create</button>
+                    <div className="material-table-container">
+                        <table className="material-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {currentItems.map(item => (
+                                    <tr key={item.id}>
+                                        <td>{item.id}</td>
+                                        <td>{item.material}</td>
+                                        <td>
+                                            <button style={{
+                                                backgroundColor: '#00ca4d',
+                                                border: '1px solid purple',
+                                                color: 'white',
+                                                padding: '10px 20px',
+                                                borderRadius: '5px',
+                                                cursor: 'pointer'
+                                            }} onClick={() => openMaterialModal(item)}>Update</button>
+                                            <button
+                                                onClick={() => showDeleteConfirm(item.id)}
+                                                style={{
+                                                    backgroundColor: 'red',
                                                     border: '1px solid purple',
                                                     color: 'white',
-                                                    padding: '13px 20px',
+                                                    padding: '10px 20px',
                                                     borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                    justifyContent:'flex-start',
-                                                    margin:'auto',
-                                                }}>BACK</NavLink>
-            <button style={{
-                                            backgroundColor: '#00ca4d',
-                                            border: '1px solid purple',
-                                            color: 'white',
-                                            padding: '10px 20px',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer',
-                                            marginBottom:'20px',
-                                            marginLeft:'20px'
-                                        }}  onClick={openCreateMaterialModal}>Create</button>
-            <div className="material-table-container">
-                <table className="material-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentItems.map(item => (
-                            <tr key={item.id}>
-                                <td>{item.id}</td>
-                                <td>{item.material}</td>
-                                <td>
-                                    <button style={{
-                                            backgroundColor: '#00ca4d',
-                                            border: '1px solid purple',
-                                            color: 'white',
-                                            padding: '10px 20px',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer'
-                                        }} onClick={() => openMaterialModal(item)}>Update</button>
-                                    <button 
-                                        onClick={() => showDeleteConfirm(item.id)} 
-                                        style={{
-                                            backgroundColor: 'red',
-                                            border: '1px solid purple',
-                                            color: 'white',
-                                            padding: '10px 20px',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer'
-                                        }} 
-                                        >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className="material-paginationContainer">
-            {/* <NavLink to="/inventory" style={{
+                                                    cursor: 'pointer'
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="material-paginationContainer">
+                        {/* <NavLink to="/inventory" style={{
                                                     backgroundColor: 'gray',
                                                     border: '1px solid purple',
                                                     color: 'white',
@@ -219,121 +248,146 @@ const Material = () => {
                                                     justifyContent:'flex-start',
                                                     margin:'auto',
                                                 }}>BACK</NavLink> */}
-                <ReactPaginate
-                    previousLabel={'Previous'}
-                    nextLabel={'Next'}
-                    breakLabel={'...'}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName={'material-pagination'}
-                    activeClassName={'active'}
-                    pageClassName={'page-item'}
-                    pageLinkClassName={'page-link'}
-                    previousClassName={'page-item'}
-                    previousLinkClassName={'page-link'}
-                    nextClassName={'page-item'}
-                    nextLinkClassName={'page-link'}
-                    breakClassName={'page-item'}
-                    breakLinkClassName={'page-link'}
-                    disabledClassName={'disabled'}
-                />
-                 <div>
-            </div>
-            </div>
-            <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeMaterialModal}
-                contentLabel="Material-update"
-                className="material-modal"
-            >
-                {selectedItem && (
-                    <div className="material-modal-content">
-                        <h2 className="material-modal-header">Update Material</h2>
-                        <label className="material-modal-label">
-                            Name:
-                            <input
-                                className="material-modal-input"
-                                type="text"
-                                value={editName}
-                                onChange={(e) => setEditName(e.target.value)}
-                            />
-                        </label>
-                        <div className="material-modal-buttons">
-                            <button style={{
-                                            backgroundColor: '#00ca4d',
-                                            border: '1px solid purple',
-                                            color: 'white',
-                                            padding: '10px 20px',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer'
-                                        }}   onClick={() => handleUpdateMaterial(selectedItem.id)}>Save</button>
-                            <button style={{
-                                            backgroundColor: 'red',
-                                            border: '1px solid purple',
-                                            color: 'white',
-                                            padding: '10px 20px',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer'
-                                        }}  
-                                    onClick={closeMaterialModal}>Close</button>
+                        <ReactPaginate
+                            previousLabel={'Previous'}
+                            nextLabel={'Next'}
+                            breakLabel={'...'}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={'material-pagination'}
+                            activeClassName={'active'}
+                            pageClassName={'page-item'}
+                            pageLinkClassName={'page-link'}
+                            previousClassName={'page-item'}
+                            previousLinkClassName={'page-link'}
+                            nextClassName={'page-item'}
+                            nextLinkClassName={'page-link'}
+                            breakClassName={'page-item'}
+                            breakLinkClassName={'page-link'}
+                            disabledClassName={'disabled'}
+                        />
+                        <div>
                         </div>
                     </div>
-                )}
-            </Modal>
-            <Modal
-                isOpen={createModalIsOpen}
-                onRequestClose={closeCreateMaterialModal}
-                contentLabel="Material-create"
-                className="material-modal"
-            >
-                <div className="material-modal-content">
-                    <h2 className="material-modal-header">Create New Material</h2>
-                    <label className="material-modal-label">
-                        Name:
-                        <input
-                            className="material-modal-input"
-                            type="text"
-                            value={newItemName}
-                            onChange={(e) => setNewItemName(e.target.value)}
-                        />
-                    </label>
-                    <div className="material-modal-buttons">
-                        <button style={{
-                                            backgroundColor: '#00ca4d',
-                                            border: '1px solid purple',
-                                            color: 'white',
-                                            padding: '10px 20px',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer'
-                                        }}  onClick={handleCreateMaterial}>Create</button>
-                        <button style={{
-                                            backgroundColor: 'red',
-                                            border: '1px solid purple',
-                                            color: 'white',
-                                            padding: '10px 20px',
-                                            borderRadius: '5px',
-                                            cursor: 'pointer'
-                                        }}  onClick={closeCreateMaterialModal}>Cancel</button>
-                    </div>
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeMaterialModal}
+                        contentLabel="Material-update"
+                        className="material-modal"
+                    >
+                        {selectedItem && (
+                            <div className="material-modal-content">
+                                <h2 className="material-modal-header">Update Material</h2>
+                                <label className="material-modal-label">
+                                    Name:
+                                    <input
+                                        className="material-modal-input"
+                                        type="text"
+                                        style={{
+                                            marginLeft:'25px'
+                                        }}
+                                        value={editName}
+                                        onChange={(e) => setEditName(e.target.value)}
+                                    />
+                                </label>
+                                <label className="material-modal-label">
+                                    Price Sell:
+                                    <input
+                                        className="material-modal-input"
+                                        type="text"
+                                        value={priceSell}
+                                        onChange={(e) => setPriceSell(e.target.value)}
+                                    />
+                                </label><label className="material-modal-label">
+                                    Price Buy:
+                                    <input
+                                        className="material-modal-input"
+                                        type="text"
+                                        value={priceBuy}
+                                        onChange={(e) => setPriceBuy(e.target.value)}
+                                    />
+                                </label>
+                                <div className="material-modal-buttons">
+                                    <button style={{
+                                        backgroundColor: '#00ca4d',
+                                        border: '1px solid purple',
+                                        color: 'white',
+                                        padding: '10px 20px',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer'
+                                    }} onClick={() => handleUpdateMaterial(selectedItem.id)}>Save</button>
+                                    <button style={{
+                                        backgroundColor: 'red',
+                                        border: '1px solid purple',
+                                        color: 'white',
+                                        padding: '10px 20px',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer'
+                                    }}
+                                        onClick={closeMaterialModal}>Close</button>
+                                </div>
+                            </div>
+                        )}
+                    </Modal>
+                    <Modal
+                        isOpen={createModalIsOpen}
+                        onRequestClose={closeCreateMaterialModal}
+                        contentLabel="Material-create"
+                        className="material-modal"
+                    >
+                        <div className="material-modal-content">
+                            <h2 className="material-modal-header">Create New Material</h2>
+                            <label className="material-modal-label">
+                                Name:
+                                <input
+                                    className="material-modal-input"
+                                    type="text"
+                                    style={{
+                                        marginLeft: '25px'
+                                    }}
+                                    value={newItemName}
+                                    onChange={(e) => setNewItemName(e.target.value)}
+                                />
+                            </label>
+
+
+                            <div className="material-modal-buttons">
+                                <button style={{
+                                    backgroundColor: '#00ca4d',
+                                    border: '1px solid purple',
+                                    color: 'white',
+                                    padding: '10px 20px',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer'
+                                }} onClick={handleCreateMaterial}>Create</button>
+                                <button style={{
+                                    backgroundColor: 'red',
+                                    border: '1px solid purple',
+                                    color: 'white',
+                                    padding: '10px 20px',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer'
+                                }} onClick={closeCreateMaterialModal}>Cancel</button>
+                            </div>
+                        </div>
+                    </Modal>
+
+                    <Modal
+                        isOpen={confirmationModalIsOpen}
+                        onRequestClose={closeConfirmationModal}
+                        contentLabel="Confirmation Modal"
+                    >
+                        <h2>Are you sure you want to delete this material ?</h2>
+                        <button className="material-modal-button-delete" onClick={() => handleDeleteMaterial(itemToDelete.id)}>Yes</button>
+                        <button onClick={closeConfirmationModal}>No</button>
+                    </Modal>
                 </div>
-            </Modal>
-            
-            <Modal
-                isOpen={confirmationModalIsOpen}
-                onRequestClose={closeConfirmationModal}
-                contentLabel="Confirmation Modal"
-            >
-                <h2>Are you sure you want to delete this material ?</h2>
-                <button className="material-modal-button-delete" onClick={() => handleDeleteMaterial(itemToDelete.id)}>Yes</button>
-                <button onClick={closeConfirmationModal}>No</button>
-            </Modal>
-        </div>
-      )
-    }
-</>
-        
+            )
+            }
+        </>
+
     );
 };
 
