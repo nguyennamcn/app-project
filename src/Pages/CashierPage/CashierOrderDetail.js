@@ -114,7 +114,7 @@ export default function ListOrderPage() {
                         <h1>Paid successfully !</h1>
                         <Button
                             htmlType='submit'
-                            onClick={handleDownload}>Download PDF</Button>
+                            onClick={handleDownload}>PRINT PDF</Button>
                     </div>
                 );
 
@@ -197,7 +197,7 @@ export default function ListOrderPage() {
     };
 
     return (
-        <div>
+        <div className='cashierOrderDetail'>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
@@ -211,6 +211,7 @@ export default function ListOrderPage() {
                     }}>
                         {paymentMethodDone === 'NONE' ? (
                             <>
+                                
                                 <label>Name: <input style={{width:'50%'}} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
                                 <label>Phone: <input style={{width:'50%'}} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
                                 <label>Address:<textarea style={{width:'90%', height:'64px', resize: 'none', border:'1px solid'}} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>

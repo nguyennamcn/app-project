@@ -8,7 +8,7 @@ Modal.setAppElement('#root');
 
 const pageStyles = {
   container: {
-    maxHeight: '70vh',
+    maxHeight: '65vh',
     overflowY: 'auto',
     background: '#e0f7fa', 
     padding: '30px',
@@ -318,16 +318,7 @@ const BillGold = () => {
     <div style={pageStyles.container}>
       <div style={pageStyles.header}>Purchase</div>
       <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Name:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="name"
-          value={customerName}
-          onChange={handleInputChange(setCustomerName)}
-        />
-
-        <label style={pageStyles.detailLabel}>Phone:</label>
+      <label style={pageStyles.detailLabel}>Phone:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -337,6 +328,17 @@ const BillGold = () => {
           maxLength={10}
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
+
+        <label style={pageStyles.detailLabel}>Name:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="name"
+          value={customerName}
+          onChange={handleInputChange(setCustomerName)}
+        />
+
+
 
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>

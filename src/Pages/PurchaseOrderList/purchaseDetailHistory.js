@@ -17,6 +17,8 @@ const pageStyles = {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '20px',
+    maxHeight:'70vh',
+    overflowY:'auto',
   },
   header: {
     gridColumn: 'span 2',

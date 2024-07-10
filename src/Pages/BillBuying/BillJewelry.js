@@ -18,6 +18,8 @@ const pageStyles = {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '8px',
+    maxHeight:'70vh',
+    overflowY:'auto'
   },
   header: {
     gridColumn: 'span 2',
@@ -418,15 +420,6 @@ const BillJewelry = () => {
     <div style={pageStyles.container}>
       <div style={pageStyles.header}>Purchase</div>
       <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Name:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="name"
-          value={customerDetails.name}
-          onChange={handleDetailChange}
-        />
-
         <label style={pageStyles.detailLabel}>Phone:</label>
         <input
           type="text"
@@ -437,6 +430,25 @@ const BillJewelry = () => {
           maxLength={10}
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
+        <label style={pageStyles.detailLabel}>Name:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="name"
+          value={customerDetails.name}
+          onChange={handleDetailChange}
+        />
+
+        {/* <label style={pageStyles.detailLabel}>Phone:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="phone"
+          value={customerDetails.phone}
+          onChange={handleDetailChange}
+          maxLength={10}
+        />
+        {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>} */}
 
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>

@@ -303,15 +303,6 @@ const BillDiamond = () => {
     <div style={pageStyles.container}>
       <div style={pageStyles.header}>Purchase</div>
       <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Name:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="name"
-          value={customerName}
-          onChange={handleInputChange(setCustomerName)}
-        />
-
         <label style={pageStyles.detailLabel}>Phone:</label>
         <input
           type="text"
@@ -322,6 +313,26 @@ const BillDiamond = () => {
           maxLength={10}
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
+
+        <label style={pageStyles.detailLabel}>Name:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="name"
+          value={customerName}
+          onChange={handleInputChange(setCustomerName)}
+        />
+
+        {/* <label style={pageStyles.detailLabel}>Phone:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="phone"
+          value={customerPhone}
+          onChange={handleInputChange(setCustomerPhone)}
+          maxLength={10}
+        />
+        {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>} */}
 
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
