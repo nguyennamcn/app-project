@@ -14,6 +14,7 @@ const CartPage = () => {
     const [discount, setDiscount] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    const [newPrice, setNewPrice] = useState();
 
     const handleInputChange = (event) => {
         setCustomerName(event.target.value);
@@ -37,6 +38,19 @@ const CartPage = () => {
         setDataSource(cartItems);
     }, []);
 
+    console.log(dataSource.productId)
+    // so sanh cart
+    useEffect(() => {
+            adornicaServ.getDetailProduct()
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch(error => {
+                    console.error("Error fetching customer data:", error);
+                });
+        
+    }, []);
+    
     useEffect(() => {
         if (customerPhone) {
             adornicaServ.getPhoneCustomer(customerPhone)
