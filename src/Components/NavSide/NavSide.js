@@ -22,7 +22,7 @@ export default function NavSide() {
           className='nav-item'
         >
           <i className="fa fa-tasks"></i>
-          <p>Inventory</p>
+          <p>Products</p>
         </NavLink>
         )}
         {isAdmin || isManager  ? (

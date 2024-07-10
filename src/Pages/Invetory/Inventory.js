@@ -34,7 +34,7 @@ const Inventory = () => {
                     right: '5%'
                 }}>Material</h2>
             </NavLink>
-            <h2 className="inventory-title">Inventory</h2>
+            <h2 className="inventory-title">Products</h2>
             <div className="inventory-table-container">
                 <table className="inventory-table">
                     <thead>
