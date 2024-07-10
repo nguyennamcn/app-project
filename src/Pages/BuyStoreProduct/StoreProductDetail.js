@@ -455,7 +455,7 @@ export default function StoreProductDetail() {
                             padding: '0',
                         }}>
                         <div className='col-sm-12 mt-2'><h1>Buy back items</h1></div>
-                        <Table style={{ width: '95.5%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
+                        <Table style={{ width: '100%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
                             ...product,
                             goldPromoPrice: calculateMaterialPromotion(product),
                             goldNonPromo: calculateMaterialNonPromo(product),

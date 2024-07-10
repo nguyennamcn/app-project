@@ -4,6 +4,7 @@ import './Employee.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import Spinner from '../../Components/Spinner/Spinner';
+import { useSelector } from 'react-redux';
 
 export default function EmployeeList() {
   const [employees, setEmployees] = useState([]);
@@ -11,6 +12,7 @@ export default function EmployeeList() {
   const [currentPage, setCurrentPage] = useState(0);
   const employeesPerPage = 4; 
   const [loading, setLoading] = useState(true);
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
 
   useEffect(() => {
     adornicaServ.getEmployee()
@@ -34,9 +36,14 @@ export default function EmployeeList() {
 
   const filteredEmployees = employees.filter(employee => {
     const roles = Array.isArray(employee.roles) ? employee.roles.join(' ') : employee.roles;
-    return employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           employee.phone.includes(searchTerm) ||
-           roles.toLowerCase().includes(searchTerm.toLowerCase());
+    return (
+      !roles.includes('ROLE_ADMIN') && employee.phone !== userInfo.phone &&
+      (
+        employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employee.phone.includes(searchTerm) ||
+        roles.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
   });
 
   const pageCount = Math.ceil(filteredEmployees.length / employeesPerPage);
