@@ -45,7 +45,7 @@ export default function ListOrderPage() {
                 console.log(res.data.metadata);
                 const orderList = res.data.metadata?.list?.map(item => ({
                     ...item,
-                    totalPrice: item.price
+                    totalPrice: item.price 
                 })) || [];
                 setProducts(orderList);
                 const customerData = res.data.metadata || {};
@@ -69,7 +69,7 @@ export default function ListOrderPage() {
             })
             .finally(() => {
                 setLoading(false); // Đánh dấu đã tải xong
-              });
+            });
     }, [orderKey, paymentUpdated]);
 
     useEffect(() => {
@@ -91,27 +91,31 @@ export default function ListOrderPage() {
             name: customerName,
             dateOfBirth: customerBirthday,
             paymentMethod: paymentMethod,
-            amount: totalPrice,
+            amount: (totalPrice - (totalPrice * discount / 100)) ,
             customerPhone: customerPhone,
         };
 
         console.log('Order Data:', orderData);
 
         const phoneFormat = /^\d{10}$/;
-    if (!phoneFormat.test(customerPhone)) {
-        notification.error({message: 'Phone number must be a 10-digit number.'});
-        return;
-    }
+        if (!phoneFormat.test(customerPhone)) {
+            notification.error({ message: 'Phone number must be a 10-digit number.' });
+            return;
+        }
 
         if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod || !customerBirthday) {
             console.error('Missing required fields');
-            notification.error({message:'Please fill all the required fields'});
+            notification.error({ message: 'Please fill all the required fields' });
             return;
         }
 
         adornicaServ.postPaidSummit(orderData)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
+                const linkCredit = res.data.metadata;
+                // if (linkCredit) {
+                //     window.location.href = linkCredit;
+                // }
                 showModal(
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>
@@ -153,7 +157,7 @@ export default function ListOrderPage() {
             })
             .catch((err) => {
                 console.error('Error submitting order:', err.response || err);
-                notification.error({message:'Error submitting order. Please check the server logs for more details.'});
+                notification.error({ message: 'Error submitting order. Please check the server logs for more details.' });
             });
     };
 
@@ -202,112 +206,112 @@ export default function ListOrderPage() {
 
     return (
         <>
-      {loading ? (
-        <Spinner />
-      ) :(
-        <div className='cashierOrderDetail'>
-            <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
-                <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
-            </div>
-            <div className="CashierOrderDetail" style={{margin:'15px 0px', width:'100%', minHeight:'400px'}}>
-                <div className="row justify-content-md-center" style={{width:'100%'}}>
-                    <div className="customer__info col-sm-5" style={{
-                        marginRight: '20px',
-                        backgroundColor: 'white',
-                        
-                    }}>
-                        {paymentMethodDone === 'NONE' ? (
-                            <>
-                                
-                                <label>Name: <input style={{width:'50%'}} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
-                                <label>Phone: <input style={{width:'50%'}} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
-                                <label>Address:<textarea style={{width:'90%', height:'64px', resize: 'none', border:'1px solid'}} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
-                                <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
-                                <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
-                                <label>Payment methods: <select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-                                    <option value='CASH'>Cash</option>
-                                    {/* <option value='BANKING'>Banking</option> */}
-                                </select></label>
-                                <label>Delivery status: {deliveryStatus}</label>
-                            </>
-                        ) : (
-                            <>
-                                <label>Name: {customerName}</label>
-                                <label>Phone: {customerPhone}</label>
-                                <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
-                                <label>Payment methods: {paymentMethodDone}</label>
-                                <label>Delivery status: {deliveryStatus}</label>
-                            </>
-                        )}
+            {loading ? (
+                <Spinner />
+            ) : (
+                <div className='cashierOrderDetail'>
+                    <div className='title'>
+                        <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
+                        <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
                     </div>
-                    <div className="product__table col-sm-5" style={{
-                        marginLeft: '10px',
-                        backgroundColor: 'white',
-                        padding:'0px 10px 0px 0px',
-                        minHeight:'380px'
-                    }}>
-                        <Table style={{ margin: '20px 10px 0 20px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
-                        <div className="row" style={{position: 'absolute', bottom:'16px'}}>
-                            <div className="col-sm-12">
-                                <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item: <span style={{ marginLeft: '4%' }}>{products.length}</span></h1>
+                    <div className="CashierOrderDetail" style={{ margin: '15px 0px', width: '100%', minHeight: '400px' }}>
+                        <div className="row justify-content-md-center" style={{ width: '100%' }}>
+                            <div className="customer__info col-sm-5" style={{
+                                marginRight: '20px',
+                                backgroundColor: 'white',
+
+                            }}>
+                                {paymentMethodDone === 'NONE' ? (
+                                    <>
+
+                                        <label>Name: <input style={{ width: '50%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
+                                        <label>Phone: <input style={{ width: '50%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
+                                        <label>Address:<textarea style={{ width: '90%', height: '64px', resize: 'none', border: '1px solid' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
+                                        <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
+                                        <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
+                                        <label>Payment methods: <select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+                                            <option value='CASH'>Cash</option>
+                                            <option value='CREDIT'>Credit</option>
+                                        </select></label>
+                                        <label>Delivery status: {deliveryStatus}</label>
+                                    </>
+                                ) : (
+                                    <>
+                                        <label>Name: {customerName}</label>
+                                        <label>Phone: {customerPhone}</label>
+                                        <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
+                                        <label>Payment methods: {paymentMethodDone}</label>
+                                        <label>Delivery status: {deliveryStatus}</label>
+                                    </>
+                                )}
                             </div>
-                            <div className="col-sm-12">
-                                <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount: <span style={{ marginLeft: '4%' }}>{discount}%</span></h1>
+                            <div className="product__table col-sm-5" style={{
+                                marginLeft: '10px',
+                                backgroundColor: 'white',
+                                padding: '0px 10px 0px 0px',
+                                minHeight: '380px'
+                            }}>
+                                <Table style={{ margin: '20px 10px 0 20px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
+                                <div className="row" style={{ position: 'absolute', bottom: '16px' }}>
+                                    <div className="col-sm-12">
+                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item: <span style={{ marginLeft: '4%' }}>{products.length}</span></h1>
+                                    </div>
+                                    <div className="col-sm-12">
+                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount: <span style={{ marginLeft: '4%' }}>{discount}%</span></h1>
+                                    </div>
+                                    <div className="col-sm-12">
+                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
+                                            {discount !== 0 ? (
+                                                <>
+                                                    <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{formatPrice(totalPrice)}</span>
+                                                    <span style={{ marginLeft: '4%', color: 'orange' }}>{formatPrice(totalPrice - (totalPrice * discount / 100))}</span>
+                                                </>
+                                            ) : (
+                                                <span style={{ marginLeft: '4%', color: 'orange' }}>{formatPrice(totalPrice)}</span>
+                                            )}
+                                        </h1>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="col-sm-12">
-                                <h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
-                                    {discount !== 0 ? (
-                                        <>
-                                            <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{formatPrice(totalPrice)}</span>
-                                            <span style={{ marginLeft: '4%', color: 'orange' }}>{formatPrice(totalPrice - (totalPrice * discount / 100))}</span>
-                                        </>
-                                    ) : (
-                                        <span style={{ marginLeft: '4%', color: 'orange' }}>{formatPrice(totalPrice)}</span>
-                                    )}
-                                </h1>
+                            <div className="col-sm-12 flex justify-center mt-6">
+                                <a href='/historyOrder'>
+                                    <Button
+                                        style={{ padding: '0 56px 0 56px', marginRight: '30px' }}
+                                        size="large"
+                                        danger
+                                    >Back</Button>
+                                </a>
+                                <Button
+                                    size="large"
+                                    htmlType='submit'
+                                    onClick={handleSubmit}
+                                    style={{ padding: '0 60px', marginLeft: '30px' }}
+                                    disabled={deliveryStatus === 'SUCCESS' || paymentMethodDone !== 'NONE'} // Disable button if deliveryStatus is success
+                                >Paid</Button>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-sm-12 flex justify-center mt-6">
-                        <a href='/historyOrder'>
-                            <Button
-                                style={{ padding: '0 56px 0 56px', marginRight: '30px' }}
-                                size="large"
-                                danger
-                            >Back</Button>
-                        </a>
-                        <Button
-                            size="large"
-                            htmlType='submit'
-                            onClick={handleSubmit}
-                            style={{ padding: '0 60px', marginLeft: '30px' }}
-                            disabled={deliveryStatus === 'SUCCESS' || paymentMethodDone !== 'NONE'} // Disable button if deliveryStatus is success
-                        >Paid</Button>
+
+                        <Modal
+                            title="Notification"
+                            visible={isModalVisible}
+                            footer={null}
+                            onCancel={() => setIsModalVisible(false)}
+                            className="custom-modal-orderdetail"
+                        >
+                            <div>{modalMessage}</div>
+                        </Modal>
+                        {pdfUrl && (
+                            <div className="pdf-container">
+                                <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+                                    <Button type="primary" size="large">View PDF</Button>
+                                </a>
+                            </div>
+                        )}
                     </div>
                 </div>
+            )
+            }
+        </>
 
-                <Modal
-                    title="Notification"
-                    visible={isModalVisible}
-                    footer={null}
-                    onCancel={() => setIsModalVisible(false)}
-                    className="custom-modal-orderdetail"
-                >
-                    <div>{modalMessage}</div>
-                </Modal>
-                {pdfUrl && (
-                    <div className="pdf-container">
-                        <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                            <Button type="primary" size="large">View PDF</Button>
-                        </a>
-                    </div>
-                )}
-            </div>
-        </div>
-      )
-    }
-</>
-        
     );
 }
