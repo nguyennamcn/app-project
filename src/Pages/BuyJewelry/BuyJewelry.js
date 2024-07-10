@@ -272,7 +272,7 @@ const JewelrySelection = () => {
                 data.origin === item.origin
               ));
               if (priceData) {
-                const diamondPrice = priceData.gemBuyPrice;
+                const diamondPrice = priceData.gemBuyPrice + ((priceData.gemSellPrice - priceData.gemBuyPrice) * gemPromotion );
                 if (diamondPrice === 0) hasValidPrice = false;
                 total += diamondPrice;
               } else {
@@ -489,7 +489,7 @@ const JewelrySelection = () => {
                 </div>
 
                 
-                <div style={styles.totalPrice}>Gold promotion: {goldPromotion}</div>
+                <div style={styles.totalPrice}>Gold promotion: {(((item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
 
                 <div style={styles.totalPrice}>
                     Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
@@ -511,7 +511,7 @@ const JewelrySelection = () => {
                 </div>
 
                
-               <div style={styles.totalPrice}>Diamond promotion: {gemPromotion}</div>
+               <div style={styles.totalPrice}>Diamond promotion: {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
 
                <div style={styles.totalPrice}>
                    Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND

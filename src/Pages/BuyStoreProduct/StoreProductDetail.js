@@ -131,12 +131,56 @@ export default function StoreProductDetail() {
         return 0;
     };
 
+    const calculateMaterialPromotion = (product) => {
+        if (product.materials && product.materials.length > 0) {
+            const material = product.materials[0]; // Assuming only one material for simplicity
+            const materialBuyPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialBuyPrice || 0;
+            const materialSellPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialSellPrice || 0;
+            const materialPrice = ( (materialSellPrice - materialBuyPrice) * parseFloat(goldPromotion || 0)) * parseFloat(material.weight || 0);
+            return materialPrice;
+        }
+        return 0;
+    };
+
+    const calculateMaterialNonPromo = (product) => {
+        if (product.materials && product.materials.length > 0) {
+            const material = product.materials[0]; // Assuming only one material for simplicity
+            const materialBuyPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialBuyPrice || 0;
+            const materialSellPrice = goldPrices.find(gp => gp.materialId === material.id)?.materialSellPrice || 0;
+            const materialPrice = (materialBuyPrice) * parseFloat(material.weight || 0);
+            return materialPrice;
+        }
+        return 0;
+    };
+
     const calculateGemBuyPrice = (product) => {
         if (product.gem && product.gem.length > 0) {
             const gem = product.gem[0]; // Assuming only one gem for simplicity
             const gemBuyPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemBuyPrice || 0;
             const gemSellPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemSellPrice || 0;
             const gemPrice = ((gemBuyPrice + (gemSellPrice - gemBuyPrice) * parseFloat(gemPromotion))) || 0;
+            return gemPrice;
+        }
+        return 0;
+    };
+
+    const calculateGemPromotion = (product) => {
+        if (product.gem && product.gem.length > 0) {
+            const gem = product.gem[0]; // Assuming only one gem for simplicity
+            const gemBuyPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemBuyPrice || 0;
+            const gemSellPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemSellPrice || 0;
+            const gemPrice = (( (gemSellPrice - gemBuyPrice) * parseFloat(gemPromotion))) || 0;
+            return gemPrice;
+        }
+        return 0;
+    };
+
+    const calculateGemNonPromo = (product) => {
+        if (product.gem && product.gem.length > 0) {
+            const gem = product.gem[0]; // Assuming only one gem for simplicity
+            const gemBuyPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemBuyPrice || 0;
+            const gemSellPrice = gemPrices.find(gp => gp.gemId === gem.id)?.gemSellPrice || 0;
+            const gemPrice = (gemBuyPrice) || 0;
             return gemPrice;
         }
         return 0;
@@ -287,21 +331,41 @@ export default function StoreProductDetail() {
         },
         {
             title: 'Material Buy Price',
-            dataIndex: 'materialBuyPrice',
-            key: 'materialBuyPrice',
+            dataIndex: 'goldNonPromo',
+            key: 'goldNonPromo',
             render: (text, record) => (
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{formatPrice(record.materialBuyPrice)}</span>
+                    <span>{formatPrice(record.goldNonPromo)}</span>
+                </div>
+            ),
+        },
+        {
+            title: 'Gold Promotion',
+            dataIndex: 'goldPromoPrice',
+            key: 'goldPromoPrice',
+            render: (text, record) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{formatPrice(record.goldPromoPrice)}</span>
                 </div>
             ),
         },
         {
             title: 'Gem Buy Price',
-            dataIndex: 'gemBuyPrice',
-            key: 'gemBuyPrice',
+            dataIndex: 'gemNonPromo',
+            key: 'gemNonPromo',
             render: (text, record) => (
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{formatPrice(record.gemBuyPrice)}</span>
+                    <span>{formatPrice(record.gemNonPromo)}</span>
+                </div>
+            ),
+        },
+        {
+            title: 'Gem Promotion',
+            dataIndex: 'gemPromoPrice',
+            key: 'gemPromoPrice',
+            render: (text, record) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{formatPrice(record.gemPromoPrice)}</span>
                 </div>
             ),
         },
@@ -333,12 +397,12 @@ export default function StoreProductDetail() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 6px 0' }}>Order Code: {sp?.orderCode}</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 2px 0' }}>Order Code: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div className="container bg-white" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius: '20px' }}>
-                <div className="row justify-around bg-white pb-4">
-                    <div className="product__table col-sm-6"
+            <div className="container overflow-auto bg-white mt-2" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius: '20px' }}>
+                <div className="row justify-around bg-white pb-2">
+                    <div className="product__table col-sm-11"
                         style={{
                             marginLeft: '10px',
                             backgroundColor: 'white',
@@ -382,7 +446,7 @@ export default function StoreProductDetail() {
                             </div>
                         </div>
                     </div>
-                    <div className='cart__table col-sm-6'
+                    <div className='cart__table col-sm-11'
                         style={{
                             marginRight: '-24px',
                             backgroundColor: 'white',
@@ -393,7 +457,12 @@ export default function StoreProductDetail() {
                         <div className='col-sm-12 mt-2'><h1>Buy back items</h1></div>
                         <Table style={{ width: '95.5%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
                             ...product,
+                            goldPromoPrice: calculateMaterialPromotion(product),
+                            goldNonPromo: calculateMaterialNonPromo(product),
                             materialBuyPrice: calculateMaterialBuyPrice(product),
+
+                            gemPromoPrice: calculateGemPromotion(product),
+                            gemNonPromo: calculateGemNonPromo(product),
                             gemBuyPrice: calculateGemBuyPrice(product)
                         }))} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
                         <div className='col-sm-1' >

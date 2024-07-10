@@ -286,9 +286,9 @@ const DiamondSelection = () => {
             {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
               <>
                 <div style={styles.totalPrice}>Diamond: Buy price {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND</div>
-                <div style={styles.totalPrice}>Diamond promotion: {gemPromotion}</div>
+                <div style={styles.totalPrice}>Diamond promotion: {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
                 <div style={styles.totalPrice}>
-                    Diamond total: {parseFloat((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)).toLocaleString('en-US')} VND
+                    Diamond total: {parseFloat((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)).toLocaleString('vi-VN')} VND
                 </div>
 
               </>
