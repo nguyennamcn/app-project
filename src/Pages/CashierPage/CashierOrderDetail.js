@@ -5,6 +5,7 @@ import './CashierOrderDetail.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function ListOrderPage() {
     const [products, setProducts] = useState([]);
@@ -26,7 +27,7 @@ export default function ListOrderPage() {
     const [modalMessage, setModalMessage] = useState('');
     const [pdfUrl, setPdfUrl] = useState('');
     const [paymentUpdated, setPaymentUpdated] = useState(false);
-
+    const [loading, setLoading] = useState(true);
     const userInfo = useSelector((state) => state.userReducer.userInfo);
     console.log(userInfo);
 
@@ -65,7 +66,10 @@ export default function ListOrderPage() {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
     }, [orderKey, paymentUpdated]);
 
     useEffect(() => {
@@ -114,7 +118,7 @@ export default function ListOrderPage() {
                         <h1>Paid successfully !</h1>
                         <Button
                             htmlType='submit'
-                            onClick={handleDownload}>Download PDF</Button>
+                            onClick={handleDownload}>PRINT PDF</Button>
                     </div>
                 );
 
@@ -197,7 +201,11 @@ export default function ListOrderPage() {
     };
 
     return (
-        <div>
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className='cashierOrderDetail'>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
@@ -211,6 +219,7 @@ export default function ListOrderPage() {
                     }}>
                         {paymentMethodDone === 'NONE' ? (
                             <>
+                                
                                 <label>Name: <input style={{width:'50%'}} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
                                 <label>Phone: <input style={{width:'50%'}} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
                                 <label>Address:<textarea style={{width:'90%', height:'64px', resize: 'none', border:'1px solid'}} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
@@ -296,5 +305,9 @@ export default function ListOrderPage() {
                 )}
             </div>
         </div>
+      )
+    }
+</>
+        
     );
 }

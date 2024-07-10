@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { NavLink, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
+import Spinner from '../../Components/Spinner/Spinner';
 
 Modal.setAppElement('#root');
 
@@ -17,6 +18,8 @@ const pageStyles = {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '20px',
+    maxHeight:'70vh',
+    overflowY:'auto',
   },
   header: {
     gridColumn: 'span 2',
@@ -153,6 +156,7 @@ const PurchaseDetailHistory = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { orderCode } = useParams();
   const [sp, setSp] = useState();
+  const [loading, setLoading] = useState(true);
 
   const handleDetailChange = (event) => {
     const { name, value } = event.target;
@@ -220,11 +224,18 @@ const PurchaseDetailHistory = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, [orderCode]);
 
   return (
-    <div style={pageStyles.container}>
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div style={pageStyles.container}>
       <div style={pageStyles.header}>Purchase</div>
       <div style={pageStyles.customerDetails}>
         <label style={pageStyles.detailLabel}>Name:</label>
@@ -317,6 +328,10 @@ const PurchaseDetailHistory = () => {
         </div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 };
 

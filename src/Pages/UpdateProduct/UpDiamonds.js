@@ -3,9 +3,11 @@ import { Modal, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
 import './UpDiamond.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import Spinner from '../../Components/Spinner/Spinner';
 
 function UpDiamond() {
   const { productCode } = useParams();
+  const [loading, setLoading] = useState(true);
   const [sp, setSp] = useState({
     productCode: '',
     productName: '',
@@ -42,6 +44,9 @@ function UpDiamond() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, [productCode]);
 
@@ -96,6 +101,7 @@ function UpDiamond() {
         notification.error({ message: errorMessage });
         console.log(error);
       });
+
   };
 
   const handleModalOk = () => {
@@ -103,7 +109,11 @@ function UpDiamond() {
   };
 
   return (
-    <div className="updiamond-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="updiamond-container">
       <div className="updiamond-content">
         <div className="updiamond-form">
           <h2 className="updiamond-title">UPDATE DIAMOND</h2>
@@ -188,6 +198,10 @@ function UpDiamond() {
         <div>{modalMessage}</div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }
 

@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import ReactPaginate from 'react-paginate';
 import './purchaseOrders.css';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -23,7 +24,7 @@ export default function PurchaseOrder() {
     const [filteredData, setFilteredData] = useState([]);
     const ordersPerPage = 3;
     const [currentPage, setCurrentPage] = useState(0);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         adornicaServ.getPurchaseHistoryOrders()
             .then((res) => {
@@ -45,7 +46,10 @@ export default function PurchaseOrder() {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            })
+            .finally(() => {
+                setLoading(false); // Đánh dấu đã tải xong
+              });
     }, []);
 
     const showModal = (message, orderCode = null) => {
@@ -110,6 +114,10 @@ export default function PurchaseOrder() {
     };
 
     return (
+        <>
+      {loading ? (
+        <Spinner />
+      ) :(
         <div className="purchase-order-container">
             <h1 className="purchase-order-title">Purchase List</h1>
             <div className="search-add-container">
@@ -234,5 +242,9 @@ export default function PurchaseOrder() {
                 </div>
             </Modal>
         </div>
+      )
+    }
+</>
+        
     );
 }

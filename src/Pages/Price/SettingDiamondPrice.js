@@ -3,6 +3,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Input, Button, notification } from 'antd';
 import './Diamond.css';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function SettingDiamondPrice() {
   const [listDiamond, setListDiamond] = useState([]);
@@ -11,7 +12,7 @@ export default function SettingDiamondPrice() {
   const [updatedBuyPrice, setUpdatedBuyPrice] = useState('');
   const [updatedSellPrice, setUpdatedSellPrice] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,9 @@ export default function SettingDiamondPrice() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   };
 
@@ -101,7 +105,11 @@ export default function SettingDiamondPrice() {
 
 
   return (
-    <div className="DiamondPrice-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="DiamondPrice-container">
       <h2 className="DiamondPrice-header">SETTING DIAMOND PRICE</h2>
       <select className='selectMaterial-diamond' onChange={(e) => handleDiamondChange(e.target.value)}>
         {listDiamond.map((diamond) => (
@@ -173,5 +181,9 @@ export default function SettingDiamondPrice() {
       </Modal>
 
     </div>
+      )
+    }
+</>
+    
   );
 }

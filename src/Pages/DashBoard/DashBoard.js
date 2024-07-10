@@ -6,8 +6,10 @@ import YearlyRevenueChart from './YearlyRevenueChart';
 import { adornicaServ } from '../../service/adornicaServ';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './DashBoard.css';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function DashBoard() {
+  const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState({
     yesterday: 0,
@@ -60,6 +62,8 @@ export default function DashBoard() {
         }));
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -96,7 +100,11 @@ export default function DashBoard() {
   };
 
   return (
-    <div className="dashboard-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="dashboard-container">
       <h1 className="dashboard-title dashboard-title-main">DashBoard</h1>
       <Row gutter={16} className="stat-row">
         <Col xs={24} sm={12} md={8}>
@@ -152,5 +160,9 @@ export default function DashBoard() {
         <YearlyRevenueChart data={data.yearlyRevenue} />
       </div>
     </div>
+      )
+    }
+</>
+    
   );
 }

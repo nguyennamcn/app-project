@@ -4,6 +4,7 @@ import { Modal, Input, DatePicker, notification } from 'antd';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import './SettingGoldPrice.css';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function SettingGoldPrice() {
   const [goldPrices, setGoldPrices] = useState([]);
@@ -18,6 +19,7 @@ export default function SettingGoldPrice() {
   const [createSellPrice, setCreateSellPrice] = useState();
   const [createEffectDate, setCreateEffectDate] = useState(null);
   const [createSelectedMaterialId, setCreateSelectedMaterialId] = useState();
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -33,7 +35,11 @@ export default function SettingGoldPrice() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
+
   }, []);
 
   const handleMaterialChange = (materialId) => {
@@ -136,7 +142,11 @@ export default function SettingGoldPrice() {
   const sortedGoldPrices = [...goldPrices].sort((a, b) => new Date(a.effectDate) - new Date(b.effectDate));
 
   return (
-    <div className="container-gold">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="container-gold">
       <h2 className="header">SETTING GOLD PRICE</h2>
       <select className='selectMaterial-gold' onChange={(e) => handleMaterialChange(e.target.value)}>
         {listMaterial.map((material) => (
@@ -241,5 +251,9 @@ export default function SettingGoldPrice() {
         </div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 };

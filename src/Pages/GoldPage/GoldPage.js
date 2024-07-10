@@ -6,6 +6,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import QrScanner from 'react-qr-scanner';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const { Meta } = Card;
 
@@ -19,7 +20,7 @@ export default function GoldPage() {
   const itemsPerPage = 5;
   const [isQRModalVisible, setIsQRModalVisible] = useState(false);
   const [scannedData, setScannedData] = useState('');
-
+  const [loading, setLoading] = useState(true);
   const userInfo = useSelector((state) => state.userReducer.userInfo);
   const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
   const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
@@ -33,6 +34,9 @@ export default function GoldPage() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, []);
 
@@ -101,7 +105,11 @@ export default function GoldPage() {
   const currentItems = filteredProducts.slice(offset, offset + itemsPerPage);
 
   return (
-    <div className="home-gold-page">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="home-gold-page">
       <div className='home-gold-filter'>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button onClick={() => setIsQRModalVisible(true)} className="home-gold-scan-button">Scan Code</button>
@@ -200,5 +208,9 @@ export default function GoldPage() {
         />
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }

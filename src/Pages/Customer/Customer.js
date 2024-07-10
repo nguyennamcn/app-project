@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import Modal from 'react-modal';
 import './Customer.css';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 Modal.setAppElement('#root'); // Đặt app element cho modal
 
@@ -24,7 +25,7 @@ export default function CustomerDetails() {
     const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
     const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
     const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
-
+    const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchCustomerDetails();
   }, []);
@@ -37,6 +38,9 @@ export default function CustomerDetails() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   };
 
@@ -107,7 +111,11 @@ export default function CustomerDetails() {
   
 
   return (
-    <div className="customer-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="customer-container">
       <h2 className="customer-header">CUSTOMER INFORMATION</h2>
       <input 
         type="text"
@@ -233,5 +241,9 @@ export default function CustomerDetails() {
         </div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }

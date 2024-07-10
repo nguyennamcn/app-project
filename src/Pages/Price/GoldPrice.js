@@ -3,6 +3,7 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { useNavigate } from 'react-router-dom';
 import './GoldPrice.css';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function GoldPrice() {
   const [goldPrices, setGoldPrices] = useState([]);
@@ -13,7 +14,7 @@ export default function GoldPrice() {
   const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
   const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
   const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     adornicaServ.getPriceMaterial()
       .then((res) => {
@@ -22,6 +23,9 @@ export default function GoldPrice() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, []);
 
@@ -35,7 +39,11 @@ export default function GoldPrice() {
   };
 
   return (
-    <div className="gold-price-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="gold-price-container">
       <h2 className="gold-price-header">GOLD PRICE - {currentDate}</h2>
       <table className="gold-price-table">
         <thead>
@@ -57,6 +65,10 @@ export default function GoldPrice() {
       </table>
       {isManager ? (<button className="btnSetting-gold" onClick={handleSetting}>Setting</button>) : null}  
     </div>
+      )
+    }
+</>
+    
   );
 };
 

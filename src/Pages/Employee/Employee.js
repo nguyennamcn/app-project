@@ -3,12 +3,14 @@ import { NavLink } from 'react-router-dom';
 import './Employee.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
   const employeesPerPage = 4; 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     adornicaServ.getEmployee()
@@ -19,6 +21,9 @@ export default function EmployeeList() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, []);
 
@@ -43,7 +48,11 @@ export default function EmployeeList() {
   };
 
   return (
-    <div className="employee-list-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="employee-list-container">
       <h1 className="employee-list-title">Employees</h1>
       <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         <input 
@@ -110,5 +119,9 @@ export default function EmployeeList() {
         />
       </div>
     </div>
+      )
+    }
+</>
+    
   );
 }

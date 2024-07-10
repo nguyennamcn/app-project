@@ -3,9 +3,11 @@ import { Modal, notification } from 'antd';
 import { NavLink, useParams } from 'react-router-dom';
 import './UpGold.css';
 import { adornicaServ } from '../../service/adornicaServ';
+import Spinner from '../../Components/Spinner/Spinner';
 
 function UpGold() {
   const { productCode } = useParams();
+  const [loading, setLoading] = useState(true);
   const [sp, setSp] = useState({
     productCode: 'None',
     productName: 'None',
@@ -24,6 +26,9 @@ function UpGold() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, [productCode]);
 
@@ -79,7 +84,11 @@ function UpGold() {
   };
 
   return (
-    <div className="upgold-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="upgold-container">
       <div className="upgold-content">
         <div className="upgold-form">
           <h2 className="upgold-title">UPDATE GOLD</h2>
@@ -137,6 +146,10 @@ function UpGold() {
         <div>{modalMessage}</div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }
 

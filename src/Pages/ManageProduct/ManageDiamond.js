@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Modal, notification } from 'antd';
 import ReactPaginate from 'react-paginate';
 import './ManageDiamond.css'; 
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function ManageDiamond() {
   const [diamondManage, setDiamondManage] = useState([]);
@@ -13,7 +14,7 @@ export default function ManageDiamond() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4; // Số lượng mục trên mỗi trang
   const totalPages = Math.ceil(diamondManage.length / itemsPerPage);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     adornicaServ.getListDiamond()
       .then((res) => {
@@ -22,6 +23,9 @@ export default function ManageDiamond() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, []);
 
@@ -116,7 +120,11 @@ export default function ManageDiamond() {
   };
 
   return (
-    <div className="diamond-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="diamond-container">
       <header className="diamond-header">
         <h1 className="diamond-title">DIAMOND INVENTORY</h1>
         <NavLink to="/add-diamond" style={{
@@ -235,5 +243,9 @@ export default function ManageDiamond() {
         </div>
       </Modal>
     </div>
+      )
+    }
+</>
+    
   );
 }

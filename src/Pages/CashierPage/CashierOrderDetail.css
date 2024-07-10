@@ -2,7 +2,10 @@
 .customer__info{
 
 }
-
+.cashierOrderDetail{
+  max-height: 80vh;
+  overflow-y: auto;
+}
 .customer__info label{
     display: block;
     margin: 10px 30px 3%;

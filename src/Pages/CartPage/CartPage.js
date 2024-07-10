@@ -224,6 +224,25 @@ const CartPage = () => {
                         <p>Discount: {discount}%</p>
                     </div>
                     <div style={{ marginTop: '0%', width: '20%' }}>
+                        <p>Phone:
+                            <input
+                                style={{
+                                    border: '1px solid black',
+                                    borderRadius: '10px',
+                                    background: '#C7CCD0',
+                                    color: 'black',
+                                    marginLeft: '1%',
+                                    marginTop: '10px',
+                                    paddingLeft: '10px',
+                                    marginBottom:'5px',
+                                }}
+                                type="text"
+                                placeholder='Phone'
+
+                                value={customerPhone}
+                                onChange={handleInputChange1}
+                            />
+                        </p>
                         <p>Customer:
                             <input
                                 style={{
@@ -239,24 +258,6 @@ const CartPage = () => {
                                 placeholder='Customer'
                                 value={customerName}
                                 onChange={handleInputChange}
-                            />
-                        </p>
-                        <p>Phone:
-                            <input
-                                style={{
-                                    border: '1px solid black',
-                                    borderRadius: '10px',
-                                    background: '#C7CCD0',
-                                    color: 'black',
-                                    marginLeft: '1%',
-                                    marginTop: '10px',
-                                    paddingLeft: '10px',
-                                }}
-                                type="text"
-                                placeholder='Phone'
-
-                                value={customerPhone}
-                                onChange={handleInputChange1}
                             />
                         </p>
                     </div>

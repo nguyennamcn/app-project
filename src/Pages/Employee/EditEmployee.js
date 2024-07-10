@@ -4,12 +4,13 @@ import { NavLink, useParams } from 'react-router-dom';
 import './EditEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 export default function EditEmployee() {
   const [form, setForm] = useState({});
   const [employee, setEmployee] = useState({});
   const { id } = useParams();
-
+  const [loading, setLoading] = useState(true);
   const userInfo = useSelector((state) => state.userReducer.userInfo);
   const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
 
@@ -26,6 +27,9 @@ export default function EditEmployee() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
       
   }, [id]);
@@ -83,7 +87,11 @@ export default function EditEmployee() {
 
 
   return (
-    <div className="edit-container">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="edit-container">
       <h1 className="edit-title">Edit Employee</h1>
       <div className="edit-card">
         <div className="edit-header">
@@ -146,5 +154,9 @@ export default function EditEmployee() {
         </div>
       </div>
     </div>
+      )
+    }
+</>
+    
   );
 }

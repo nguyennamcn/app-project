@@ -8,6 +8,7 @@ import QrScanner from 'react-qr-scanner';
 import braceletImage from '../../asset/img/Lactay.png';
 import necklaceImage from '../../asset/img/Daychuyen.png';
 import { useSelector } from 'react-redux';
+import Spinner from '../../Components/Spinner/Spinner';
 
 const { Meta } = Card;
 
@@ -24,11 +25,11 @@ export default function JewelryPage() {
   const [isNecklaceSizeModalVisible, setIsNecklaceSizeModalVisible] = useState(false);
   const [isQRModalVisible, setIsQRModalVisible] = useState(false);
   const [scannedData, setScannedData] = useState('');
-
+  const [loading, setLoading] = useState(true);
   const userInfo = useSelector((state) => state.userReducer.userInfo);
-    const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
-    const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
-    const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+  const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+  const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+  const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -38,6 +39,9 @@ export default function JewelryPage() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false); // Đánh dấu đã tải xong
       });
   }, []);
 
@@ -62,7 +66,7 @@ export default function JewelryPage() {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
-    if(product.productPrice < 0){
+    if (product.productPrice < 0) {
       showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
       return;
     }
@@ -110,40 +114,44 @@ export default function JewelryPage() {
   };
 
   return (
-    <div className="home-jewelry-page">
+    <>
+      {loading ? (
+        <Spinner />
+      ) :(
+        <div className="home-jewelry-page">
       <div className='home-jewelry-filter'>
         <div style={{ display: 'flex', gap: '5px' }}>
           <button onClick={() => setIsSizeModalVisible(true)} className="home-jewelry-size-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-rulers" viewBox="0 0 16 16">
-              <path d="M2.23 0a.5.5 0 0 0-.5.5v1.75a.5.5 0 0 0 1 0V1H6v.25a.5.5 0 0 0 1 0V1h2v.25a.5.5 0 0 0 1 0V1h2.5v1.25a.5.5 0 0 0 1 0V.5a.5.5 0 0 0-.5-.5H2.23zM1 2.5v10.77a.5.5 0 0 0 .5.5h1.75a.5.5 0 0 0 0-1H2V10h.25a.5.5 0 0 0 0-1H2V7h.25a.5.5 0 0 0 0-1H2V4h.25a.5.5 0 0 0 0-1H2V2h.25a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0-.5.5zM13 2v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm-2-6v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm-2-6v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9z"/>
+              <path d="M2.23 0a.5.5 0 0 0-.5.5v1.75a.5.5 0 0 0 1 0V1H6v.25a.5.5 0 0 0 1 0V1h2v.25a.5.5 0 0 0 1 0V1h2.5v1.25a.5.5 0 0 0 1 0V.5a.5.5 0 0 0-.5-.5H2.23zM1 2.5v10.77a.5.5 0 0 0 .5.5h1.75a.5.5 0 0 0 0-1H2V10h.25a.5.5 0 0 0 0-1H2V7h.25a.5.5 0 0 0 0-1H2V4h.25a.5.5 0 0 0 0-1H2V2h.25a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0-.5.5zM13 2v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm-2-6v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm-2-6v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9z" />
             </svg>
           </button>
           <button onClick={() => setIsBraceletSizeModalVisible(true)} className="home-jewelry-size-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z"/>
+              <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z" />
             </svg>
           </button>
           <button onClick={() => setIsNecklaceSizeModalVisible(true)} className="home-jewelry-size-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z"/>
+              <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z" />
             </svg>
           </button>
           <button onClick={() => setIsQRModalVisible(true)} className="home-jewelry-scan-button">Scan Code</button>
         </div>
 
-          <div className='home-jewelry-search-input-jewelry'>
-            <textarea
-              placeholder='Search by product code or name...'
-              value={searchTerm}
-              onChange={handleSearch}
-              rows={2}
-              style={{ width: '300px', height: '25px', resize: 'none' }}
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-          </div>
+        <div className='home-jewelry-search-input-jewelry'>
+          <textarea
+            placeholder='Search by product code or name...'
+            value={searchTerm}
+            onChange={handleSearch}
+            rows={2}
+            style={{ width: '300px', height: '25px', resize: 'none' }}
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+          </svg>
         </div>
+      </div>
       <div className="home-jewelry-container">
         {currentProducts.length > 0 ? (
           currentProducts.map((sp) => (
@@ -164,7 +172,7 @@ export default function JewelryPage() {
                     <button className="home-jewelry-overlay-button">View</button>
                   </NavLink>
 
-                  {isAdmin || isCashier || isManager ? ( null
+                  {isAdmin || isCashier || isManager ? (null
                   ) : (
                     <button className="home-jewelry-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
                   )}
@@ -254,6 +262,10 @@ export default function JewelryPage() {
           style={{ width: '100%' }}
         />
       </Modal>
-    </div>
+        </div>
+      )
+    }
+    </>
+    
   );
 }
