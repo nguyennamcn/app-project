@@ -68,7 +68,10 @@
   color: #000;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1250px) {
+  .gold-price-container{
+    margin: 20px 20px 20px 20px;
+  }
   .gold-price-header {
       font-size: 20px;
       padding: 8px;
@@ -115,6 +118,7 @@
       font-weight: bold;
   }
 }
+
 
 @media only screen and (max-width: 480px) {
   .gold-price-header {
