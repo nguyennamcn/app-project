@@ -153,8 +153,8 @@
 }
 .home-jewelry-pagination-container {
   display: flex;
-  justify-content: flex-end; /* Căn chỉnh sang phải */
-  margin: 30px 0;
+  justify-content: flex-end; 
+  margin: 70px 0px 0px 0px;
   width: 100%;
 }
 
