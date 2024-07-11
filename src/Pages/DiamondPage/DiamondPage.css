@@ -115,7 +115,7 @@
 .home-diamond-pagination-container {
   display: flex;
   justify-content: flex-end; /* Căn chỉnh sang phải */
-  margin: 30px 0;
+  margin: 65px 0px 0px 0px;
   width: 100%;
 }
 

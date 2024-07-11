@@ -9,8 +9,8 @@
   font-size: 24px;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #001f3f; /* Màu chàm đậm */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Hiệu ứng đổ bóng */
+  color: #001f3f; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
 }
 
 
@@ -40,6 +40,7 @@
 .employee-list-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 5px;
 }
 
 .employee-list-table th, .employee-list-table td {

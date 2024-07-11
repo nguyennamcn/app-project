@@ -25,7 +25,7 @@ export default function EmployeeList() {
         console.log(err);
       })
       .finally(() => {
-        setLoading(false); // Đánh dấu đã tải xong
+        setLoading(false); 
       });
   }, []);
 
