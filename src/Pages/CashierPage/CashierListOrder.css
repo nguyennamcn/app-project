@@ -30,6 +30,7 @@
 .sell-order-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
 
 }
 
@@ -48,10 +49,12 @@
     text-align: left;
 }
 
-.pagination-container {
+.pagination-container-cashier-order{
     display: flex;
-    justify-content: flex-end;
-}
+    justify-content: flex-end; 
+    margin: 25px 0px 0px 0px;
+    width: 100%;
+  }
 
 .pagination {
     display: flex;
