@@ -206,7 +206,7 @@ export default function SellOrderPage() {
     ))}
 </tbody>
             </table>
-            <div className="pagination-container">
+            <div className="pagination-container-cashier-order">
                 <ReactPaginate
                     previousLabel={'Previous'}
                     nextLabel={'Next'}

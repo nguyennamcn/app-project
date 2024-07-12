@@ -30,6 +30,7 @@
 .purchase-order-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
 }
 
 .purchase-order-table th,
@@ -49,7 +50,9 @@
 
 .purchase-pagination-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; 
+    margin: 45px 0px 0px 0px;
+    width: 100%;
 }
 
 .pagination {
