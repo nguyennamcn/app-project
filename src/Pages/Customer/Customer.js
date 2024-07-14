@@ -170,7 +170,7 @@ export default function CustomerDetails() {
         </table>
       </div>
       <div className="customer-paginationContainer">
-        <ReactPaginate
+      <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
           breakLabel={'...'}
@@ -178,17 +178,17 @@ export default function CustomerDetails() {
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
-          containerClassName={'customer-pagination'}
-          activeClassName={'active'}
-          pageClassName={'page-item'}
-          pageLinkClassName={'page-link'}
-          previousClassName={'page-item'}
+          containerClassName={'home-jewelry-pagination'}
+          activeClassName={'home-jewelry-active'}
+          pageClassName={'home-jewelry-page-item'}
+          pageLinkClassName={'home-jewelry-page-link'}
+          previousClassName={'home-jewelry-page-item'}
           previousLinkClassName={'page-link'}
           nextClassName={'page-item'}
           nextLinkClassName={'page-link'}
           breakClassName={'page-item'}
           breakLinkClassName={'page-link'}
-          disabledClassName={'disabled'}
+          disabledClassName={'home-jewelry-disabled'}
         />
       </div>
       <Modal
