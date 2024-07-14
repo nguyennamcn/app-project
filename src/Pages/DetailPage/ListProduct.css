@@ -1,5 +1,6 @@
-.button-nor{
-    padding: 0 50px;
+/* General styles */
+.button-nor {
+    padding: 10px 0; /* Adjust padding for better appearance */
     border: 1px solid black;
     margin-right: 5px;
     border-radius: 5px;
@@ -7,13 +8,59 @@
     opacity: 0.5;
     z-index: 3;
     background-color: white;
+    flex: 1; /* Ensure equal width */
+    text-align: center; /* Center text */
 }
 
-.active{
+.active {
     padding-bottom: 10px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     transition: all 0.3s;
     opacity: 1;
     font-weight: 700;
+}
+
+.list_product_page {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .button-nor {
+        margin-right: 3px;
+    }
+
+    .list-product {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .list-product span {
+        flex: 1 1 20%; /* Ensure equal width */
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+    .button-nor {
+        margin-right: 2px;
+        font-size: 14px;
+    }
+
+    .list-product {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .list-product span {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
 }

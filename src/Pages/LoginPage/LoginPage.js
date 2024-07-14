@@ -59,12 +59,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div class="">
+    <div class="pageuser">
       <div class="header__login">
         <div className="header__login__left">
           <div class='img__login1'>
             {/* img */}
           </div>
+          <Button className="sidebar-toggle" onClick={() => setIsSidebarVisible(true)}>☰</Button>
         </div>
         <div class="header__login__right">
           <NavLink style={{ textDecoration: 'none' }} >Service</NavLink>
@@ -72,7 +73,6 @@ const LoginPage = () => {
           <NavLink style={{ textDecoration: 'none' }} >Shop</NavLink>
           <NavLink style={{ textDecoration: 'none' }} >About system</NavLink>
         </div>
-        <Button className="sidebar-toggle" onClick={() => setIsSidebarVisible(true)}>☰</Button>
       </div>
       <div class="login-form container">
         <div className="row">
