@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 70vh;
-  overflow-y: auto;
+  /* max-height: 70vh;
+  overflow-y: auto; */
 }
 
 .home-jewelry-filter {
