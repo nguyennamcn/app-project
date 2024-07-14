@@ -198,13 +198,13 @@ const CartPage = () => {
             key: 'productCode',
         },
         {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
-            render: (text, record) => formatPrice(record.totalPrice),
+            title: 'Quantity',
+            dataIndex: 'quantity',
+            key: 'quantity',
+            render: (text, record) => 1,
         },
         {
-            title: 'Total Price',
+            title: 'Price',
             dataIndex: 'totalPrice',
             key: 'totalPrice',
             render: (text, record) => formatPrice(record.totalPrice),
