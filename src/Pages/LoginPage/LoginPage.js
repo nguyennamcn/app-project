@@ -8,13 +8,13 @@ import { useDispatch } from 'react-redux';
 import { setUserLogin } from '../../toolkit/userSlice';
 import "./login.css"
 
-
 const LoginPage = () => {
   let dispatch = useDispatch();
   let navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false); // Add state for sidebar visibility
 
   const showModal = (title, message) => {
     setModalTitle(title);
@@ -35,7 +35,7 @@ const LoginPage = () => {
           res.data.metadata
         ));
         // chuyển hướng user tới trang chủ
-        if(res.data.metadata.role != 'admin')
+        if (res.data.metadata.role != 'admin')
           navigate("/homePage");
         else
           navigate('/adminPage');
@@ -46,7 +46,7 @@ const LoginPage = () => {
         const errorMetadata = err.response.data.metadata;
         const errorMessage = errorMetadata?.message || "An error occurred";
         const errorCode = errorMetadata?.code || "Unknown error code";
-        showModal("Login Failed",<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1 style={{color:'red'}}>Error: {errorMessage} (Code: {errorCode})</h1></div>);
+        showModal("Login Failed", <div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1 style={{ color: 'red' }}>Error: {errorMessage} (Code: {errorCode})</h1></div>);
 
         console.log(err);
       })
@@ -57,6 +57,7 @@ const LoginPage = () => {
     console.log('Failed:', errorInfo);
 
   };
+
   return (
     <div class="">
       <div class="header__login">
@@ -71,6 +72,7 @@ const LoginPage = () => {
           <NavLink style={{ textDecoration: 'none' }} >Shop</NavLink>
           <NavLink style={{ textDecoration: 'none' }} >About system</NavLink>
         </div>
+        <Button className="sidebar-toggle" onClick={() => setIsSidebarVisible(true)}>☰</Button>
       </div>
       <div class="login-form container">
         <div className="row">
@@ -105,14 +107,14 @@ const LoginPage = () => {
                       { max: 10, message: 'Phone number must be 10 digits!' }
                     ]}
                   >
-                    <Input  maxLength={10}/>
+                    <Input maxLength={10} />
                   </Form.Item>
                   <Form.Item
                     label="Password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]
-                    
-                  }
+
+                    }
                   >
                     <Input.Password />
                   </Form.Item>
@@ -136,8 +138,18 @@ const LoginPage = () => {
       >
         <div>{modalMessage}</div>
       </Modal>
-    </div>  
-      );
+
+      {isSidebarVisible && (
+        <div className="sidebar">
+          <button className="close-btn" onClick={() => setIsSidebarVisible(false)}>×</button>
+          <NavLink style={{ textDecoration: 'none' }} >Service</NavLink>
+          <NavLink style={{ textDecoration: 'none' }} >Policy</NavLink>
+          <NavLink style={{ textDecoration: 'none' }} >Shop</NavLink>
+          <NavLink style={{ textDecoration: 'none' }} >About system</NavLink>
+        </div>
+      )}
+    </div>
+  );
 }
 
-      export default LoginPage;
+export default LoginPage;
