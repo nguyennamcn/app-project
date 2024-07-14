@@ -1,3 +1,4 @@
+/* Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,17 +16,13 @@
   justify-content: space-between;
   align-items: center;
 }
-.header__login__left {
-  display: flex;
-  align-items: center;
-}
 .header__login__left,
 .header__login__left img {
   width: 100%;
   max-width: 180px;
   height: 70px;
 }
-.header__login__right {
+.header__login__right_login {
   width: 50%;
   display: flex;
   justify-content: space-between;
@@ -92,27 +89,23 @@ section {
 }
 .sidebar-toggle {
   display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   .header__login {
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: flex-start;
     height: auto;
   }
   .header__login__left,
-  .header__login__right {
+  .header__login__right_login {
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 0 2%;
   }
-  .header__login__right {
+  .header__login__right_login{
     display: none;
   }
   .sidebar-toggle {
@@ -122,6 +115,7 @@ section {
     border: none;
     font-size: 24px;
     margin-left: auto;
+    justify-self: flex-end;
     margin-bottom: 10px;
   }
   .login-img {
@@ -141,11 +135,11 @@ section {
   .header__login {
     padding: 0 4%;
   }
-  .header__login__right {
+  .header__login__right_login {
     flex-direction: column;
     align-items: flex-start;
   }
-  .header__login__right a {
+  .header__login__right_login a {
     margin-bottom: 10px;
   }
   .login-input h1 {
@@ -157,7 +151,7 @@ section {
   .header__login {
     padding: 0 2%;
   }
-  .header__login__right {
+  .header__login__right_login {
     align-items: center;
   }
   .login-input {

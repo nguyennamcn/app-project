@@ -20,7 +20,7 @@ export default function ListProduct({ product }) {
     };
 
     return (
-        <div className="list_product_page" >
+        <div className='list_product_page'>
             <div>
                 <div className="list-product">
                     <span

@@ -59,20 +59,20 @@ const LoginPage = () => {
   };
 
   return (
-    <div class="pageuser">
+    <div class="">
       <div class="header__login">
         <div className="header__login__left">
           <div class='img__login1'>
             {/* img */}
           </div>
-          <Button className="sidebar-toggle" onClick={() => setIsSidebarVisible(true)}>☰</Button>
         </div>
-        <div class="header__login__right">
+        <div class="header__login__right_login">
           <NavLink style={{ textDecoration: 'none' }} >Service</NavLink>
           <NavLink style={{ textDecoration: 'none' }} >Policy</NavLink>
           <NavLink style={{ textDecoration: 'none' }} >Shop</NavLink>
           <NavLink style={{ textDecoration: 'none' }} >About system</NavLink>
         </div>
+        <Button className="sidebar-toggle" onClick={() => setIsSidebarVisible(true)}>☰</Button>
       </div>
       <div class="login-form container">
         <div className="row">
@@ -82,7 +82,7 @@ const LoginPage = () => {
             </div>
           </div>
           <div className="login-input col-lg-4">
-            <div className='flex justify-between'>
+            <div style={{marginLeft:'auto',marginRight:'auto'}}>
               <h1 className='mb-2 '>LOGIN</h1>
             </div>
             <div class="">
