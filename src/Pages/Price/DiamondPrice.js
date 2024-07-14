@@ -45,6 +45,8 @@ const DiamondPrice = () => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
 
+  const sortedDiamondCarat = [...diamondPrices].sort((a, b) => a.carat - b.carat);
+
     return (
         <>
       {loading ? (
@@ -64,11 +66,11 @@ const DiamondPrice = () => {
                             <th className="DiamondPrice-th">Carat</th>
                             <th className="DiamondPrice-th">Purchase (VND)</th>
                             <th className="DiamondPrice-th">Sell (VND)</th>
-                            <th className="DiamondPrice-th">Date Update</th>
+                            {/* <th className="DiamondPrice-th">Date Update</th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        {diamondPrices.map((price, index) => (
+                        {sortedDiamondCarat.map((price, index) => (
                             <tr key={index} style={{ cursor: 'auto' }} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
                                 <td
                                     data-label="STT"
@@ -83,7 +85,7 @@ const DiamondPrice = () => {
                                 <td data-label="Carat" className="DiamondPrice-td">{price.carat}</td>
                                 <td data-label="Purchase (VND)" className="DiamondPrice-td">{formatPrice(price.gemBuyPrice)}</td>
                                 <td data-label="Sell" className="DiamondPrice-td">{formatPrice(price.gemSellPrice)}</td>
-                                <td data-label="Date Update" className="DiamondPrice-td">{formatDate(price.effectDate)}</td>
+                                {/* <td data-label="Date Update" className="DiamondPrice-td">{formatDate(price.effectDate)}</td> */}
                             </tr>
                         ))}
                     </tbody>

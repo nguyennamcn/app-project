@@ -130,7 +130,7 @@ export default function SettingDiamondPrice() {
               <th className="DiamondPrice-th">Carat</th>
               <th className="DiamondPrice-th">Purchase (VND)</th>
               <th className="DiamondPrice-th">Sell (VND)</th>
-              <th className="DiamondPrice-th">Date Update</th>
+              <th className="DiamondPrice-th">Effect Date</th>
             </tr>
           </thead>
           <tbody>
