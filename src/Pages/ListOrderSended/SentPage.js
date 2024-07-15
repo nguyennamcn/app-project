@@ -27,7 +27,7 @@ export default function SentPage() {
     const [modalMessage, setModalMessage] = useState('');
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
     const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 4;
+    const itemsPerPage = 5;
 
     let userInfo = useSelector((state) => state.userReducer.userInfo);
 
