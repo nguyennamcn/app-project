@@ -114,9 +114,47 @@
   }
 
 /* Responsive styles */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
     .action-buttons {
         justify-content: space-around; /* Điều chỉnh justify-content cho responsive */
+        max-width: 70px;
+        width: 100%;
+    }
+
+    .custom-table thead {
+        display: none; /* Ẩn phần header của table */
+    }
+
+    .custom-table, .custom-table tbody, .custom-table tr, .custom-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .custom-table tr {
+        margin-bottom: 15px;
+    }
+
+    .custom-table td {
+        text-align: left; /* Thay đổi alignment cho responsive */
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .custom-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: calc(50% - 30px);
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+@media only screen and (max-width: 720px) {
+    .action-buttons {
+        justify-content: space-around; /* Điều chỉnh justify-content cho responsive */
+        max-width: 70px;
+        width: 100%;
     }
 
     .custom-table thead {
@@ -149,10 +187,13 @@
     }
 }
 
+
 @media only screen and (max-width: 480px) {
     .action-buttons {
         flex-direction: column; /* Điều chỉnh flex-direction cho responsive */
         align-items: center; /* Điều chỉnh align-items cho responsive */
+        max-width: 70px;
+        width: 100%;
     }
 
     .pagination {
