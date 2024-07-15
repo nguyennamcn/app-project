@@ -131,11 +131,14 @@ export default function DetailPage() {
                         />
                     </div>
                     <div className="info-section">
-                        <div className="product-header" style={{whiteSpace:'no'}}>
-                            <p className="product-name">{product.productName}</p>
                             <button className="close-button" type="button" onClick={() => navigate(-1)}>
                                 X
                             </button>
+                        <div className="product-header" style={{whiteSpace:'no'}}>
+                            <p className="product-name">{product.productName}</p>
+                            {/* <button className="close-button" type="button" onClick={() => navigate(-1)}>
+                                X
+                            </button> */}
                         </div>
                         {product.totalPrice < 1 ?
                             <p className="product-price">The product is: <span className="price-amount">Undefined</span></p> :
