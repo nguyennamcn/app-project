@@ -218,8 +218,8 @@ const JewelryInventoryPage = () => {
           nextLabel={'Next'}
           breakLabel={'...'}
           pageCount={totalPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={2}
           onPageChange={(data) => changePage(data.selected + 1)}
           containerClassName={'pagination'}
           activeClassName={'active'}

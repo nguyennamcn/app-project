@@ -212,8 +212,8 @@ export default function SellOrderPage() {
                     nextLabel={'Next'}
                     breakLabel={'...'}
                     pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={2}
                     onPageChange={handlePageChange}
                     containerClassName={'pagination'}
                     activeClassName={'active'}
