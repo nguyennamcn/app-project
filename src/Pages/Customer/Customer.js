@@ -170,13 +170,13 @@ export default function CustomerDetails() {
         </table>
       </div>
       <div className="customer-paginationContainer">
-      <ReactPaginate
+        <ReactPaginate
           previousLabel={'Previous'}
           nextLabel={'Next'}
           breakLabel={'...'}
           pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={2} // This will ensure that a maximum of 3 pages (current + 2) are displayed
           onPageChange={handlePageClick}
           containerClassName={'home-jewelry-pagination'}
           activeClassName={'home-jewelry-active'}
@@ -191,6 +191,7 @@ export default function CustomerDetails() {
           disabledClassName={'home-jewelry-disabled'}
         />
       </div>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

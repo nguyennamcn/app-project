@@ -134,7 +134,7 @@ export default function GoldPage() {
               <Card
                 bodyStyle={{ padding: '8px' }}
                 style={{ width: '100%', textAlign: 'center', borderRadius: '10px', position: 'relative' }}
-                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '190px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
+                cover={<img style={{ padding: '10px', maxWidth: '100%', height: '160px', objectFit: 'cover' }} alt={sp.productName} src={sp.productImage} />}
               >
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
                 <div className="home-gold--info">

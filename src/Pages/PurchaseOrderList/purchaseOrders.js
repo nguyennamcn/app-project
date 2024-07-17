@@ -22,7 +22,7 @@ export default function PurchaseOrder() {
     const [orderCodeToDelete, setOrderCodeToDelete] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [filteredData, setFilteredData] = useState([]);
-    const ordersPerPage = 5;
+    const ordersPerPage = 3;
     const [currentPage, setCurrentPage] = useState(0);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
