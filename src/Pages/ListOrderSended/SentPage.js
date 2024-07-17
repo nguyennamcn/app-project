@@ -164,8 +164,8 @@ export default function SentPage() {
                 nextLabel={'Next'}
                 breakLabel={'...'}
                 pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={2}
                 onPageChange={handlePageClick}
                 containerClassName={'home-jewelry-pagination'}
                 activeClassName={'home-jewelry-active'}

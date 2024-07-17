@@ -240,8 +240,8 @@ export default function ManageGold() {
           nextLabel={'Next'}
           breakLabel={'...'}
           pageCount={totalPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={2}
           onPageChange={handlePageClick}
           containerClassName={'pagination'}
           activeClassName={'active'}

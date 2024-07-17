@@ -198,8 +198,8 @@ export default function PurchaseOrder() {
                     nextLabel={'Next'}
                     breakLabel={'...'}
                     pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={2}
                     onPageChange={handlePageClick}
                     containerClassName={'pagination'}
                     activeClassName={'active'}
