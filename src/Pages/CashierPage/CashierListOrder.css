@@ -30,7 +30,7 @@
 .sell-order-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 5px;
 
 }
 
@@ -52,7 +52,7 @@
 .pagination-container-cashier-order{
     display: flex;
     justify-content: flex-end; 
-    margin: 25px 0px 0px 0px;
+    margin: auto;
     width: 100%;
   }
 
@@ -117,7 +117,13 @@
   .custom-modal-list  .ant-modal-footer {
     display: none;
   }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
+    .sell-order-container {
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        max-height: 50vh;
+        overflow-y: auto;
+    }
     .sell-order-search-input {
         padding: 6px;
         margin-bottom: 20px;
@@ -180,8 +186,14 @@
 }
 
 @media only screen and (max-width: 480px) {
+    .sell-order-container {
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        max-height: 50vh;
+        overflow-y: auto;
+    }
     .sell-order-search-input {
-        width: calc(50% - 10px);
+        width: calc(100% - 10px);
         display: inline-block;
         margin-bottom: 10px;
         padding: 5px;

@@ -1,7 +1,7 @@
 .employee-list-container {
   padding: 20px;
   font-family: Arial, sans-serif;
-  max-height: 70vh;
+  max-height: 80vh;
   overflow-y: auto;
 }
 
@@ -146,8 +146,21 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .add-employee-list-button, .employee-list-search-input {
+  /* .employee-list-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-height: 70vh;
+    overflow-y: auto;
+  } */
+   .employee-list-search-input {
     width: calc(50% - 10px); 
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 5px; 
+    font-size: 12px; 
+  }
+  .add-employee-list-button{
+    width: calc(100% - 10px); 
     display: inline-block;
     margin-bottom: 10px;
     padding: 5px; 
