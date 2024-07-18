@@ -31,7 +31,7 @@ const AddEmployee = () => {
     const { name, value } = e.target;
     if (name === 'phone') {
       if (!/^\d*$/.test(value)) {
-        setPhoneError('Phone number must be digits only!');
+        setPhoneError('Vui lòng chỉ nhập số (tối đa 10 chữ số)!');
         return;
       } else {
         setPhoneError('');
@@ -96,33 +96,32 @@ const AddEmployee = () => {
 
   const showModal = () => {
     confirm({
-      title: 'Add Successfully',
-      content: 'Employee has been added successfully!',
+      content: 'Thêm nhân viên thành công!',
       onOk() {
         navigate('/employee');
       },
-      onCancel() {
-        console.log('Cancelled');
-      },
+      okText: 'OK',
+      cancelButtonProps: { style: { display: 'none' } },
     });
   };
+  
 
   return (
     <div className="add-employee-container">
-      <h1>Add Employee</h1>
+      <h1>Thêm Nhân viên</h1>
       <div className="form-section">
         <div className="form-group">
-          <h2>Personal information :</h2>
+          <h2>Thông tin nhân viên :</h2>
           <Input
             className="input-field"
-            placeholder="Full Name"
+            placeholder="Họ và tên"
             name="name"
             value={form.name}
             onChange={handleChange}
           />
           <Input
             className="input-field"
-            placeholder="Phone number"
+            placeholder="Số điện thoại"
             name="phone"
             value={form.phone}
             maxLength={10}
@@ -131,7 +130,7 @@ const AddEmployee = () => {
           {phoneError && <div className="error-message">{phoneError}</div>}
           <DatePicker
             className="input-field"
-            placeholder="Date of Birth"
+            placeholder="Ngày sinh"
             onChange={handleDateChange}
             style={{ width: '100%' }}
             open={datePickerOpen}
@@ -140,7 +139,7 @@ const AddEmployee = () => {
           />
           <Input
             className="input-field"
-            placeholder="Address"
+            placeholder="Địa chỉ"
             name="address"
             value={form.address}
             onChange={handleChange}
@@ -152,13 +151,13 @@ const AddEmployee = () => {
               value={form.gender}
               onChange={handleGenderChange}
             >
-              <Radio value="MALE">Male</Radio>
-              <Radio value="FEMALE">Female</Radio>
+              <Radio value="MALE">Nam</Radio>
+              <Radio value="FEMALE">Nữ</Radio>
             </Radio.Group>
           </div>
         </div>
         <div className="form-group">
-          <h2>Account :</h2>
+          <h2>Tài khoản :</h2>
           <Input
             className="input-field"
             placeholder="Email"
@@ -168,14 +167,14 @@ const AddEmployee = () => {
           />
           <Input.Password
             className="input-field"
-            placeholder="Password"
+            placeholder="Mật khẩu"
             name="password"
             value={form.password}
             onChange={handleChange}
           />
           <Input.Password
             className="input-field"
-            placeholder="Confirm Password"
+            placeholder="Xác nhận mật khẩu"
             name="confirmPassword"
             value={form.confirmPassword}
             onChange={handleChange}
@@ -183,28 +182,28 @@ const AddEmployee = () => {
           <div className="store-role-section">
           {isAdmin ? (
             <div className="role-group">
-            <h3>Role :</h3>
+            <h3>Chức vụ :</h3>
             <Radio.Group
               name="role"
               value={form.role}
               onChange={handleChange}
             >
-              <Radio value="ROLE_SALES_STAFF">Sales Staff</Radio>
-              <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
-              <Radio value="ROLE_MANAGER">Manager</Radio>
+              <Radio value="ROLE_SALES_STAFF">Nhân viên bán hàng</Radio>
+              <Radio value="ROLE_CASHIER_STAFF">Thu ngân</Radio>
+              <Radio value="ROLE_MANAGER">Quản lý</Radio>
               <Radio value="ROLE_ADMIN">Admin</Radio>
             </Radio.Group>
           </div>
           ) : (
             <div className="role-group">
-              <h3>Role :</h3>
+              <h3>Chức vụ :</h3>
               <Radio.Group
                 name="role"
                 value={form.role}
                 onChange={handleChange}
               >
-                <Radio value="ROLE_SALES_STAFF">Sales Staff</Radio>
-                <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
+                <Radio value="ROLE_SALES_STAFF">Nhân viên bán hàng</Radio>
+                <Radio value="ROLE_CASHIER_STAFF">Thu ngân</Radio>
               </Radio.Group>
             </div>
           )}
@@ -213,7 +212,7 @@ const AddEmployee = () => {
       </div>
       <div className="form-actions">
         <NavLink to="/employee">
-          <Button className="nav-button">Back</Button>
+          <Button className="nav-button">Trở về</Button>
         </NavLink>
         <Button
           type="primary"
@@ -221,7 +220,7 @@ const AddEmployee = () => {
           onClick={handleSubmit}
           disabled={!isFormValid()}
         >
-          ADD
+          Thêm
         </Button>
       </div>
     </div>

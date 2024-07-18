@@ -30,7 +30,8 @@
   border-radius: 5px;
   outline: none;
   transition: box-shadow 0.3s ease;
-  width: 20%;
+  width: 100%;
+  max-width: 420px;
 }
 
 .employee-list-search-input:focus {

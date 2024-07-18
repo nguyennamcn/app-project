@@ -229,7 +229,7 @@ const BillGold = () => {
     const { value } = event.target;
     if (setter === setCustomerPhone) {
       if (!/^\d*$/.test(value)) {
-        setPhoneError('Phone number must be digits only!');
+        setPhoneError('Vui lòng chỉ nhập số');
         return;
       } else if (value.length > 10) {
         return;
@@ -316,9 +316,9 @@ const BillGold = () => {
 
   return (
     <div style={pageStyles.container}>
-      <div style={pageStyles.header}>Purchase</div>
+      <div style={pageStyles.header}>Thu mua</div>
       <div style={pageStyles.customerDetails}>
-      <label style={pageStyles.detailLabel}>Phone:</label>
+      <label style={pageStyles.detailLabel}>Số điện thoại:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -329,7 +329,7 @@ const BillGold = () => {
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
 
-        <label style={pageStyles.detailLabel}>Name:</label>
+        <label style={pageStyles.detailLabel}>Tên:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -342,9 +342,9 @@ const BillGold = () => {
 
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
-            <span>Product</span>
-            <span>Weight</span>
-            <span>Price</span>
+            <span>Sản phẩm</span>
+            <span>Khối lượng</span>
+            <span>Giá</span>
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
@@ -357,7 +357,7 @@ const BillGold = () => {
       </div>
 
       <div style={pageStyles.customerDetails}>
-      <label style={pageStyles.detailLabel}>Address:</label>
+      <label style={pageStyles.detailLabel}>Địa chỉ:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -368,12 +368,12 @@ const BillGold = () => {
       </div>
 
       <div style={pageStyles.summary}>
-        <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {formatPrice(calculateTotalPrice())} </div>
+        <div style={pageStyles.totalItems}>Tổng sản phẩm: {totalItems}</div>
+        <div style={pageStyles.totalPrice}>Tổng tiền: {formatPrice(calculateTotalPrice())} </div>
       </div>
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>
-          <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
+          <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>Trở về</button>
         </NavLink>
 
         <button
@@ -383,7 +383,7 @@ const BillGold = () => {
           onClick={handleFinishClick}
           disabled={isFinishButtonDisabled}
         >
-          CREATE
+          Tạo đơn
         </button>
       </div>
 

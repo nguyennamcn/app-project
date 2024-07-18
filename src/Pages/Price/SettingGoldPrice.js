@@ -63,7 +63,7 @@ export default function SettingGoldPrice() {
     adornicaServ.putMaterialPrice(selectedMaterial.id, dataUpdate)
       .then(response => {
         console.log(response.data.metadata);
-        notification.success({ message: "Updated price successfully" });
+        notification.success({ message: "Chỉnh sửa giá thành công" });
 
         setGoldPrices(prevPrices =>
           prevPrices.map(material =>
@@ -119,12 +119,12 @@ export default function SettingGoldPrice() {
     adornicaServ.postMaterialPriceWithEffectDate(createSelectedMaterialId, dataUpdateWithEffectDate)
       .then(response => {
         console.log(response.data.metadata);
-        notification.success({ message: "Added product successfully" });
+        notification.success({ message: "Tạo thành công" });
         setIsCreateModalVisible(false);
         handleMaterialChange(createSelectedMaterialId);
       })
       .catch(error => {
-        const errorMessage = "Can not create, please try again !";
+        const errorMessage = "Tạo thất bại,vui lòng thử lại !";
         notification.error({ message: errorMessage });
         console.log(error);
       });
@@ -147,21 +147,21 @@ export default function SettingGoldPrice() {
         <Spinner />
       ) :(
         <div className="container-gold">
-      <h2 className="header">SETTING GOLD PRICE</h2>
+      <h2 className="header-setting-gold-price">Tùy chỉnh giá Vàng</h2>
       <select className='selectMaterial-gold' onChange={(e) => handleMaterialChange(e.target.value)}>
         {listMaterial.map((material) => (
           <option key={material.id} value={material.id}>{material.material}</option>
         ))}
       </select>
-      <button className="btnCreate" onClick={showCreateModal}>Create</button>
+      <button className="btnCreate" onClick={showCreateModal}>Tạo ngày thay đổi giá</button>
       <table className="table">
         <thead>
           <tr>
             <th className="th">ID</th>
-            <th className="th">Name</th>
-            <th className="th">Purchase (VND)</th>
-            <th className="th">Sell (VND)</th>
-            <th className="th">Effect date</th>
+            <th className="th">Loại vàng</th>
+            <th className="th">Giá thu mua (VND)</th>
+            <th className="th">Giá bán (VND)</th>
+            <th className="th">Ngày hiệu lực</th>
           </tr>
         </thead>
         <tbody>
@@ -176,17 +176,17 @@ export default function SettingGoldPrice() {
           ))}
         </tbody>
       </table>
-      <button className="btnBack" onClick={() => navigate("/gold-price")}>Back</button>
+      <button className="btnBack" onClick={() => navigate("/gold-price")}>Trở về</button>
       <Modal
-        title={<center><h1>UPDATE PRICE</h1></center>}
+        title={<center><h1>Tùy chỉnh giá Vàng</h1></center>}
         visible={isModalVisible}
         onOk={handleUpdate}
         onCancel={handleCancel}
       >
-        <h2>Price ID: {selectedMaterial.id}</h2>
-        <h2>Material Name: {selectedMaterial.materialName}</h2>
+        <h2>Giá ID: {selectedMaterial.id}</h2>
+        <h2>Loại vàng: {selectedMaterial.materialName}</h2>
         <div>
-          <label style={{fontWeight:600, fontSize:'16px'}}>Purchase (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá thu mua (VND): </label>
           <Input
             value={updatedBuyPrice}
             onChange={(e) => setUpdatedBuyPrice(e.target.value)}
@@ -195,7 +195,7 @@ export default function SettingGoldPrice() {
           />
         </div>
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label style={{fontWeight:600, fontSize:'16px'}}>Sell (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá bán (VND): </label>
           <Input
             value={updatedSellPrice}
             onChange={(e) => setUpdatedSellPrice(e.target.value)}
@@ -207,20 +207,20 @@ export default function SettingGoldPrice() {
       </Modal>
 
       <Modal
-        title={<center><h1>CREATE NEW PRICE</h1></center>}
+        title={<center><h1>Tạo giá mới</h1></center>}
         visible={isCreateModalVisible}
         onOk={handleCreate}
         onCancel={handleCancel}
       >
         <select style={{border:'1px solid'}} className='selectMaterial' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
-          <option value="">Select Material</option>
+          <option value="">Chọn loại vàng</option>
           {listMaterial.map((material) => (
             <option key={material.id} value={material.id}>{material.material}</option>
           ))}
         </select>
 
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label style={{fontWeight:600, fontSize:'16px'}}>Effect date:</label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Ngày hiệu lực:</label>
           <DatePicker
             style={{ marginLeft: '10px' }}
             // showTime={{ format: 'HH:mm' }}
@@ -230,7 +230,7 @@ export default function SettingGoldPrice() {
         </div>
 
         <div>
-          <label style={{fontWeight:600, fontSize:'16px'}}>Purchase (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá thu mua (VND): </label>
           <Input
             value={createBuyPrice}
             onChange={(e) => setCreateBuyPrice(e.target.value)}
@@ -240,7 +240,7 @@ export default function SettingGoldPrice() {
           />
         </div>
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label style={{fontWeight:600, fontSize:'16px'}}>Sell (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá bán (VND): </label>
           <Input
             value={createSellPrice}
             onChange={(e) => setCreateSellPrice(e.target.value)}

@@ -67,16 +67,16 @@ export default function JewelryPage() {
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if (product.productPrice < 0) {
-      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
+      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-question" ></i><h1>Sản phẩm chưa có giá !</h1></div>);
       return;
     }
 
     if (existingItemIndex > -1) {
-      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
+      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-error-icon fa-solid fa-circle-xmark" ></i><h1>Sản phẩm đã được thêm từ trước !</h1></div>);
     } else {
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-check-icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+      showModal(<div className='home-jewelry-notice-content'><i className="home-jewelry-check-icon fa-solid fa-circle-check" ></i><h1>Đã thêm sản phẩm thành công  !</h1></div>);
     }
   };
 

@@ -4,20 +4,20 @@ import { NavLink } from 'react-router-dom';
 
 const Inventory = () => {
     const items = [
-        { id: 1, category: 'Gold', quantity: 69 },
-        { id: 2, category: 'Diamond', quantity: 70 },
-        { id: 3, category: 'Jewelry', quantity: 108 }
+        { id: 1, category: 'Vàng', quantity: 69 },
+        { id: 2, category: 'Kim Cương', quantity: 70 },
+        { id: 3, category: 'Trang sức', quantity: 108 }
     ];
 
     const handleViewClick = (category) => {
         switch (category.toLowerCase()) {
-            case 'gold':
+            case 'vàng':
                 window.location.href = '/ManageGold';
                 break;
-            case 'diamond':
+            case 'kim cương':
                 window.location.href = '/ManageDiamond';
                 break;
-            case 'jewelry':
+            case 'trang sức':
                 window.location.href = '/ManageJewelry';
                 break;
             default:
@@ -32,16 +32,16 @@ const Inventory = () => {
                     textAlign: 'right',
                     position: 'absolute',
                     right: '5%'
-                }}>Material</h2>
+                }}>Vật liệu</h2>
             </NavLink>
-            <h2 className="inventory-title">Products</h2>
+            <h2 className="inventory-title">Sản phẩm</h2>
             <div className="inventory-table-container">
                 <table className="inventory-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Category</th>
-                            <th>Action</th>
+                            <th>Số thứ tự</th>
+                            <th>Loại</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,7 +57,7 @@ const Inventory = () => {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }} onClick={() => handleViewClick(item.category)}>View</button>
+                                        }} onClick={() => handleViewClick(item.category)}>Xem</button>
                                 </td>
                             </tr>
                         ))}

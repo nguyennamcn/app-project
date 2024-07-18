@@ -71,16 +71,16 @@ export default function DashBoard() {
   }, []);
 
   const dailyAndMonthlyRevenueData = [
-    { period: 'Yesterday', dailyRevenue: data.yesterday, monthlyRevenue: null },
-    { period: 'Today', dailyRevenue: data.today, monthlyRevenue: null },
-    { period: 'Last Month', monthlyRevenue: data.lastMonth },
-    { period: 'This Month', monthlyRevenue: data.thisMonth },
+    { period: 'Hôm qua', dailyRevenue: data.yesterday, monthlyRevenue: null },
+    { period: 'Hôm nay', dailyRevenue: data.today, monthlyRevenue: null },
+    { period: 'Tháng trước', monthlyRevenue: data.lastMonth },
+    { period: 'Tháng này', monthlyRevenue: data.thisMonth },
   ];
 
   const productData = [
-    { name: 'Jewelry', value: data.products.jewelry },
-    { name: 'Gold', value: data.products.gold },
-    { name: 'Diamond', value: data.products.diamond },
+    { name: 'Trang sức', value: data.products.jewelry },
+    { name: 'Vàng', value: data.products.gold },
+    { name: 'Kim cương', value: data.products.diamond },
   ];
 
   const customTooltip = ({ active, payload, label }) => {
@@ -91,8 +91,8 @@ export default function DashBoard() {
       return (
         <div className="custom-tooltip">
           <p className="label">{`${label}`}</p>
-          {dailyRevenue !== undefined && <p className="intro">{`Daily Revenue: ${dailyRevenue.toLocaleString()} VND`}</p>}
-          {monthlyRevenue !== undefined && <p className="intro">{`Monthly Revenue: ${monthlyRevenue.toLocaleString()} VND`}</p>}
+          {dailyRevenue !== undefined && <p className="intro">{`Doanh thu: ${dailyRevenue.toLocaleString()} VND`}</p>}
+          {monthlyRevenue !== undefined && <p className="intro">{`Doanh thu: ${monthlyRevenue.toLocaleString()} VND`}</p>}
         </div>
       );
     }
@@ -105,38 +105,38 @@ export default function DashBoard() {
         <Spinner />
       ) :(
         <div className="dashboard-container">
-      <h1 className="dashboard-title dashboard-title-main">DashBoard</h1>
+      <h1 className="dashboard-title dashboard-title-main">Thống kê</h1>
       <Row gutter={16} className="stat-row">
         <Col xs={24} sm={12} md={8}>
           <Card className="stat-card orders-sold-card">
-            <Statistic title="Total Amount Yesterday" value={data.yesterday} />
+            <Statistic title="Doanh thu hôm qua" value={data.yesterday} />
           </Card>
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Card className="stat-card repeat-orders-card">
-            <Statistic title="Total Amount Today" value={data.today} />
+            <Statistic title="Doanh thu hôm nay" value={data.today} />
           </Card>
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Card className="stat-card top-employee-card">
-            <Statistic title="Staff with Most Orders" value={data.staffMostOrders} />
+            <Statistic title="Nhân viên xuất sắc nhất" value={data.staffMostOrders} />
           </Card>
         </Col>
       </Row>
       <Row gutter={16} className="stat-row">
         <Col xs={24} sm={12} md={8}>
           <Card className="stat-card gold-sold-card">
-            <Statistic title="Total Amount Last Month" value={data.lastMonth} />
+            <Statistic title="Doanh thu tháng trước" value={data.lastMonth} />
           </Card>
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Card className="stat-card diamond-sold-card">
-            <Statistic title="Total Amount This Month" value={data.thisMonth} />
+            <Statistic title="Doanh thu tháng này" value={data.thisMonth} />
           </Card>
         </Col>
       </Row>
       <div className="chart-container">
-        <h2 className="dashboard-title dashboard-title-sub">Daily and Monthly </h2>
+        <h2 className="dashboard-title dashboard-title-sub">Hàng ngày và Hàng tháng </h2>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={dailyAndMonthlyRevenueData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -148,15 +148,15 @@ export default function DashBoard() {
         </ResponsiveContainer>
       </div>
       <div className="chart-container">
-        <h2 className="dashboard-title dashboard-title-sub">Product Distribution</h2>
+        <h2 className="dashboard-title dashboard-title-sub">Sản phẩm</h2>
         <ProductPieChart data={productData} />
       </div>
       <div className="chart-container">
-        <h2 className="dashboard-title dashboard-title-sub">Weekly Revenue</h2>
+        <h2 className="dashboard-title dashboard-title-sub">Doanh thu trong tuần</h2>
         <WeeklyRevenueChart data={data.weeklyRevenue} />
       </div>
       <div className="chart-container">
-        <h2 className="dashboard-title dashboard-title-sub">Yearly Revenue</h2>
+        <h2 className="dashboard-title dashboard-title-sub">Daonh thu trong năm</h2>
         <YearlyRevenueChart data={data.yearlyRevenue} />
       </div>
     </div>

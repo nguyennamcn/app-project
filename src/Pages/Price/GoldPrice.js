@@ -44,13 +44,13 @@ export default function GoldPrice() {
         <Spinner />
       ) :(
         <div className="gold-price-container">
-      <h2 className="gold-price-header">GOLD PRICE - {currentDate}</h2>
+      <h2 className="gold-price-header">Giá Vàng - {currentDate}</h2>
       <table className="gold-price-table">
         <thead>
           <tr>
-            <th className="gold-price-th">Name</th>
-            <th className="gold-price-th">Purchase (VND)</th>
-            <th className="gold-price-th">Sell (VND)</th>
+            <th className="gold-price-th">Loại vàng</th>
+            <th className="gold-price-th">Giá thu mua (VND)</th>
+            <th className="gold-price-th">Giá bán (VND)</th>
           </tr>
         </thead>
         <tbody>
@@ -63,7 +63,7 @@ export default function GoldPrice() {
           ))}
         </tbody>
       </table>
-      {isManager ? (<button className="btnSetting-gold" onClick={handleSetting}>Setting</button>) : null}  
+      {isManager ? (<button className="btnSetting-gold" onClick={handleSetting}>Tùy chỉnh</button>) : null}  
     </div>
       )
     }
