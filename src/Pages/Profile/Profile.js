@@ -125,7 +125,7 @@ export default function EditEmployee() {
             <Input className="input-field" placeholder="Địa chỉ" name="address" value={profile.address} onChange={handleChange} />
             <DatePicker
               className="input-field"
-              placeholder="Birthday"
+              placeholder="Ngày sinh"
               value={profile.birthday ? moment(profile.birthday) : null}
               disabled
               format="YYYY-MM-DD"

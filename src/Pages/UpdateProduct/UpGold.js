@@ -74,7 +74,7 @@ function UpGold() {
       })
       .catch((error) => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
-        notification.error({ message: errorMessage });
+        notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
         console.log(error);
       });
   };

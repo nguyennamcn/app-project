@@ -51,7 +51,7 @@ const JewelryInventoryPage = () => {
       })
       .catch((err) => {
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-        notification.error({ message: errorMessage });
+        notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
         console.log(err);
       });
   };
