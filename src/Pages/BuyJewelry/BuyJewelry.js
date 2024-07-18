@@ -374,20 +374,10 @@ const JewelrySelection = () => {
 
   return (
     <div style={styles.container}>
-      <div style={{ display: 'flex', gap: '5px' }}>
-          <button onClick={() => setIsSizeModalVisible(true)} className="home-jewelry-size-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-rulers" viewBox="0 0 16 16">
-              <path d="M2.23 0a.5.5 0 0 0-.5.5v1.75a.5.5 0 0 0 1 0V1H6v.25a.5.5 0 0 0 1 0V1h2v.25a.5.5 0 0 0 1 0V1h2.5v1.25a.5.5 0 0 0 1 0V.5a.5.5 0 0 0-.5-.5H2.23zM1 2.5v10.77a.5.5 0 0 0 .5.5h1.75a.5.5 0 0 0 0-1H2V10h.25a.5.5 0 0 0 0-1H2V7h.25a.5.5 0 0 0 0-1H2V4h.25a.5.5 0 0 0 0-1H2V2h.25a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0-.5.5zM13 2v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm-2-6v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm-2-6v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9z" />
-            </svg>
-          </button>
+      <div style={{ display: 'flex', gap: '5px' , maxWidth:'50px' }}>
           <button onClick={() => setIsBraceletSizeModalVisible(true)} className="home-jewelry-size-button">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
               <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z" />
-            </svg>
-          </button>
-          <button onClick={() => setIsNecklaceSizeModalVisible(true)} className="home-jewelry-size-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z" />
             </svg>
           </button>
         </div>
@@ -591,7 +581,7 @@ const JewelrySelection = () => {
         className="home-jewelry-custom-modal-bracelet"
       >
         <div className='size_img_bracelet'>
-          kk
+          <img src="https://media.discordapp.net/attachments/1161276908433063946/1263359796363530250/image.png?ex=6699f2ff&is=6698a17f&hm=aa0213e5bf016ae87e900052d14728047a2687c71f526b862b2c0238f7a4ae6a&=&format=webp&quality=lossless&width=1363&height=383" alt="Ring Sizes" style={{ width: '100%' }} />
         </div>
       </Modal>
       <Modal
