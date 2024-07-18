@@ -36,14 +36,6 @@ import Profile from './Pages/Profile/Profile';
 import CustomerDetails from './Pages/Customer/Customer';
 import DashBoard from './Pages/DashBoard/DashBoard';
 import BillGold from './Pages/BillBuying/BillGold';
-import Policy from './Pages/Header/Policy';
-import Service from './Pages/Header/Service';
-import Shop from './Pages/Header/Shop';
-import AboutSystem from './Pages/Header/AboutSystem';
-import PolicyLogin from './Pages/LoginHeader/Header/PolicyLogin';
-import ServiceLogin from './Pages/LoginHeader/Header/ServiceLogin';
-import ShopLogin from './Pages/LoginHeader/Header/ShopLogin';
-import AboutSystemLogin from './Pages/LoginHeader/Header/AboutSystemLogin';
 import BillDiamond from './Pages/BillBuying/BillDiamond';
 import BillJewelry from './Pages/BillBuying/BillJewelry';
 import PurchaseDetail from './Pages/PurchaseOrderList/purchaseDetail';
@@ -123,14 +115,6 @@ function App() {
               <Route path="/profile" element={<Layout Component={Profile} />} />
               <Route path="/customer" element={<Layout Component={CustomerDetails} />} />
               <Route path="/dashboard" element={<Layout Component={DashBoard} />} />
-              <Route path="/policy" element={<Layout Component={Policy} />} />
-              <Route path="/service" element={<Layout Component={Service} />} />
-              <Route path="/shop" element={<Layout Component={Shop} />} />
-              <Route path="/about-system" element={<Layout Component={AboutSystem} />} />
-              <Route path="/policy-login" element={<Layout Component={PolicyLogin} />} />
-              <Route path="/service-login" element={<Layout Component={ServiceLogin} />} />
-              <Route path="/shop-login" element={<Layout Component={ShopLogin} />} />
-              <Route path="/about-system-login" element={<Layout Component={AboutSystemLogin} />} />
               <Route path="/historyOrder" element={<Layout Component={HistoryOrder} />} />
               <Route path="/settingGoldPrice" element={<Layout Component={SettingGoldPrice} />} />
               <Route path="/settingDiamondPrice" element={<Layout Component={SettingDiamondPrice} />} />
