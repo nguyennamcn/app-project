@@ -31,7 +31,7 @@ export default function EditEmployee() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'phone' && (!/^\d*$/.test(value) || value.length > 10)) {
-      notification.error({ message: 'Phone number must be digits only and max 10 digits.' });
+      notification.error({ message: 'Vui lòng nhập số (tối đa 10 chữ số)' });
       return;
     }
     setProfile({
@@ -68,22 +68,22 @@ export default function EditEmployee() {
 
     const updateAvatar = fileAvatar ? adornicaServ.postImg(userInfo.id, fileAvatar)
       .then((res) => {
-        notification.success({ message: 'Avatar updated successfully!' });
+        notification.success({ message: 'Cập nhật ảnh đại diện thành công!' });
       })
       .catch((err) => {
         console.log(err);
-        notification.error({ message: 'Error updating avatar. Please try again.' });
+        notification.error({ message: 'Cập nhật thất bại ! Vui lòng thử lại' });
       }) : Promise.resolve();
 
     updateAvatar.finally(() => {
       adornicaServ.postUserUpdate(userInfo.id, data)
         .then((res) => {
           setProfile(data);
-          notification.success({ message: 'Profile updated successfully!' });
+          notification.success({ message: 'Cập nhật hồ sơ thành công!' });
         })
         .catch((err) => {
           console.log(err);
-          notification.error({ message: 'Error updating profile. Please try again.' });
+          notification.error({ message: 'Cập nhật thất bại ! Vui lòng thử lại' });
         })
         .finally(() => {
           setLoading(false);
@@ -105,7 +105,7 @@ export default function EditEmployee() {
         <Spinner />
       ) :(
         <div className="profile-container">
-      <h1 className="profile-title">Profile</h1>
+      <h1 className="profile-title">Hồ sơ</h1>
       <div className="profile-card">
         <div className="profile-header">
           <div className="profile-image" onClick={showModal}>
@@ -118,14 +118,14 @@ export default function EditEmployee() {
             </label>
           </div>
           <div className="profile-info">
-            <Input className="input-field" placeholder="Full Name" name="name" value={profile.name} disabled />
-            <Input className="input-field" placeholder="Phone number" name="phone" value={profile.phone} onChange={handleChange} />
+            <Input className="input-field" placeholder="Họ và tên" name="name" value={profile.name} disabled />
+            <Input className="input-field" placeholder="Số điện thoại" name="phone" value={profile.phone} onChange={handleChange} />
             <Input className="input-field" placeholder="Email" name="email" value={profile.email} onChange={handleChange} />
-            <Input className="input-field" placeholder="Gender" name="gender" value={profile.gender} disabled />
-            <Input className="input-field" placeholder="Address" name="address" value={profile.address} onChange={handleChange} />
+            <Input className="input-field" placeholder="Giới tính" name="gender" value={profile.gender} disabled />
+            <Input className="input-field" placeholder="Địa chỉ" name="address" value={profile.address} onChange={handleChange} />
             <DatePicker
               className="input-field"
-              placeholder="Birthday"
+              placeholder="Ngày sinh"
               value={profile.birthday ? moment(profile.birthday) : null}
               disabled
               format="YYYY-MM-DD"
@@ -135,10 +135,9 @@ export default function EditEmployee() {
         </div>
         <hr />
         <div className="profile-details">
-          <h3>Work Information:</h3>
           <div className="work-info-row">
             <div className="work-info-item">
-              <h3>Role:</h3>
+              <h3>Chức vụ : </h3>
               <Input className="input-field" value={profile.roleUser} disabled />
             </div>
           </div>
@@ -146,7 +145,7 @@ export default function EditEmployee() {
         <hr />
         <div className="profile-actions">
           <Button type="primary" className="nav-button" onClick={handleSubmit} loading={loading}>
-            Save
+            Lưu
           </Button>
         </div>
       </div>
@@ -159,10 +158,10 @@ export default function EditEmployee() {
         className='modal__avatar'
       >
         <div className='modal__content' onClick={showAvatar} style={{ marginTop: '2px', marginBottom: '4px' }}>
-          View avatar
+          Xem ảnh đại diện
         </div>
         <div className='modal__content'>
-          <label htmlFor="avatar-upload" className='change__avatar__modal'>Change avatar </label>
+          <label htmlFor="avatar-upload" className='change__avatar__modal'> Đổi ảnh đại diện </label>
           <input
             id="avatar-upload"
             type="file"

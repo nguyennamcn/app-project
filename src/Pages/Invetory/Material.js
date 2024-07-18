@@ -74,13 +74,13 @@ const Material = () => {
                 setItems(prevItems => [...prevItems, { id: res.data.id, name: newItemName }]);
                 setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
                 closeCreateMaterialModal();
-                notification.success({ message: "Create successfully !" });
+                notification.success({ message: "Tạo thành công !" });
                 // navigate(0); // Reload lại trang
 
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-                notification.error({ message: errorMessage });
+                notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
                 console.log(err);
             });
 
@@ -94,12 +94,12 @@ const Material = () => {
                 const newItems = items.filter(item => item.id !== id);
                 setItems(newItems);
                 setPageCount(Math.ceil(newItems.length / itemsPerPage));
-                notification.success({ message: "Delete successfully !" });
+                notification.success({ message: "Xóa thành công !" });
                 // navigate(0); // Reload lại trang
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-                notification.error({ message: errorMessage });
+                notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
                 console.log(err);
             });
         closeConfirmationModal();
@@ -116,13 +116,13 @@ const Material = () => {
             .then((res) => {
                 console.log(`Updated material with id: ${id}`);
                 setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, ...updatedData } : item));
-                notification.success({ message: "Update successfully !" });
+                notification.success({ message: "Cập nhật thành công !" });
                 navigate(0); // Reload lại trang
                 closeMaterialModal();
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-                notification.error({ message: errorMessage });
+                notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại !" });
                 console.log(err);
             });
 
@@ -133,24 +133,23 @@ const Material = () => {
                 setItems(prevItems => [...prevItems, { id: res.data.id, name: newItemName }]);
                 setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
                 closeCreateMaterialModal();
-                notification.success({ message: "Create successfully !" });
+                notification.success({ message: "Tạo thành công !" });
                 navigate(0); // Reload lại trang
 
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-                notification.error({ message: errorMessage });
+                notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
                 console.log(err);
             });
     };
 
     const showDeleteConfirm = (id) => {
         AntdModal.confirm({
-            title: 'Confirm Delete',
-            content: 'Are you sure you want to delete this material?',
-            okText: 'Yes',
+            content: 'Bạn có muốn xóa sản phẩm này không ?',
+            okText: 'Có',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: 'Không',
             onOk() {
                 handleDeleteMaterial(id);
             }
@@ -174,7 +173,7 @@ const Material = () => {
                 <Spinner />
             ) : (
                 <div className="material-container">
-                    <h2 className="material-title">Material</h2>
+                    <h2 className="material-title">Vật liệu</h2>
                     <NavLink to="/inventory" style={{
                         backgroundColor: 'gray',
                         border: '1px solid purple',
@@ -184,7 +183,7 @@ const Material = () => {
                         cursor: 'pointer',
                         justifyContent: 'flex-start',
                         margin: 'auto',
-                    }}>BACK</NavLink>
+                    }}>Trở về</NavLink>
                     <button style={{
                         backgroundColor: '#00ca4d',
                         border: '1px solid purple',
@@ -194,14 +193,14 @@ const Material = () => {
                         cursor: 'pointer',
                         marginBottom: '20px',
                         marginLeft: '20px'
-                    }} onClick={openCreateMaterialModal}>Create</button>
+                    }} onClick={openCreateMaterialModal}>Tạo mới</button>
                     <div className="material-table-container">
                         <table className="material-table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Action</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -217,7 +216,7 @@ const Material = () => {
                                                 padding: '10px 20px',
                                                 borderRadius: '5px',
                                                 cursor: 'pointer'
-                                            }} onClick={() => openMaterialModal(item)}>Update</button>
+                                            }} onClick={() => openMaterialModal(item)}>Chỉnh sửa</button>
                                             <button
                                                 onClick={() => showDeleteConfirm(item.id)}
                                                 style={{
@@ -229,7 +228,7 @@ const Material = () => {
                                                     cursor: 'pointer'
                                                 }}
                                             >
-                                                Delete
+                                                Xóa
                                             </button>
                                         </td>
                                     </tr>
@@ -238,19 +237,9 @@ const Material = () => {
                         </table>
                     </div>
                     <div className="material-paginationContainer">
-                        {/* <NavLink to="/inventory" style={{
-                                                    backgroundColor: 'gray',
-                                                    border: '1px solid purple',
-                                                    color: 'white',
-                                                    padding: '10px 20px',
-                                                    borderRadius: '5px',
-                                                    cursor: 'pointer',
-                                                    justifyContent:'flex-start',
-                                                    margin:'auto',
-                                                }}>BACK</NavLink> */}
                         <ReactPaginate
-                            previousLabel={'Previous'}
-                            nextLabel={'Next'}
+                            previousLabel={'Trước'}
+                            nextLabel={'Sau'}
                             breakLabel={'...'}
                             pageCount={pageCount}
                             marginPagesDisplayed={1}
@@ -279,9 +268,9 @@ const Material = () => {
                     >
                         {selectedItem && (
                             <div className="material-modal-content">
-                                <h2 className="material-modal-header">Update Material</h2>
+                                <h2 className="material-modal-header">Chỉnh sửa vật liệu</h2>
                                 <label className="material-modal-label">
-                                    Name:
+                                    Tên sản phẩm:
                                     <input
                                         className="material-modal-input"
                                         type="text"
@@ -293,7 +282,7 @@ const Material = () => {
                                     />
                                 </label>
                                 <label className="material-modal-label">
-                                    Price Sell:
+                                    Giá bán:
                                     <input
                                         className="material-modal-input"
                                         type="text"
@@ -301,7 +290,7 @@ const Material = () => {
                                         onChange={(e) => setPriceSell(e.target.value)}
                                     />
                                 </label><label className="material-modal-label">
-                                    Price Buy:
+                                    Giá thu mua:
                                     <input
                                         className="material-modal-input"
                                         type="text"
@@ -317,7 +306,7 @@ const Material = () => {
                                         padding: '10px 20px',
                                         borderRadius: '5px',
                                         cursor: 'pointer'
-                                    }} onClick={() => handleUpdateMaterial(selectedItem.id)}>Save</button>
+                                    }} onClick={() => handleUpdateMaterial(selectedItem.id)}>Lưu</button>
                                     <button style={{
                                         backgroundColor: 'red',
                                         border: '1px solid purple',
@@ -326,7 +315,7 @@ const Material = () => {
                                         borderRadius: '5px',
                                         cursor: 'pointer'
                                     }}
-                                        onClick={closeMaterialModal}>Close</button>
+                                        onClick={closeMaterialModal}>Đóng</button>
                                 </div>
                             </div>
                         )}
@@ -338,9 +327,9 @@ const Material = () => {
                         className="material-modal"
                     >
                         <div className="material-modal-content">
-                            <h2 className="material-modal-header">Create New Material</h2>
+                            <h2 className="material-modal-header">Tạo vật liệu mới</h2>
                             <label className="material-modal-label">
-                                Name:
+                                Tên:
                                 <input
                                     className="material-modal-input"
                                     type="text"
@@ -361,7 +350,7 @@ const Material = () => {
                                     padding: '10px 20px',
                                     borderRadius: '5px',
                                     cursor: 'pointer'
-                                }} onClick={handleCreateMaterial}>Create</button>
+                                }} onClick={handleCreateMaterial}>Tạo</button>
                                 <button style={{
                                     backgroundColor: 'red',
                                     border: '1px solid purple',
@@ -369,7 +358,7 @@ const Material = () => {
                                     padding: '10px 20px',
                                     borderRadius: '5px',
                                     cursor: 'pointer'
-                                }} onClick={closeCreateMaterialModal}>Cancel</button>
+                                }} onClick={closeCreateMaterialModal}>Hủy</button>
                             </div>
                         </div>
                     </Modal>

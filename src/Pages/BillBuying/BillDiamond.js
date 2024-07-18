@@ -301,9 +301,9 @@ const BillDiamond = () => {
 
   return (
     <div style={pageStyles.container}>
-      <div style={pageStyles.header}>Purchase</div>
+      <div style={pageStyles.header}>Thu mua</div>
       <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Phone:</label>
+        <label style={pageStyles.detailLabel}>Số điện thoại:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -314,7 +314,7 @@ const BillDiamond = () => {
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
 
-        <label style={pageStyles.detailLabel}>Name:</label>
+        <label style={pageStyles.detailLabel}>Tên:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -323,25 +323,14 @@ const BillDiamond = () => {
           onChange={handleInputChange(setCustomerName)}
         />
 
-        {/* <label style={pageStyles.detailLabel}>Phone:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="phone"
-          value={customerPhone}
-          onChange={handleInputChange(setCustomerPhone)}
-          maxLength={10}
-        />
-        {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>} */}
-
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
-            <span>Cut</span>
-            <span>Carat</span>
-            <span>Color</span>
-            <span>Clarity</span>
-            <span>Origin</span>
-            <span>Price</span>
+            <span>Vết cắt</span>
+            <span>Khối lượng</span>
+            <span>Màu sắc</span>
+            <span>Độ tinh khiết</span>
+            <span>Nguồn gốc</span>
+            <span>Giá</span>
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
@@ -357,7 +346,7 @@ const BillDiamond = () => {
       </div>
 
       <div style={pageStyles.customerDetails}>
-      <label style={pageStyles.detailLabel}>Address:</label>
+      <label style={pageStyles.detailLabel}>Địa chỉ:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -368,13 +357,13 @@ const BillDiamond = () => {
       </div>
 
       <div style={pageStyles.summary}>
-        <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {formatPrice(calculateTotalPrice())}</div>
+        <div style={pageStyles.totalItems}>Tổng sản phẩm: {totalItems}</div>
+        <div style={pageStyles.totalPrice}>Tổng tiền: {formatPrice(calculateTotalPrice())}</div>
       </div>
 
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>
-          <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>BACK</button>
+          <button style={{ ...pageStyles.button, ...pageStyles.backButton }}>Trở về</button>
         </NavLink>
 
         <button
@@ -384,7 +373,7 @@ const BillDiamond = () => {
           onClick={handleFinishClick}
           disabled={isFinishButtonDisabled}
         >
-          CREATE
+          Tạo đơn
         </button>
       </div>
 
@@ -395,7 +384,7 @@ const BillDiamond = () => {
         style={pageStyles.modal}
       >
         <div style={pageStyles.successIcon}>✔</div>
-        <h2>Successfully</h2>
+        <h2>Thành công</h2>
       </Modal>
     </div>
   );

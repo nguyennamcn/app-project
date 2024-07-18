@@ -171,8 +171,8 @@ export default function CustomerDetails() {
       </div>
       <div className="customer-paginationContainer">
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={'Trước'}
+          nextLabel={'Sau'}
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}

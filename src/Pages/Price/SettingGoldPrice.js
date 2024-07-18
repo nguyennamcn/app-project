@@ -83,7 +83,7 @@ export default function SettingGoldPrice() {
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
-        notification.error({ message: errorMessage });
+        notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
         console.log(error);
         console.log("selectedMaterial", selectedMaterial);
       });
@@ -124,8 +124,8 @@ export default function SettingGoldPrice() {
         handleMaterialChange(createSelectedMaterialId);
       })
       .catch(error => {
-        const errorMessage = "Tạo thất bại,vui lòng thử lại !";
-        notification.error({ message: errorMessage });
+        const errorMessage = "Can not create, please try again !";
+        notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
         console.log(error);
       });
   };

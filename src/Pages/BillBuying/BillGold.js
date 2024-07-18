@@ -394,7 +394,7 @@ const BillGold = () => {
         style={pageStyles.modal}
       >
         <div style={pageStyles.successIcon}>✔</div>
-        <h2>Successfully</h2>
+        <h2>Thành công</h2>
       </Modal>
     </div>
   );
