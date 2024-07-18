@@ -291,7 +291,7 @@ const JewelrySelection = () => {
                 if (diamondPrice === 0) hasValidPrice = false;
                 total += diamondPrice;
               } else {
-                notification.error({ message: "Gem was undefined" });
+                notification.error({ message: "Không tim thấy vật liệu này" });
                 hasValidPrice = false;
               }
             }
@@ -395,11 +395,11 @@ const JewelrySelection = () => {
         {jewelryItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.jewelryLabel}>
-              Jewelry {index + 1}
-              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+              Trang sức {index + 1}
+              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Xóa</button>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Name:</label>
+              <label style={styles.label}>Tên sản phẩm:</label>
               <input
                 type="text"
                 style={styles.input}
@@ -411,7 +411,7 @@ const JewelrySelection = () => {
             </div>
             <div></div>
             <div style={styles.formGroup} ref={index === jewelryItems.length - 1 ? newItemRef : null}>
-              <label style={styles.label}>Gold type:</label>
+              <label style={styles.label}>Loại vàng:</label>
               <select style={styles.input} value={item.goldType} onChange={e => handleInputChange(index, 'goldType', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
@@ -421,7 +421,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Weight (gram):</label>
+              <label style={styles.label}>Khối lượng (gram):</label>
               <input
                 type="number"
                 style={styles.input}
@@ -433,7 +433,7 @@ const JewelrySelection = () => {
               />
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Origin:</label>
+              <label style={styles.label}>Nguồn gốc:</label>
               <select style={styles.input} value={item.origin} onChange={e => handleInputChange(index, 'origin', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
@@ -442,7 +442,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Carat Weight:</label>
+              <label style={styles.label}>Khối lượng (Kim cương):</label>
               <input
                 type="number"
                 style={styles.input}
@@ -453,7 +453,7 @@ const JewelrySelection = () => {
               />
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Color:</label>
+              <label style={styles.label}>Màu sắc:</label>
               <select
                 style={styles.input}
                 value={item.color}
@@ -475,7 +475,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Clarity:</label>
+              <label style={styles.label}>Độ tinh khiết:</label>
               <select
                 style={styles.input}
                 value={item.clarity}
@@ -498,7 +498,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Cut:</label>
+              <label style={styles.label}>Vết cắt:</label>
               <select
                 style={styles.input}
                 value={item.cut}
@@ -517,14 +517,14 @@ const JewelrySelection = () => {
             {item.goldType  && item.weight >0 && (
               <>
                 <div style={styles.totalPrice}>
-                    {item.goldType}: Buy price {item.materialBuyPrice.toLocaleString('vi-VN')} VND - Sell price {item.materialSellPrice.toLocaleString('vi-VN')} VND
+                    {item.goldType}: Giá mua {item.materialBuyPrice.toLocaleString('vi-VN')} VND - Giá bán {item.materialSellPrice.toLocaleString('vi-VN')} VND
                 </div>
 
                 
-                <div style={styles.totalPrice}>Gold promotion: {(((item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
+                <div style={styles.totalPrice}>Khuyến mãi Vàng: {(((item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
 
                 <div style={styles.totalPrice}>
-                    Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
+                    Tổng tiền vật liệu: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
 
               </>
@@ -539,14 +539,14 @@ const JewelrySelection = () => {
                   textAlign: 'center',
                   marginTop: '30px',
                 }}>
-                  Diamond: Buy price {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND
+                  Kim cương: Giá mua {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Giá bán {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND
                 </div>
 
                
-               <div style={styles.totalPrice}>Diamond promotion: {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
+               <div style={styles.totalPrice}>Khuyến mãi kim cương: {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
 
                <div style={styles.totalPrice}>
-                   Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND
+                   Tổng tiền kim cương: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND
                 </div>
 
               </>
@@ -554,16 +554,16 @@ const JewelrySelection = () => {
             
           </React.Fragment>
         ))}
-        <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>ADD JEWELRY</button>
+        <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Thêm sản phẩm</button>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice.toLocaleString('vi-Vn')} VND
+          Tổng tiền: {totalPrice.toLocaleString('vi-Vn')} VND
         </div>
         <button
           type="submit"
           style={{ ...styles.button, ...(formValid && totalPrice > 0 ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
           disabled={!formValid || totalPrice === 0}
         >
-          PURCHASE
+          Thu mua
         </button>
       </form>
       <Modal

@@ -25,11 +25,11 @@ function Feedback() {
   return (
     <div className="Feedback" style={styles.feedbackContainer}>
       <div style={styles.innerContainer}>
-        <h2 style={styles.heading}>Review and Evaluation</h2>
+        <h2 style={styles.heading}>Đánh giá</h2>
         <textarea
           value={comment}
           onChange={handleCommentChange}
-          placeholder="Comment..."
+          placeholder="Bình luận..."
           style={styles.textarea}
         />
         <div style={styles.ratingContainer}>
@@ -45,16 +45,16 @@ function Feedback() {
         </div>
         <div style={styles.submitContainer}>
           <button style={styles.submitButton} onClick={handleSubmit}>
-            Submit Review
+            Gửi đánh giá
           </button>
         </div>
       </div>
       {isModalOpen && (
         <div style={styles.modalOverlay}>
           <div style={styles.modal}>
-            <p>Submit Successfully</p>
+            <p>Đã gửi thành công</p>
             <button style={styles.closeButton} onClick={closeModal}>
-              Close
+              Đóng
             </button>
           </div>
         </div>

@@ -53,19 +53,19 @@ const DiamondPrice = () => {
         <Spinner />
       ) :(
         <div className="DiamondPrice-container">
-            <h2 className="DiamondPrice-header">DIAMOND PRICE - {currentDate}</h2>
+            <h2 className="DiamondPrice-header">Giá Kim Cương - {currentDate}</h2>
             <div className="DiamondPrice-tableContainer">
                 <table className="DiamondPrice-table">
                     <thead>
                         <tr>
                             <th className="DiamondPrice-th">STT</th>
-                            <th className="DiamondPrice-th">Origin</th>
-                            <th className="DiamondPrice-th">Color</th>
-                            <th className="DiamondPrice-th">Clarity</th>
-                            <th className="DiamondPrice-th">Cut</th>
-                            <th className="DiamondPrice-th">Carat</th>
-                            <th className="DiamondPrice-th">Purchase (VND)</th>
-                            <th className="DiamondPrice-th">Sell (VND)</th>
+                            <th className="DiamondPrice-th">Nguồn gốc</th>
+                            <th className="DiamondPrice-th">Màu sắc</th>
+                            <th className="DiamondPrice-th">Độ tinh khiết</th>
+                            <th className="DiamondPrice-th">Vết cắt</th>
+                            <th className="DiamondPrice-th">Khối lượng</th>
+                            <th className="DiamondPrice-th">Giá thu mua (VND)</th>
+                            <th className="DiamondPrice-th">Giá bán (VND)</th>
                             {/* <th className="DiamondPrice-th">Date Update</th> */}
                         </tr>
                     </thead>
@@ -90,50 +90,8 @@ const DiamondPrice = () => {
                         ))}
                     </tbody>
                 </table>
-                {isManager ? (<button className="btnSetting-diamond" onClick={handleSetting}>Setting</button>) : null}
+                {isManager ? (<button className="btnSetting-diamond" onClick={handleSetting}>Tùy chỉnh</button>) : null}
             </div>
-
-
-            {/* <Modal title="Update Prices" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <h1>Current price</h1>
-                <div>
-                    <label>Purchase (VND): </label>
-                    <Input 
-                        value={updatedPurchase} 
-                        //onChange={(e) => setUpdatedPurchase(e.target.value)} 
-                        type="number"
-                        readOnly
-                    />
-                </div>
-                <div style={{ marginTop: '10px', marginBottom:'14px' }}>
-                    <label>Sell (VND): </label>
-                    <Input 
-                        value={updatedSell} 
-                        //onChange={(e) => setUpdatedSell(e.target.value)} 
-                        type="number"
-                        readOnly
-                    />
-                </div>
-
-                <h1>New price</h1>
-                <div>
-                    <label>Purchase (VND): </label>
-                    <Input 
-                      
-                        onChange={(e) => setUpdatedPurchase(e.target.value)} 
-                        type="number"
-                    />
-                </div>
-                <div style={{ marginTop: '10px' }}>
-                    <label>Sell (VND): </label>
-                    <Input 
-                      
-                        onChange={(e) => setUpdatedSell(e.target.value)} 
-                        type="number"
-                    />
-                </div>
-            </Modal> */}
-
         </div>
       )
     }

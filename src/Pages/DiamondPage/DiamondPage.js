@@ -66,16 +66,16 @@ export default function DiamondPage() {
     const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
     if (product.productPrice < 0) {
-      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></div>);
+      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Sản phẩm chưa có giá !</h1></div>);
       return;
     }
 
     if (existingItemIndex > -1) {
-      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Product was added !</h1></div>);
+      showModal(<div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1>Sản phẩm đã được thêm từ trước !</h1></div>);
     } else {
       cartItems.push(item);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Product added successfully !</h1></div>);
+      showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Đã thêm sản phẩm thành công !</h1></div>);
     }
   };
 
@@ -116,12 +116,12 @@ export default function DiamondPage() {
         <div className='home-diamond-page'>
       <div className='home-diamond-filter'>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        <button onClick={() => setIsQRModalVisible(true)} className="home-diamond-scan-button">Scan Code</button>
+        <button onClick={() => setIsQRModalVisible(true)} className="home-diamond-scan-button">QUÉT MÃ</button>
         </div>
   
         <div className='home-diamond-search-input-diamond'>
           <textarea 
-            placeholder='Search by product code or name...' 
+            placeholder='Tìm sản phẩm theo mã hoặc theo tên...' 
             value={searchTerm} 
             onChange={handleSearch} 
             rows={2}
@@ -150,12 +150,12 @@ export default function DiamondPage() {
                 </div>
                 <div className="home-diamond-overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-                    <button className="home-diamond-overlay-button">View</button>
+                    <button className="home-diamond-overlay-button">XEM</button>
                   </NavLink>
 
                   {isAdmin || isCashier || isManager ? ( null
                   ) : (
-                  <button className="home-diamond-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                  <button className="home-diamond-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>THÊM</button>
                   )}
                 </div>
               </Card>
@@ -172,8 +172,8 @@ export default function DiamondPage() {
   
       <div className="home-diamond-pagination-container">
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={'Trước'}
+          nextLabel={'Sau'}
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}

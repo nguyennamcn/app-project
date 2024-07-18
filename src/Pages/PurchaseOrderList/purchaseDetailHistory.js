@@ -236,9 +236,9 @@ const PurchaseDetailHistory = () => {
         <Spinner />
       ) :(
         <div style={pageStyles.container}>
-      <div style={pageStyles.header}>Purchase</div>
+      <div style={pageStyles.header}>Đơn hàng mua lại</div>
       <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Name:</label>
+        <label style={pageStyles.detailLabel}>Tên khách hàng:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -247,7 +247,7 @@ const PurchaseDetailHistory = () => {
           disabled
         />
 
-        <label style={pageStyles.detailLabel}>Phone:</label>
+        <label style={pageStyles.detailLabel}>Số điện thoại:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -256,7 +256,7 @@ const PurchaseDetailHistory = () => {
           disabled
         />
 
-        <label style={pageStyles.detailLabel}>Address:</label>
+        <label style={pageStyles.detailLabel}>Địa chỉ:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -265,24 +265,24 @@ const PurchaseDetailHistory = () => {
           disabled
         />
 
-        <label style={pageStyles.detailLabel}>Payment methods:</label>
+        <label style={pageStyles.detailLabel}>Hình thức thanh toán:</label>
         <select
           style={pageStyles.paymentSelect}
           name="paymentMethod"
           value={customerDetails.paymentMethod}
           onChange={handleDetailChange}
         >
-          <option value="CASH">Cash</option>
+          <option value="CASH">Tiền mặt</option>
         </select>
       </div>
       <div>
-        <h1>Order Code: {sp?.orderCode}</h1>
-        <h1>Total Amount: {formatPrice(sp?.totalAmount)}</h1>
+        <h1>Mã đơn hàng: {sp?.orderCode}</h1>
+        <h1>Tổng số tiền: {formatPrice(sp?.totalAmount)}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>
         <div style={pageStyles.buttonWrapper}>
-          <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Back</NavLink>
+          <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Trở về</NavLink>
           <button
             onClick={handleFinishClick}
             style={{ backgroundColor: '#00ca4d',
@@ -293,7 +293,7 @@ const PurchaseDetailHistory = () => {
               cursor: 'pointer',
               marginRight:'5px' }}
           >
-            FINISH
+            Hoàn thành
           </button>
         </div>
       </div>
@@ -303,8 +303,8 @@ const PurchaseDetailHistory = () => {
         onRequestClose={closeModal}
         style={pageStyles.modal}
       >
-        <h2>Order Completed!</h2>
-        <p>Your order has been successfully submitted.</p>
+        <h2>Hoàn thành đơn hàng!</h2>
+        <p>Đơn hàng đã thanh toán thành công</p>
         <div style={pageStyles.modalButtonWrapper}>
           <NavLink to="/historyOrder" style={{ backgroundColor: 'gray',
               border: '1px solid purple',
@@ -312,7 +312,7 @@ const PurchaseDetailHistory = () => {
               padding: '12px 20px',
               borderRadius: '5px',
               cursor: 'pointer',
-              marginRight:'5px' }}>BACK</NavLink>
+              marginRight:'5px' }}>Trở về</NavLink>
           <button
             onClick={handleDownloadPDF}
             style={{ backgroundColor: '#00ca4d',
@@ -323,7 +323,7 @@ const PurchaseDetailHistory = () => {
               cursor: 'pointer',
               marginRight:'5px' }}
           >
-            PRINT PDF
+            In hóa đơn
           </button>
         </div>
       </Modal>

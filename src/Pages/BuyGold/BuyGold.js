@@ -220,7 +220,7 @@ const GoldSelection = () => {
         {goldItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.formGroup} ref={index === goldItems.length - 1 ? newItemRef : null}>
-              <label style={styles.label}>Gold type:</label>
+              <label style={styles.label}>Loại vàng</label>
               <select style={styles.input} value={item.goldType} onChange={e => handleGoldTypeChange(index, e.target.value)}>
                 <option value=""></option>
                 {goldPrices.map((gold) => (
@@ -229,26 +229,26 @@ const GoldSelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Weight (gram):</label>
+              <label style={styles.label}>Khối lượng (gram):</label>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <input type="number" style={styles.input} value={item.weight} onChange={e => handleWeightChange(index, e.target.value)} min={0} step={0.1} />
-                <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+                <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Xóa</button>
               </div>
             </div>
             {item.goldType && (
               <>
-                <div style={styles.totalPrice}>{item.goldType}: Buy price {parseFloat(item.materialBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.materialSellPrice).toLocaleString('vi-VN')} VND</div>
+                <div style={styles.totalPrice}>{item.goldType}: Giá mua {parseFloat(item.materialBuyPrice).toLocaleString('vi-VN')} VND - Giá bán {parseFloat(item.materialSellPrice).toLocaleString('vi-VN')} VND</div>
                 
-                <div style={styles.totalPrice}>Gold promotion: { (((item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
+                <div style={styles.totalPrice}>Khuyến mãi: { (((item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
 
                 <div style={styles.totalPrice}>
-                  Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND
+                  Tổng vật liệu: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
               </>
             )}
           </React.Fragment>
         ))}
-        <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>ADD GOLD</button>
+        <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>Thêm sản phẩm</button>
         
         <div style={styles.totalPrice}>
           Total price: {totalPrice > 0 ? parseFloat(totalPrice).toLocaleString('vi-VN') : '0.00'} VND
@@ -261,7 +261,7 @@ const GoldSelection = () => {
           }}
           disabled={!formValid || totalPrice <= 0}
         >
-          PURCHASE
+          Thu mua
         </button>
       </form>
     </div>

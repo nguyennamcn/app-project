@@ -116,10 +116,10 @@ export default function CustomerDetails() {
         <Spinner />
       ) :(
         <div className="customer-container">
-      <h2 className="customer-header">CUSTOMER INFORMATION</h2>
+      <h2 className="customer-header">Thông tin khách hàng</h2>
       <input 
         type="text"
-        placeholder="Search by Name or Phone"
+        placeholder="Search by tên hoặc số điện thoại"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="customer-searchBar"
@@ -129,12 +129,12 @@ export default function CustomerDetails() {
           <thead>
             <tr>
               <th className="customer-th">ID</th>
-              <th className="customer-th">Name</th>
-              <th className="customer-th">Phone</th>
-              <th className="customer-th">Address</th>
-              <th className="customer-th">Birthday</th>
-              <th className="customer-th">Discount (%)</th>
-              <th className="customer-th">Purchased (VND)</th>
+              <th className="customer-th">Tên khách hàng</th>
+              <th className="customer-th">Số điện thoại</th>
+              <th className="customer-th">Địa chỉ</th>
+              <th className="customer-th">Sinh nhật</th>
+              <th className="customer-th">Giảm giá (%)</th>
+              <th className="customer-th">Số tiền đã mua (VND)</th>
             </tr>
           </thead>
           <tbody>
@@ -201,11 +201,11 @@ export default function CustomerDetails() {
       >
         <div className="customer-modal-content">
           <span className="customer-modal-close" onClick={closeModal}>&times;</span>
-          <h2>Customer Details</h2>
+          <h2>Thông tin chi tiết</h2>
           <p><strong>ID:</strong> {selectedCustomer?.customerId}</p>
           <div className="customer-edit-form">
             <label>
-              <strong>Name:</strong>
+              <strong>Tên:</strong>
               <input
                 type="text"
                 value={editName}
@@ -213,7 +213,7 @@ export default function CustomerDetails() {
               />
             </label>
             <label>
-              <strong>Phone:</strong>
+              <strong>Số điện thoại:</strong>
               <input
                 type="text"
                 value={editPhone}
@@ -221,7 +221,7 @@ export default function CustomerDetails() {
               />
             </label>
             <label>
-              <strong>Address:</strong>
+              <strong>Địa chỉ:</strong>
               <input
                 type="text"
                 value={editAddress}
@@ -229,7 +229,7 @@ export default function CustomerDetails() {
               />
             </label>
             <label>
-              <strong>Birthday:</strong>
+              <strong>Sinh nhật:</strong>
               <input
                 type="text"
                 value={formatBirthday(editDateOfBirth)}
@@ -238,7 +238,7 @@ export default function CustomerDetails() {
               />
             </label>
           </div>
-          <button onClick={updateCustomer}>Update</button>
+          <button onClick={updateCustomer}>Cập nhật</button>
         </div>
       </Modal>
     </div>

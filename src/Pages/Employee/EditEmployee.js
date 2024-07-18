@@ -73,7 +73,7 @@ export default function EditEmployee() {
       .then((res) => {
         console.log('Role updated:', res);
         //window.location.reload();
-        notification.success({ message: "Update user successfully" });
+        notification.success({ message: "Lưu thông tin thành công" });
 
       })
       .catch((err) => {
@@ -92,7 +92,7 @@ export default function EditEmployee() {
         <Spinner />
       ) :(
         <div className="edit-container">
-      <h1 className="edit-title">Edit Employee</h1>
+      <h1 className="edit-title">Chỉnh sửa hồ sơ của nhân viên</h1>
       <div className="edit-card">
         <div className="edit-header">
           <div className="edit-image">
@@ -122,14 +122,14 @@ export default function EditEmployee() {
         <hr />
         <div className="edit-details">
           {/* <h3>Work Information</h3> */}
-          <h3>Role:</h3>
+          <h3>Chức vụ:</h3>
           {isAdmin ? (
             <div className="role-group-edit">
             {/* <h3>Role:</h3> */}
             <Radio.Group name="role" onChange={handleChange} value={form.role} style={{ marginLeft: '10px' }}>
-              <Radio value="ROLE_SALES_STAFF">Sales staff</Radio>
-              <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
-                <Radio value="ROLE_MANAGER">Manager</Radio>
+              <Radio value="ROLE_SALES_STAFF">Nhân viên bán hàng</Radio>
+              <Radio value="ROLE_CASHIER_STAFF">Thu ngân</Radio>
+                <Radio value="ROLE_MANAGER">Quản lý</Radio>
                 <Radio value="ROLE_ADMIN">Admin</Radio>
             </Radio.Group>
           </div>
@@ -137,8 +137,8 @@ export default function EditEmployee() {
             <div className="role-group-edit">
             {/* <h3>Role:</h3> */}
             <Radio.Group name="role" onChange={handleChange} value={form.role} style={{ marginLeft: '10px' }}>
-              <Radio value="ROLE_SALES_STAFF">Sales staff</Radio>
-              <Radio value="ROLE_CASHIER_STAFF">Cashier</Radio>
+              <Radio value="ROLE_SALES_STAFF">Nhân viên bán hàng</Radio>
+              <Radio value="ROLE_CASHIER_STAFF">Thu ngân</Radio>
             </Radio.Group>
           </div>
           )}        
@@ -146,10 +146,10 @@ export default function EditEmployee() {
         <hr />
         <div className="edit-actions">
           <NavLink to="/employee">
-            <Button className="nav-button">Back</Button>
+            <Button className="nav-button">Trở về</Button>
           </NavLink>
           <NavLink>
-            <Button type="primary" className="nav-button" onClick={handleSubmit}>Save</Button>
+            <Button type="primary" className="nav-button" onClick={handleSubmit}>Lưu</Button>
           </NavLink>
         </div>
       </div>

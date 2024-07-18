@@ -106,7 +106,7 @@ const StoreSelection = () => {
     adornicaServ.postOrderCode(phone, ordercode)
       .then(response => {
         console.log("Order sent successfully:", response.data);
-        setModalMessage('Order sent successfully');
+        setModalMessage('Gửi đơn thành công');
         setModalIsOpen(true);
         setTimeout(() => {
           setModalIsOpen(false);
@@ -115,7 +115,7 @@ const StoreSelection = () => {
       })
       .catch(error => {
         console.error("There was an error sending the order:", error);
-        setModalMessage('Failed to send order. Please check your input data.');
+        setModalMessage('Gửi đơn thất bại ! Vui lòng kiểm tra lại thông tin');
         setModalIsOpen(true);
       });
   };
@@ -130,11 +130,11 @@ const StoreSelection = () => {
     <div style={styles.container}>
       <form style={styles.form} onSubmit={handleSubmit}>
         <div style={styles.formGroup}>
-          <label style={styles.label}>Phone:</label>
+          <label style={styles.label}>Số điện thoại:</label>
           <input type="text" style={styles.input} value={phone} onChange={e => setPhone(e.target.value)} />
         </div>
         <div style={styles.formGroup}>
-          <label style={styles.label}>Order code:</label>
+          <label style={styles.label}>Mã đơn hàng:</label>
           <input style={styles.input} type="text" value={ordercode} onChange={e => setOrdercode(e.target.value)} />
         </div>
         <button type="submit"
@@ -145,7 +145,7 @@ const StoreSelection = () => {
           onMouseEnter={e => e.target.style.backgroundColor = isFormValid ? styles.buttonHover.backgroundColor : styles.button.backgroundColor}
           onMouseLeave={e => e.target.style.backgroundColor = styles.button.backgroundColor}
           disabled={!isFormValid}
-        >Check</button>
+        >Kiểm tra</button>
       </form>
 
       <Modal
@@ -154,7 +154,7 @@ const StoreSelection = () => {
         style={styles.modal}
       >
         <h2>{modalMessage}</h2>
-        <button onClick={closeModal} style={styles.modalButton}>Close</button>
+        <button onClick={closeModal} style={styles.modalButton}>Đóng</button>
       </Modal>
     </div>
   );

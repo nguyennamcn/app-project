@@ -25,7 +25,7 @@ const CartPage = () => {
         if (/^\d*$/.test(input) && input.length <= 10) {
             setCustomerPhone(input);
         } else {
-            notification.error({ message: 'Phone incorrect (10 digits).' });
+            notification.error({ message: 'Vui lòng nhập lại (tối đa 10 chữ số)' });
         }
     };
 
@@ -46,7 +46,7 @@ const CartPage = () => {
                     console.log(res)
                 })
                 .catch(error => {
-                    console.error("Error fetching customer data:", error);
+                    console.error("Lỗi khi tìm nạp dữ liệu khách hàng:", error);
                 });
         
     }, []);
@@ -65,7 +65,7 @@ const CartPage = () => {
                     }
                 })
                 .catch(error => {
-                    console.error("Error fetching customer data:", error);
+                    console.error("Lỗi khi tìm nạp dữ liệu khách hàng:", error);
                         setDiscount(0);
                         setCustomerName(''); 
                 });
@@ -137,7 +137,7 @@ const CartPage = () => {
             showModal(
                 <div className='notice__content'>
                     <i className="error__icon fa-solid fa-circle-xmark" ></i>
-                    <h1>Failed to send order. Please check name and phone number.</h1>
+                    <h1>Gửi đơn thất bại! Vui lòng kiểm tra lại thông tin</h1>
                 </div>
             );
             return;
@@ -147,7 +147,7 @@ const CartPage = () => {
             showModal(
                 <div className='notice__content'>
                     <i className="error__icon fa-solid fa-circle-xmark" ></i>
-                    <h1>Phone number incorrect. Please check your input data.</h1>
+                    <h1>Số điện thoại không đúng! Vui lòng kiểm tra lại</h1>
                 </div>
             );
             return;
@@ -174,11 +174,12 @@ const CartPage = () => {
                 setDataSource([]);
                 localStorage.removeItem('cartItems');
 
-                showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Order sent successfully !</h1></div>);
+                showModal(<div className='notice__content'><i class="check__icon fa-solid fa-circle-check" ></i><h1>Đơn hàng đã gửi thành công !</h1></div>);
+                window.location.reload();  // Reload the page after successful order
             })
             .catch(error => {
                 console.error("There was an error sending the order:", error);
-                showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Failed to send order. Please check your input data.</h1></div>);
+                showModal(<div className='notice__content'><i class="error__icon fa-solid fa-circle-xmark" ></i><h1>Gửi đơn thất bại! Vui lòng kiểm tra lại thông tin.</h1></div>);
             });
     };
 
@@ -188,34 +189,34 @@ const CartPage = () => {
 
     const columns = [
         {
-            title: 'Name',
+            title: 'Tên Sản Phẩm',
             dataIndex: 'name',
             key: 'name',
         },
         {
-            title: 'Product Code',
+            title: 'Mã Sản Phẩm',
             dataIndex: 'productCode',
             key: 'productCode',
         },
         {
-            title: 'Quantity',
+            title: 'Số lượng',
             dataIndex: 'quantity',
             key: 'quantity',
             render: (text, record) => 1,
         },
         {
-            title: 'Price',
+            title: 'Giá',
             dataIndex: 'totalPrice',
             key: 'totalPrice',
             render: (text, record) => formatPrice(record.totalPrice),
         },
         {
-            title: 'Delete',
+            title: 'Xóa',
             dataIndex: 'delete',
             key: 'delete',
             render: (text, record) => (
                 <div>
-                    <Button onClick={() => handleQuantityChange(record.productCode, record.size, -1)}>Delete</Button>
+                    <Button onClick={() => handleQuantityChange(record.productCode, record.size, -1)}>Xóa</Button>
                 </div>
             ),
         },
@@ -226,19 +227,19 @@ const CartPage = () => {
             <Table dataSource={dataSource} columns={columns} pagination={false} scroll={{y:200}} />
             <hr />
             <div>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Order detail</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500',marginBottom:'20px',marginTop:'20px' }}>Chi tiết đơn hàng</h1>
                 <div style={{
                     display: "flex",
                     justifyContent: "space-around",
                     fontSize: '20px',
                 }}>
                     <div style={{ marginTop: '0%' }}>
-                        <p>Quantity: {totalQuantity}</p>
-                        <p>Total Price: {formatPrice(totalAllPrice)}</p>
-                        <p>Discount: {discount}%</p>
+                        <p>Số lượng sản phẩm: {totalQuantity}</p>
+                        <p>Tổng giá: {formatPrice(totalAllPrice)}</p>
+                        <p>Giảm giá: {discount}%</p>
                     </div>
                     <div style={{ marginTop: '0%', width: '20%' }}>
-                        <p>Phone:
+                        <p>Số điện thoại khách hàng:
                             <input
                                 style={{
                                     border: '1px solid black',
@@ -251,13 +252,13 @@ const CartPage = () => {
                                     marginBottom:'5px',
                                 }}
                                 type="text"
-                                placeholder='Phone'
+                                placeholder='Số điện thoại...'
 
                                 value={customerPhone}
                                 onChange={handleInputChange1}
                             />
                         </p>
-                        <p>Customer:
+                        <p>Tên khách hàng:
                             <input
                                 style={{
                                     border: '1px solid black',
@@ -269,7 +270,7 @@ const CartPage = () => {
                                     paddingLeft: '10px',
                                 }}
                                 type="text"
-                                placeholder='Customer'
+                                placeholder='Tên khách hàng...'
                                 value={customerName}
                                 onChange={handleInputChange}
                             />

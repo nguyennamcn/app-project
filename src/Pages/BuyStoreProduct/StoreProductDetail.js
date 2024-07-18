@@ -286,23 +286,23 @@ export default function StoreProductDetail() {
 
     const columnsProductInBill = [
         {
-            title: 'Product Name',
+            title: 'Tên sản phẩm',
             dataIndex: 'productName',
             key: 'productName',
         },
         {
-            title: 'Product Code',
+            title: 'Mã sản phẩm',
             dataIndex: 'productCode',
             key: 'productCode',
         },
         {
-            title: 'Price',
+            title: 'Giá',
             dataIndex: 'price',
             key: 'price',
             render: (text) => `${formatPrice(text)} `,
         },
         {
-            title: 'Choose',
+            title: 'Lựa chọn',
             dataIndex: 'choose',
             key: 'choose',
             render: (_, record) => (
@@ -320,17 +320,17 @@ export default function StoreProductDetail() {
 
     const buyBackItem = [
         {
-            title: 'Product Name',
+            title: 'Tên sản phẩm',
             dataIndex: 'productName',
             key: 'productName',
         },
         {
-            title: 'Product Code',
+            title: 'Mã sản phẩm',
             dataIndex: 'productCode',
             key: 'productCode',
         },
         {
-            title: 'Material Buy Price',
+            title: 'Giá thu mua vật liệu',
             dataIndex: 'goldNonPromo',
             key: 'goldNonPromo',
             render: (text, record) => (
@@ -340,7 +340,7 @@ export default function StoreProductDetail() {
             ),
         },
         {
-            title: 'Gold Promotion',
+            title: 'Giá vàng khuyến mãi',
             dataIndex: 'goldPromoPrice',
             key: 'goldPromoPrice',
             render: (text, record) => (
@@ -350,7 +350,7 @@ export default function StoreProductDetail() {
             ),
         },
         {
-            title: 'Gem Buy Price',
+            title: 'Giá mua đá quý',
             dataIndex: 'gemNonPromo',
             key: 'gemNonPromo',
             render: (text, record) => (
@@ -360,7 +360,7 @@ export default function StoreProductDetail() {
             ),
         },
         {
-            title: 'Gem Promotion',
+            title: 'Giá khuyến mãi của đá quý',
             dataIndex: 'gemPromoPrice',
             key: 'gemPromoPrice',
             render: (text, record) => (
@@ -370,7 +370,7 @@ export default function StoreProductDetail() {
             ),
         },
         {
-            title: 'Total',
+            title: 'Tổng',
             dataIndex: 'total',
             key: 'total',
             render: (text, record) => (
@@ -380,7 +380,7 @@ export default function StoreProductDetail() {
             ),
         },
         {
-            title: 'Remove',
+            title: 'Xóa',
             dataIndex: 'remove',
             key: 'remove',
             render: (_, record) => (
@@ -395,7 +395,7 @@ export default function StoreProductDetail() {
     const dateSellFormatted = sp?.dateSell ? new Date(sp.dateSell).toLocaleDateString() : '';
 
     return (
-        <div>
+        <div className='storeProductDetail'>
             <div className='title'>
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 2px 0' }}>Order Code: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
@@ -413,22 +413,22 @@ export default function StoreProductDetail() {
                         <div className='col-sm-1'>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Customer:<span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
+                                    Khách hàng : <span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Phone number:<span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
+                                    Số điện thoại : <span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 10px 11%' }}>
-                                    Date of sale:<span style={{ marginLeft: '4%' }}>{dateSellFormatted}</span>
+                                    Ngày : <span style={{ marginLeft: '4%' }}>{dateSellFormatted}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Payment method:<span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
+                                    Phương thức thanh toán : <span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
                                 </h1>
                             </div>
                         </div>
@@ -436,12 +436,12 @@ export default function StoreProductDetail() {
                         <div className='col-sm-1' >
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total items:<span style={{ marginLeft: '4%' }}> {sp?.list ? sp.list.length : 0}</span>
+                                    Tổng sản phẩm : <span style={{ marginLeft: '4%' }}> {sp?.list ? sp.list.length : 0}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total:<span style={{ marginLeft: '4%' }}> {formatPrice(totalPrice)} </span>
+                                    Tổng tiền : <span style={{ marginLeft: '4%' }}> {formatPrice(totalPrice)} </span>
                                 </h1>
                             </div>
                         </div>
@@ -454,7 +454,7 @@ export default function StoreProductDetail() {
                             height: '400px',
                             padding: '0',
                         }}>
-                        <div className='col-sm-12 mt-2'><h1>Buy back items</h1></div>
+                        <div className='col-sm-12 mt-2'><h1>Sản phẩm thu mua</h1></div>
                         <Table style={{ width: '100%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
                             ...product,
                             goldPromoPrice: calculateMaterialPromotion(product),
@@ -468,12 +468,12 @@ export default function StoreProductDetail() {
                         <div className='col-sm-1' >
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total items:<span style={{ marginLeft: '4%' }}> {selectedProducts.length}</span>
+                                    Tổng sản phẩm:<span style={{ marginLeft: '4%' }}> {selectedProducts.length}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Total:<span style={{ marginLeft: '4%' }}> {formatPrice(totalSelectedPrice)} </span>
+                                    Tổng tiền thu mua:<span style={{ marginLeft: '4%' }}> {formatPrice(totalSelectedPrice)} </span>
                                 </h1>
                             </div>
                         </div>
@@ -484,14 +484,14 @@ export default function StoreProductDetail() {
                                 style={{ padding: '0 56px 0 56px' }}
                                 size="large"
                                 danger
-                            >Back</Button>
+                            >Trở về</Button>
                         </NavLink>
                         <Button
                             size="large"
                             htmlType='submit'
                             onClick={handleSubmit}
                             style={{ padding: '0 46px', marginLeft: '50px' }}
-                        >Purchase</Button>
+                        >Thu mua</Button>
                     </div>
                 </div>
             </div>

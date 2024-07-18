@@ -182,17 +182,17 @@ export default function ListOrderPage() {
 
     const columns = [
         {
-            title: 'Product Name',
+            title: 'Tên sản phẩm',
             dataIndex: 'productName',
             key: 'productName',
         },
         {
-            title: 'Product Code',
+            title: 'Mã sản phẩm',
             dataIndex: 'productCode',
             key: 'productCode',
         },
         {
-            title: 'Price',
+            title: 'Giá',
             dataIndex: 'price',
             key: 'price',
             render: (text) => formatPrice(text),
@@ -211,7 +211,7 @@ export default function ListOrderPage() {
             ) : (
                 <div className='cashierOrderDetail'>
                     <div className='title'>
-                        <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Order : {orderKey}</h1>
+                        <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 20px 0' }}>Mã đơn hàng : {orderKey}</h1>
                         <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
                     </div>
                     <div className="CashierOrderDetail" style={{ margin: '15px 0px', width: '100%', minHeight: '400px' }}>
@@ -224,16 +224,16 @@ export default function ListOrderPage() {
                                 {paymentMethodDone === 'NONE' ? (
                                     <>
 
-                                        <label>Name: <input style={{ width: '50%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
-                                        <label>Phone: <input style={{ width: '50%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
-                                        <label>Address:<textarea style={{ width: '90%', height: '64px', resize: 'none', border: '1px solid' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
-                                        <label>Birthday: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
-                                        <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
-                                        <label>Payment methods: <select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-                                            <option value='CASH'>Cash</option>
-                                            <option value='CREDIT'>Credit</option>
+                                        <label>Tên: <input style={{ width: '50%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
+                                        <label>Số điện thoại: <input style={{ width: '50%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
+                                        <label>Địa chỉ:<textarea style={{ width: '90%', height: '64px', resize: 'none', border: '1px solid' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
+                                        <label>Sinh nhật: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
+                                        <label>Ngày: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
+                                        <label>Phương thức thanh toán: <select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+                                            <option value='CASH'>Tiền mặt</option>
+                                            <option value='CREDIT'>Thẻ</option>
                                         </select></label>
-                                        <label>Delivery status: {deliveryStatus}</label>
+                                        <label>Trạng thái giao hàng : {deliveryStatus}</label>
                                     </>
                                 ) : (
                                     <>
@@ -254,13 +254,13 @@ export default function ListOrderPage() {
                                 <Table style={{ margin: '20px 10px 0 20px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
                                 <div className="row" style={{ position: 'absolute', bottom: '16px' }}>
                                     <div className="col-sm-12">
-                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item: <span style={{ marginLeft: '4%' }}>{products.length}</span></h1>
+                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Số lượng sản phẩm: <span style={{ marginLeft: '4%' }}>{products.length}</span></h1>
                                     </div>
                                     <div className="col-sm-12">
-                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount: <span style={{ marginLeft: '4%' }}>{discount}%</span></h1>
+                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Giảm giá: <span style={{ marginLeft: '4%' }}>{discount}%</span></h1>
                                     </div>
                                     <div className="col-sm-12">
-                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
+                                        <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Tổng số tiền:
                                             {discount !== 0 ? (
                                                 <>
                                                     <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{formatPrice(totalPrice)}</span>
@@ -279,7 +279,7 @@ export default function ListOrderPage() {
                                         style={{ padding: '0 56px 0 56px', marginRight: '30px' }}
                                         size="large"
                                         danger
-                                    >Back</Button>
+                                    >Trở về</Button>
                                 </a>
                                 <Button
                                     size="large"
@@ -287,7 +287,7 @@ export default function ListOrderPage() {
                                     onClick={handleSubmit}
                                     style={{ padding: '0 60px', marginLeft: '30px' }}
                                     disabled={deliveryStatus === 'SUCCESS' || paymentMethodDone !== 'NONE'} // Disable button if deliveryStatus is success
-                                >Paid</Button>
+                                >Thanh toán</Button>
                             </div>
                         </div>
 

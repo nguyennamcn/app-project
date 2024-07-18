@@ -32,11 +32,10 @@ export default function ManageGold() {
 
   const showDeleteConfirm = (goldCode) => {
     Modal.confirm({
-      title: 'Confirm',
-      content: 'Do you really want to delete this product?',
-      okText: 'Yes',
+      content: 'Bạn có muốn xóa sản phẩm này không?',
+      okText: 'Có',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: 'Không',
       onOk() {
         handleDelete(goldCode);
       }
@@ -48,7 +47,7 @@ export default function ManageGold() {
       .then(() => {
         const newProductData = goldManage.filter((item) => item.productCode !== goldCode);
         setGoldManage(newProductData);
-        notification.success({ message: "Delete Successfully" });
+        notification.success({ message: "Xóa thành công" });
       })
       .catch((err) => {
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
@@ -88,7 +87,7 @@ export default function ManageGold() {
 
   const handleModalOk = () => {
     if (selectedImages.length !== 4) {
-      notification.error({ message: 'Please select all 4 images' });
+      notification.error({ message: 'Hãy lựa chọn 4 hình ảnh' });
       return;
     }
 
@@ -102,7 +101,7 @@ export default function ManageGold() {
       setIsModalVisible(false);
       setSelectedImages([]);
       setCurrentGoldId(null);
-      notification.success({ message: 'Images updated successfully' });
+      notification.success({ message: 'Đã thêm hình ảnh thành công' });
 
       adornicaServ.getListGold()
         .then((res) => {
@@ -115,7 +114,7 @@ export default function ManageGold() {
 
     }).catch((err) => {
       console.log("Error uploading images:", err.response.data);
-      notification.error({ message: 'Error uploading images' });
+      notification.error({ message: 'Không thể tải lên hình ảnh' });
     });
   };
 
@@ -140,7 +139,7 @@ export default function ManageGold() {
   };
   const formatPrice = (price) => {
     if (price <= 0 || isNaN(price)) {
-      return 'Not yet been priced';
+      return 'Sản phẩm chưa có giá';
     }
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
   };
@@ -153,7 +152,7 @@ export default function ManageGold() {
       ) :(
         <div className="gold-container">
       <header className="gold-header">
-        <h1 className="gold-title">GOLD</h1>
+        <h1 className="gold-title">Vàng</h1>
         <NavLink to="/add-gold" style={{
                                             backgroundColor: '#00ca4d',
                                             border: '1px solid purple',
@@ -161,17 +160,17 @@ export default function ManageGold() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>ADD GOLD</NavLink>
+                                        }}>Thêm sản phẩm</NavLink>
       </header>
       <table className="gold-table">
         <thead>
           <tr>
             <th className="gold-th">ID</th>
-            <th className="gold-th">Code</th>
-            <th className="gold-th">Name</th>
-            <th className="gold-th">Price (VND)</th>
-            <th className="gold-th">Size</th>
-            <th className="gold-th">Action</th>
+            <th className="gold-th">Mã sản phẩm</th>
+            <th className="gold-th">Tên sản phẩm</th>
+            <th className="gold-th">Giá (VND)</th>
+            <th className="gold-th">Kích cỡ</th>
+            <th className="gold-th"></th>
           </tr>
         </thead>
         <tbody>
@@ -197,7 +196,7 @@ export default function ManageGold() {
                     onClick={() => handleUpdate(product.productCode)}
 
                   >
-                    Update
+                    Chỉnh sửa
                   </button>
                 </NavLink>
                 <button
@@ -212,14 +211,14 @@ export default function ManageGold() {
                 }}
                   onClick={() => showDeleteConfirm(product.productCode)}
                 >
-                  Delete
+                  Xóa
                 </button>
                 <button
                   className={product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
                   onClick={() => product.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(product.productId)}
                   disabled={product.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
-                  Img
+                  Hình ảnh
                 </button>
               </td>
             </tr>
@@ -234,10 +233,10 @@ export default function ManageGold() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>BACK</NavLink>
+                                        }}>Trở về</NavLink>
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={'Trước'}
+          nextLabel={'Sau'}
           breakLabel={'...'}
           pageCount={totalPages}
           marginPagesDisplayed={1}

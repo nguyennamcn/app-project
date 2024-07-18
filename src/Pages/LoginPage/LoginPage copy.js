@@ -30,7 +30,7 @@ const LoginPage = () => {
     setTimeout(() => setIsModalVisible(false), 2000);
   };
 
-  const onFinish = (values : any) => {
+  const onFinish = (values) => {
     console.log('Success:', values);
     userService.postLogin(values)
       .then((res) => {
@@ -52,7 +52,7 @@ const LoginPage = () => {
       });
   };
 
-  const onFinishFailed = (errorInfo : any) => {
+  const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 

@@ -29,7 +29,7 @@ function ViewEmployee() {
     adornicaServ.delectAccount(staffId)
       .then((res) => {
         console.log('Employee deleted', res);
-        notification.success({ message: "Delete user successfully" });
+        notification.success({ message: "Xóa thành công" });
         navigate(0); // Reload lại trang
       })
       .catch((err) => {
@@ -74,7 +74,7 @@ function ViewEmployee() {
         <Spinner />
       ) :(
         <div className="profile-container">
-      <h1 className="profile-title">Profile of {employee?.name}</h1>
+      <h1 className="profile-title">Hồ sơ của {employee?.name}</h1>
       <div className="profile-card">
         <div className="profile-header">
           <div className="profile-image-employee">
@@ -100,27 +100,27 @@ function ViewEmployee() {
             <p>{employee?.roles}</p>
             <div className="profile-status">
               <span className={`status-indicator ${employee?.active ? 'online' : 'offline'}`}></span>
-              <span className="status-text">{employee?.active ? 'Online' : 'Offline'}</span>
+              <span className="status-text">{employee?.active ? 'Đang hoạt động' : 'Nghỉ việc'}</span>
             </div>
           </div>
           <div className="edit-button">
             <NavLink to={`/edit-employee/${employee?.id}`}>
-              <button>Edit</button>
+              <button>Chỉnh sửa</button>
             </NavLink>
           </div>
         </div>
         <hr />
         <div className="profile-details">
-          <p><strong>Role:</strong> {employee?.roleUser}</p>
-          <p><strong>Phone:</strong> {employee?.phone}</p>
-          <p><strong>Store address:</strong> {employee?.address}</p>
+          <p><strong>Chức vụ:</strong> {employee?.roleUser}</p>
+          <p><strong>Số điện thoại:</strong> {employee?.phone}</p>
+          <p><strong>Làm việc tại cửa hàng:</strong> {employee?.address}</p>
           {/* <p><strong>Other information ...</strong></p> */}
         </div>
         <div className="profile-actions">
           <NavLink to="/employee">
-            <button className="back-button">Back</button>
+            <button className="back-button">Trở về</button>
           </NavLink>
-          <button className="delete-button" onClick={showDeleteConfirm}>Delete</button>
+          <button className="delete-button" onClick={showDeleteConfirm}>Xóa</button>
         </div>
       </div>
     </div>
