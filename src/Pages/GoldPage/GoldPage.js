@@ -139,7 +139,7 @@ export default function GoldPage() {
                 <Meta title={<span style={{ fontSize: '14px' }}>{sp.productName}</span>} description={sp.categoryType} />
                 <div className="home-gold--info">
                   <h1>{sp.productCode}</h1>
-                  <h2>{sp.productPrice < 1 ? 'Not yet been priced' : `${sp.productPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`}</h2>
+                  <h2>{sp.productPrice < 1 ? 'Giá không xác định' : `${sp.productPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`}</h2>
 
                 </div>
                 <div className="home-gold-overlay">
