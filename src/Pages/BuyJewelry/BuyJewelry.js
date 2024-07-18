@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { notification } from 'antd';
+import { Modal, notification } from 'antd';
+import QrScanner from 'react-qr-scanner';
+import necklaceImage from '../../asset/img/Daychuyen.png';
 
 // Define styles as objects
 const styles = {
@@ -124,7 +126,12 @@ const JewelrySelection = () => {
   const newItemRef = useRef(null);
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.userReducer.userInfo);
-
+  const [isSizeModalVisible, setIsSizeModalVisible] = useState(false);
+  const [isBraceletSizeModalVisible, setIsBraceletSizeModalVisible] = useState(false);
+  const [isNecklaceSizeModalVisible, setIsNecklaceSizeModalVisible] = useState(false);
+  const [isQRModalVisible, setIsQRModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   useEffect(() => {
     adornicaServ.getPriceMaterial()
       .then((res) => {
@@ -239,7 +246,15 @@ const JewelrySelection = () => {
     validateForm(updatedItems);
     console.log('updated item',updatedItems);
   };  
-  
+  const handleScan = (data) => {
+    if (data) {
+      setIsQRModalVisible(false); // Close QR modal after scan
+    }
+  };
+
+  const handleError = (err) => {
+    console.error(err);
+  };
 
   useEffect(() => {
     const calculateTotalPrice = async () => {
@@ -331,7 +346,7 @@ const JewelrySelection = () => {
       alert('Please fill out all required fields and ensure total price is greater than 0.');
       return;
     }
-  
+   
     const jewelryData = jewelryItems.map(item => {
       const totalMaterial = ((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight) || 0;
       const totalGem = ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion))) || 0;
@@ -359,6 +374,23 @@ const JewelrySelection = () => {
 
   return (
     <div style={styles.container}>
+      <div style={{ display: 'flex', gap: '5px' }}>
+          <button onClick={() => setIsSizeModalVisible(true)} className="home-jewelry-size-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-rulers" viewBox="0 0 16 16">
+              <path d="M2.23 0a.5.5 0 0 0-.5.5v1.75a.5.5 0 0 0 1 0V1H6v.25a.5.5 0 0 0 1 0V1h2v.25a.5.5 0 0 0 1 0V1h2.5v1.25a.5.5 0 0 0 1 0V.5a.5.5 0 0 0-.5-.5H2.23zM1 2.5v10.77a.5.5 0 0 0 .5.5h1.75a.5.5 0 0 0 0-1H2V10h.25a.5.5 0 0 0 0-1H2V7h.25a.5.5 0 0 0 0-1H2V4h.25a.5.5 0 0 0 0-1H2V2h.25a.5.5 0 0 0 0-1H1.5a.5.5 0 0 0-.5.5zM13 2v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm0 3v1h.5a.5.5 0 0 0 0-1H13zm-2-6v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm0 3v1h.5a.5.5 0 0 0 0-1H11zm-2-6v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9zm0 3v1h.5a.5.5 0 0 0 0-1H9z" />
+            </svg>
+          </button>
+          <button onClick={() => setIsBraceletSizeModalVisible(true)} className="home-jewelry-size-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z" />
+            </svg>
+          </button>
+          <button onClick={() => setIsNecklaceSizeModalVisible(true)} className="home-jewelry-size-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z" />
+            </svg>
+          </button>
+        </div>
       <form style={styles.form} onSubmit={handleSubmit}>
         {jewelryItems.map((item, index) => (
           <React.Fragment key={index}>
@@ -534,6 +566,44 @@ const JewelrySelection = () => {
           PURCHASE
         </button>
       </form>
+      <Modal
+        visible={isModalVisible}
+        footer={null}
+        onCancel={() => setIsModalVisible(false)}
+        className="home-jewelry-custom-modal"
+      >
+        <div>{modalMessage}</div>
+      </Modal>
+      <Modal
+        visible={isSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsSizeModalVisible(false)}
+        className="home-jewelry-custom-modal"
+      >
+        <div>
+          <img src="https://vuanem.com/blog/wp-content/uploads/2022/09/bang-size-nhan-nam1-1.jpg" alt="Ring Sizes" style={{ width: '100%' }} />
+        </div>
+      </Modal>
+      <Modal
+        visible={isBraceletSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsBraceletSizeModalVisible(false)}
+        className="home-jewelry-custom-modal-bracelet"
+      >
+        <div className='size_img_bracelet'>
+          kk
+        </div>
+      </Modal>
+      <Modal
+        visible={isNecklaceSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsNecklaceSizeModalVisible(false)}
+        className="home-jewelry-custom-modal-necklace"
+      >
+        <div>
+          <img src={necklaceImage} alt="Necklace Sizes" style={{ width: '100%' }} />
+        </div>
+      </Modal>
     </div>
   );
 };
