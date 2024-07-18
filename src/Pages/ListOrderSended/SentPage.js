@@ -34,7 +34,8 @@ export default function SentPage() {
     useEffect(() => {
         adornicaServ.getListOrderByStaffID(userInfo.id)
             .then((res) => {
-                const orders = res.data.metadata.data.map((order) => ({
+                console.log(res)
+                const orders = res.data.metadata.map((order) => ({
                     orderId: order.orderId,
                     orderCode: order.orderCode,
                     deliveryStatus: order.deliveryStatus,
