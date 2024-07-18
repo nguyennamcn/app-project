@@ -103,13 +103,13 @@ export default function Header() {
                   onClick={handleLogout}
                   style={{ width: '120px', height: '32px', marginLeft: 'auto' }}
                 >
-                  Log out
+                  Đăng xuất
                 </button>
               }
             />
           ) : (
             <NavLink to='/'>
-              Login
+              Đăng nhập
             </NavLink>
           )}
           <button className="sidebar-toggle" onClick={toggleSidebar}>

@@ -90,6 +90,14 @@ section {
 .sidebar-toggle {
   display: none;
 }
+.ant-form-item-label > label {
+  white-space: nowrap;
+}
+
+h1.mb-2 {
+  white-space: nowrap;
+  margin:auto;
+}
 
 /* Responsive Design */
 @media (max-width: 1024px) {
