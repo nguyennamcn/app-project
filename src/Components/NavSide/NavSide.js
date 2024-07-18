@@ -41,12 +41,12 @@ export default function NavSide() {
           <p>Danh sách đơn hàng</p>
         </NavLink>
         )}
-        {/* <NavLink to='/profile' 
+        <NavLink to='/profile' 
           className='nav-item'
         >
           <i className="fa fa-user"></i>
           <p>Hồ sơ</p>
-        </NavLink> */}
+        </NavLink>
         <NavLink to='/gold-price' 
           className='nav-item'
         >

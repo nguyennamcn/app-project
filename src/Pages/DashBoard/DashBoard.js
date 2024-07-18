@@ -156,7 +156,7 @@ export default function DashBoard() {
         <WeeklyRevenueChart data={data.weeklyRevenue} />
       </div>
       <div className="chart-container">
-        <h2 className="dashboard-title dashboard-title-sub">Daonh thu trong năm</h2>
+        <h2 className="dashboard-title dashboard-title-sub">Doanh thu trong năm</h2>
         <YearlyRevenueChart data={data.yearlyRevenue} />
       </div>
     </div>

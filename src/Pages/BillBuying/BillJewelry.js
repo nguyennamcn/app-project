@@ -315,7 +315,7 @@ const BillJewelry = () => {
     const { name, value } = e.target;
     if (name === 'phone') {
       if (!/^\d*$/.test(value)) {
-        setPhoneError('Phone number must be digits only!');
+        setPhoneError('Vui lòng nhập số (tối đa 10 chữ số)');
         return;
       } else if (value.length > 10) {
         return;
@@ -418,9 +418,9 @@ const BillJewelry = () => {
 
   return (
     <div style={pageStyles.container}>
-      <div style={pageStyles.header}>Purchase</div>
+      <div style={pageStyles.header}>Thu mua</div>
       <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Phone:</label>
+        <label style={pageStyles.detailLabel}>Số điện thoại:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -430,7 +430,7 @@ const BillJewelry = () => {
           maxLength={10}
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
-        <label style={pageStyles.detailLabel}>Name:</label>
+        <label style={pageStyles.detailLabel}>Tên:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -439,28 +439,17 @@ const BillJewelry = () => {
           onChange={handleDetailChange}
         />
 
-        {/* <label style={pageStyles.detailLabel}>Phone:</label>
-        <input
-          type="text"
-          style={pageStyles.detailInput}
-          name="phone"
-          value={customerDetails.phone}
-          onChange={handleDetailChange}
-          maxLength={10}
-        />
-        {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>} */}
-
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>
-            <span>Name</span>
-            <span>Gold type</span>
-            <span>Weight</span>
-            <span>Cut</span>
-            <span>Carat</span>
-            <span>Color</span>
-            <span>Clarity</span>
-            <span>Origin</span>
-            <span>Total</span>
+            <span>Tên</span>
+            <span>Loại vàng</span>
+            <span>Khối lượng(gram)</span>
+            <span>Vết cắt</span>
+            <span>Khối lượng (Kim cương):</span>
+            <span>Màu sắc</span>
+            <span>Độ tinh khiết</span>
+            <span>Nguồn gốc</span>
+            <span>Tổng</span>
           </div>
           {products.map((product, index) => (
             <div key={index} style={pageStyles.tableRow}>
@@ -479,7 +468,7 @@ const BillJewelry = () => {
       </div>
 
       <div style={pageStyles.customerDetails}>
-        <label style={pageStyles.detailLabel}>Address:</label>
+        <label style={pageStyles.detailLabel}>Địa chỉ:</label>
         <input
           type="text"
           style={pageStyles.detailInput}
@@ -487,27 +476,16 @@ const BillJewelry = () => {
           value={customerDetails.address}
           onChange={handleDetailChange}
         />
-
-        {/* <label style={pageStyles.detailLabel}>Payment methods:</label>
-        <select
-          style={pageStyles.paymentSelect}
-          name="paymentMethod"
-          value={customerDetails.paymentMethod}
-          onChange={handleDetailChange}
-        >
-          <option value="Cash">Cash</option>
-          <option value="Card">Banking</option>
-        </select> */}
       </div>
 
       <div style={pageStyles.summary}>
-        <div style={pageStyles.totalItems}>Total items: {totalItems}</div>
-        <div style={pageStyles.totalPrice}>Total price: {formatPrice(calculateTotalPrice())}</div>
+        <div style={pageStyles.totalItems}>Tổng sản phẩm : {totalItems}</div>
+        <div style={pageStyles.totalPrice}>Tổng số tiền : {formatPrice(calculateTotalPrice())}</div>
       </div>
 
       <div style={pageStyles.buttonWrapper}>
         <NavLink to="/buyProduct" exact>
-          <button style={pageStyles.backButton}>BACK</button>
+          <button style={pageStyles.backButton}>Trờ về</button>
         </NavLink>
 
         <button
@@ -517,7 +495,7 @@ const BillJewelry = () => {
           onClick={handleFinishClick}
           disabled={isFinishButtonDisabled}
         >
-          CREATE
+          Tạo đơn
         </button>
       </div>
 
@@ -528,7 +506,7 @@ const BillJewelry = () => {
         style={pageStyles.modal}
       >
         <div style={pageStyles.successIcon}>✔</div>
-        <h2>Successfully</h2>
+        <h2>Thành công</h2>
       </Modal>
     </div>
   );
