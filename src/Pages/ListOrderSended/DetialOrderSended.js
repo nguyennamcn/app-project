@@ -66,7 +66,7 @@ export default function ListOrderPage() {
                 showModal(
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>
-                        <h1>Delivery successfully !</h1>
+                        <h1>Giao hàng thành công !</h1>
                     </div>
                 );
                 setDeliveryStatus('SUCCESS'); // Update the delivery status to trigger a rerender
@@ -83,17 +83,17 @@ export default function ListOrderPage() {
 
     const columns = [
         {
-            title: 'Product Name',
+            title: 'Tên Sản Phẩm',
             dataIndex: 'productName',
             key: 'productName',
         },
         {
-            title: 'Product Code',
+            title: 'Mã Sản Phẩm',
             dataIndex: 'productCode',
             key: 'productCode',
         },
         {
-            title: 'Price (VND)',
+            title: 'Giá tiền (VND)',
             dataIndex: 'price',
             key: 'price',
             render: (text) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(text)
@@ -112,7 +112,7 @@ export default function ListOrderPage() {
     return (
         <div>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 10px 0', }}>Order code: {orderKey}</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 10px 0', }}>Mã đơn hàng: {orderKey}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
             </div>
             <div className="detailOrderSended">
@@ -126,11 +126,11 @@ export default function ListOrderPage() {
                         height: '400px',
                         padding: '0',
                     }}>
-                        <label>Name: {customerName}</label>
-                        <label>Phone: {customerPhone}</label>
-                        <label>Date of sale: {datesale}</label>
-                        <label>Payment methods: {paymentMethod}</label>
-                        <label>Delivery status: {deliveryStatus}</label>
+                        <label>Tên: {customerName}</label>
+                        <label>Số điện thoại: {customerPhone}</label>
+                        <label>Ngày : {datesale}</label>
+                        <label>Phương thức thanh toán: {paymentMethod}</label>
+                        <label>Trạng thái giao dịch: {deliveryStatus}</label>
                     </div>
 
                     <div className="product__table col-sm-6"
@@ -143,11 +143,11 @@ export default function ListOrderPage() {
                         }}>
                         <Table style={{ margin: '20px 20px 0 20px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
                         <div className="row" style={{position: 'absolute', bottom:'16px'}}>
-                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total item:<span style={{ marginLeft: '4%' }}>{products.length}</span></h1></div>
-                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Discount:<span style={{ marginLeft: '4%' }}>{discount}%</span></h1></div>
+                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Số lượng sản phẩm:<span style={{ marginLeft: '4%' }}>{products.length}</span></h1></div>
+                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Giảm :<span style={{ marginLeft: '4%' }}>{discount}%</span></h1></div>
                             {discount > 0 && (
                                 <div className="col-sm-12">
-                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
+                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Tổng:
                                         <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)}</span>
                                         <span style={{ marginLeft: '4%', color: 'orange' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice - (totalPrice * discount / 100))}</span>
                                     </h1>
@@ -155,7 +155,7 @@ export default function ListOrderPage() {
                             )}
                             {discount === 0 && (
                                 <div className="col-sm-12">
-                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Total:
+                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Tổng:
                                         <span style={{ marginLeft: '4%', color: 'orange' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)}</span>
                                     </h1>
                                 </div>
@@ -169,7 +169,7 @@ export default function ListOrderPage() {
                                 style={{ padding: '0 56px 0 56px', marginRight: '30px',marginBottom:'20px' }}
                                 size="large"
                                 danger
-                            >Back</Button>
+                            >Trở về</Button>
                         </NavLink>
 
                         <Button
@@ -178,7 +178,7 @@ export default function ListOrderPage() {
                             type='primary'
                             onClick={() => handleSubmit(orderKey)}
                             disabled={isDeliverySuccessful || isNotPaymented}
-                        >Delivery</Button>
+                        >Giao hàng</Button>
 
                     </div>
                 </div>

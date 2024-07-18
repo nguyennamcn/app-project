@@ -21,7 +21,7 @@ const WeeklyRevenueChart = ({ data }) => {
         <YAxis tickFormatter={formatYAxis} />
         <Tooltip 
           formatter={(value) => [`Total Amount: ${value.toLocaleString()}`]}
-          labelFormatter={(label) => `Date: ${label}`}
+          labelFormatter={(label) => `Ngày: ${label}`}
           contentStyle={{ backgroundColor: 'transparent', fontSize: '16px', padding: '10px', border: 'none' }} // Điều chỉnh kích thước và kiểu dáng của Tooltip
         />
         <Legend />

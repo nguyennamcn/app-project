@@ -69,7 +69,7 @@ function UpGold() {
     console.log("productData sent: ", productData);
     adornicaServ.updateProduct(productCode, productData)
       .then((response) => {
-        notification.success({ message: 'Update product success' });
+        notification.success({ message: 'Cập nhật thành công' });
         console.log(productData);
       })
       .catch((error) => {
@@ -91,26 +91,26 @@ function UpGold() {
         <div className="upgold-container">
       <div className="upgold-content">
         <div className="upgold-form">
-          <h2 className="upgold-title">UPDATE GOLD</h2>
+          <h2 className="upgold-title">Chỉnh sửa Vàng</h2>
           <form onSubmit={handleUpdate}>
             <div className="upgold-form-row">
               <div className="upgold-form-group">
-                <label>Product Code:</label>
+                <label>Mã sản phẩm:</label>
                 <h2 className="upgold-static-input">{sp.productCode}</h2>
               </div>
               <div className="upgold-form-group">
-                <label>Product Name:</label>
+                <label>Tên sản phẩm:</label>
                 <input type="text" name="productName" value={sp.productName} onChange={handleInputChange} required />
               </div>
             </div>
 
             <div className="upgold-form-row">
               <div className="upgold-form-group">
-                <label>Material ID:</label>
+                <label>Vật liệu ID:</label>
                 <h2 className="upgold-static-input">{sp.materials[0]?.name || ''}</h2>
               </div>
               <div className="upgold-form-group">
-                <label>Weight (gram):</label>
+                <label>Khối lượng (gram):</label>
                 <input type="number" name="weight" value={sp.materials[0]?.weight || ''} onChange={handleMaterialChange} min={0.1} step={0.1} />
               </div>
             </div>
@@ -131,7 +131,7 @@ function UpGold() {
                     borderRadius: '5px',
                     cursor: 'pointer',
                     marginRight:'5px'
-                }} type="submit">UPDATE GOLD</button>
+                }} type="submit">Cập nhật</button>
             </div>
           </form>
         </div>

@@ -75,11 +75,11 @@ export default function CashierUpdateOrder() {
             .then((res) => {
                 console.log('Order updated successfully:', res);
                 console.log(orderData);
-                notification.success({message: "Update successfully"});
+                notification.success({message: "Chỉnh sửa thành công"});
             })
             .catch((err) => {
                 console.error('Error updating order:', err.response);
-                notification.error({message: "Update fail"});
+                notification.error({message: "Chỉnh sửa thất bại"});
             });
 
 
@@ -91,27 +91,27 @@ export default function CashierUpdateOrder() {
 
     const columns = [
         {
-            title: 'Product ID',
+            title: 'Mã sản phẩm',
             dataIndex: 'productId',
             key: 'productId',
         },
         {
-            title: 'Product Name',
+            title: 'Tên sản phẩm',
             dataIndex: 'productName',
             key: 'productName',
         },
         {
-            title: 'Price',
+            title: 'Giá',
             dataIndex: 'price',
             key: 'price',
             render: (text) => `${formatPrice(text)} `,
         },
         {
-            title: 'Action',
+            title: '',
             dataIndex: 'action',
             key: 'action',
             render: (text, record) => (
-                <Button onClick={() => handlRemove(record.productId)}>Delete</Button>
+                <Button onClick={() => handlRemove(record.productId)}>Xóa</Button>
             ),
         },
     ];
@@ -125,15 +125,15 @@ export default function CashierUpdateOrder() {
             <div className='container'>
                 <div className='row justify-center'>
                     <div className='col-sm-12'>
-                        <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500' }}>Update order: #{orderKey}</h1>
+                        <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500',marginTop:'30px' }}>Chỉnh sửa đơn : #{orderKey}</h1>
                     </div>
                     <div className='col-sm-11 mb-4'>
                         <Table dataSource={products} columns={columns} pagination={false} scroll={{ y: 320 }} style={{maxHeight:'300px'}}/>
                     </div>
 
-                    <div style={{position:'absolute', bottom:'130px'}} className='col-sm-10'><h1>Total: {formatPrice(totalAllPrice)}</h1></div>
+                    <div style={{position:'absolute', bottom:'130px',marginBottom:'20px'}} className='col-sm-10'><h1>Tổng: {formatPrice(totalAllPrice)}</h1></div>
                     <hr />
-                    <div className='row col-sm-10 justify-center' style={{position:'absolute', bottom:'74px'}}>
+                    <div className='row col-sm-10 justify-center' style={{position:'absolute', bottom:'74px',marginBottom:'20px'}}>
                         <NavLink to='/cashierListOrder'>
                             <button style={{
                                 padding: '15px 40px',
@@ -141,7 +141,7 @@ export default function CashierUpdateOrder() {
                                 borderRadius: '10px',
                                 color: 'white',
                                 marginRight: '70px'
-                            }}>Back</button>
+                            }}>Trở về</button>
                         </NavLink>
 
                         <button onClick={handleUpdateOrder} style={{
@@ -149,7 +149,7 @@ export default function CashierUpdateOrder() {
                             background: '#15B83F',
                             borderRadius: '10px',
                             color: 'white',
-                        }}>Update</button>
+                        }}>Chỉnh sửa</button>
 
                     </div>
                 </div>

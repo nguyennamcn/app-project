@@ -37,7 +37,7 @@ export default function ProductPieChart({ data }) {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip formatter={(value) => [`Total Amount: ${value.toLocaleString()}`]}
+        <Tooltip formatter={(value) => [`Tổng : ${value.toLocaleString()} %`]}
           labelFormatter={(label) => `Date: ${label}`}
           contentStyle={{ backgroundColor: 'transparent', fontSize: '16px', padding: '10px', border: 'none' }}/>
       </PieChart>
