@@ -116,12 +116,12 @@ export default function DiamondPage() {
         <div className='home-diamond-page'>
       <div className='home-diamond-filter'>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        <button onClick={() => setIsQRModalVisible(true)} className="home-diamond-scan-button">Scan Code</button>
+        <button onClick={() => setIsQRModalVisible(true)} className="home-diamond-scan-button">QUÉT MÃ</button>
         </div>
   
         <div className='home-diamond-search-input-diamond'>
           <textarea 
-            placeholder='Search by product code or name...' 
+            placeholder='Tìm sản phẩm theo mã hoặc theo tên...' 
             value={searchTerm} 
             onChange={handleSearch} 
             rows={2}
@@ -150,12 +150,12 @@ export default function DiamondPage() {
                 </div>
                 <div className="home-diamond-overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-                    <button className="home-diamond-overlay-button">View</button>
+                    <button className="home-diamond-overlay-button">XEM</button>
                   </NavLink>
 
                   {isAdmin || isCashier || isManager ? ( null
                   ) : (
-                  <button className="home-diamond-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                  <button className="home-diamond-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>THÊM</button>
                   )}
                 </div>
               </Card>
@@ -172,8 +172,8 @@ export default function DiamondPage() {
   
       <div className="home-diamond-pagination-container">
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={'Trước'}
+          nextLabel={'Sau'}
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}

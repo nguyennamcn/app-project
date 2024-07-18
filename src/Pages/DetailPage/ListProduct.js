@@ -27,26 +27,26 @@ export default function ListProduct({ product }) {
                         className={`button-nor ${isActive === 'Jewelry' ? 'active' : ''}`}
                         onClick={() => handleClick('Jewelry')}
                     >
-                        Jewelry
+                        Trang sức
                     </span>
                     <span
                         className={`button-nor ${isActive === 'Gold' ? 'active' : ''}`}
                         onClick={() => handleClick('Gold')}
                     >
-                        Gold
+                        Vàng
                     </span>
                     <span
                         className={`button-nor ${isActive === 'Diamond' ? 'active' : ''}`}
                         onClick={() => handleClick('Diamond')}
                     >
-                        Diamond
+                        Kim cương
                     </span>
                     {isStaff && (
                         <span
                             className={`button-nor ${isActive === 'Cart' ? 'active' : ''}`}
                             onClick={() => handleClick('Cart')}
                         >
-                            Cart
+                            Giỏ Hàng
                         </span>
                     )}
                     {isStaff && (
@@ -54,7 +54,7 @@ export default function ListProduct({ product }) {
                             className={`button-nor ${isActive === 'Sent' ? 'active' : ''}`}
                             onClick={() => handleClick('Sent')}
                         >
-                            Sent
+                            Đơn đã gửi
                         </span>
                     )}
                 </div>

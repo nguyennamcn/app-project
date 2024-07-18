@@ -136,16 +136,16 @@ export default function JewelryPage() {
               <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z" />
             </svg>
           </button>
-          <button onClick={() => setIsQRModalVisible(true)} className="home-jewelry-scan-button">Scan Code</button>
+          <button onClick={() => setIsQRModalVisible(true)} className="home-jewelry-scan-button">QUÉT MÃ</button>
         </div>
 
         <div className='home-jewelry-search-input-jewelry'>
           <textarea
-            placeholder='Search by product code or name...'
+            placeholder='Tìm sản phẩm theo mã hoặc theo tên...'
             value={searchTerm}
             onChange={handleSearch}
             rows={2}
-            style={{ width: '300px', height: '25px', resize: 'none' }}
+            style={{ maxWidth:'400px',width:'100%', height: '25px', resize: 'none' }}
           />
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -169,12 +169,12 @@ export default function JewelryPage() {
                 </div>
                 <div className="home-jewelry-overlay">
                   <NavLink style={{ textDecoration: 'none' }} to={`/detail/${sp.productId}`}>
-                    <button className="home-jewelry-overlay-button">View</button>
+                    <button className="home-jewelry-overlay-button">XEM</button>
                   </NavLink>
 
                   {isAdmin || isCashier || isManager ? (null
                   ) : (
-                    <button className="home-jewelry-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>Add</button>
+                    <button className="home-jewelry-overlay-button" onClick={() => handleAddToCart(sp.productCode)}>THÊM</button>
                   )}
                 </div>
               </Card>
@@ -190,8 +190,8 @@ export default function JewelryPage() {
       </div>
       <div className="home-jewelry-pagination-container">
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={'Trước'}
+          nextLabel={'Sau'}
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}

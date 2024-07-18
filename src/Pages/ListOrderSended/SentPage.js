@@ -60,7 +60,7 @@ export default function SentPage() {
     };
 
     const handleDelete = (key) => {
-        showModal("Do you really want to cancel this order?", key);
+        showModal("Bạn có muốn hủy đơn này không", key);
     };
 
     const confirmDelete = () => {
@@ -101,23 +101,23 @@ export default function SentPage() {
     return (
         <div className="sent-page-container">
             <div className='title'>
-                <h1>List order sended</h1>
+                <h1>Danh sách đơn hàng</h1>
                 <div className="separator"></div>
             </div>
             <div className="table-container">
                 <table className="custom-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Order code</th>
-                            <th>Phone</th>
-                            <th>Name</th>
-                            <th>Delivery status</th>
-                            <th>Payment method</th>
-                            <th>Total</th>
-                            <th>Discount</th>
-                            <th>Create at</th>
-                            <th>Action</th>
+                            <th>Số thứ tự</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Số điện thoại</th>
+                            <th>Nhân viên</th>
+                            <th>Trạng thái</th>
+                            <th>Thanh toán</th>
+                            <th>Tổng</th>
+                            <th>Giảm giá</th>
+                            <th>Ngày</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,7 +140,7 @@ export default function SentPage() {
                                                 type="primary"
                                                 onClick={() => handleView(order.orderCode)}
                                             >
-                                                View
+                                                Xem
                                             </Button>
                                         </NavLink>
                                         <Button
@@ -149,7 +149,7 @@ export default function SentPage() {
                                             onClick={() => handleDelete(order.orderCode)}
                                             disabled={order.deliveryStatus === 'SUCCESS' || order.paymentMethod !== 'NONE'}
                                         >
-                                            Cancel
+                                            Hủy
                                         </Button>
                                     </div>
                                 </td>
@@ -160,8 +160,8 @@ export default function SentPage() {
             </div>
             <div className="sent-pagination-container">
                 <ReactPaginate
-                previousLabel={'Previous'}
-                nextLabel={'Next'}
+                previousLabel={'Trước'}
+                nextLabel={'Sau'}
                 breakLabel={'...'}
                 pageCount={pageCount}
                 marginPagesDisplayed={1}
@@ -193,14 +193,14 @@ export default function SentPage() {
                             <Button
                                 onClick={() => setIsModalVisible(false)}
                             >
-                                No
+                                Không
                             </Button>
                             <Button
                                 type="primary"
                                 danger
                                 onClick={confirmDelete}
                             >
-                                Yes
+                                Có
                             </Button>
                         </div>
                     </div>
