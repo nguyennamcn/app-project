@@ -141,8 +141,8 @@ export default function DetailPage() {
                             </button> */}
                         </div>
                         {product.totalPrice < 1 ?
-                            <p className="product-price">The product is: <span className="price-amount">Undefined</span></p> :
-                            <p className="product-price">Price of the product: <span className="price-amount">{formatPrice(product.totalPrice)}</span></p>
+                            <p className="product-price">Giá sản phẩm: <span className="price-amount">Không xác định</span></p> :
+                            <p className="product-price">Giá sản phẩm: <span className="price-amount">{formatPrice(product.totalPrice)}</span></p>
                         }
                         <div className="product-description">
                         </div>
@@ -159,13 +159,13 @@ export default function DetailPage() {
 
                     </div>
                     <div className="product-information">
-                        <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Product information</span>
+                        <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Thông tin sản phẩm</span>
                         <div style={{ display: 'flex', marginTop: '5px' }}>
                             <div style={{ fontSize: '15px', marginRight: '150px' }}>
                                 <div style={{ marginTop: '5px' }}>ID: {product.id}</div>
-                                <div style={{ marginTop: '5px' }}>Gender: {product.gender}</div>
-                                <div style={{ marginTop: '5px' }}>Category: {product.category}</div>
-                                <div style={{ marginTop: '5px' }}>Size: {product.size}</div>
+                                <div style={{ marginTop: '5px' }}>Giới tính: {product.gender}</div>
+                                <div style={{ marginTop: '5px' }}>Loại: {product.category}</div>
+                                <div style={{ marginTop: '5px' }}>Kích cỡ: {product.size}</div>
                             </div>
                             <div style={{ fontSize: '15px' }}>
                                 {product.materials?.map((mt, index) => (
@@ -176,10 +176,10 @@ export default function DetailPage() {
 
                                 {product.gem?.map((sp, index) => (
                                     <div key={index}>
-                                        <div style={{ marginTop: '5px' }}>Diamond: {sp.gemName}</div>
-                                        <div style={{ marginTop: '5px' }}>Clarity: {sp.clarity}</div>
-                                        <div style={{ marginTop: '5px' }}>Color: {sp.color}</div>
-                                        <div style={{ marginTop: '5px' }}>Carat: {sp.carat} ct</div>
+                                        <div style={{ marginTop: '5px' }}>Kim cương: {sp.gemName}</div>
+                                        <div style={{ marginTop: '5px' }}>Độ tinh khiết: {sp.clarity}</div>
+                                        <div style={{ marginTop: '5px' }}>Màu sắc: {sp.color}</div>
+                                        <div style={{ marginTop: '5px' }}>Khối lượng: {sp.carat} ct</div>
                                     </div>
                                 ))}
                             </div>
