@@ -81,7 +81,7 @@ export default function PurchaseOrderByStaffId() {
     };
 
     const handleDelete = (key) => {
-        showModal("Do you really want to delete this order?", key);
+        showModal("Bạn có muốn xóa đơn hàng này không", key);
     };
 
     const handleView = (code) => {
@@ -124,27 +124,16 @@ export default function PurchaseOrderByStaffId() {
         <Spinner />
       ) :(
         <div className="purchase-order-container">
-            <h1 className="purchase-order-title">Purchase List</h1>
-            {/* <div className="search-add-container">
-                <Input
-                    type="text"
-                    placeholder="Search by Staff name or Order Code"
-                    className="purchase-order-search-input"
-                    value={searchText}
-                    onChange={handleSearch}
-                    prefix={<SearchOutlined style={{ fontSize: '16px' }} />}
-                    size="small"
-                />
-            </div> */}
+            <h1 className="purchase-order-title">Danh sách đơn thu mua</h1>
             <table className="purchase-order-table">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Staff name</th>
-                        <th>Purchase Code</th>
-                        <th>Total Price</th>
-                        <th>Date Order</th>
-                        <th>Action</th>
+                        <th>ID</th>
+                        <th>Tên nhân viên</th>
+                        <th>Mã đơn mua lại</th>
+                        <th>Tổng tiền</th>
+                        <th>Ngày</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -163,7 +152,7 @@ export default function PurchaseOrderByStaffId() {
                                             type="primary"
                                             onClick={() => handleView(order.orderCode)}
                                         >
-                                            View
+                                            Xem
                                         </Button>
                                     </NavLink>
                                     <Button
@@ -173,7 +162,7 @@ export default function PurchaseOrderByStaffId() {
                                         onClick={() => handleDelete(order.orderCode)}
                                         disabled={order.paymentMethod !== "NONE"}
                                     >
-                                        Delete
+                                        Xóa
                                     </Button>
                                 </div>
                             </td>
@@ -183,8 +172,8 @@ export default function PurchaseOrderByStaffId() {
             </table>
             <div className="purchase-pagination-container">
                 <ReactPaginate
-                    previousLabel={'Previous'}
-                    nextLabel={'Next'}
+                    previousLabel={'Trước'}
+                    nextLabel={'Sau'}
                     breakLabel={'...'}
                     pageCount={pageCount}
                     marginPagesDisplayed={1}
@@ -217,7 +206,7 @@ export default function PurchaseOrderByStaffId() {
                             style={{ marginRight: '40px' }}
                             size='large'
                         >
-                            No
+                            Không
                         </Button>
                         <Button
                             type="primary"
@@ -225,7 +214,7 @@ export default function PurchaseOrderByStaffId() {
                             onClick={confirmDelete}
                             size='large'
                         >
-                            Yes
+                            Có
                         </Button>
                     </div>
                 </div>
