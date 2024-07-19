@@ -52,7 +52,7 @@ function AddGold() {
       .then(response => {
         console.log(response.data.metadata);
         notification.success({message: "Đã thêm sản phẩm thành công"})
-        navigate(0);
+        navigate('/ManageGold');
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";

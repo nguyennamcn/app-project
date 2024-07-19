@@ -292,11 +292,11 @@ export default function ListOrderPage() {
                                     </>
                                 ) : (
                                     <>
-                                        <label>Name: {customerName}</label>
-                                        <label>Phone: {customerPhone}</label>
-                                        <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
-                                        <label>Payment methods: {paymentMethodDone}</label>
-                                        <label>Delivery status: {deliveryStatus}</label>
+                                        <label>Tên: {customerName}</label>
+                                        <label>Số điện thoại: {customerPhone}</label>
+                                        <label>Ngày: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
+                                        <label>Phương thức thanh toán: {paymentMethodDone}</label>
+                                        <label>Trạng thái giao hàng: {deliveryStatus}</label>
                                     </>
                                 )}
                             </div>

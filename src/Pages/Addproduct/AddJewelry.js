@@ -68,7 +68,7 @@ function AddJewelry() {
       .then(response => {
         console.log(response.data.metadata);
         notification.success({message: "Thêm sản phẩm thành công"})
-        navigate(0);
+        navigate('/ManageJewelry');
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
@@ -238,7 +238,7 @@ function AddJewelry() {
                 </select>
               </div>
               <div className="add-gem-form-group">
-                <label>Chi phí sản xuất:</label>
+                <label>Giá đá quý:</label>
                 <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0}  />
               </div>
             </div>
