@@ -123,6 +123,7 @@ const JewelryInventoryPage = () => {
     }
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
   };
+  console.log(jewelry.image)
 
   return (
     <>
@@ -192,7 +193,7 @@ const JewelryInventoryPage = () => {
                   Xóa
                 </button>
                 <button
-                  className={jewelry.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
+                  className={item.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
                   onClick={() => item.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(item.productId)}
                   disabled={item.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
