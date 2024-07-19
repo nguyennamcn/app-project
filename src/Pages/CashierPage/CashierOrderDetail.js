@@ -112,17 +112,17 @@ export default function ListOrderPage() {
         adornicaServ.postPaidSummit(orderData)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
-                const linkCredit = res.data.metadata;
-                if (linkCredit) {
-                    window.location.href = linkCredit;
-                }
+                // const linkCredit = res.data.metadata;
+                // if (linkCredit) {
+                //     window.location.href = linkCredit;
+                // }
                 showModal(
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>
                         <h1>Paid successfully !</h1>
                         <Button
                             htmlType='submit'
-                            onClick={handleDownload}>PRINT PDF</Button>
+                            onClick={handleDownload}>IN BILL</Button>
                     </div>
                 );
 
@@ -156,8 +156,63 @@ export default function ListOrderPage() {
                     });
             })
             .catch((err) => {
-                console.error('Error submitting order:', err.response || err);
-                notification.error({ message: 'Error submitting order. Please check the server logs for more details.' });
+                const errorMessage = err.response?.data?.metadata?.message || err.message || "Lỗi ! Vui lòng kiểm tra lại";
+                notification.error({ message:  errorMessage});
+                console.log(err);
+            });
+    };
+
+    const handleSubmitCredit = () => {
+        const randomOrderKey = generateRandomKey();
+
+        const orderData = {
+            orderId: orderId,
+            orderCode: orderKey,
+            address: customerAddress,
+            name: customerName,
+            dateOfBirth: customerBirthday,
+            paymentMethod: paymentMethod,
+            amount: (totalPrice - (totalPrice * discount / 100)) ,
+            customerPhone: customerPhone,
+        };
+
+        console.log('Order Data:', orderData);
+
+        const phoneFormat = /^\d{10}$/;
+        if (!phoneFormat.test(customerPhone)) {
+            notification.error({ message: 'Phone number must be a 10-digit number.' });
+            return;
+        }
+
+        if (!orderId || !orderKey || !customerName || !customerPhone || !customerAddress || !paymentMethod || !customerBirthday) {
+            console.error('Missing required fields');
+            notification.error({ message: 'Please fill all the required fields' });
+            return;
+        }
+
+        adornicaServ.postPaidSummit(orderData)
+            .then((res) => {
+                console.log('Order submitted successfully:', res.data);
+                const linkCredit = res.data.metadata;
+                if (linkCredit) {
+                    window.location.href = linkCredit;
+                }
+                showModal(
+                    <div className='notice__content'>
+                        <i className="check__icon fa-solid fa-circle-check"></i>
+                        <h1>Paid successfully !</h1>
+                        <Button
+                            htmlType='submit'
+                            onClick={handleDownload}>IN BILL</Button>
+                    </div>
+                );
+
+                
+            })
+            .catch((err) => {
+                const errorMessage = err.response?.data?.metadata?.message || err.message || "Lỗi ! Vui lòng kiểm tra lại";
+                notification.error({ message:  errorMessage});
+                console.log(err);
             });
     };
 
@@ -284,7 +339,7 @@ export default function ListOrderPage() {
                                 <Button
                                     size="large"
                                     htmlType='submit'
-                                    onClick={handleSubmit}
+                                    onClick={paymentMethod === 'CREDIT' ? handleSubmitCredit : handleSubmit}
                                     style={{ padding: '0 60px', marginLeft: '30px' }}
                                     disabled={deliveryStatus === 'SUCCESS' || paymentMethodDone !== 'NONE'} // Disable button if deliveryStatus is success
                                 >Thanh toán</Button>
