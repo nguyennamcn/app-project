@@ -125,7 +125,7 @@ export default function ManageDiamond() {
       ) :(
         <div className="diamond-container">
       <header className="diamond-header">
-        <h1 className="diamond-title">Kim cương</h1>
+        <h1 className="diamond-title">Sản phẩm Kim cương</h1>
         <NavLink to="/add-diamond" style={{
                                             backgroundColor: '#00ca4d',
                                             border: '1px solid purple',

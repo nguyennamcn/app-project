@@ -4,7 +4,7 @@
     font-family: Arial, sans-serif;
     max-height: 70vh;
     overflow-y: auto;
-    background-color: #fff7f0; /* Màu nền hồng nhạt */
+    background-color: #fff7f0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -18,13 +18,13 @@
   }
   
   .jewelry-title {
-    margin: 0;
+    margin: auto;
     font-size: 25px;
-    color: #d97d0d; /* Màu chủ đạo cho tiêu đề */
+    color: #000000;
   }
   
   .addButton {
-    background-color: #d97d0d; /* Màu chủ đạo cho nút ADD */
+    background-color: #d97d0d; 
     color: white;
     border: none;
     border-radius: 4px;
@@ -40,11 +40,11 @@
   }
   
   .jewelry-th {
-    border: 2px solid #ffcc99; /* Viền cho header cột */
+    border: 2px solid #ffcc99; 
     padding: 8px;
     text-align: left;
-    background-color: #ffe0b3; /* Màu nền cho header cột */
-    color: #d97d0d; /* Màu chữ cho header cột */
+    background-color: #ffe0b3; 
+    color: #d97d0d; 
   }
   
   .jewelry-td {
