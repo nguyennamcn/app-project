@@ -148,11 +148,11 @@ export default function DetailPage() {
                         </div>
                         {isAdmin || isCashier || isManager ? (
                             <button className="add-to-cart-button" type="button" onClick={handleNotificationAddToCart}>
-                            ADD
+                            Thêm sản phẩm
                         </button>
                         ) : (
                             <button className="add-to-cart-button" type="button" onClick={handleAddToCart}>
-                            ADD
+                            Thêm sản phẩm
                         </button>
                         )}
                         
