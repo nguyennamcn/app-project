@@ -203,9 +203,8 @@
     .pagination-container {
         justify-content: center;
     }
-    .pagination-container-cashier-order{
-        display: flex;
-        justify-content: flex-end; 
-        margin: auto;
-      }
+    .page-link{
+        font-size: 12px;
+        padding: 5px;
+    }
 }
