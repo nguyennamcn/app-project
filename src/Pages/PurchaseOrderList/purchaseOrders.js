@@ -135,7 +135,7 @@ export default function PurchaseOrder() {
                 <thead>
                     <tr>
                         <th>Số thứ tự</th>
-                        <th>Tên nhân viên</th>
+                        <th>Nhân viên</th>
                         <th>Mã đơn hàng</th>
                         <th>Tổng số tiền</th>
                         <th>Ngày</th>
@@ -146,13 +146,13 @@ export default function PurchaseOrder() {
                 <tbody>
                     {currentOrders.map(order => (
                         <tr key={order.orderId}>
-                            <td data-label="Order ID">{order.orderId}</td>
-                            <td data-label="Staff name">{order.salesStaffName}</td>
-                            <td data-label="Purchase Code">{order.orderCode}</td>
-                            <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>
-                            <td data-label="Date Order">{order.dateOrder}</td>
-                            <td data-label="Payment status">{order.paymentMethod}</td>
-                            <td data-label="Action">
+                            <td data-label="Số thứ tự">{order.orderId}</td>
+                            <td data-label="Nhân viên">{order.salesStaffName}</td>
+                            <td data-label="Mã đơn hàng">{order.orderCode}</td>
+                            <td data-label="Tổng số tiền">{formatPrice(order.totalPrice)}</td>
+                            <td data-label="Ngày">{order.dateOrder}</td>
+                            <td data-label="Thanh toán">{order.paymentMethod}</td>
+                            <td data-label="">
                                 <div className="action-buttons">
                                     <NavLink to={`/payment-history/${order.orderCode}`}>
                                         <Button
