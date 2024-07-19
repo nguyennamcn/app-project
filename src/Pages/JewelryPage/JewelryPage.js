@@ -202,7 +202,7 @@ export default function JewelryPage() {
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={1}
           onPageChange={handlePageClick}
           containerClassName={'home-jewelry-pagination'}
           activeClassName={'home-jewelry-active'}

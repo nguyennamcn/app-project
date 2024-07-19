@@ -56,9 +56,9 @@ export default function GoldPrice() {
         <tbody>
           {goldPrices.map((material, index) => (
             <tr key={index} className={index % 2 === 0 ? 'rowEven' : 'rowOdd'}>
-              <td data-label="Name" className="gold-price-td">{material.materialName}</td>
-              <td data-label="Purchase (VND)" className="gold-price-td">{formatPrice(material.materialBuyPrice)}</td>
-              <td data-label="Sell (VND)" className="gold-price-td">{formatPrice(material.materialSellPrice)}</td>
+              <td data-label="Loại vàng" className="gold-price-td">{material.materialName}</td>
+              <td data-label="Giá thu mua (VND)" className="gold-price-td">{formatPrice(material.materialBuyPrice)}</td>
+              <td data-label="Giá bán (VND)" className="gold-price-td">{formatPrice(material.materialSellPrice)}</td>
             </tr>
           ))}
         </tbody>

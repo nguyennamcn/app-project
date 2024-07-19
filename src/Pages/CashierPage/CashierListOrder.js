@@ -146,14 +146,14 @@ export default function SellOrderPage() {
                 <tbody>
     {currentOrders.map(order => (
         <tr key={order.orderId}>
-            <td data-label="Order ID">{order.orderId}</td>
-            <td data-label="Staff name">{order.salesStaffName}</td>
-            <td data-label="Order Code">{order.orderCode}</td>
-            <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>
-            <td data-label="Date Order">{order.dateOrder}</td>
-            <td data-label="Payment method">{order.paymentMethod}</td>
-            <td data-label="Delivery Status">{order.deliveryStatus}</td>
-            <td data-label="Action">
+            <td data-label="Số thứ tự">{order.orderId}</td>
+            <td data-label="Nhân viên">{order.salesStaffName}</td>
+            <td data-label="Mã đơn hàng">{order.orderCode}</td>
+            <td data-label="Số tiền">{formatPrice(order.totalPrice)}</td>
+            <td data-label="Ngày">{order.dateOrder}</td>
+            <td data-label="Thanh toán">{order.paymentMethod}</td>
+            <td data-label="Trạng thái">{order.deliveryStatus}</td>
+            <td data-label="">
                 <div className="action-buttons">
                     <NavLink to={`/cashierOrderDetail/${order.orderCode}`}>
                         <Button
@@ -213,7 +213,7 @@ export default function SellOrderPage() {
                     breakLabel={'...'}
                     pageCount={pageCount}
                     marginPagesDisplayed={1}
-                    pageRangeDisplayed={2}
+                    pageRangeDisplayed={1}
                     onPageChange={handlePageChange}
                     containerClassName={'pagination'}
                     activeClassName={'active'}

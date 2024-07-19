@@ -207,7 +207,7 @@ export default function ManageDiamond() {
           breakLabel={'...'}
           pageCount={totalPages}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={1}
           onPageChange={(data) => changePage(data.selected + 1)}
           containerClassName={'pagination'}
           activeClassName={'active'}
