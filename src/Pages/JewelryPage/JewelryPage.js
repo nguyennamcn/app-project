@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Modal } from 'antd';
 import './JewelryCss.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import ReactPaginate from 'react-paginate';
 import QrScanner from 'react-qr-scanner';
@@ -30,6 +30,8 @@ export default function JewelryPage() {
   const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
   const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
   const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     adornicaServ.getListJewelry()
@@ -86,9 +88,14 @@ export default function JewelryPage() {
 
   const handleScan = (data) => {
     if (data) {
-      setScannedData(data);
-      setSearchTerm(data); // Set search term to scanned data
-      setIsQRModalVisible(false); // Close QR modal after scan
+      const regex = /^JW\d{3}$/;
+      if (regex.test(data)) {
+        navigate(`/detail/${data}`);
+      } else {
+        setScannedData(data);
+        setSearchTerm(data); // Set search term to scanned data
+        setIsQRModalVisible(false); // Close QR modal after scan
+      }
     }
   };
 
