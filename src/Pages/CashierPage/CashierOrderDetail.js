@@ -113,9 +113,9 @@ export default function ListOrderPage() {
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
                 const linkCredit = res.data.metadata;
-                // if (linkCredit) {
-                //     window.location.href = linkCredit;
-                // }
+                if (linkCredit) {
+                    window.location.href = linkCredit;
+                }
                 showModal(
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>

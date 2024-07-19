@@ -223,8 +223,8 @@ export default function SettingGoldPrice() {
           <label style={{fontWeight:600, fontSize:'16px'}}>Effect date:</label>
           <DatePicker
             style={{ marginLeft: '10px' }}
-            // showTime={{ format: 'HH:mm' }}
-            // format="YYYY-MM-DD HH:mm"
+            showTime={{ format: 'HH:mm' }}
+            format="YYYY-MM-DD HH:mm"
             onChange={(date) => setCreateEffectDate(date)}
           />
         </div>
