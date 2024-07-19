@@ -177,7 +177,7 @@ export default function PurchaseOrderByStaffId() {
                     breakLabel={'...'}
                     pageCount={pageCount}
                     marginPagesDisplayed={1}
-                    pageRangeDisplayed={2}
+                    pageRangeDisplayed={1}
                     onPageChange={handlePageClick}
                     containerClassName={'pagination'}
                     activeClassName={'active'}

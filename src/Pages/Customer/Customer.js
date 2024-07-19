@@ -119,7 +119,7 @@ export default function CustomerDetails() {
       <h2 className="customer-header">Thông tin khách hàng</h2>
       <input 
         type="text"
-        placeholder="Search by tên hoặc số điện thoại"
+        placeholder="Tìm kiếm tên hoặc số điện thoại"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="customer-searchBar"
@@ -176,7 +176,7 @@ export default function CustomerDetails() {
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={2} 
+          pageRangeDisplayed={1} 
           onPageChange={handlePageClick}
           containerClassName={'home-jewelry-pagination'}
           activeClassName={'home-jewelry-active'}

@@ -243,7 +243,7 @@ const Material = () => {
                             breakLabel={'...'}
                             pageCount={pageCount}
                             marginPagesDisplayed={1}
-                            pageRangeDisplayed={2}
+                            pageRangeDisplayed={1}
                             onPageChange={handlePageClick}
                             containerClassName={'material-pagination'}
                             activeClassName={'active'}

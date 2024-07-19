@@ -22,7 +22,8 @@
 }
 
 .customer-searchBar {
-  width: 50%;
+  width: 100%;
+  max-width: 300px;
   padding: 10px;
   margin-bottom: 10px;
   font-size: 13px;

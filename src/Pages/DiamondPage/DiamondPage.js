@@ -177,7 +177,7 @@ export default function DiamondPage() {
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={1}
           onPageChange={handlePageClick}
           containerClassName={'home-diamond-pagination'}
           activeClassName={'home-diamond-active'}

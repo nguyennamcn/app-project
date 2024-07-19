@@ -170,7 +170,7 @@ export default function GoldPage() {
           breakLabel={'...'}
           pageCount={pageCount}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={1}
           onPageChange={handlePageClick}
           containerClassName={'home-gold-pagination'}
           activeClassName={'home-gold-active'}
