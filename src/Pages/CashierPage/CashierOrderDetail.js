@@ -112,17 +112,14 @@ export default function ListOrderPage() {
         adornicaServ.postPaidSummit(orderData)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
-                // const linkCredit = res.data.metadata;
-                // if (linkCredit) {
-                //     window.location.href = linkCredit;
-                // }
+           
                 showModal(
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>
-                        <h1>Paid successfully !</h1>
+                        <h1>Thanh toán thành công !</h1>
                         <Button
                             htmlType='submit'
-                            onClick={handleDownload}>IN BILL</Button>
+                            onClick={handleDownload}>Xuất hóa đơn</Button>
                     </div>
                 );
 
@@ -200,14 +197,14 @@ export default function ListOrderPage() {
                 showModal(
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>
-                        <h1>Paid successfully !</h1>
+                        <h1>Thanh toán thành công !</h1>
                         <Button
                             htmlType='submit'
-                            onClick={handleDownload}>IN BILL</Button>
+                            onClick={handleDownload}>Xuất hóa đơn</Button>
                     </div>
                 );
 
-                
+
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Lỗi ! Vui lòng kiểm tra lại";
@@ -288,15 +285,15 @@ export default function ListOrderPage() {
                                             <option value='CASH'>Tiền mặt</option>
                                             <option value='CREDIT'>Thẻ</option>
                                         </select></label>
-                                        <label>Trạng thái giao hàng : {deliveryStatus}</label>
+                                        <label>Trạng thái giao hàng : {deliveryStatus == "PENDING" ? "Đang sử lí": "Thành công"}</label>
                                     </>
                                 ) : (
                                     <>
                                         <label>Name: {customerName}</label>
                                         <label>Phone: {customerPhone}</label>
                                         <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
-                                        <label>Payment methods: {paymentMethodDone}</label>
-                                        <label>Delivery status: {deliveryStatus}</label>
+                                        <label>Payment methods: {paymentMethodDone == "CASH" ? "Tiền mặt": paymentMethodDone == "CREDIT" ? "Thẻ": "Chưa thanh toán"}</label>
+                                        <label>Delivery status: {deliveryStatus == "PENDING" ? "Đang sử lí": "Thành công"}</label>
                                     </>
                                 )}
                             </div>
@@ -306,7 +303,7 @@ export default function ListOrderPage() {
                                 padding: '0px 10px 0px 0px',
                                 minHeight: '380px'
                             }}>
-                                <Table style={{ margin: '20px 10px 0 20px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
+                                <Table style={{ margin: '20px 10px 0 20px', width: '90%', }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 150 }} />
                                 <div className="row" style={{ position: 'absolute', bottom: '16px' }}>
                                     <div className="col-sm-12">
                                         <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Số lượng sản phẩm: <span style={{ marginLeft: '4%' }}>{products.length}</span></h1>
@@ -347,7 +344,7 @@ export default function ListOrderPage() {
                         </div>
 
                         <Modal
-                            title="Notification"
+                            title="Thông báo"
                             visible={isModalVisible}
                             footer={null}
                             onCancel={() => setIsModalVisible(false)}
