@@ -131,7 +131,7 @@ const JewelryInventoryPage = () => {
       ) :(
         <div  className="jewelry-container">
       <header className="jewelry-header">
-        <h1 className="jewelry-title">Trang sức</h1>
+        <h1 className="jewelry-title">Sản phẩm Trang sức</h1>
         <NavLink to="/add-jewelry"  style={{
                                             backgroundColor: '#00ca4d',
                                             border: '1px solid purple',

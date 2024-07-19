@@ -17,9 +17,9 @@
   width: 100%;
   max-width: 1000px;
   padding: 50px;
-  border: 2px solid #FFCBA4; /* Màu cam nhạt */
+  border: 2px solid #FFCBA4; 
   border-radius: 7px;
-  background-color: #FFEFD5; /* Màu cam nhạt */
+  background-color: #fffde5; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -59,9 +59,9 @@
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  border: 1px solid #FFCBA4; /* Màu cam nhạt */
+  border: 1px solid #FFCBA4; 
   border-radius: 4px;
-  background-color: #FFFFFF; /* Màu cam nhạt */
+  background-color: #FFFFFF; 
   color: #333;
 }
 
@@ -78,8 +78,8 @@
 
 .back-button {
   padding: 8px 16px;
-  background: #FFEFD5; /* Màu cam nhạt */
-  border: 1px solid #FFCBA4; /* Màu cam nhạt */
+  background: #FFEFD5; 
+  border: 1px solid #FFCBA4; 
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
@@ -88,12 +88,12 @@
 }
 
 .back-button:hover {
-  background: #FFA07A; /* Màu cam nhạt */
+  background: #FFA07A; 
 }
 
 .add-gold-button {
   padding: 8px 16px;
-  background: #FFCBA4; /* Màu cam nhạt */
+  background: #FFCBA4; 
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -104,7 +104,7 @@
 }
 
 .add-gold-button:hover {
-  background: #FFCC99; /* Màu cam đậm hơn */
+  background: #FFCC99; 
 }
 
 .custom-modal .ant-modal-content {
