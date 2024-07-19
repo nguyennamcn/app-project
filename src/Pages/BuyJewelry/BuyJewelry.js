@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { notification } from 'antd';
+import { Modal, notification } from 'antd';
+import QrScanner from 'react-qr-scanner';
+import necklaceImage from '../../asset/img/Daychuyen.png';
 
 // Define styles as objects
 const styles = {
@@ -124,7 +126,12 @@ const JewelrySelection = () => {
   const newItemRef = useRef(null);
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.userReducer.userInfo);
-
+  const [isSizeModalVisible, setIsSizeModalVisible] = useState(false);
+  const [isBraceletSizeModalVisible, setIsBraceletSizeModalVisible] = useState(false);
+  const [isNecklaceSizeModalVisible, setIsNecklaceSizeModalVisible] = useState(false);
+  const [isQRModalVisible, setIsQRModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   useEffect(() => {
     adornicaServ.getPriceMaterial()
       .then((res) => {
@@ -239,7 +246,15 @@ const JewelrySelection = () => {
     validateForm(updatedItems);
     console.log('updated item',updatedItems);
   };  
-  
+  const handleScan = (data) => {
+    if (data) {
+      setIsQRModalVisible(false); // Close QR modal after scan
+    }
+  };
+
+  const handleError = (err) => {
+    console.error(err);
+  };
 
   useEffect(() => {
     const calculateTotalPrice = async () => {
@@ -276,7 +291,7 @@ const JewelrySelection = () => {
                 if (diamondPrice === 0) hasValidPrice = false;
                 total += diamondPrice;
               } else {
-                notification.error({ message: "Gem was undefined" });
+                notification.error({ message: "Không tim thấy vật liệu này" });
                 hasValidPrice = false;
               }
             }
@@ -331,7 +346,7 @@ const JewelrySelection = () => {
       alert('Please fill out all required fields and ensure total price is greater than 0.');
       return;
     }
-  
+   
     const jewelryData = jewelryItems.map(item => {
       const totalMaterial = ((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight) || 0;
       const totalGem = ((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion))) || 0;
@@ -359,15 +374,22 @@ const JewelrySelection = () => {
 
   return (
     <div style={styles.container}>
+      <div style={{ display: 'flex', gap: '5px' , maxWidth:'50px' }}>
+          <button onClick={() => setIsBraceletSizeModalVisible(true)} className="home-jewelry-size-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z" />
+            </svg>
+          </button>
+        </div>
       <form style={styles.form} onSubmit={handleSubmit}>
         {jewelryItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.jewelryLabel}>
-              Jewelry {index + 1}
-              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+              Trang sức {index + 1}
+              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Xóa</button>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Name:</label>
+              <label style={styles.label}>Tên sản phẩm:</label>
               <input
                 type="text"
                 style={styles.input}
@@ -379,7 +401,7 @@ const JewelrySelection = () => {
             </div>
             <div></div>
             <div style={styles.formGroup} ref={index === jewelryItems.length - 1 ? newItemRef : null}>
-              <label style={styles.label}>Gold type:</label>
+              <label style={styles.label}>Loại vàng:</label>
               <select style={styles.input} value={item.goldType} onChange={e => handleInputChange(index, 'goldType', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
@@ -389,7 +411,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Weight (gram):</label>
+              <label style={styles.label}>Khối lượng (gram):</label>
               <input
                 type="number"
                 style={styles.input}
@@ -401,7 +423,7 @@ const JewelrySelection = () => {
               />
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Origin:</label>
+              <label style={styles.label}>Nguồn gốc:</label>
               <select style={styles.input} value={item.origin} onChange={e => handleInputChange(index, 'origin', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
@@ -410,7 +432,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Carat Weight:</label>
+              <label style={styles.label}>Khối lượng (Kim cương):</label>
               <input
                 type="number"
                 style={styles.input}
@@ -421,7 +443,7 @@ const JewelrySelection = () => {
               />
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Color:</label>
+              <label style={styles.label}>Màu sắc:</label>
               <select
                 style={styles.input}
                 value={item.color}
@@ -443,7 +465,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Clarity:</label>
+              <label style={styles.label}>Độ tinh khiết:</label>
               <select
                 style={styles.input}
                 value={item.clarity}
@@ -466,7 +488,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Cut:</label>
+              <label style={styles.label}>Vết cắt:</label>
               <select
                 style={styles.input}
                 value={item.cut}
@@ -485,14 +507,14 @@ const JewelrySelection = () => {
             {item.goldType  && item.weight >0 && (
               <>
                 <div style={styles.totalPrice}>
-                    {item.goldType}: Buy price {item.materialBuyPrice.toLocaleString('vi-VN')} VND - Sell price {item.materialSellPrice.toLocaleString('vi-VN')} VND
+                    {item.goldType}: Giá mua {item.materialBuyPrice.toLocaleString('vi-VN')} VND - Giá bán {item.materialSellPrice.toLocaleString('vi-VN')} VND
                 </div>
 
                 
-                <div style={styles.totalPrice}>Gold promotion: {(((item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
+                <div style={styles.totalPrice}>Khuyến mãi Vàng: {(((item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
 
                 <div style={styles.totalPrice}>
-                    Material total: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
+                    Tổng tiền vật liệu: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
 
               </>
@@ -507,14 +529,14 @@ const JewelrySelection = () => {
                   textAlign: 'center',
                   marginTop: '30px',
                 }}>
-                  Diamond: Buy price {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND
+                  Kim cương: Giá mua {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Giá bán {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND
                 </div>
 
                
-               <div style={styles.totalPrice}>Diamond promotion: {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
+               <div style={styles.totalPrice}>Khuyến mãi kim cương: {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
 
                <div style={styles.totalPrice}>
-                   Diamond total: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND
+                   Tổng tiền kim cương: {((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND
                 </div>
 
               </>
@@ -522,18 +544,56 @@ const JewelrySelection = () => {
             
           </React.Fragment>
         ))}
-        <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>ADD JEWELRY</button>
+        <button type="button" style={styles.addButtonJewelry} onClick={handleAddItem}>Thêm sản phẩm</button>
         <div style={styles.totalPrice}>
-          Total price: {totalPrice.toLocaleString('vi-Vn')} VND
+          Tổng tiền: {totalPrice.toLocaleString('vi-Vn')} VND
         </div>
         <button
           type="submit"
           style={{ ...styles.button, ...(formValid && totalPrice > 0 ? {} : { backgroundColor: 'gray', cursor: 'not-allowed' }) }}
           disabled={!formValid || totalPrice === 0}
         >
-          PURCHASE
+          Thu mua
         </button>
       </form>
+      <Modal
+        visible={isModalVisible}
+        footer={null}
+        onCancel={() => setIsModalVisible(false)}
+        className="home-jewelry-custom-modal"
+      >
+        <div>{modalMessage}</div>
+      </Modal>
+      <Modal
+        visible={isSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsSizeModalVisible(false)}
+        className="home-jewelry-custom-modal"
+      >
+        <div>
+          <img src="https://vuanem.com/blog/wp-content/uploads/2022/09/bang-size-nhan-nam1-1.jpg" alt="Ring Sizes" style={{ width: '100%' }} />
+        </div>
+      </Modal>
+      <Modal
+        visible={isBraceletSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsBraceletSizeModalVisible(false)}
+        className="home-jewelry-custom-modal-bracelet"
+      >
+        <div className='size_img_bracelet'>
+          <img src="https://media.discordapp.net/attachments/1161276908433063946/1263359796363530250/image.png?ex=6699f2ff&is=6698a17f&hm=aa0213e5bf016ae87e900052d14728047a2687c71f526b862b2c0238f7a4ae6a&=&format=webp&quality=lossless&width=1363&height=383" alt="Ring Sizes" style={{ width: '100%' }} />
+        </div>
+      </Modal>
+      <Modal
+        visible={isNecklaceSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsNecklaceSizeModalVisible(false)}
+        className="home-jewelry-custom-modal-necklace"
+      >
+        <div>
+          <img src={necklaceImage} alt="Necklace Sizes" style={{ width: '100%' }} />
+        </div>
+      </Modal>
     </div>
   );
 };

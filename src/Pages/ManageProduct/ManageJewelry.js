@@ -32,11 +32,10 @@ const JewelryInventoryPage = () => {
 
   const showDeleteConfirm = (jewelryCode) => {
     Modal.confirm({
-      title: 'Confirm',
-      content: 'Do you really want to delete this product?',
-      okText: 'Yes',
+      content: 'Bạn có muốn xóa sản phẩm này không?',
+      okText: 'Có',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: 'Không',
       onOk() {
         handleDelete(jewelryCode);
       }
@@ -48,11 +47,11 @@ const JewelryInventoryPage = () => {
       .then(() => {
         const newProductData = jewelry.filter((item) => item.productCode !== jewelryCode);
         setJewelry(newProductData);
-        notification.success({ message: "Delete Successfully" });
+        notification.success({ message: "Xóa thành công" });
       })
       .catch((err) => {
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-        notification.error({ message: errorMessage });
+        notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
         console.log(err);
       });
   };
@@ -78,7 +77,7 @@ const JewelryInventoryPage = () => {
 
   const handleModalOk = () => {
     if (selectedImages.length !== 4) {
-      notification.error({ message: 'Please select all 4 images' });
+      notification.error({ message: 'Hãy lựa chọn 4 hình ảnh' });
       return;
     }
 
@@ -92,7 +91,7 @@ const JewelryInventoryPage = () => {
       setIsModalVisible(false);
       setSelectedImages([]);
       setCurrentJewelryId(null);
-      notification.success({message: 'Images updated successfully'});
+      notification.success({message: 'Đã thêm hình ảnh thành công'});
 
       adornicaServ.getListJewelry()
       .then((res) => {
@@ -105,7 +104,7 @@ const JewelryInventoryPage = () => {
       
     }).catch((err) => {
       console.log("Error uploading images:", err.response);
-      notification.error({ message: 'Error uploading images' });
+      notification.error({ message: 'Không thể tải lên hình ảnh' });
     });
   };
 
@@ -120,7 +119,7 @@ const JewelryInventoryPage = () => {
   const currentJewelry = jewelry.slice(firstItemIndex, lastItemIndex);
   const formatPrice = (price) => {
     if (price <= 0 || isNaN(price)) {
-      return 'Not yet been priced'; 
+      return 'Sản phẩm chưa có giá'; 
     }
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
   };
@@ -132,7 +131,7 @@ const JewelryInventoryPage = () => {
       ) :(
         <div  className="jewelry-container">
       <header className="jewelry-header">
-        <h1 className="jewelry-title">JEWELRY INVENTORY</h1>
+        <h1 className="jewelry-title">Trang sức</h1>
         <NavLink to="/add-jewelry"  style={{
                                             backgroundColor: '#00ca4d',
                                             border: '1px solid purple',
@@ -140,17 +139,17 @@ const JewelryInventoryPage = () => {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>ADD JEWELRY</NavLink>
+                                        }}>Thêm sản phẩm</NavLink>
       </header>
       <table className="jewelry-table">
         <thead>
           <tr>
             <th className="jewelry-th">ID</th>
-            <th className="jewelry-th">Code</th>
-            <th className="jewelry-th">Name</th>
-            <th className="jewelry-th">Price (VND) </th>
-            <th className="jewelry-th">Size</th>
-            <th className="jewelry-th">Action</th>
+            <th className="jewelry-th">Mã sản phẩm</th>
+            <th className="jewelry-th">Tên sản phẩm</th>
+            <th className="jewelry-th">Giá (VND) </th>
+            <th className="jewelry-th">Kích cỡ</th>
+            <th className="jewelry-th"></th>
           </tr>
         </thead>
         <tbody>
@@ -175,7 +174,7 @@ const JewelryInventoryPage = () => {
                   }}
                     onClick={() => handleUpdate(item.productCode)}
                   >
-                    Update
+                    Chỉnh sửa
                   </button>
                 </NavLink>
                 <button
@@ -190,14 +189,14 @@ const JewelryInventoryPage = () => {
                 }}
                   onClick={() => showDeleteConfirm(item.productCode)}
                 >
-                  Delete
+                  Xóa
                 </button>
                 <button
                   className={jewelry.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
                   onClick={() => item.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(item.productId)}
                   disabled={item.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
-                  Img
+                  Hình ảnh
                 </button>
               </td>
             </tr>
@@ -212,14 +211,14 @@ const JewelryInventoryPage = () => {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>BACK</NavLink>
+                                        }}>Trở về</NavLink>
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={'Trước'}
+          nextLabel={'Sau'}
           breakLabel={'...'}
           pageCount={totalPages}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={1}
           onPageChange={(data) => changePage(data.selected + 1)}
           containerClassName={'pagination'}
           activeClassName={'active'}

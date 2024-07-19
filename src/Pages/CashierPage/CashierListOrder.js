@@ -64,8 +64,8 @@ export default function SellOrderPage() {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
                 setFilteredData(newDataSource);
-                setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Order was deleted!</h1></div>);
-                notification.success({ message: "Order was deleted!" });
+                setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Đơn hàng đã được xóa</h1></div>);
+                notification.success({ message: "Đơn hàng đã được xóa!" });
             })
             .catch((err) => {
                 console.log("Error deleting order:", err);
@@ -74,7 +74,7 @@ export default function SellOrderPage() {
     };
 
     const handleDeleteOrder = (key) => {
-        showDeleteModal("Do you really want to delete this order?", key);
+        showDeleteModal("Bạn có muốn xóa đơn hàng này không ?", key);
     };
 
     const handleViewOrder = (key) => {
@@ -118,11 +118,11 @@ export default function SellOrderPage() {
         <Spinner />
       ) :(
         <div className="sell-order-container">
-            <h1 className="sell-order-title">Orders</h1>
+            <h1 className="sell-order-title">Đơn bán</h1>
             <div className="search-add-container">
                 <Input
                     type="text"
-                    placeholder="Search by Staff name or Order Code"
+                    placeholder="Tìm theo mã đơn hàng hoặc tên nhân viên"
                     className="sell-order-search-input"
                     value={searchText}
                     onChange={handleSearchOrders}
@@ -133,27 +133,27 @@ export default function SellOrderPage() {
             <table className="sell-order-table">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Staff name</th>
-                        <th>Order Code</th>
-                        <th>Total Price</th>
-                        <th>Date Order</th>
-                        <th>Payment method</th>
-                        <th>Delivery Status</th>
-                        <th>Action</th>
+                        <th>Số thứ tự</th>
+                        <th>Tên nhân viên</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Số tiền</th>
+                        <th>Ngày</th>
+                        <th>Thanh toán</th>
+                        <th>Trạng thái</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
     {currentOrders.map(order => (
         <tr key={order.orderId}>
-            <td data-label="Order ID">{order.orderId}</td>
-            <td data-label="Staff name">{order.salesStaffName}</td>
-            <td data-label="Order Code">{order.orderCode}</td>
-            <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>
-            <td data-label="Date Order">{order.dateOrder}</td>
-            <td data-label="Payment method">{order.paymentMethod}</td>
-            <td data-label="Delivery Status">{order.deliveryStatus}</td>
-            <td data-label="Action">
+            <td data-label="Số thứ tự">{order.orderId}</td>
+            <td data-label="Nhân viên">{order.salesStaffName}</td>
+            <td data-label="Mã đơn hàng">{order.orderCode}</td>
+            <td data-label="Số tiền">{formatPrice(order.totalPrice)}</td>
+            <td data-label="Ngày">{order.dateOrder}</td>
+            <td data-label="Thanh toán">{order.paymentMethod}</td>
+            <td data-label="Trạng thái">{order.deliveryStatus}</td>
+            <td data-label="">
                 <div className="action-buttons">
                     <NavLink to={`/cashierOrderDetail/${order.orderCode}`}>
                         <Button
@@ -167,7 +167,7 @@ export default function SellOrderPage() {
                             type="primary"
                             onClick={() => handleViewOrder(order.orderCode)}
                         >
-                            View
+                            Xem
                         </Button>
                     </NavLink>
                     <NavLink>
@@ -184,7 +184,7 @@ export default function SellOrderPage() {
                         onClick={() => handleDeleteOrder(order.orderCode)}
                         disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
                     >
-                        Delete
+                        Xóa
                     </Button>
                     </NavLink>
                     <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
@@ -197,7 +197,7 @@ export default function SellOrderPage() {
                             type="primary"
                             disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
                         >
-                            Update
+                            Sửa
                         </Button>
                     </NavLink>
                 </div>
@@ -208,12 +208,12 @@ export default function SellOrderPage() {
             </table>
             <div className="pagination-container-cashier-order">
                 <ReactPaginate
-                    previousLabel={'Previous'}
-                    nextLabel={'Next'}
+                    previousLabel={'Trước'}
+                    nextLabel={'Sau'}
                     breakLabel={'...'}
                     pageCount={pageCount}
                     marginPagesDisplayed={1}
-                    pageRangeDisplayed={2}
+                    pageRangeDisplayed={1}
                     onPageChange={handlePageChange}
                     containerClassName={'pagination'}
                     activeClassName={'active'}
@@ -242,7 +242,7 @@ export default function SellOrderPage() {
                             style={{ marginRight: '40px' }}
                             size='large'
                         >
-                            No
+                            Không
                         </Button>
                         <Button
                             type="primary"
@@ -250,7 +250,7 @@ export default function SellOrderPage() {
                             onClick={confirmDelete}
                             size='large'
                         >
-                            Yes
+                            Có
                         </Button>
                     </div>
                 </div>

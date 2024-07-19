@@ -64,19 +64,19 @@ export default function PurchaseOrder() {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
                 setFilteredData(newDataSource);
-                setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Order was deleted!</h1></div>);
-                notification.success({ message: "Order was deleted!" });
+                setModalMessage(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Đơn hàng đã được xóa!</h1></div>);
+                notification.success({ message: "Đơn hàng đã được xóa!" });
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-                notification.error({ message: errorMessage });
+                notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
                 console.log(err);
             });
         setModalVisible(false);
     };
 
     const handleDelete = (key) => {
-        showModal("Do you really want to delete this order?", key);
+        showModal("Bạn có muốn xóa đơn hàng này không", key);
     };
 
     const handleView = (code) => {
@@ -119,11 +119,11 @@ export default function PurchaseOrder() {
         <Spinner />
       ) :(
         <div className="purchase-order-container">
-            <h1 className="purchase-order-title">Purchase List</h1>
+            <h1 className="purchase-order-title"> Danh sách đơn hàng mua lại</h1>
             <div className="search-add-container">
                 <Input
                     type="text"
-                    placeholder="Search by Staff name or Order Code"
+                    placeholder="Tìm theo mã đơn hàng hoặc tên nhân viên"
                     className="purchase-order-search-input"
                     value={searchText}
                     onChange={handleSearch}
@@ -134,25 +134,25 @@ export default function PurchaseOrder() {
             <table className="purchase-order-table">
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Staff name</th>
-                        <th>Purchase Code</th>
-                        <th>Total Price</th>
-                        <th>Date Order</th>
-                        <th>Payment status</th>
-                        <th>Action</th>
+                        <th>Số thứ tự</th>
+                        <th>Nhân viên</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Tổng số tiền</th>
+                        <th>Ngày</th>
+                        <th>Thanh toán</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentOrders.map(order => (
                         <tr key={order.orderId}>
-                            <td data-label="Order ID">{order.orderId}</td>
-                            <td data-label="Staff name">{order.salesStaffName}</td>
-                            <td data-label="Purchase Code">{order.orderCode}</td>
-                            <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>
-                            <td data-label="Date Order">{order.dateOrder}</td>
-                            <td data-label="Payment status">{order.paymentMethod}</td>
-                            <td data-label="Action">
+                            <td data-label="Số thứ tự">{order.orderId}</td>
+                            <td data-label="Nhân viên">{order.salesStaffName}</td>
+                            <td data-label="Mã đơn hàng">{order.orderCode}</td>
+                            <td data-label="Tổng số tiền">{formatPrice(order.totalPrice)}</td>
+                            <td data-label="Ngày">{order.dateOrder}</td>
+                            <td data-label="Thanh toán">{order.paymentMethod}</td>
+                            <td data-label="">
                                 <div className="action-buttons">
                                     <NavLink to={`/payment-history/${order.orderCode}`}>
                                         <Button
@@ -167,7 +167,7 @@ export default function PurchaseOrder() {
                                             type="primary"
                                             onClick={() => handleView(order.orderCode)}
                                         >
-                                            View
+                                            Xem
                                         </Button>
                                     </NavLink>
                                     <Button
@@ -184,7 +184,7 @@ export default function PurchaseOrder() {
                                         onClick={() => handleDelete(order.orderCode)}
                                         disabled={order.paymentMethod !== "NONE"}
                                     >
-                                        Delete
+                                        Xóa
                                     </Button>
                                 </div>
                             </td>
@@ -194,12 +194,12 @@ export default function PurchaseOrder() {
             </table>
             <div className="purchase-pagination-container">
                 <ReactPaginate
-                    previousLabel={'Previous'}
-                    nextLabel={'Next'}
+                    previousLabel={'Trước'}
+                    nextLabel={'Sau'}
                     breakLabel={'...'}
                     pageCount={pageCount}
                     marginPagesDisplayed={1}
-                    pageRangeDisplayed={2}
+                    pageRangeDisplayed={1}
                     onPageChange={handlePageClick}
                     containerClassName={'pagination'}
                     activeClassName={'active'}
@@ -228,7 +228,7 @@ export default function PurchaseOrder() {
                             style={{ marginRight: '40px' }}
                             size='large'
                         >
-                            No
+                            Không
                         </Button>
                         <Button
                             type="primary"
@@ -236,7 +236,7 @@ export default function PurchaseOrder() {
                             onClick={confirmDelete}
                             size='large'
                         >
-                            Yes
+                            Có
                         </Button>
                     </div>
                 </div>

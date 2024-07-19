@@ -27,8 +27,8 @@ const DiamondPrice = () => {
                 console.log(err);
             })
             .finally(() => {
-                setLoading(false); // Đánh dấu đã tải xong
-              });
+                setLoading(false);
+            });
     }, []);
 
     const handleSetting = () => {
@@ -45,100 +45,64 @@ const DiamondPrice = () => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
 
-  const sortedDiamondCarat = [...diamondPrices].sort((a, b) => a.carat - b.carat);
+    const groupByCaratRange = (data) => {
+        const ranges = {};
+        data.forEach(price => {
+            const rangeKey = `${Math.floor(price.carat * 2) / 2}-${Math.floor(price.carat * 2 + 1) / 2}`;
+            if (!ranges[rangeKey]) {
+                ranges[rangeKey] = [];
+            }
+            ranges[rangeKey].push(price);
+        });
+        return ranges;
+    };
+
+    const caratRanges = groupByCaratRange(diamondPrices);
 
     return (
         <>
-      {loading ? (
-        <Spinner />
-      ) :(
-        <div className="DiamondPrice-container">
-            <h2 className="DiamondPrice-header">DIAMOND PRICE - {currentDate}</h2>
-            <div className="DiamondPrice-tableContainer">
-                <table className="DiamondPrice-table">
-                    <thead>
-                        <tr>
-                            <th className="DiamondPrice-th">STT</th>
-                            <th className="DiamondPrice-th">Origin</th>
-                            <th className="DiamondPrice-th">Color</th>
-                            <th className="DiamondPrice-th">Clarity</th>
-                            <th className="DiamondPrice-th">Cut</th>
-                            <th className="DiamondPrice-th">Carat</th>
-                            <th className="DiamondPrice-th">Purchase (VND)</th>
-                            <th className="DiamondPrice-th">Sell (VND)</th>
-                            {/* <th className="DiamondPrice-th">Date Update</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sortedDiamondCarat.map((price, index) => (
-                            <tr key={index} style={{ cursor: 'auto' }} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
-                                <td
-                                    data-label="STT"
-                                    className="DiamondPrice-td-toClick"
-                                >
-                                    {index + 1}
-                                </td>
-                                <td data-label="Origin" className="DiamondPrice-td">{price.origin}</td>
-                                <td data-label="Color" className="DiamondPrice-td">{price.color}</td>
-                                <td data-label="Clarity" className="DiamondPrice-td">{price.clarity}</td>
-                                <td data-label="Cut" className="DiamondPrice-td">{price.cut}</td>
-                                <td data-label="Carat" className="DiamondPrice-td">{price.carat}</td>
-                                <td data-label="Purchase (VND)" className="DiamondPrice-td">{formatPrice(price.gemBuyPrice)}</td>
-                                <td data-label="Sell" className="DiamondPrice-td">{formatPrice(price.gemSellPrice)}</td>
-                                {/* <td data-label="Date Update" className="DiamondPrice-td">{formatDate(price.effectDate)}</td> */}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {isManager ? (<button className="btnSetting-diamond" onClick={handleSetting}>Setting</button>) : null}
-            </div>
-
-
-            {/* <Modal title="Update Prices" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <h1>Current price</h1>
-                <div>
-                    <label>Purchase (VND): </label>
-                    <Input 
-                        value={updatedPurchase} 
-                        //onChange={(e) => setUpdatedPurchase(e.target.value)} 
-                        type="number"
-                        readOnly
-                    />
+            {loading ? (
+                <Spinner />
+            ) : (
+                <div className="DiamondPrice-container">
+                    <h2 className="DiamondPrice-header">Giá Kim Cương - {currentDate}</h2>
+                    {Object.keys(caratRanges).map((range, idx) => (
+                        <div key={idx} className="DiamondPrice-tableContainer">
+                            <h3 className="DiamondPrice-rangeHeader">Khối lượng {range} carat</h3>
+                            <table className="DiamondPrice-table">
+                                <thead>
+                                    <tr>
+                                        <th className="DiamondPrice-th">STT</th>
+                                        <th className="DiamondPrice-th">Nguồn gốc</th>
+                                        <th className="DiamondPrice-th">Màu sắc</th>
+                                        <th className="DiamondPrice-th">Độ tinh khiết</th>
+                                        <th className="DiamondPrice-th">Vết cắt</th>
+                                        <th className="DiamondPrice-th">Khối lượng</th>
+                                        <th className="DiamondPrice-th">Giá thu mua (VND)</th>
+                                        <th className="DiamondPrice-th">Giá bán (VND)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {caratRanges[range].map((price, index) => (
+                                        <tr key={index} style={{ cursor: 'auto' }} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
+                                            <td data-label="STT" className="DiamondPrice-td-toClick">{index + 1}</td>
+                                            <td data-label="Origin" className="DiamondPrice-td">{price.origin}</td>
+                                            <td data-label="Color" className="DiamondPrice-td">{price.color}</td>
+                                            <td data-label="Clarity" className="DiamondPrice-td">{price.clarity}</td>
+                                            <td data-label="Cut" className="DiamondPrice-td">{price.cut}</td>
+                                            <td data-label="Carat" className="DiamondPrice-td">{price.carat}</td>
+                                            <td data-label="Purchase (VND)" className="DiamondPrice-td">{formatPrice(price.gemBuyPrice)}</td>
+                                            <td data-label="Sell" className="DiamondPrice-td">{formatPrice(price.gemSellPrice)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ))}
+                    {isManager ? (<button className="btnSetting-diamond" onClick={handleSetting}>Tùy chỉnh</button>) : null}
                 </div>
-                <div style={{ marginTop: '10px', marginBottom:'14px' }}>
-                    <label>Sell (VND): </label>
-                    <Input 
-                        value={updatedSell} 
-                        //onChange={(e) => setUpdatedSell(e.target.value)} 
-                        type="number"
-                        readOnly
-                    />
-                </div>
-
-                <h1>New price</h1>
-                <div>
-                    <label>Purchase (VND): </label>
-                    <Input 
-                      
-                        onChange={(e) => setUpdatedPurchase(e.target.value)} 
-                        type="number"
-                    />
-                </div>
-                <div style={{ marginTop: '10px' }}>
-                    <label>Sell (VND): </label>
-                    <Input 
-                      
-                        onChange={(e) => setUpdatedSell(e.target.value)} 
-                        type="number"
-                    />
-                </div>
-            </Modal> */}
-
-        </div>
-      )
-    }
-</>
-        
+            )}
+        </>
     );
 };
 

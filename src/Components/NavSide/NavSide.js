@@ -15,14 +15,14 @@ export default function NavSide() {
           className='nav-item'
         >
           <i className="fa fa-home"></i>
-          <p>Home</p>
+          <p>Trang chủ</p>
         </NavLink>
         {isManager && (
           <NavLink to='/inventory' 
           className='nav-item'
         >
           <i className="fa fa-tasks"></i>
-          <p>Products</p>
+          <p>Sản phẩm</p>
         </NavLink>
         )}
         {isAdmin || isManager  ? (
@@ -30,7 +30,7 @@ export default function NavSide() {
           className='nav-item'
         >
           <i className="fa fa-users"></i>
-          <p>Employees</p>
+          <p>Nhân Viên</p>
         </NavLink>
         ): null }
         {!isStaff && !isAdmin && (
@@ -38,53 +38,53 @@ export default function NavSide() {
           className='nav-item'
         >
           <i className="fa fa-file-invoice-dollar"></i>
-          <p>Order list</p>
+          <p>Danh sách đơn hàng</p>
         </NavLink>
         )}
         <NavLink to='/profile' 
           className='nav-item'
         >
           <i className="fa fa-user"></i>
-          <p>Profile</p>
+          <p>Hồ sơ</p>
         </NavLink>
         <NavLink to='/gold-price' 
           className='nav-item'
         >
           <i className="fa fa-money-bill"></i>
-          <p>Gold price</p>
+          <p>Giá Vàng</p>
         </NavLink>
         <NavLink to='/diamond-price' 
           className='nav-item'
         >
           <i className="fa fa-gem"></i>
-          <p>Diamond price</p>
+          <p>Giá Kim Cương</p>
         </NavLink>
         <NavLink to='/customer' 
           className='nav-item'
         >
           <i className="fa fa-user-cog"></i>
-          <p>Customer</p>
+          <p>Khách hàng</p>
         </NavLink>
         {isManager && (
           <NavLink to='/dashboard' 
           className='nav-item'
         >
           <i className="fa fa-chart-line"></i>
-          <p>DashBoard</p>
+          <p>Thống kê</p>
         </NavLink>
         )}
         <NavLink to='/feedbacks' 
           className='nav-item'
         >
           <i className="fa fa-star"></i>
-          <p>Feedback</p>
+          <p>Đánh giá</p>
         </NavLink>
         {isAdmin ? (null) : (
           <NavLink to='/buyProduct' 
           className='nav-item'
         >
           <i className="fa fa-hand-holding-usd"></i>
-          <p>Buy</p>
+          <p>Mua lại sản phẩm</p>
         </NavLink>
         )}
         

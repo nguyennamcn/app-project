@@ -23,31 +23,31 @@ export default function BuyListProduct({ product }) {
                         className={`button-nor ${isActive === 'Jewelry' ? 'active' : ''}`}
                         onClick={() => handleClick('Jewelry')}
                     >
-                        Jewelry
+                        Trang sức
                     </span>
                     <span
                         className={`button-nor ${isActive === 'Gold' ? 'active' : ''}`}
                         onClick={() => handleClick('Gold')}
                     >
-                        Gold
+                        Vàng
                     </span>
                     <span
                         className={`button-nor ${isActive === 'Diamond' ? 'active' : ''}`}
                         onClick={() => handleClick('Diamond')}
                     >
-                        Diamond
+                        Kim cương
                     </span>
                     <span
                         className={`button-nor ${isActive === 'StoreSelection' ? 'active' : ''}`}
                         onClick={() => handleClick('StoreSelection')}
                     >
-                        StoreSelection
+                        Sản phẩm của cửa hàng
                     </span>
                     <span
                         className={`button-nor ${isActive === 'History' ? 'active' : ''}`}
                         onClick={() => handleClick('History')}
                     >
-                        History
+                        Lịch sử 
                     </span>
 
                 </div>

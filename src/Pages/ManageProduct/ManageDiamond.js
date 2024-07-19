@@ -31,21 +31,20 @@ export default function ManageDiamond() {
 
   const handleDelete = (diamondCode) => {
     Modal.confirm({
-      title: 'Confirm Delete',
-      content: 'Are you sure you want to delete this diamond?',
-      okText: 'Yes',
+      content: 'Bạn có muốn xóa sản phẩm này không?',
+      okText: 'Có',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: 'Không',
       onOk() {
         adornicaServ.deleteProduct(diamondCode)
           .then(() => {
             const newProductData = diamondManage.filter((item) => item.productCode !== diamondCode);
             setDiamondManage(newProductData);
-            notification.success({ message: "Delete Successfully" });
+            notification.success({ message: "Xóa thành công" });
           })
           .catch((err) => {
             const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-            notification.error({ message: errorMessage });
+            notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
             console.log(err);
           });
       },
@@ -72,7 +71,7 @@ export default function ManageDiamond() {
 
   const handleModalOk = () => {
     if (selectedImages.length !== 4) {
-      notification.error({ message: 'Please select all 4 images' });
+      notification.error({ message: 'Hãy lựa chọn 4 hình ảnh' });
       return;
     }
 
@@ -86,7 +85,7 @@ export default function ManageDiamond() {
       setIsModalVisible(false);
       setSelectedImages([]);
       setCurrentDiamondId(null);
-      notification.success({message: 'Images updated successfully'});
+      notification.success({message: 'Đã thêm hình ảnh thành công'});
 
       adornicaServ.getListDiamond()
       .then((res) => {
@@ -99,7 +98,7 @@ export default function ManageDiamond() {
 
     }).catch((err) => {
       console.log("Error uploading images:", err.response);
-      notification.error({ message: 'Error uploading images' });
+      notification.error({ message: 'Không thể tải lên hình ảnh' });
     });
   };
 
@@ -114,7 +113,7 @@ export default function ManageDiamond() {
   const currentDiamonds = diamondManage.slice(firstItemIndex, lastItemIndex);
   const formatPrice = (price) => {
     if (price <= 0 || isNaN(price)) {
-      return 'Not yet been priced'; 
+      return 'Sản phẩm chưa có giá'; 
     }
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
   };
@@ -126,7 +125,7 @@ export default function ManageDiamond() {
       ) :(
         <div className="diamond-container">
       <header className="diamond-header">
-        <h1 className="diamond-title">DIAMOND INVENTORY</h1>
+        <h1 className="diamond-title">Kim cương</h1>
         <NavLink to="/add-diamond" style={{
                                             backgroundColor: '#00ca4d',
                                             border: '1px solid purple',
@@ -134,17 +133,17 @@ export default function ManageDiamond() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>ADD DIAMOND</NavLink>
+                                        }}>Thêm sản phẩm</NavLink>
       </header>
       <table className="diamond-table">
         <thead>
           <tr>
             <th  className="diamond-th">ID</th>
-            <th  className="diamond-th">Code</th>
-            <th  className="diamond-th">Name</th>
-            <th  className="diamond-th">Price (VND)</th>
-            <th  className="diamond-th">Size</th>
-            <th  className="diamond-th">Action</th>
+            <th  className="diamond-th">Mã sản phẩm</th>
+            <th  className="diamond-th">Tên sản phẩm</th>
+            <th  className="diamond-th">Giá (VND)</th>
+            <th  className="diamond-th">Kích cỡ</th>
+            <th  className="diamond-th"></th>
           </tr>
         </thead>
         <tbody>
@@ -165,7 +164,7 @@ export default function ManageDiamond() {
                                             borderRadius: '5px',
                                             cursor: 'pointer',
                                             marginRight:'5px'
-                                        }}>Update</button>
+                                        }}>Chinh sửa</button>
                 </NavLink>
                 <button
                   style={{
@@ -179,14 +178,14 @@ export default function ManageDiamond() {
                 }}
                   onClick={() => handleDelete(diamond.productCode)}
                 >
-                  Delete
+                  Xóa
                 </button>
                 <button
                   className={diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" ? "updateButton" : "disabledButton"}
                   onClick={() => diamond.productImage === "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png" && handleUpdateImg(diamond.productId)}
                   disabled={diamond.productImage !== "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/832px-No-Image-Placeholder.svg.png"}
                 >
-                  Img
+                  Hình ảnh
                 </button>
               </td>
             </tr>
@@ -201,14 +200,14 @@ export default function ManageDiamond() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>BACK</NavLink>
+                                        }}>Trở về</NavLink>
         <ReactPaginate
-          previousLabel={'Previous'}
-          nextLabel={'Next'}
+          previousLabel={'Trước'}
+          nextLabel={'Sau'}
           breakLabel={'...'}
           pageCount={totalPages}
           marginPagesDisplayed={1}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={1}
           onPageChange={(data) => changePage(data.selected + 1)}
           containerClassName={'pagination'}
           activeClassName={'active'}

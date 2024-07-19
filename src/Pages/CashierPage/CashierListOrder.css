@@ -20,7 +20,8 @@
     border-radius: 5px;
     outline: none;
     transition: box-shadow 0.3s ease;
-    width: 22%; /* Điều chỉnh độ rộng cho ô input */
+    width: 100%; 
+    max-width: 300px;
 }
 
 .sell-order-search-input:focus {
@@ -193,8 +194,7 @@
         overflow-y: auto;
     }
     .sell-order-search-input {
-        width: calc(100% - 10px);
-        display: inline-block;
+        width: calc(100% - 0px);
         margin-bottom: 10px;
         padding: 5px;
         font-size: 12px;
@@ -202,5 +202,9 @@
 
     .pagination-container {
         justify-content: center;
+    }
+    .page-link{
+        font-size: 12px;
+        padding: 5px;
     }
 }

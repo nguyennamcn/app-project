@@ -51,12 +51,12 @@ function AddGold() {
     adornicaServ.postCreateProduct(productData)
       .then(response => {
         console.log(response.data.metadata);
-        notification.success({message: "Add product success"})
+        notification.success({message: "Đã thêm sản phẩm thành công"})
         navigate(0);
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
-        notification.error({ message: errorMessage });
+        notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
         console.log(error);
       });
   };
@@ -69,21 +69,21 @@ function AddGold() {
     <div className="add-gold-container">
       <div className="add-gold-content">
         <div className="add-gold-form">
-          <h2 className="form-title">ADD GOLD</h2>
+          <h2 className="form-title">Thêm sản phẩm từ Vàng</h2>
           <form onSubmit={handleFormSubmit}>
             <div className="add-gold-form-row">
               <div className="add-gold-form-group">
-                <label>Product Code:</label>
-                <input type="text" name="productCode" placeholder='Product code' value={newJewelry.productCode} onChange={handleInputChange} required/>
+                <label>Mã sản phẩm:</label>
+                <input type="text" name="productCode" placeholder='Hãy nhập mã sản phẩm' value={newJewelry.productCode} onChange={handleInputChange} required/>
               </div>
               <div className="add-gold-form-group">
-                <label>Product Name:</label>
-                <input type="text" name="productName" placeholder='Product name' value={newJewelry.productName} onChange={handleInputChange} required/>
+                <label>Tên sản phẩm:</label>
+                <input type="text" name="productName" placeholder='Hãy nhập tên sản phẩm' value={newJewelry.productName} onChange={handleInputChange} required/>
               </div>
             </div>
             <div className="add-gold-form-row">
               <div className="add-gold-form-group">
-                <label>Material:</label>
+                <label>Vật liệu:</label>
                 <select name="material" value={newJewelry.material} onChange={handleInputChange} >
                   <option value={1}>24K GOLD</option>
                   <option value={2}>18K GOLD</option>
@@ -92,7 +92,7 @@ function AddGold() {
                 </select>
               </div>
               <div className="add-gold-form-group">
-                <label>Weight (gram):</label>
+                <label>Khối lượng (gram):</label>
                 <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={0.1} step={0.1}/>
               </div>
             </div>
@@ -104,7 +104,7 @@ function AddGold() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>BACK</NavLink>
+                                        }}>Trở về</NavLink>
               <button style={{
                                             backgroundColor: '#00ca4d',
                                             border: '1px solid purple',
@@ -112,7 +112,7 @@ function AddGold() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }} type="submit">ADD GOLD</button>
+                                        }} type="submit">Thêm sản phẩm</button>
             </div>
           </form>
         </div>

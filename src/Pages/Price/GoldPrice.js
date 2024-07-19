@@ -44,26 +44,26 @@ export default function GoldPrice() {
         <Spinner />
       ) :(
         <div className="gold-price-container">
-      <h2 className="gold-price-header">GOLD PRICE - {currentDate}</h2>
+      <h2 className="gold-price-header">Giá Vàng - {currentDate}</h2>
       <table className="gold-price-table">
         <thead>
           <tr>
-            <th className="gold-price-th">Name</th>
-            <th className="gold-price-th">Purchase (VND)</th>
-            <th className="gold-price-th">Sell (VND)</th>
+            <th className="gold-price-th">Loại vàng</th>
+            <th className="gold-price-th">Giá thu mua (VND)</th>
+            <th className="gold-price-th">Giá bán (VND)</th>
           </tr>
         </thead>
         <tbody>
           {goldPrices.map((material, index) => (
             <tr key={index} className={index % 2 === 0 ? 'rowEven' : 'rowOdd'}>
-              <td data-label="Name" className="gold-price-td">{material.materialName}</td>
-              <td data-label="Purchase (VND)" className="gold-price-td">{formatPrice(material.materialBuyPrice)}</td>
-              <td data-label="Sell (VND)" className="gold-price-td">{formatPrice(material.materialSellPrice)}</td>
+              <td data-label="Loại vàng" className="gold-price-td">{material.materialName}</td>
+              <td data-label="Giá thu mua (VND)" className="gold-price-td">{formatPrice(material.materialBuyPrice)}</td>
+              <td data-label="Giá bán (VND)" className="gold-price-td">{formatPrice(material.materialSellPrice)}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      {isManager ? (<button className="btnSetting-gold" onClick={handleSetting}>Setting</button>) : null}  
+      {isManager ? (<button className="btnSetting-gold" onClick={handleSetting}>Tùy chỉnh</button>) : null}  
     </div>
       )
     }

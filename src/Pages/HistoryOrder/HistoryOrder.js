@@ -18,13 +18,13 @@ export default function HistoryOrder({ product }) {
                         className={`button-nor ${isActive === 'Sell' ? 'active' : ''}`}
                         onClick={() => handleClick('Sell')}
                     >
-                        Sell
+                        Đơn bán
                     </span>
                     <span
                         className={`button-nor ${isActive === 'Purchase' ? 'active' : ''}`}
                         onClick={() => handleClick('Purchase')}
                     >
-                        Purchase
+                        Đơn mua lại
                     </span>
                 </div>
                 <hr style={{ zIndex: '2', color: 'black' }} />

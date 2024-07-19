@@ -93,12 +93,12 @@ function UpDiamond() {
 
     adornicaServ.updateProduct(productCode, productData)
       .then((response) => {
-        notification.success({ message: 'Update product success' });
+        notification.success({ message: 'Cập nhật thành công' });
         console.log(response.data.metadata);
       })
       .catch((error) => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
-        notification.error({ message: errorMessage });
+        notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
         console.log(error);
       });
 
@@ -116,51 +116,51 @@ function UpDiamond() {
         <div className="updiamond-container">
       <div className="updiamond-content">
         <div className="updiamond-form">
-          <h2 className="updiamond-title">UPDATE DIAMOND</h2>
+          <h2 className="updiamond-title">Chỉnh sửa Kim cương</h2>
           <form onSubmit={handleUpdate}>
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
-                <label>Product Code:</label>
+                <label>Mã sản phẩm:</label>
                 <h2 className="updiamond-static-input" name="productCode">{sp.productCode}</h2>
               </div>
               <div className="updiamond-form-group">
-                <label>Product Name:</label>
+                <label>Tên sản phẩm:</label>
                 <input type="text" name="productName" placeholder="Product name" value={sp.productName} onChange={handleInputChange} required />
               </div>
             </div>
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
-                <label>Gem Code:</label>
+                <label>Mã đá quý:</label>
                 <h2 className="updiamond-static-input" name="gemCode">{sp.gem[0]?.gemCode || ''}</h2>
               </div>
             </div>
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
-                <label>Diamond Name:</label>
+                <label>Tên kim cương:</label>
                 <input type="text" name="gemName" placeholder="Diamond name" value={sp.gem[0].gemName} onChange={handleGemInputChange} required />
               </div>
               <div className="updiamond-form-group">
-                <label>Origin:</label>
+                <label>Nguồn gốc:</label>
                 <h2 className="updiamond-static-input" name="origin">{sp.gem[0].origin}</h2>
               </div>
             </div>
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
-                <label>Color:</label>
+                <label>Màu sắc:</label>
                 <h2 className="updiamond-static-input" name="color">{sp.gem[0].color}</h2>
               </div>
               <div className="updiamond-form-group">
-                <label>Clarity:</label>
+                <label>Độ tinh khiết:</label>
                 <h2 className="updiamond-static-input" name="clarity">{sp.gem[0].clarity}</h2>
               </div>
             </div>
             <div className="updiamond-form-row">
               <div className="updiamond-form-group">
-                <label>Cut:</label>
+                <label>Vết cắt:</label>
                 <h2 className="updiamond-static-input" name="cut">{sp.gem[0].cut}</h2>
               </div>
               <div className="updiamond-form-group">
-                <label>Carat:</label>
+                <label>Khối lượng:</label>
                 <h2 className="updiamond-static-input" name="carat">{sp.gem[0].carat}</h2>
               </div>
             </div>
@@ -173,7 +173,7 @@ function UpDiamond() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>BACK</NavLink>
+                                        }}>Trở về</NavLink>
               <button style={{
                     backgroundColor: '#00ca4d',
                     border: '1px solid purple',
@@ -183,7 +183,7 @@ function UpDiamond() {
                     cursor: 'pointer',
                     marginRight:'5px'
                 }} type="submit">
-                UPDATE DIAMOND
+                Cập nhật
               </button>
             </div>
           </form>

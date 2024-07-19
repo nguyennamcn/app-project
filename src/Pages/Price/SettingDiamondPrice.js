@@ -57,7 +57,7 @@ export default function SettingDiamondPrice() {
     adornicaServ.putDiamondPrice(selectedDiamond.id, dataUpdate)
       .then(response => {
         console.log(response.data.metadata);
-        notification.success({ message: "Updated price successfully" });
+        notification.success({ message: "Chỉnh sửa giá thành công" });
 
         setDiamondPrices(prevPrices =>
           prevPrices.map(price =>
@@ -110,7 +110,7 @@ export default function SettingDiamondPrice() {
         <Spinner />
       ) :(
         <div className="DiamondPrice-container">
-      <h2 className="DiamondPrice-header">SETTING DIAMOND PRICE</h2>
+      <h2 className="DiamondPrice-header">Tùy chỉnh giá Kim cương</h2>
       <select className='selectMaterial-diamond' onChange={(e) => handleDiamondChange(e.target.value)}>
         {listDiamond.map((diamond) => (
           <option key={diamond.gemId} value={diamond.gemId}>
@@ -123,14 +123,14 @@ export default function SettingDiamondPrice() {
           <thead>
             <tr>
               <th className="DiamondPrice-th">ID</th>
-              <th className="DiamondPrice-th">Origin</th>
-              <th className="DiamondPrice-th">Color</th>
-              <th className="DiamondPrice-th">Clarity</th>
-              <th className="DiamondPrice-th">Cut</th>
-              <th className="DiamondPrice-th">Carat</th>
-              <th className="DiamondPrice-th">Purchase (VND)</th>
-              <th className="DiamondPrice-th">Sell (VND)</th>
-              <th className="DiamondPrice-th">Effect Date</th>
+              <th className="DiamondPrice-th">Nguồn gốc</th>
+              <th className="DiamondPrice-th">Màu sắc</th>
+              <th className="DiamondPrice-th">Độ tinh khiết</th>
+              <th className="DiamondPrice-th">Vết cắt</th>
+              <th className="DiamondPrice-th">Khối lượng</th>
+              <th className="DiamondPrice-th">Giá thu mua (VND)</th>
+              <th className="DiamondPrice-th">Giá bán (VND)</th>
+              <th className="DiamondPrice-th">Ngày hiệu lực</th>
             </tr>
           </thead>
           <tbody>
@@ -149,19 +149,19 @@ export default function SettingDiamondPrice() {
             ))}
           </tbody>
         </table>
-        <button className="btnBack-diamond" onClick={handleBack}>Back</button>
+        <button className="btnBack-diamond" onClick={handleBack}>Trở về</button>
       </div>
 
       <Modal
-        title={<center><h1>UPDATE PRICE</h1></center>}
+        title={<center><h1>Chỉnh sửa giá Kim cương</h1></center>}
         visible={isModalVisible}
         onOk={handleUpdate}
         onCancel={() => setIsModalVisible(false)}
       >
-        <h2>Price ID: {selectedDiamond.id}</h2>
-        <h2>Diamond: {selectedDiamond.color} - {selectedDiamond.clarity} - {selectedDiamond.cut} - {selectedDiamond.origin} - {selectedDiamond.carat}</h2>
+        <h2>Giá ID: {selectedDiamond.id}</h2>
+        <h2>Kim cương: {selectedDiamond.color} - {selectedDiamond.clarity} - {selectedDiamond.cut} - {selectedDiamond.origin} - {selectedDiamond.carat}</h2>
         <div>
-          <label style={{fontWeight:600, fontSize:'16px'}}>Purchase (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá thu mua (VND): </label>
           <Input
             value={updatedBuyPrice}
             onChange={(e) => setUpdatedBuyPrice(e.target.value)}
@@ -170,7 +170,7 @@ export default function SettingDiamondPrice() {
           />
         </div>
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
-          <label style={{fontWeight:600, fontSize:'16px'}}>Sell (VND): </label>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá bán (VND): </label>
           <Input
             value={updatedSellPrice}
             onChange={(e) => setUpdatedSellPrice(e.target.value)}

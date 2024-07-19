@@ -101,7 +101,7 @@ function UpJewelry() {
 
     adornicaServ.updateProduct(productCode, productData)
       .then((response) => {
-        notification.success({ message: 'Update product success' });
+        notification.success({ message: 'Cập nhật thành công' });
         console.log(response.data.metadata);
         console.log(productData);
 
@@ -124,92 +124,92 @@ function UpJewelry() {
         <div className="upjewelry-container">
       <div className="upjewelry-content">
         <div className="upjewelry-form">
-          <h2 className="upjewelry-title">UPDATE JEWELRY</h2>
+          <h2 className="upjewelry-title">Chỉnh sửa Trang sức</h2>
           <form onSubmit={handleUpdate}>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Product Code:</label>
+                <label>Mã sản phẩm:</label>
                 <h2 className="upjewelry-static-input">{sp.productCode}</h2>
               </div>
               <div className="upjewelry-form-group">
-                <label>Product Name:</label>
+                <label>Tên sản phẩm:</label>
                 <input type="text" name="productName" placeholder='Product name' value={sp.productName} onChange={handleInputChange} required />
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Gem Cost:</label>
+                <label>Mã đá quý:</label>
                 <h2 className="upjewelry-static-input">{sp.gemCost}</h2>
               </div>
               <div className="upjewelry-form-group">
-                <label>Production Cost:</label>
+                <label>Chi phí sản xuất:</label>
                 <input type="number" name="productionCost" placeholder='Production cost' value={sp.productionCost} onChange={handleInputChange} min={1} required />
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Gender:</label>
+                <label>Giới tính:</label>
                 <select name="gender" value={sp.gender} onChange={handleInputChange}>
                   <option value={sp.gender}>{sp.gender}</option>
-                  {sp.gender !== "MALE" && <option value="MALE">Male</option>}
+                  {sp.gender !== "MALE" && <option value="MALE">Nam</option>}
                   {sp.gender !== "FEMALE" && <option value="FEMALE">Female</option>}
                   {sp.gender !== "UNISEX" && <option value="UNISEX">Unisex</option>}
                 </select>
               </div>
               <div className="upjewelry-form-group">
-                <label>Category:</label>
+                <label>Loại:</label>
                 <h2 className="upjewelry-static-input">{sp.category}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Material ID:</label>
+                <label>Vật liệu ID:</label>
                 <h2 className="upjewelry-static-input">{sp.materials[0]?.name}</h2>
               </div>
               <div className="upjewelry-form-group">
-                <label>Material Weight (gram):</label>
+                <label>Trọng lượng vật liệu (gram):</label>
                 <input type="number" name="weight" placeholder='Material weight' value={sp.materials[0]?.weight} onChange={(e) => handleMaterialInputChange(e, 0)} min={1} />
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Gem Code:</label>
+                <label>Mã đá quý (Kim cương):</label>
                 <h2 className="upjewelry-static-input">{sp.gem[0]?.gemCode}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Diamond Name:</label>
+                <label>Tên kim cương:</label>
                 <h2 className="upjewelry-static-input">{sp.gem[0]?.gemName}</h2>
               </div>
               <div className="upjewelry-form-group">
-                <label>Origin:</label>
+                <label>Nguồn gốc:</label>
                 <h2 className="upjewelry-static-input">{sp.gem[0]?.origin}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Color:</label>
+                <label>Màu sắc:</label>
                 <h2 className="upjewelry-static-input">{sp.gem[0]?.color}</h2>
               </div>
               <div className="upjewelry-form-group">
-                <label>Clarity:</label>
+                <label>Độ tinh khiết:</label>
                 <h2 className="upjewelry-static-input">{sp.gem[0]?.clarity}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Cut:</label>
+                <label>Vết cắt:</label>
                 <h2 className="upjewelry-static-input">{sp.gem[0]?.cut}</h2>
               </div>
               <div className="upjewelry-form-group">
-                <label>Carat:</label>
+                <label>Khối lượng:</label>
                 <h2 className="upjewelry-static-input">{sp.gem[0]?.carat}</h2>
               </div>
             </div>
             <div className="upjewelry-form-row">
               <div className="upjewelry-form-group">
-                <label>Size:</label>
+                <label>Kích cỡ:</label>
                 <select name="size" value={sp.size} onChange={handleInputChange} required>
                   <option value={sp.size}>{sp.size}</option>
                   {sp.size !== "SIZE_1" && <option value="SIZE_1">Size 1</option>}
@@ -221,7 +221,7 @@ function UpJewelry() {
                 </select>
               </div>
               <div className="upjewelry-form-group">
-                <label>Jewelry Diamond:</label>
+                <label>Trang sức kim cương:</label>
                 <h2 className="upjewelry-static-input">{sp.jewelryDiamond ? "true" : "false"}</h2>
               </div>
             </div>
@@ -233,7 +233,7 @@ function UpJewelry() {
                                             padding: '10px 20px',
                                             borderRadius: '5px',
                                             cursor: 'pointer'
-                                        }}>BACK</NavLink>
+                                        }}>Trở về</NavLink>
               <button style={{
                     backgroundColor: '#00ca4d',
                     border: '1px solid purple',
@@ -243,7 +243,7 @@ function UpJewelry() {
                     cursor: 'pointer',
                     marginRight:'5px'
                 }} type="submit">
-                UPDATE JEWELRY
+                Cập nhật
               </button>
             </div>
           </form>

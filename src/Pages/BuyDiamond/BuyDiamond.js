@@ -161,7 +161,7 @@ const DiamondSelection = () => {
           } else {
             updatedItems[index].gemBuyPrice = '0.00';
             updatedItems[index].gemSellPrice = '0.00';
-            notification.error({ message: 'Gem was undefined' });
+            notification.error({ message: 'Không tim thấy vật liệu này' });
           }
           setDiamondItems(updatedItems);
         } else {
@@ -193,7 +193,7 @@ const DiamondSelection = () => {
     e.preventDefault();
 
     if (!formValid) {
-      alert('Please fill out all required fields.');
+      alert('Vui lòng điền đầy đủ thông tin.');
       return;
     }
 
@@ -225,11 +225,11 @@ const DiamondSelection = () => {
         {diamondItems.map((item, index) => (
           <React.Fragment key={index}>
             <div style={styles.productTitle}>
-              Diamond {index + 1}
-              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Delete</button>
+              Kim cương {index + 1}
+              <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Xóa</button>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Color:</label>
+              <label style={styles.label}>Màu sắc:</label>
               <select style={styles.input} value={item.color} onChange={(e) => handleDiamondItemChange(index, 'color', e.target.value)}>
                 <option value=""></option>
                 <option value="D">D</option>
@@ -245,7 +245,7 @@ const DiamondSelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Cut:</label>
+              <label style={styles.label}>Vết cắt:</label>
               <select style={styles.input} value={item.cut} onChange={(e) => handleDiamondItemChange(index, 'cut', e.target.value)}>
                 <option value=""></option>
                 <option value="EX">EX</option>
@@ -255,7 +255,7 @@ const DiamondSelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Clarity:</label>
+              <label style={styles.label}>Độ tinh khiết:</label>
               <select style={styles.input} value={item.clarity} onChange={(e) => handleDiamondItemChange(index, 'clarity', e.target.value)}>
                 <option value=""></option>
                 <option value="FL">FL</option>
@@ -272,11 +272,11 @@ const DiamondSelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Carat Weight:</label>
+              <label style={styles.label}>Khối lượng:</label>
               <input type="number" style={styles.input} value={item.carat} onChange={(e) => handleDiamondItemChange(index, 'carat', e.target.value)} />
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Origin:</label>
+              <label style={styles.label}>Nguồn gốc:</label>
               <select style={styles.input} value={item.origin} onChange={(e) => handleDiamondItemChange(index, 'origin', e.target.value)}>
                 <option value=""></option>
                 <option value="NATURAL">NATURAL</option>
@@ -285,10 +285,10 @@ const DiamondSelection = () => {
             </div>
             {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
               <>
-                <div style={styles.totalPrice}>Diamond: Buy price {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Sell price {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND</div>
-                <div style={styles.totalPrice}>Diamond promotion: {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
+                <div style={styles.totalPrice}>Kim cương: Giá mua {parseFloat(item.gemBuyPrice).toLocaleString('vi-VN')} VND - Giá bán {parseFloat(item.gemSellPrice).toLocaleString('vi-VN')} VND</div>
+                <div style={styles.totalPrice}>Khuyến mãi : {(((parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toLocaleString('vi-Vn'))} VND</div>
                 <div style={styles.totalPrice}>
-                    Diamond total: {parseFloat((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)).toLocaleString('vi-VN')} VND
+                    Tổng giá trị viên kim cương: {parseFloat((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)).toLocaleString('vi-VN')} VND
                 </div>
 
               </>
@@ -300,9 +300,9 @@ const DiamondSelection = () => {
           style={styles.addButton}
           onClick={handleAddItem}
         >
-          ADD DIAMOND
+          Thêm sản phẩm
         </button>
-        <div style={styles.totalPrice}>Total price: {parseFloat(totalPrice).toLocaleString('vi-VN')} VND</div>
+        <div style={styles.totalPrice}>Tổng tiền: {parseFloat(totalPrice).toLocaleString('vi-VN')} VND</div>
         <button
           type="submit"
           style={{
@@ -311,7 +311,7 @@ const DiamondSelection = () => {
           }}
           disabled={!formValid || totalPrice <= 0}
         >
-          PURCHASE
+          Thu mua
         </button>
       </form>
     </div>
