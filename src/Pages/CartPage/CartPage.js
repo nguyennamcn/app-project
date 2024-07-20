@@ -283,7 +283,7 @@ const CartPage = () => {
                     background: '#15B83F',
                     borderRadius: '10px',
                     color: 'white'
-                }}>Send order</button>
+                }}>Gửi</button>
             </div>
             <Modal
                 visible={isModalVisible}
