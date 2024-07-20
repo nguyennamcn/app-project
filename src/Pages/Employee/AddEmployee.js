@@ -157,13 +157,13 @@ const AddEmployee = () => {
           </div>
         </div>
         <div className="form-group">
-          <h2>Tài khoản :</h2>
           <Input
             className="input-field"
             placeholder="Email"
             name="email"
             value={form.email}
             onChange={handleChange}
+            style={{marginTop:'30px'}}
           />
           <Input.Password
             className="input-field"
