@@ -34,7 +34,7 @@ const LoginPage = () => {
     console.log('Success:', values);
     userService.postLogin(values)
       .then((res) => {
-        message.success("Login successfully");
+        message.success("Đăng nhập thành công");
         localService.set(res.data.metadata);
         dispatch(setLoginAction(res.data.metadata));
         if (res.data.metadata.role !== 'admin')
@@ -47,7 +47,7 @@ const LoginPage = () => {
         const errorMetadata = err.response.data.metadata;
         const errorMessage = errorMetadata?.message || "An error occurred";
         const errorCode = errorMetadata?.code || "Unknown error code";
-        showModal("Login Failed", <div className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1 style={{ color: 'red' }}>Error: {errorMessage} (Code: {errorCode})</h1></div>);
+        showModal(<center><h1>Đăng nhập thất bại</h1></center>, <center className='notice__content'><i className="error__icon fa-solid fa-circle-xmark" ></i><h1 style={{ color: 'red' }}>Vui lòng kiểm tra lại thông tin đăng nhập</h1></center>);
         console.log(err);
       });
   };

@@ -55,7 +55,7 @@ function AddDiamond() {
       .then(response => {
         console.log(response.data.metadata);
         notification.success({ message: "Add product successfully" });
-        navigate(0);
+        navigate('/ManageDiamond');
       })
       .catch(error => {
         const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";

@@ -99,6 +99,31 @@ export default function SentPage() {
         return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Undefined';
     };
 
+    const getPaid = (role) => {
+        switch (role) {
+          case 'CASH':
+            return 'Tiền Mặt';
+          case 'CREDIT':
+            return 'Chuyển Khoản';
+          case 'NONE':
+            return 'Chưa Chọn Hình Thức';
+          // Add more cases as needed
+          default:
+            return role;
+        }
+      };
+    
+    const getStt = (role) => {
+        switch (role) {
+          case 'SUCCESS':
+            return 'Đã Thanh Toán';
+          case 'PENDING':
+            return 'Đang Chờ';
+          default:
+            return role;
+        }
+      };
+
     return (
         <div className="sent-page-container">
             <div className='title'>
@@ -128,8 +153,8 @@ export default function SentPage() {
                                 <td data-label="Order code">{order.orderCode}</td>
                                 <td data-label="Phone">{order.phone}</td>
                                 <td data-label="Name">{order.name}</td>
-                                <td data-label="Delivery status">{order.deliveryStatus}</td>
-                                <td data-label="Payment method">{order.paymentMethod}</td>
+                                <td data-label="Delivery status">{getStt(order.deliveryStatus)}</td>
+                                <td data-label="Payment method">{getPaid(order.paymentMethod)}</td>
                                 <td data-label="Total">{formatPrice(order.totalPrice)}</td>
                                 <td data-label="Discount">{order.discount}</td>
                                 <td data-label="Create at">{order.createAt}</td>
