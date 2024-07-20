@@ -152,7 +152,7 @@ export default function ManageGold() {
       ) :(
         <div className="gold-container">
       <header className="gold-header">
-        <h1 className="gold-title">Vàng</h1>
+        <h1 className="gold-title">Sản phẩm Vàng</h1>
         <NavLink to="/add-gold" style={{
                                             backgroundColor: '#00ca4d',
                                             border: '1px solid purple',

@@ -17,9 +17,9 @@
   width: 100%;
   max-width: 900px;
   padding: 20px;
-  border: 2px solid #FFCBA4; /* Màu cam nhạt */
+  border: 2px solid #FFCBA4; 
   border-radius: 8px;
-  background-color: #FFEFD5; /* Màu cam nhạt */
+  background-color: #d8f5ff; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -29,7 +29,7 @@
   font-size: 25px;
   margin-bottom: 15px;
   margin-top: 15px;
-  color: #FF8C00; /* Màu cam đậm */
+  color: #FF8C00; 
 }
 
 .add-diamond-form-row {
@@ -79,22 +79,22 @@
 
 .add-diamond-back-button {
   padding: 8px 16px;
-  background: #FFEFD5; /* Màu cam nhạt */
-  border: 1px solid #FFCBA4; /* Màu cam nhạt */
+  background: #FFEFD5; 
+  border: 1px solid #FFCBA4; 
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   text-decoration: none;
-  color: #FF8C00; /* Màu cam đậm */
+  color: #FF8C00; 
 }
 
 .add-diamond-back-button:hover {
-  background: #FFCBA4; /* Màu cam nhạt */
+  background: #FFCBA4; 
 }
 
 .add-diamond-add-button {
   padding: 8px 16px;
-  background: #FFCBA4; /* Màu cam nhạt */
+  background: #FFCBA4; 
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -105,7 +105,7 @@
 }
 
 .add-diamond-add-button:hover {
-  background: #FFCC99; /* Màu cam đậm hơn */
+  background: #FFCC99; 
 }
 
 .custom-modal .ant-modal-content {
