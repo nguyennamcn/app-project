@@ -52,8 +52,8 @@ export default function DetailPage() {
 
     const handleNotificationAddToCart = () => {
         notification.warning({
-            message: 'You cannot execute that feature !',
-            description:'Only sale staff can execute that feature.',
+            message: 'Bạn không thể thực thi tính năng đó !',
+            description:'Chỉ nhân viên bán hàng mới có thể thực hiện tính năng đó.',
         });
         
     }
@@ -76,18 +76,18 @@ export default function DetailPage() {
         const existingItemIndex = cartItems.findIndex(cartItem => cartItem.productCode === item.productCode);
 
         if(product.totalPrice < 1){
-            showModalnotify(<center className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Product has not been priced yet !</h1></center>);
+            showModalnotify(<center className='notice__content'><i className="error__icon fa-solid fa-question" ></i><h1>Giá không xác định!</h1></center>);
             return;
           }
 
         if (existingItemIndex > -1) {
-            showModalnotify(<center className='notice__content'><i className="error__icon fa-solid fa-circle-xmark"></i><h1>Product was added !</h1></center>);
+            showModalnotify(<center className='notice__content'><i className="error__icon fa-solid fa-circle-xmark"></i><h1>Sản phẩm đã được thêm từ trước!</h1></center>);
         } else {
             // Add new item to the cart
             cartItems.push(item);
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
             // Save updated cart items to local storage
-            showModalnotify(<center className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Product added successfully !</h1></center>);
+            showModalnotify(<center className='notice__content'><i className="check__icon fa-solid fa-circle-check"></i><h1>Thêm sản phẩm thành công !</h1></center>);
         }
     };
 
@@ -170,7 +170,7 @@ export default function DetailPage() {
                             <div style={{ fontSize: '15px' }}>
                                 {product.materials?.map((mt, index) => (
                                     <div key={index}>
-                                        <div>Material: {mt.name}</div>
+                                        <div>Vật liệu: {mt.name}</div>
                                     </div>
                                 ))}
 

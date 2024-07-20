@@ -187,7 +187,7 @@ export default function SellOrderPage() {
                         Xóa
                     </Button>
                     </NavLink>
-                    <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
+                    {/* <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
                         <Button
                             style={{ 
                                 border: '1px solid purple',
@@ -199,7 +199,7 @@ export default function SellOrderPage() {
                         >
                             Sửa
                         </Button>
-                    </NavLink>
+                    </NavLink> */}
                 </div>
             </td>
         </tr>
