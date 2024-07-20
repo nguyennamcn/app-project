@@ -199,8 +199,8 @@ export default function StoreProductDetail() {
 
         if (selectedProducts.length === 0) {
             notification.error({
-                message: 'No Products Selected',
-                description: 'You need to choose at least one product to purchase.',
+                message: 'Không có sản phẩm nào được chọn',
+                description: 'Bạn cần chọn ít nhất một sản phẩm để mua.',
             });
             return;
         }
@@ -236,8 +236,8 @@ export default function StoreProductDetail() {
         try {
             const response = await adornicaServ.postPurchaseOrderCode(formData);
             console.log('Order sent successfully:', response.data);
-            setModalTitle('Success');
-            setModalMessage(<center><i className="home-jewelry-check-icon fa-solid fa-circle-check" ></i><h1 style={{marginTop:'20px'}}>Purchased successfully !</h1></center>);
+            setModalTitle('Thành công');
+            setModalMessage(<center><i className="home-jewelry-check-icon fa-solid fa-circle-check" ></i><h1 style={{marginTop:'20px'}}>Đơn hàng đã được gửi thành công !</h1></center>);
             setModalVisible(true);
             setTimeout(() => {
                 setModalVisible(false);
@@ -385,7 +385,7 @@ export default function StoreProductDetail() {
             key: 'remove',
             render: (_, record) => (
                 <div>
-                    <Button type='primary' danger onClick={() => handleCheckboxChange(record)}>Remove</Button>
+                    <Button type='primary' danger onClick={() => handleCheckboxChange(record)}>Xóa</Button>
                 </div>
             ),
         },
@@ -397,7 +397,7 @@ export default function StoreProductDetail() {
     return (
         <div className='storeProductDetail'>
             <div className='title'>
-                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 2px 0' }}>Order Code: {sp?.orderCode}</h1>
+                <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 2px 0' }}>Mã Đơn Hàng: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div className="container overflow-auto bg-white mt-2" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius: '20px' }}>
@@ -410,7 +410,7 @@ export default function StoreProductDetail() {
                             height: '400px',
                             padding: '0',
                         }}>
-                        <div className='col-sm-1'>
+                        <div className='col-sm-1s'>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                     Khách hàng : <span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
