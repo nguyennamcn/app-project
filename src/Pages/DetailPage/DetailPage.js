@@ -58,6 +58,36 @@ export default function DetailPage() {
         
     }
 
+    const mapGender = (role) => {
+        switch(role) {
+          case 'MALE':
+            return 'NAM';
+          case 'FEMALE':
+            return 'NỮ';
+          default:
+            return role;
+        }
+      };
+
+      const mapCate = (role) => {
+        switch(role) {
+          case 'Ring':
+            return 'Nhẫn';
+          case 'Necklace':
+            return 'Dây chuyền';
+          case 'Bracelet':
+            return 'Vòng tay';
+          case 'Earring':
+            return 'Bông tay';
+          case 'Gold':
+            return 'Vàng';
+          case 'Diamond':
+            return 'Kim cương';
+          default:
+            return role;
+        }
+      };
+
     const handleAddToCart = () => {
         const item = {
             productId: product.id,
@@ -163,8 +193,8 @@ export default function DetailPage() {
                         <div style={{ display: 'flex', marginTop: '5px' }}>
                             <div style={{ fontSize: '15px', marginRight: '150px' }}>
                                 <div style={{ marginTop: '5px' }}>ID: {product.id}</div>
-                                <div style={{ marginTop: '5px' }}>Giới tính: {product.gender}</div>
-                                <div style={{ marginTop: '5px' }}>Loại: {product.category}</div>
+                                <div style={{ marginTop: '5px' }}>Giới tính: {mapGender(product.gender)}</div>
+                                <div style={{ marginTop: '5px' }}>Loại: {mapCate(product.category)}</div>
                                 <div style={{ marginTop: '5px' }}>Kích cỡ: {product.size}</div>
                             </div>
                             <div style={{ fontSize: '15px' }}>
