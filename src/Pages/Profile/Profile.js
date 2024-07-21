@@ -104,11 +104,13 @@ export default function EditEmployee() {
   const getRoleDisplayName = (role) => {
     switch (role) {
       case 'ROLE_MANAGER':
-        return 'quản lý';
+        return 'Quản lý';
       case 'ROLE_SALES_STAFF':
         return 'Nhân Viên Bán Hàng';
       case 'ROLE_CASHIER_STAFF':
-        return 'Nhân Viên Thu Ngân';
+        return 'Thu Ngân';
+      case 'ROLE_ADMIN':
+        return 'Admin';  
       // Add more cases as needed
       default:
         return role;
