@@ -289,11 +289,13 @@ export default function ListOrderPage() {
                                     </>
                                 ) : (
                                     <>
+
                                         <label>Name: {customerName}</label>
                                         <label>Phone: {customerPhone}</label>
                                         <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
                                         <label>Payment methods: {paymentMethodDone == "CASH" ? "Tiền mặt": paymentMethodDone == "CREDIT" ? "Thẻ": "Chưa thanh toán"}</label>
                                         <label>Delivery status: {deliveryStatus == "PENDING" ? "Đang sử lí": "Thành công"}</label>
+
                                     </>
                                 )}
                             </div>

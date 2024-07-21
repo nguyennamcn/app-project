@@ -41,7 +41,7 @@ const UserDropdown = ({ user, logoutBtn }) => {
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = itemHoverStyle.backgroundColor}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
-            <button onClick={() => navigate('/profile')} style={{width:'120px',height:'32px',}}>Edit Profile</button>
+            <button onClick={() => navigate('/profile')} style={{width:'120px',height:'32px',}}>Hồ Sơ</button>
           </div>
         </div>
       )}

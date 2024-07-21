@@ -14,7 +14,9 @@ export default function EditEmployee() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAvatarVisible, setIsAvatarVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
+    setLoading(true);
     adornicaServ.getProfile(userInfo.id)
       .then((res) => {
         console.log(res.data.metadata);
@@ -99,98 +101,128 @@ export default function EditEmployee() {
     setIsAvatarVisible(true);
   };
 
+  const getRoleDisplayName = (role) => {
+    switch (role) {
+      case 'ROLE_MANAGER':
+        return 'Quản lý';
+      case 'ROLE_SALES_STAFF':
+        return 'Nhân Viên Bán Hàng';
+      case 'ROLE_CASHIER_STAFF':
+        return 'Thu Ngân';
+      case 'ROLE_ADMIN':
+        return 'Admin';  
+      // Add more cases as needed
+      default:
+        return role;
+    }
+  };
+
+  const displayRoles = (roles) => {
+    return roles?.map((role) => getRoleDisplayName(role)).join(', ');
+  };
+
+  const getGenderDisplayName = (role) => {
+    switch (role) {
+      case 'MALE':
+        return 'NAM';
+      case 'FEMALE':
+        return 'NỮ';
+      // Add more cases as needed
+      default:
+        return role;
+    }
+  };
+
   return (
     <>
       {loading ? (
         <Spinner />
-      ) :(
+      ) : (
         <div className="profile-container">
-      <h1 className="profile-title">Hồ sơ</h1>
-      <div className="profile-card">
-        <div className="profile-header">
-          <div className="profile-image" onClick={showModal}>
-            <label className="profile-placeholder">
+          <h1 className="profile-title">Hồ sơ</h1>
+          <div className="profile-card">
+            <div className="profile-header">
+              <div className="profile-image" onClick={showModal}>
+                <label className="profile-placeholder">
+                  {profile.avatar ? (
+                    <img src={profile.avatar} alt="Avatar" className="avatar" />
+                  ) : (
+                    '+'
+                  )}
+                </label>
+              </div>
+              <div className="profile-info">
+                <Input className="input-field" placeholder="Họ và tên" name="name" value={profile.name} disabled />
+                <Input className="input-field" placeholder="Số điện thoại" name="phone" value={profile.phone} onChange={handleChange} />
+                <Input className="input-field" placeholder="Email" name="email" value={profile.email} onChange={handleChange} />
+                <Input className="input-field" placeholder="Giới tính" name="gender" value={getGenderDisplayName(profile.gender)} disabled />
+                <Input className="input-field" placeholder="Địa chỉ" name="address" value={profile.address} onChange={handleChange} />
+                <DatePicker
+                  className="input-field"
+                  placeholder="Ngày sinh"
+                  value={profile.birthday ? moment(profile.birthday) : null}
+                  disabled
+                  format="YYYY-MM-DD"
+                  style={{ width: '100%' }}
+                />
+              </div>
+            </div>
+            <hr />
+            <div className="profile-details">
+              <div className="work-info-row">
+                <div className="work-info-item">
+                  <h3>Chức vụ: </h3>
+                  <Input className="input-field" value={displayRoles(profile.roleUser)} disabled />
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="profile-actions">
+              <Button type="primary" className="nav-button" onClick={handleSubmit} loading={loading}>
+                Lưu
+              </Button>
+            </div>
+          </div>
+          <Modal
+            visible={isModalVisible}
+            footer={null}
+            mask={false}
+            closable={false}
+            onCancel={() => setIsModalVisible(false)}
+            className='modal__avatar'
+          >
+            <div className='modal__content' onClick={showAvatar} style={{ marginTop: '2px', marginBottom: '4px' }}>
+              Xem ảnh đại diện
+            </div>
+            <div className='modal__content'>
+              <label htmlFor="avatar-upload" className='change__avatar__modal'> Đổi ảnh đại diện </label>
+              <input
+                id="avatar-upload"
+                type="file"
+                style={{ display: 'none' }}
+                onChange={handleAvatarChange}
+              />
+            </div>
+          </Modal>
+
+          <Modal
+            visible={isAvatarVisible}
+            footer={null}
+            mask={false}
+            closable={false}
+            onCancel={() => setIsAvatarVisible(false)}
+            className='show__avatar'
+          >
+            <div>
               {profile.avatar ? (
                 <img src={profile.avatar} alt="Avatar" className="avatar" />
               ) : (
                 '+'
               )}
-            </label>
-          </div>
-          <div className="profile-info">
-            <Input className="input-field" placeholder="Họ và tên" name="name" value={profile.name} disabled />
-            <Input className="input-field" placeholder="Số điện thoại" name="phone" value={profile.phone} onChange={handleChange} />
-            <Input className="input-field" placeholder="Email" name="email" value={profile.email} onChange={handleChange} />
-            <Input className="input-field" placeholder="Giới tính" name="gender" value={profile.gender} disabled />
-            <Input className="input-field" placeholder="Địa chỉ" name="address" value={profile.address} onChange={handleChange} />
-            <DatePicker
-              className="input-field"
-              placeholder="Ngày sinh"
-              value={profile.birthday ? moment(profile.birthday) : null}
-              disabled
-              format="YYYY-MM-DD"
-              style={{ width: '100%' }}
-            />
-          </div>
-        </div>
-        <hr />
-        <div className="profile-details">
-          <div className="work-info-row">
-            <div className="work-info-item">
-              <h3>Chức vụ : </h3>
-              <Input className="input-field" value={profile.roleUser} disabled />
             </div>
-          </div>
+          </Modal>
         </div>
-        <hr />
-        <div className="profile-actions">
-          <Button type="primary" className="nav-button" onClick={handleSubmit} loading={loading}>
-            Lưu
-          </Button>
-        </div>
-      </div>
-      <Modal
-        visible={isModalVisible}
-        footer={null}
-        mask={false}
-        closable={false}
-        onCancel={() => setIsModalVisible(false)}
-        className='modal__avatar'
-      >
-        <div className='modal__content' onClick={showAvatar} style={{ marginTop: '2px', marginBottom: '4px' }}>
-          Xem ảnh đại diện
-        </div>
-        <div className='modal__content'>
-          <label htmlFor="avatar-upload" className='change__avatar__modal'> Đổi ảnh đại diện </label>
-          <input
-            id="avatar-upload"
-            type="file"
-            style={{ display: 'none' }}
-            onChange={handleAvatarChange}
-          />
-        </div>
-      </Modal>
-
-      <Modal
-        visible={isAvatarVisible}
-        footer={null}
-        mask={false}
-        closable={false}
-        onCancel={() => setIsAvatarVisible(false)}
-        className='show__avatar'
-      >
-        <div>
-          {profile.avatar ? (
-            <img src={profile.avatar} alt="Avatar" className="avatar" />
-          ) : (
-            '+'
-          )}
-        </div>
-      </Modal>
-    </div>
-      )
-    }
-</>
-    
+      )}
+    </>
   );
 }

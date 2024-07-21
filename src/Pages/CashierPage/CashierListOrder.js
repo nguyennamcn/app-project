@@ -112,6 +112,31 @@ export default function SellOrderPage() {
     };
     
 
+    const getPaid = (role) => {
+        switch (role) {
+          case 'CASH':
+            return 'Tiền Mặt';
+          case 'CREDIT':
+            return 'Chuyển Khoản';
+          case 'NONE':
+            return 'Chưa Chọn Hình Thức';
+          // Add more cases as needed
+          default:
+            return role;
+        }
+      };
+    
+    const getStt = (role) => {
+        switch (role) {
+          case 'SUCCESS':
+            return 'Đã Thanh Toán';
+          case 'PENDING':
+            return 'Đang Chờ';
+          default:
+            return role;
+        }
+      };
+
     return (
         <>
       {loading ? (
@@ -151,8 +176,8 @@ export default function SellOrderPage() {
             <td data-label="Mã đơn hàng">{order.orderCode}</td>
             <td data-label="Số tiền">{formatPrice(order.totalPrice)}</td>
             <td data-label="Ngày">{order.dateOrder}</td>
-            <td data-label="Thanh toán">{order.paymentMethod}</td>
-            <td data-label="Trạng thái">{order.deliveryStatus}</td>
+            <td data-label="Thanh toán">{getPaid(order.paymentMethod)}</td>
+            <td data-label="Trạng thái">{getStt(order.deliveryStatus)}</td>
             <td data-label="">
                 <div className="action-buttons">
                     <NavLink to={`/cashierOrderDetail/${order.orderCode}`}>
@@ -187,7 +212,7 @@ export default function SellOrderPage() {
                         Xóa
                     </Button>
                     </NavLink>
-                    <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
+                    {/* <NavLink to={`/cashierUpdateOrder/${order.orderCode}`}>
                         <Button
                             style={{ 
                                 border: '1px solid purple',
@@ -199,7 +224,7 @@ export default function SellOrderPage() {
                         >
                             Sửa
                         </Button>
-                    </NavLink>
+                    </NavLink> */}
                 </div>
             </td>
         </tr>

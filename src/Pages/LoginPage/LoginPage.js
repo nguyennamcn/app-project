@@ -34,7 +34,7 @@ const LoginPage = () => {
     console.log('Success:', values);
     userService.postLogin(values)
       .then((res) => {
-        message.success("Login successfully");
+        message.success("Đăng nhập thành công");
         localService.set(res.data.metadata);
         dispatch(setLoginAction(res.data.metadata));
         if (res.data.metadata.role !== 'admin')

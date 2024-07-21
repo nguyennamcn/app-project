@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jewelry Purchase Invoice</title>
+    <title>Hóa Đơn Thu Mua Trang Sức</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -15,7 +15,7 @@
             background-color: #ffffff;
             padding: 20px;
             margin: 0 auto;
-            max-width: 900px;
+            max-width: 800px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
@@ -60,14 +60,13 @@
             color: #333;
         }
         .invoice-table {
-            font-size: 10px;
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
         .invoice-table th, .invoice-table td {
             border: 1px solid #ddd;
-            padding: 2px;
+            padding: 12px;
             text-align: center;
             color: #333;
         }
@@ -120,82 +119,89 @@
 <body>
     <div class="invoice-container">
         <div class="invoice-title">
-            <h1>BILL BUYING ADORNICA</h1>
+            <h1>HÓA ĐƠN ADORNICA</h1>
         </div>
         <div class="header">
             <div class="seller-info">
-                <p>Seller: <strong>VINCA Test Digital Signature Company</strong></p>
-                <p>Address: <strong>33 Hai Ho Street, Thanh Binh Ward, Hai Chau District, Da Nang</strong></p>
-                <p>Tel: <strong>0978436843</strong></p>
+                <p>Người bán: <strong>Công Ty Chữ Ký Số VINCA</strong></p>
+                <p>Địa chỉ: <strong>33 Đường Hải Hồ, Phường Thanh Bình, Quận Hải Châu, Đà Nẵng</strong></p>
+                <p>Điện thoại: <strong>0978436843</strong></p>
                 <p>Email: <strong>kinhdoanh@vin-ca.vn</strong></p>
                 <p>Website: <strong>vin-hoadon.com</strong></p>
-                <p>Bank Account: <strong>0123456789</strong></p>
+                <p>Số tài khoản: <strong>0123456789</strong></p>
             </div>
             <div class="invoice-info">
-                <p>Electronic invoice display</p>
-                <p>Date: ____________</p>
-                <p>Serial No: <strong>1K21TYY</strong></p>
-                <p>No: <strong>000000</strong></p>
+                <p>Hiển thị hóa đơn điện tử</p>
+                <p>Ngày: ____________</p>
+                <p>Số sê-ri: <strong>1K21TYY</strong></p>
+                <p>Số: <strong>000000</strong></p>
             </div>
         </div>
         <div class="buyer-info">
-            <p>Customer's Full Name: ________________________________________</p>
-            <p>Address: ________________________________________</p>
-            <p>Phone: ________________________________________</p>
-            <p>Payment Method: ________________________________________</p>
+            <p>Họ và tên khách hàng: ________________________________________</p>
+            <p>Địa chỉ: ________________________________________</p>
+            <p>Điện thoại: ________________________________________</p>
+            <p>Phương thức thanh toán: ________________________________________</p>
         </div>
         <table class="invoice-table">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>Detail</th>
-                    <th>Price</th>
+                    <th>STT</th>
+                    <th>Mô tả</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Ring - Gold 24K - Weight: 3g, Diamond: Natural, Weight: 10g, Clarity: FL, Color: D, Cut: P</td>
-                    <td>$1000</td>
+                    <td>Dây chuyền vàng</td>
+                    <td>1</td>
+                    <td>$500</td>
+                    <td>$500</td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Diamond Ring - Diamond: Natural, Weight: 20g, Clarity: VVS1, Color: M, Cut: F</td>
-                    <td>$2000</td>
+                    <td>Nhẫn kim cương</td>
+                    <td>1</td>
+                    <td>$1200</td>
+                    <td>$1200</td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td>Gold Ring - Gold 18k - Weight: 20g, Diamond: Artificial, Weight: 3g, Clarity: I3, Color: H, Cut: G</td>
+                    <td>Lắc bạc</td>
+                    <td>2</td>
+                    <td>$150</td>
                     <td>$300</td>
                 </tr>
             </tbody>
         </table>
         <div class="total-section">
-            <p>Total Amount: ____________</p>
-            <p>Total Payment: ____________</p>
+            <p>Tổng cộng: ____________</p>
+            <p>Tổng thanh toán: ____________</p>
         </div>
         <div class="amount-in-words">
-            <p>Amount in Words: ________________________________________</p>
+            <p>Số tiền bằng chữ: ________________________________________</p>
         </div>
         <div class="Warranty">
-            <p>Warranty 6 months from date: ________________________________________ </p>
-            <p>( *for product code : ________________________________________ )</p>
+            <p>Bảo hành 6 tháng kể từ ngày: ________________________________________</p>
         </div>
         <div class="sign-section">
             <div class="sign-box">
-                <p>Buyer:</p>
-                <p>(Sign & Full Name)</p>
+                <p>Người mua:</p>
+                <p>(Ký và ghi rõ họ tên)</p>
                 <div class="sign-space"></div>
             </div>
             <div class="sign-box">
-                <p>Seller:</p>
-                <p>(Sign & Full Name)</p>
+                <p>Người bán:</p>
+                <p>(Ký và ghi rõ họ tên)</p>
                 <div class="sign-space"></div>
             </div>
         </div>
         <div class="footer">
-            <p>Check the electronic invoice at: http://tracuu.vin-hoadon.com</p>
-            <p>Verification Code: ________________________________________</p>
+            <p>Kiểm tra hóa đơn điện tử tại: http://tracuu.vin-hoadon.com</p>
+            <p>Mã xác thực: ________________________________________</p>
         </div>
     </div>
 </body>

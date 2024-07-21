@@ -34,6 +34,21 @@ export default function EmployeeList() {
     setCurrentPage(0); 
   };
 
+  const mapRole = (role) => {
+    switch(role) {
+      case 'ROLE_SALES_STAFF':
+        return 'Nhân Viên Bán Hàng';
+      case 'ROLE_CASHIER_STAFF':
+        return 'Thu Ngân';
+      case 'ROLE_MANAGER':
+        return 'Quản Lý';
+        case 'ROLE_ADMIN':
+          return 'Admin';
+      default:
+        return role;
+    }
+  };
+
   const filteredEmployees = employees.filter(employee => {
     const roles = Array.isArray(employee.roles) ? employee.roles.join(' ') : employee.roles;
     return (
@@ -60,75 +75,73 @@ export default function EmployeeList() {
         <Spinner />
       ) :(
         <div className="employee-list-container">
-      <h1 className="employee-list-title">Danh sách Nhân viên</h1>
-      <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-        <input 
-          type="text" 
-          placeholder="Tìm kiếm theo tên hoặc số điện thoại hoặc theo chức vụ" 
-          className="employee-list-search-input" 
-          value={searchTerm} 
-          onChange={handleSearch} 
-        />
-        <NavLink to="/add-employee">
-          <button className="add-employee-list-button">+ Thêm nhân viên</button>
-        </NavLink>
-      </div>
-      <table className="employee-list-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tên</th>
-            <th>Số điện thoại</th>
-            <th>Chức vụ</th>
-            <th>Trạng thái</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentEmployees.map(employee => (
-            <tr key={employee.id}>
-              <td data-label="ID">{employee.staffId}</td>
-              <td data-label="Name">{employee.name}</td>
-              <td data-label="Phone">{employee.phone}</td>
-              <td data-label="Role User">{Array.isArray(employee.roles) ? employee.roles.join(', ') : employee.roles}</td>
-              <td data-label="Status">
-                <span className={`employee-list-status ${employee.active ? 'online' : 'offline'}`}></span>
-              </td>
-              <td data-label="Action">
-                <NavLink to={`/view-employee/${employee.staffId}`}>
-                  <button className="employee-list-view-button">Xem</button>
-                </NavLink>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="pagination-container">
-        <ReactPaginate
-          previousLabel={'Trước'}
-          nextLabel={'Sau'}
-          breakLabel={'...'}
-          pageCount={pageCount}
-          marginPagesDisplayed={1}
-          pageRangeDisplayed={1}
-          onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
-          pageClassName={'page-item'}
-          pageLinkClassName={'page-link'}
-          previousClassName={'page-item'}
-          previousLinkClassName={'page-link'}
-          nextClassName={'page-item'}
-          nextLinkClassName={'page-link'}
-          breakClassName={'page-item'}
-          breakLinkClassName={'page-link'}
-          disabledClassName={'disabled'}
-        />
-      </div>
-    </div>
-      )
-    }
-</>
-    
+          <h1 className="employee-list-title">Danh sách Nhân viên</h1>
+          <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+            <input 
+              type="text" 
+              placeholder="Tìm kiếm theo tên hoặc số điện thoại hoặc theo chức vụ" 
+              className="employee-list-search-input" 
+              value={searchTerm} 
+              onChange={handleSearch} 
+            />
+            <NavLink to="/add-employee">
+              <button className="add-employee-list-button">+ Thêm nhân viên</button>
+            </NavLink>
+          </div>
+          <table className="employee-list-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tên</th>
+                <th>Số điện thoại</th>
+                <th>Chức vụ</th>
+                <th>Trạng thái</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentEmployees.map(employee => (
+                <tr key={employee.id}>
+                  <td data-label="ID">{employee.staffId}</td>
+                  <td data-label="Name">{employee.name}</td>
+                  <td data-label="Phone">{employee.phone}</td>
+                  <td data-label="Role User">{Array.isArray(employee.roles) ? employee.roles.map(mapRole).join(', ') : mapRole(employee.roles)}</td>
+                  <td data-label="Status">
+                    <span className={`employee-list-status ${employee.active ? 'online' : 'offline'}`}></span>
+                  </td>
+                  <td data-label="Action">
+                    <NavLink to={`/view-employee/${employee.staffId}`}>
+                      <button className="employee-list-view-button">Xem</button>
+                    </NavLink>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="pagination-container">
+            <ReactPaginate
+              previousLabel={'Trước'}
+              nextLabel={'Sau'}
+              breakLabel={'...'}
+              pageCount={pageCount}
+              marginPagesDisplayed={1}
+              pageRangeDisplayed={1}
+              onPageChange={handlePageClick}
+              containerClassName={'pagination'}
+              activeClassName={'active'}
+              pageClassName={'page-item'}
+              pageLinkClassName={'page-link'}
+              previousClassName={'page-item'}
+              previousLinkClassName={'page-link'}
+              nextClassName={'page-item'}
+              nextLinkClassName={'page-link'}
+              breakClassName={'page-item'}
+              breakLinkClassName={'page-link'}
+              disabledClassName={'disabled'}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

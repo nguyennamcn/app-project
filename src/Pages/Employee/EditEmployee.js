@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Button, Radio, Modal, notification } from 'antd';
-import { NavLink, useParams } from 'react-router-dom';
+import { useNavigate,NavLink, useParams } from 'react-router-dom';
 import './EditEmployee.css';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
@@ -52,7 +52,7 @@ export default function EditEmployee() {
       reader.readAsDataURL(file);
     }
   };
-
+  const navigate = useNavigate();
   const handleSubmit = () => {
     const data = {
       id: employee.id,
@@ -74,7 +74,7 @@ export default function EditEmployee() {
         console.log('Role updated:', res);
         //window.location.reload();
         notification.success({ message: "Lưu thông tin thành công" });
-
+        navigate('/employee');
       })
       .catch((err) => {
         const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
