@@ -113,7 +113,7 @@ function ViewEmployee() {
         <div className="profile-details">
           <p><strong>Chức vụ:</strong> {employee?.roleUser}</p>
           <p><strong>Số điện thoại:</strong> {employee?.phone}</p>
-          <p><strong>Làm việc tại cửa hàng:</strong> {employee?.address}</p>
+          <p><strong>Địa chỉ:</strong> {employee?.address}</p>
           {/* <p><strong>Other information ...</strong></p> */}
         </div>
         <div className="profile-actions">
