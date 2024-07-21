@@ -116,7 +116,7 @@ export default function ListOrderPage() {
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px', }}></div>
             </div>
             <div className="detailOrderSended">
-                <div className="row justify-content-md-center" style={{backgroundColor:'white', padding:'6px', borderRadius:'10px',}}>
+                <div className="row justify-content-md-center" style={{backgroundColor:'white', padding:'10px', borderRadius:'10px',}}>
 
                     <div className='order__info col-sm-5'
                      style={{
@@ -142,12 +142,12 @@ export default function ListOrderPage() {
                             padding: '0',
                         }}>
                         <Table style={{ margin: '20px 20px 0 20px', width: '90%' }} dataSource={products} columns={columns} pagination={false} scroll={{ y: 168 }} />
-                        <div className="row" style={{position: 'absolute', bottom:'16px'}}>
-                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Số lượng sản phẩm:<span style={{ marginLeft: '4%' }}>{products.length}</span></h1></div>
-                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Giảm :<span style={{ marginLeft: '4%' }}>{discount}%</span></h1></div>
+                        <div className="row" style={{position: 'absolute', bottom:'0px'}}>
+                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 0px 11%' }}>Số lượng sản phẩm:<span style={{ marginLeft: '4%' }}>{products.length}</span></h1></div>
+                            <div className="col-sm-12"><h1 style={{textAlign:'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 0px 11%' }}>Giảm :<span style={{ marginLeft: '4%' }}>{discount}%</span></h1></div>
                             {discount > 0 && (
                                 <div className="col-sm-12">
-                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>Tổng:
+                                    <h1 style={{ textAlign: 'left', fontSize: '16px', fontWeight: '600', margin: '12px 0px 0px 11%' }}>Tổng:
                                         <span style={{ marginLeft: '4%', textDecoration: 'line-through' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)}</span>
                                         <span style={{ marginLeft: '4%', color: 'orange' }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice - (totalPrice * discount / 100))}</span>
                                     </h1>

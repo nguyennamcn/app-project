@@ -69,7 +69,7 @@ export default function SentPage() {
             .then(() => {
                 const newDataSource = dataSource.filter((item) => item.orderCode !== orderCodeToDelete);
                 setDataSource(newDataSource);
-                showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Order was deleted!</h1></div>);
+                showModal(<div className='notice__content'><i className="check__icon fa-solid fa-circle-check" ></i><h1>Xóa đơn hàng thành công</h1></div>);
             })
             .catch((err) => {
                 console.log("Error deleting order:", err);
