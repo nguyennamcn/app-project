@@ -39,9 +39,11 @@ export default function EmployeeList() {
       case 'ROLE_SALES_STAFF':
         return 'Nhân Viên Bán Hàng';
       case 'ROLE_CASHIER_STAFF':
-        return 'Nhân Viên Thu Ngân';
+        return 'Thu Ngân';
       case 'ROLE_MANAGER':
         return 'Quản Lý';
+        case 'ROLE_ADMIN':
+          return 'Admin';
       default:
         return role;
     }
