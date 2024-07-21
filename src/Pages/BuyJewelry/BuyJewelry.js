@@ -427,8 +427,8 @@ const JewelrySelection = () => {
               <select style={styles.input} value={item.origin} onChange={e => handleInputChange(index, 'origin', e.target.value)} required>
                 <option value=""></option>
                 <option value="None">None</option>
-                <option value="NATURAL">NATURAL</option>
-                <option value="LAB_GROWN">LAB_GROWN</option>
+                <option value="TỰ NHIÊN">TỰ NHIÊN</option>
+                <option value="NHÂN TẠO">NHÂN TẠO</option>
               </select>
             </div>
             <div style={styles.formGroup}>
@@ -520,7 +520,7 @@ const JewelrySelection = () => {
               </>
             )}
 
-            { item.clarity && item.color && item.cut && item.origin && (item.origin ==="NATURAL"|| item.origin ==="LAB_GROWN")  && formValid &&(
+            { item.clarity && item.color && item.cut && item.origin && (item.origin ==="TỰ NHIÊN"|| item.origin ==="NHÂN TẠO")  && formValid &&(
               <>
                 <div style={{
                   fontSize: '16px',
