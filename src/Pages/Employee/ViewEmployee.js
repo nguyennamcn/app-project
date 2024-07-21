@@ -41,16 +41,15 @@ function ViewEmployee() {
 
   const showDeleteConfirm = () => {
     if (!employee?.active) {
-      notification.warning({ message: "Cannot delete an offline employee" });
+      notification.warning({ message: "Nhân viên này không tồn tại" });
       return;
     }
 
     Modal.confirm({
-      title: 'Confirm Delete',
-      content: 'Are you sure you want to delete this employee?',
-      okText: 'Yes',
+      content: 'Bạn có chắc chắn muốn xóa nhân viên này?',
+      okText: 'Có',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: 'Không',
       onOk() {
         handleDelete();
       }
