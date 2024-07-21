@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation , useNavigate} from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import { useSelector } from 'react-redux';
 
@@ -184,7 +184,7 @@ const BillDiamond = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isCreated, setIsCreated] = useState(false); // Trạng thái đã tạo hóa đơn
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (customerPhone) {
       adornicaServ.getPhoneCustomer(customerPhone)
@@ -286,6 +286,9 @@ const BillDiamond = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
+    if (isCreated) {
+      navigate('/buyProduct');
+    }
   };
 
   useEffect(() => {
