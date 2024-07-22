@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { NavLink, useParams } from 'react-router-dom';
 import { adornicaServ } from '../../service/adornicaServ';
 import Spinner from '../../Components/Spinner/Spinner';
+import { useSelector } from 'react-redux';
 
 Modal.setAppElement('#root');
 
@@ -17,7 +18,7 @@ const pageStyles = {
     fontFamily: 'Arial, sans-serif',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '20px',
+    gap: '12px',
     maxHeight:'70vh',
     overflowY:'auto',
   },
@@ -49,6 +50,7 @@ const pageStyles = {
     border: '2px solid #cccccc',
     borderRadius: '5px',
     fontSize: '12px',
+    marginBottom:'5px',
   },
   productTable: {
     width: '100%',
@@ -85,7 +87,7 @@ const pageStyles = {
     gridColumn: 'span 2',
     textAlign: 'right',
     fontSize: '14px',
-    marginTop: '70px',
+    marginTop: '0px',
   },
   totalSummary: {
     fontWeight: 'bold',
@@ -145,6 +147,7 @@ const pageStyles = {
   },
 };
 
+
 const PurchaseDetailHistory = () => {
   const [customerDetails, setCustomerDetails] = useState({
     name: '',
@@ -157,6 +160,12 @@ const PurchaseDetailHistory = () => {
   const { orderCode } = useParams();
   const [sp, setSp] = useState();
   const [loading, setLoading] = useState(true);
+
+  const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const isAdmin = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_ADMIN');
+    const isManager = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_MANAGER');
+    const isCashier = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_CASHIER_STAFF');
+    const isStaff = userInfo && userInfo.roleUsers && userInfo.roleUsers.includes('ROLE_SALES_STAFF');
 
   const handleDetailChange = (event) => {
     const { name, value } = event.target;
@@ -279,7 +288,7 @@ const getPaid = (role) => {
           disabled
         />
 
-        <label style={pageStyles.detailLabel}>Hình thức thanh toán:</label>
+        <label style={pageStyles.detailLabel}>Phương thức thanh toán:</label>
         <select
           style={pageStyles.paymentSelect}
           name="paymentMethod"
@@ -289,14 +298,25 @@ const getPaid = (role) => {
           <option value="CASH">Tiền mặt</option>
           <option value="CREDIT">VNPAY</option>
         </select>
+
+        <label style={pageStyles.detailLabel}>Trạng thái giao dịch:</label>
+        <input
+          type="text"
+          style={pageStyles.detailInput}
+          name="address"
+          value={sp?.paymentMethod === 'NONE' ? "Chưa thanh toán" : sp?.paymentMethod === 'CASH' ? "Tiền mặt" : "VN PAY"}
+          disabled
+        />
       </div>
-      <div>
+      <div style={{marginTop:'10px'}}>
         <h1>Mã đơn hàng: {sp?.orderCode}</h1>
         <h1>Tổng số tiền: {formatPrice(sp?.totalAmount)}</h1>
       </div>
 
       <div style={pageStyles.footerInfo}>
-        <div style={pageStyles.buttonWrapper}>
+
+        {isCashier ? (
+          <div style={pageStyles.buttonWrapper}>
           <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Trở về</NavLink>
           <button
             onClick={handleFinishClick}
@@ -311,7 +331,20 @@ const getPaid = (role) => {
             Hoàn thành
           </button>
         </div>
+      ) 
+
+      : isManager ? (
+        <NavLink to="/historyOrder" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Trở về</NavLink>
+      )
+
+      : 
+      <div style={pageStyles.buttonWrapper}>
+      <NavLink to="/buyProduct" style={{ ...pageStyles.button, ...pageStyles.backButton }}>Trở về</NavLink>
+      
+    </div>
+      }
       </div>
+        
       
       <Modal
         isOpen={modalIsOpen}

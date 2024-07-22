@@ -91,7 +91,7 @@ export default function EmployeeList() {
           <table className="employee-list-table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Số thứ tự</th>
                 <th>Tên</th>
                 <th>Số điện thoại</th>
                 <th>Chức vụ</th>
@@ -100,9 +100,9 @@ export default function EmployeeList() {
               </tr>
             </thead>
             <tbody>
-              {currentEmployees.map(employee => (
+              {currentEmployees.map((employee, index) => (
                 <tr key={employee.id}>
-                  <td data-label="ID">{employee.staffId}</td>
+                  <td data-label="ID">{index + 1}</td>
                   <td data-label="Name">{employee.name}</td>
                   <td data-label="Phone">{employee.phone}</td>
                   <td data-label="Role User">{Array.isArray(employee.roles) ? employee.roles.map(mapRole).join(', ') : mapRole(employee.roles)}</td>

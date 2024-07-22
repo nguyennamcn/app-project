@@ -279,7 +279,7 @@ const CartPage = () => {
                 </div>
                 <button onClick={handleSendOrder} style={{
                     marginLeft: '45%',
-                    padding: '15px',
+                    padding: '15px 40px',
                     background: '#15B83F',
                     borderRadius: '10px',
                     color: 'white'

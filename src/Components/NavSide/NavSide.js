@@ -79,7 +79,7 @@ export default function NavSide() {
           <i className="fa fa-star"></i>
           <p>Đánh giá</p>
         </NavLink>
-        {isAdmin ? (null) : (
+        {isAdmin ? (null) : isManager ? (null) : isCashier ? (null) :(
           <NavLink to='/buyProduct' 
           className='nav-item'
         >
