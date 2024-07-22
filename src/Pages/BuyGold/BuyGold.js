@@ -250,7 +250,7 @@ const GoldSelection = () => {
                 <div style={styles.totalPrice}>Khuyến mãi: { (((item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
 
                 <div style={styles.totalPrice}>
-                  Tổng vật liệu: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND
+                  Thành tiền: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * buyBackPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
               </>
             )}
@@ -259,7 +259,7 @@ const GoldSelection = () => {
         <button type="button" style={styles.addButtonGold} onClick={handleAddItem}>Thêm sản phẩm</button>
         
         <div style={styles.totalPrice}>
-          Total price: {totalPrice > 0 ? parseFloat(totalPrice).toLocaleString('vi-VN') : '0.00'} VND
+          Tổng tiền: {totalPrice > 0 ? parseFloat(totalPrice).toLocaleString('vi-VN') : '0.00'} VND
         </div>
         <button
           type="submit"

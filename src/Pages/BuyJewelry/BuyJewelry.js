@@ -514,7 +514,7 @@ const JewelrySelection = () => {
                 <div style={styles.totalPrice}>Khuyến mãi Vàng: {(((item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
 
                 <div style={styles.totalPrice}>
-                    Tổng tiền vật liệu: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
+                    Thành tiền: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
 
               </>
