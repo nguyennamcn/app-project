@@ -158,7 +158,7 @@ export default function SettingDiamondPrice() {
         onOk={handleUpdate}
         onCancel={() => setIsModalVisible(false)}
       >
-        <h2>Giá ID: {selectedDiamond.id}</h2>
+        <h2>ID: {selectedDiamond.id}</h2>
         <h2>Kim cương: {selectedDiamond.color} - {selectedDiamond.clarity} - {selectedDiamond.cut} - {selectedDiamond.origin} - {selectedDiamond.carat}</h2>
         <div>
           <label style={{fontWeight:600, fontSize:'16px'}}>Giá thu mua (VND): </label>

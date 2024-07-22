@@ -19,6 +19,7 @@ export default function StoreProductDetail() {
     const [modalTitle, setModalTitle] = useState('');
     const [goldPrices, setGoldPrices] = useState([]);
     const [gemPrices, setGemPrices] = useState([]);
+    const [isBraceletSizeModalVisible, setIsBraceletSizeModalVisible] = useState(false);
     const [totalSelectedPrice, setTotalSelectedPrice] = useState(0);
 
     const [goldPromotion, setGoldPromotion] = useState(0);
@@ -400,8 +401,17 @@ export default function StoreProductDetail() {
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 2px 0' }}>Mã Đơn Hàng: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
+            
             <div className="container overflow-auto bg-white mt-2" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px 3px', borderRadius: '20px' }}>
+            <div className='row ml-5' style={{ display: 'flex', gap: '5px' , maxWidth:'50px', }}>
+          <button onClick={() => setIsBraceletSizeModalVisible(true)} className="home-jewelry-size-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z" />
+            </svg>
+          </button>
+        </div>
                 <div className="row justify-around bg-white pb-2 m-0">
+                
                     <div className="product__table col-sm-11"
                         style={{
                             marginLeft: '10px',
@@ -466,19 +476,18 @@ export default function StoreProductDetail() {
                             gemPromoPrice: calculateGemPromotion(product),
                             gemNonPromo: calculateGemNonPromo(product),
                             gemBuyPrice: calculateGemBuyPrice(product)
-                        }))} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
+                        }))} columns={buyBackItem} pagination={false} scroll={{ y: 150 }} />
                         </div>
                         <div className='col-sm-1' >
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                     Tổng sản phẩm:<span style={{ marginLeft: '4%' }}> {selectedProducts.length}</span>
                                 </h1>
-                            </div>
-                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                     Tổng tiền thu mua:<span style={{ marginLeft: '4%' }}> {formatPrice(totalSelectedPrice)} </span>
                                 </h1>
                             </div>
+                           
                         </div>
                     </div>
                     <div className="col-sm-12 flex justify-center mt-1">
@@ -505,6 +514,20 @@ export default function StoreProductDetail() {
             >
                 <p>{modalMessage}</p>
             </Modal>
+
+            <Modal
+        visible={isBraceletSizeModalVisible}
+        footer={null}
+        onCancel={() => setIsBraceletSizeModalVisible(false)}
+        className="home-jewelry-custom-modal-bracelet"
+      >
+        <div className='size_img_bracelet'>
+          <h2 >Chiết khấu vàng: {goldPromotion * 100}%</h2>
+          <h2>Chiết khấu kim cương: {gemPromotion * 100}%</h2>
+          <h2>Bảng tính giá thu mua sản phẩm:</h2>
+          <h2 style={{marginLeft:'30px'}}>- Giá mua + (Giá bán - Giá mua) * (Chiết khấu)</h2>
+        </div>
+      </Modal>
         </div>
     );
 }

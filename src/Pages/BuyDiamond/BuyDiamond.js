@@ -280,7 +280,7 @@ const DiamondSelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Khối lượng:</label>
+              <label style={styles.label}>Khối lượng (Carat):</label>
               <input type="number" style={styles.input} value={item.carat} onChange={(e) => handleDiamondItemChange(index, 'carat', e.target.value)} />
             </div>
             <div style={styles.formGroup}>
