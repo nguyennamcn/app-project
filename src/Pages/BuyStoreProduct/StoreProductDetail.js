@@ -400,8 +400,8 @@ export default function StoreProductDetail() {
                 <h1 style={{ textAlign: 'center', fontSize: '30px', fontWeight: '500', margin: '10px 0 2px 0' }}>Mã Đơn Hàng: {sp?.orderCode}</h1>
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
-            <div className="container overflow-auto bg-white mt-2" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius: '20px' }}>
-                <div className="row justify-around bg-white pb-2">
+            <div className="container overflow-auto bg-white mt-2" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px 3px', borderRadius: '20px' }}>
+                <div className="row justify-around bg-white pb-2 m-0">
                     <div className="product__table col-sm-11"
                         style={{
                             marginLeft: '10px',
@@ -412,38 +412,39 @@ export default function StoreProductDetail() {
                         }}>
                         <div className='col-sm-1s'>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Khách hàng : <span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
-                                </h1>
+                                <h2 style={{ fontSize: '16px', fontWeight: '600', margin: '8px 0px 6px 1%' }}>
+                                    Khách hàng : <span style={{ marginLeft: '2%' }}>{sp?.customerName}</span>
+                                </h2>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Số điện thoại : <span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
-                                </h1>
+                                <h2 style={{ fontSize: '16px', fontWeight: '600', margin: '8px 0px 6px 1%' }}>
+                                    Số điện thoại : <span style={{ marginLeft: '2%' }}>{sp?.customerPhone}</span>
+                                </h2>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 10px 11%' }}>
-                                    Ngày : <span style={{ marginLeft: '4%' }}>{dateSellFormatted}</span>
-                                </h1>
+                                <h2 style={{ fontSize: '16px', fontWeight: '600', margin: '8px 0px 6px 1%' }}>
+                                    Ngày : <span style={{ marginLeft: '2%' }}>{dateSellFormatted}</span>
+                                </h2>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Phương thức thanh toán : <span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
-                                </h1>
+                                <h2 style={{ fontSize: '16px', fontWeight: '600', margin: '8px 0px 6px 1%' }}>
+                                    Phương thức thanh toán : <span style={{ marginLeft: '2%' }}>{sp?.paymentMethod}</span>
+                                </h2>
                             </div>
                         </div>
-                        <Table style={{ width: '94%', border: '1px solid #ccc', }} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 120 }} />
+                        <div style={{overflow:'auto'}}>
+                        <Table style={{minWidth:'600px',width: '100%', border: '1px solid #ccc', }} dataSource={products} columns={columnsProductInBill} pagination={false} scroll={{ y: 120 }} />
+                        </div>
                         <div className='col-sm-1' >
-                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+                            <div className="col-sm-6" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                     Tổng sản phẩm : <span style={{ marginLeft: '4%' }}> {sp?.list ? sp.list.length : 0}</span>
                                 </h1>
-                            </div>
-                            <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
                                     Tổng tiền : <span style={{ marginLeft: '4%' }}> {formatPrice(totalPrice)} </span>
                                 </h1>
                             </div>
+                           
                         </div>
                     </div>
                     <div className='cart__table col-sm-11'
@@ -455,7 +456,8 @@ export default function StoreProductDetail() {
                             padding: '0',
                         }}>
                         <div className='col-sm-12 mt-2'><h1>Sản phẩm thu mua</h1></div>
-                        <Table style={{ width: '100%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
+                        <div style={{overflow:'auto'}}>
+                        <Table style={{minWidth:'900px' ,width: '100%', border: '1px solid #ccc', }} dataSource={selectedProducts.map(product => ({
                             ...product,
                             goldPromoPrice: calculateMaterialPromotion(product),
                             goldNonPromo: calculateMaterialNonPromo(product),
@@ -465,6 +467,7 @@ export default function StoreProductDetail() {
                             gemNonPromo: calculateGemNonPromo(product),
                             gemBuyPrice: calculateGemBuyPrice(product)
                         }))} columns={buyBackItem} pagination={false} scroll={{ y: 168 }} />
+                        </div>
                         <div className='col-sm-1' >
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
                                 <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
