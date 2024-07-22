@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import { adornicaServ } from '../../service/adornicaServ';
 
-// Define styles as objects
 const styles = {
   container: {
     background: '#f0f8ff',
@@ -76,6 +75,11 @@ const styles = {
     cursor: 'pointer',
     fontSize: '16px',
     marginTop: '20px'
+  },
+  errorMessage: {
+    color: 'red',
+    fontSize: '14px',
+    marginTop: '5px'
   }
 };
 
@@ -86,6 +90,7 @@ const StoreSelection = () => {
   const [ordercode, setOrdercode] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -93,6 +98,16 @@ const StoreSelection = () => {
     if (phone || ordercode) {
       handleSendOrder();
     }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (!/^\d*$/.test(value)) {
+      setPhoneError('Số điện thoại chỉ chứa số.');
+    } else {
+      setPhoneError('');
+    }
+    setPhone(value);
   };
 
   const handleSendOrder = () => {
@@ -131,7 +146,8 @@ const StoreSelection = () => {
       <form style={styles.form} onSubmit={handleSubmit}>
         <div style={styles.formGroup}>
           <label style={styles.label}>Số điện thoại:</label>
-          <input type="text" style={styles.input} value={phone} onChange={e => setPhone(e.target.value)} />
+          <input type="text" style={styles.input} value={phone} onChange={handlePhoneChange} />
+          {phoneError && <span style={styles.errorMessage}>{phoneError}</span>}
         </div>
         <div style={styles.formGroup}>
           <label style={styles.label}>Mã đơn hàng:</label>

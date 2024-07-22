@@ -514,7 +514,7 @@ const JewelrySelection = () => {
                 <div style={styles.totalPrice}>Khuyến mãi Vàng: {(((item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND</div>
 
                 <div style={styles.totalPrice}>
-                    Tổng tiền vật liệu: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
+                    Thành tiền: {((item.materialBuyPrice + (item.materialSellPrice - item.materialBuyPrice) * goldPromotion) * item.weight).toLocaleString('vi-VN')} VND
                 </div>
 
               </>
@@ -581,7 +581,10 @@ const JewelrySelection = () => {
         className="home-jewelry-custom-modal-bracelet"
       >
         <div className='size_img_bracelet'>
-          <img src="https://media.discordapp.net/attachments/1161276908433063946/1263359796363530250/image.png?ex=6699f2ff&is=6698a17f&hm=aa0213e5bf016ae87e900052d14728047a2687c71f526b862b2c0238f7a4ae6a&=&format=webp&quality=lossless&width=1363&height=383" alt="Ring Sizes" style={{ width: '100%' }} />
+          <h2 >Chiết khấu vàng: {goldPromotion * 100}%</h2>
+          <h2>Chiết khấu kim cương: {gemPromotion * 100}%</h2>
+          <h2>Bảng tính giá thu mua sản phẩm:</h2>
+          <h2 style={{marginLeft:'30px'}}>- Giá mua + (Giá bán - Giá mua) * (Chiết khấu)</h2>
         </div>
       </Modal>
       <Modal

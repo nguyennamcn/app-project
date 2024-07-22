@@ -183,7 +183,7 @@ export default function SettingGoldPrice() {
         onOk={handleUpdate}
         onCancel={handleCancel}
       >
-        <h2>Giá ID: {selectedMaterial.id}</h2>
+        <h2>ID: {selectedMaterial.id}</h2>
         <h2>Loại vàng: {selectedMaterial.materialName}</h2>
         <div>
           <label style={{fontWeight:600, fontSize:'16px'}}>Giá thu mua (VND): </label>
