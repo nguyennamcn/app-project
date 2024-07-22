@@ -21,6 +21,7 @@ function AddJewelry() {
     categoryId: null, // id:1 ring, id: 2 Bracelet, id:3 Necklace, id:4 Earrings
     material: null,  // not null
     weight: null, // not null
+    diamondName: '',
     gemCode: '',
     origin: '',
     color: '',
@@ -33,6 +34,7 @@ function AddJewelry() {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [addGemContent, setAddGemContent] = useState(false);
   const [availableSizes, setAvailableSizes] = useState([]);
   const navigate = useNavigate();
 
@@ -45,11 +47,78 @@ function AddJewelry() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewJewelry({ ...newJewelry, [name]: value });
+    let selectedIsJewelryDiamond = value === "true" ? true : value === "false" ? false : value;
+    
+    setNewJewelry((prevState) => ({ ...prevState, [name]: selectedIsJewelryDiamond }));
+    
+    if(name === 'isJewelryDiamond'){
+    setAddGemContent(selectedIsJewelryDiamond);
+    }
   };
+
+   useEffect(() => {
+    if (!addGemContent) {
+      setNewJewelry((prevState) => ({
+        ...prevState,
+        diamondName: 'NONE',
+        gemCode: 'NONE',
+        origin: 'NONE',
+        color: 'NONE',
+        clarity: 'NONE',
+        cut: 'NONE',
+        carat: 0,
+        gemCost: 0,
+      }));
+    } else {
+      setNewJewelry((prevState) => ({
+        ...prevState,
+        diamondName: '',
+        gemCode: '',
+        origin: '',
+        color: '',
+        clarity: '',
+        cut: '',
+        carat: 0,
+        gemCost: 0,
+      }));
+    }
+  }, [addGemContent]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    if(newJewelry.isJewelryDiamond === true){
+      if(newJewelry.gemCode === ''){
+        notification.warning({message: "Bạn chưa nhập mã kim cương"});
+        return;
+      }
+      if(newJewelry.diamondName === ''){
+        notification.warning({message: "Bạn chưa nhập tên kim cương"});
+        return;
+      }
+      if(newJewelry.carat <= 0){
+        notification.warning({message: "bạn chưa nhập carat"});
+        return;
+      }
+      if(newJewelry.gemCost <= 0){
+        notification.warning({message: "Bạn chưa nhập giá"});
+        return;
+      }
+      
+    }
+
+    if(newJewelry.categoryId <= 0){
+        notification.warning({message: "Bạn chưa chọn loại sản phẩm"});
+        return;
+      }
+      if(newJewelry.material <= 0){
+        notification.warning({message: "Bạn chưa chọn loại vật liệu"});
+        return;
+      }
+      if(newJewelry.weight <= 0){
+        notification.warning({message: "Bạn chưa chọn trọng lượng vật liệu"});
+        return;
+      }
 
     const productData = {
       productCode: newJewelry.productCode,
@@ -109,30 +178,8 @@ function AddJewelry() {
               </div>
             </div>
             <div className="add-gem-form-row">
-              <div className="add-gem-form-group">
-                <label>Trang sức kim cương:</label>
-                <select name="isJewelryDiamond" value={newJewelry.isJewelryDiamond} onChange={handleInputChange}>
-                  <option value="true">Có</option>
-                  <option value="false">Không</option>
-                </select>
-              </div>
-
-              <div className="add-gem-form-group">
-                <label>Chi phí sản xuất:</label>
-                <input type="number" name="productionCost" placeholder='Hãy nhập chi phí sản xuất' value={newJewelry.productionCost} onChange={handleInputChange} min={1} required/>
-              </div>
-            </div>
-            <div className="add-gem-form-row">
-              <div className="add-gem-form-group">
-                <label>Giới tính:</label>
-                <select name="gender" value={newJewelry.gender} onChange={handleInputChange} required>
-                  <option value="">Chọn giới tính</option>
-                  <option value="UNISEX">UNISEX</option>
-                  <option value="MALE">MALE</option>
-                  <option value="FEMALE">FEMALE</option>
-                </select>
-              </div>
-              <div className="add-gem-form-group">
+              
+            <div className="add-gem-form-group">
                 <label>Loại sản phẩm</label>
                 <select name="categoryId" placeholder='Category id' value={newJewelry.categoryId} onChange={handleInputChange} required>
                   <option value={0}>Chọn loại sản phẩm</option>
@@ -142,16 +189,28 @@ function AddJewelry() {
                   <option value={4}>Bông tai</option>
                 </select>
               </div>
+
+              <div className="add-gem-form-group">
+                <label>Kích cỡ:</label>
+                <select name="size" value={newJewelry.size} onChange={handleInputChange}>
+                  {availableSizes.map((size, index) => (
+                    <option key={index} value={size}>{size}</option>
+                  ))}
+                </select>
+              </div>
+
+             
             </div>
+
             <div className="add-gem-form-row">
               <div className="add-gem-form-group">
                 <label>Vật liệu:</label>
                 <select name="material" placeholder='Material id' value={newJewelry.material} onChange={handleInputChange} required>
                   <option value={0}>Hãy chọn vật liệu</option>
-                  <option value={1}>24K GOLD</option>
-                  <option value={2}>18K GOLD</option>
-                  <option value={3}>WHITE GOLD</option>
-                  <option value={4}>GOLD BARS</option>
+                  <option value={1}>VÀNG 24K</option>
+                  <option value={2}>VÀNG 18K</option>
+                  <option value={3}>VÀNG TRẮNG</option>
+                  {/* <option value={4}>GOLD BARS</option> */}
                 </select>
               </div>
               <div className="add-gem-form-group">
@@ -159,6 +218,32 @@ function AddJewelry() {
                 <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={1} required/>
               </div>
             </div>
+            <div className="add-gem-form-row">
+              <div className="add-gem-form-group">
+                <label>Giới tính:</label>
+                <select name="gender" value={newJewelry.gender} onChange={handleInputChange} required>
+                  <option value="">Chọn giới tính</option>
+                  <option value="UNISEX">UNISEX</option>
+                  <option value="MALE">NAM</option>
+                  <option value="FEMALE">NỮ</option>
+                </select>
+              </div>
+              
+              <div className="add-gem-form-group">
+                <label>Chi phí sản xuất:</label>
+                <input type="number" name="productionCost" placeholder='Hãy nhập chi phí sản xuất' value={newJewelry.productionCost} onChange={handleInputChange} min={1} required/>
+              </div>
+
+              <div className="add-gem-form-group">
+                <label>Trang sức kim cương:</label>
+                <select name="isJewelryDiamond" value={newJewelry.isJewelryDiamond} onChange={handleInputChange}>
+                <option value="true">Có</option>
+                <option value="false">Không</option>
+                </select>
+              </div>
+            </div>
+          {(addGemContent === true) && (
+            <div className='gem-content'>
             <div className="add-gem-form-row">
               <div className="add-gem-form-group">
                 <label>Mã đá quý (Kim cương):</label>
@@ -174,9 +259,9 @@ function AddJewelry() {
                 <label>Nguồn gốc:</label>
                 <select type="text" name="origin" value={newJewelry.origin} onChange={handleInputChange} required>
                   <option value="">Chọn nguồn gốc</option>
-                  <option value="NONE">NONE</option>
-                  <option value="NATURAL">NATURAL</option>
-                  <option value="LAB_GROWN">LAB_GROWN</option>
+           
+                  <option value="TỰ NHIÊN">TỰ NHIÊN</option>
+                  <option value="NHÂN TẠO">NHÂN TẠO</option>
                 </select>
               </div>
             </div>
@@ -185,7 +270,7 @@ function AddJewelry() {
                 <label>Màu sắc:</label>
                 <select type="text" name="color" value={newJewelry.color} onChange={handleInputChange} required>
                   <option value="" disabled>Chọn màu sắc</option>
-                  <option value="NONE">NONE</option>
+             
                   <option value="D">D</option>
                   <option value="E">E</option>
                   <option value="F">F</option>
@@ -202,7 +287,7 @@ function AddJewelry() {
                 <label>Độ tinh khiết:</label>
                 <select type="text" name="clarity" value={newJewelry.clarity} onChange={handleInputChange} required>
                   <option value="" disabled>Chọn độ tinh khiết</option>
-                  <option value="NONE">NONE</option>
+           
                   <option value="FL">FL</option>
                   <option value="IF">IF</option>
                   <option value="VVS1">VVS1</option>
@@ -222,7 +307,7 @@ function AddJewelry() {
                 <label>Vết cắt:</label>
                 <select name="cut" value={newJewelry.cut} onChange={handleInputChange} required>
                   <option value="" disabled>Chọn loại vết cắt</option>
-                  <option value="NONE">NONE</option>
+         
                   <option value="EX">EX</option>
                   <option value="G">G</option>
                   <option value="F">F</option>
@@ -230,24 +315,17 @@ function AddJewelry() {
                 </select>
               </div>
               <div className="add-gem-form-group">
-                <label>Khối lượng:</label>
+                <label>Khối lượng (carat):</label>
                 <input type="number" name="carat" value={newJewelry.carat} onChange={handleInputChange} min={0} step={0.1}/>
-              </div>
-            </div>
-            <div className="add-gem-form-row">
-              <div className="add-gem-form-group">
-                <label>Kích cỡ:</label>
-                <select name="size" value={newJewelry.size} onChange={handleInputChange}>
-                  {availableSizes.map((size, index) => (
-                    <option key={index} value={size}>{size}</option>
-                  ))}
-                </select>
               </div>
               <div className="add-gem-form-group">
                 <label>Giá đá quý:</label>
                 <input type="number" name="gemCost" placeholder='Gem cost' value={newJewelry.gemCost} onChange={handleInputChange} min={0} />
               </div>
             </div>
+          </div>
+          )}  
+          
 
             <div className="add-gem-form-footer">
               <NavLink to="/ManageJewelry" style={{

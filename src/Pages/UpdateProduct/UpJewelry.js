@@ -8,6 +8,7 @@ import Spinner from '../../Components/Spinner/Spinner';
 function UpJewelry() {
   const { productCode } = useParams();
   const [loading, setLoading] = useState(true);
+  const [isHaveGem, setIsHaveGem] = useState("None");
 
   const [sp, setSp] = useState({
     productCode: '',
@@ -28,7 +29,7 @@ function UpJewelry() {
     gemCost: '',
     productionCost: '',
     size: 'SIZE_0',
-    jewelryDiamond: true,
+    isJewelryDiamond: true,
   });
 
   useEffect(() => {
@@ -44,6 +45,14 @@ function UpJewelry() {
         setLoading(false);
       });
   }, [productCode]);
+
+  useEffect(() => {
+    if (sp.gem && sp.gem.length > 0 && sp.gem[0].gemCode) {
+      setIsHaveGem(sp.gem[0].gemCode);
+    } else {
+      setIsHaveGem('None');
+    }
+  }, [sp]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -70,7 +79,7 @@ function UpJewelry() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-
+  
     const productData = {
       productCode: sp.productCode,
       productName: sp.productName,
@@ -80,33 +89,37 @@ function UpJewelry() {
         material: material.id,
         weight: material.weight,
       })),
-      gemId: Number(sp.gem[0].id),
-      gemCode: sp.gem[0].gemCode,
-      diamondName: sp.gem[0].gemName,
-      origin: sp.gem[0].origin,
-      color: sp.gem[0].color,
-      clarity: sp.gem[0].clarity,
-      cut: sp.gem[0].cut,
-      carat: Number(sp.gem[0].carat),
       gemCost: sp.gemCost,
       productionCost: sp.productionCost,
       size: sp.size,
-      jewelryDiamond: true,
+      //isJewelryDiamond: true,
     };
-
+  
+    // Add gem properties only if gem exists
+    if (sp.gem && sp.gem.length > 0 && sp.gem[0].id) {
+      productData.gemId = Number(sp.gem[0].id);
+      productData.gemCode = sp.gem[0].gemCode;
+      productData.diamondName = sp.gem[0].gemName;
+      productData.origin = sp.gem[0].origin;
+      productData.color = sp.gem[0].color;
+      productData.clarity = sp.gem[0].clarity;
+      productData.cut = sp.gem[0].cut;
+      productData.carat = Number(sp.gem[0].carat);
+    }
+  
     adornicaServ.updateProduct(productCode, productData)
       .then((response) => {
         notification.success({ message: 'Cập nhật thành công' });
         navigate('/ManageJewelry');
         console.log(response.data.metadata);
         console.log(productData);
-
       })
       .catch((error) => {
         notification.error({ message: error.response.data.metadata.message });
         console.log(error.response.data.metadata.message);
       });
   };
+  
 
   const handleModalOk = () => {
     setIsModalVisible(false);
@@ -134,7 +147,7 @@ function UpJewelry() {
                 </div>
                 <div className="upjewelry-form-row">
                   <div className="upjewelry-form-group">
-                    <label>Mã đá quý:</label>
+                    <label>Giá đá quý:</label>
                     <h2 className="upjewelry-static-input">{sp.gemCost}</h2>
                   </div>
                   <div className="upjewelry-form-group">
@@ -167,6 +180,7 @@ function UpJewelry() {
                     <input type="number" name="weight" placeholder='Material weight' value={sp.materials[0]?.weight} onChange={(e) => handleMaterialInputChange(e, 0)} min={1} />
                   </div>
                 </div>
+              {(isHaveGem !== "None") && (<>
                 <div className="upjewelry-form-row">
                   <div className="upjewelry-form-group">
                     <label>Mã đá quý (Kim cương):</label>
@@ -232,9 +246,12 @@ function UpJewelry() {
                   </div>
                   <div className="upjewelry-form-group">
                     <label>Khối lượng:</label>
-                    <input type="number" name="carat" placeholder='Khối lượng (kim cương)' value={sp.gem[0]?.carat} onChange={(e) => handleGemInputChange(e, 0)} min={0} />
+                    <input type="number" name="carat" placeholder='Khối lượng (kim cương)' value={sp.gem[0]?.carat} onChange={(e) => handleGemInputChange(e, 0)} min={0} step={0.1} />
                   </div>
                 </div>
+              </>)}
+               
+
                 <div className="upjewelry-form-row">
                   <div className="upjewelry-form-group">
                     <label>Kích cỡ:</label>
@@ -249,8 +266,8 @@ function UpJewelry() {
                     </select>
                   </div>
                   <div className="upjewelry-form-group">
-                    <label>Trang sức kim cương:</label>
-                    <h2 className="upjewelry-static-input">{sp.jewelryDiamond ? "true" : "false"}</h2>
+                    {/* <label>Trang sức kim cương:</label>
+                    <h2 className="upjewelry-static-input">{sp.isJewelryDiamond === true ? "true" : "false"}</h2> */}
                   </div>
                 </div>
                 <div className="upjewelry-form-footer">

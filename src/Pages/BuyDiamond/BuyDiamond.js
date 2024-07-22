@@ -279,8 +279,8 @@ const DiamondSelection = () => {
               <label style={styles.label}>Nguồn gốc:</label>
               <select style={styles.input} value={item.origin} onChange={(e) => handleDiamondItemChange(index, 'origin', e.target.value)}>
                 <option value=""></option>
-                <option value="NATURAL">NATURAL</option>
-                <option value="LAB_GROWN">LAB_GROWN</option>
+                <option value="TỰ NHIÊN">TỰ NHIÊN</option>
+                <option value="NHÂN TẠO">NHÂN TẠO</option>
               </select>
             </div>
             {item.carat && item.clarity && item.color && item.cut && item.origin && formValid && (
