@@ -43,6 +43,7 @@ export default function SellOrderPage() {
 
                 setDataSource(orders);
                 setFilteredData(orders);
+                console.log(orders)
             })
             .catch((err) => {
                 console.log(err);
@@ -197,7 +198,7 @@ export default function SellOrderPage() {
                     </NavLink>
                     <NavLink>
                     <Button
-                        style={{ backgroundColor: order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === 'cash' || order.paymentMethod.toLowerCase() === 'banking' ? 'gray' : 'red',
+                        style={{ backgroundColor: order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === 'cash' || order.paymentMethod.toLowerCase() === 'credit' ? 'gray' : 'red',
                             border: '1px solid purple',
                             color: 'white',
                             marginTop:'10px',
@@ -207,7 +208,7 @@ export default function SellOrderPage() {
                         type="primary"
                         danger
                         onClick={() => handleDeleteOrder(order.orderCode)}
-                        disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === ('cash' || 'banking')}
+                        disabled={order.deliveryStatus.toLowerCase() === 'success' || order.paymentMethod.toLowerCase() === 'cash' || order.paymentMethod.toLowerCase() === 'credit'}
                     >
                         Xóa
                     </Button>
