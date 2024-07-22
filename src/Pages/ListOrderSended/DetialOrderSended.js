@@ -155,7 +155,7 @@ export default function ListOrderPage() {
                         <label>Số điện thoại: {customerPhone}</label>
                         <label>Ngày : {datesale}</label>
                         <label>Phương thức thanh toán: {getPaid(paymentMethod)}</label>
-                        <label>Trạng thái giao dịch: {getStt(deliveryStatus)}</label>
+                        <label>Trạng thái giao hàng: {getStt(deliveryStatus)}</label>
                     </div>
 
                     <div className="product__table col-sm-6"

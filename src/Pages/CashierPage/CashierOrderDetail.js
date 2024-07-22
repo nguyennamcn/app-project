@@ -331,11 +331,11 @@ export default function ListOrderPage() {
                                 ) : (
                                     <>
 
-                                        <label>Name: {customerName}</label>
-                                        <label>Phone: {customerPhone}</label>
-                                        <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
-                                        <label>Payment methods: {paymentMethodDone == "CASH" ? "Tiền mặt" : paymentMethodDone == "CREDIT" ? "VNPAY" : "Chưa thanh toán"}</label>
-                                        <label>Delivery status: {deliveryStatus == "PENDING" ? "Đang sử lí" : "Thành công"}</label>
+                                        <label>Tên: {customerName}</label>
+                                        <label>Số điện thoại: {customerPhone}</label>
+                                        <label>Ngày bán: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
+                                        <label>Phương thức thanh toán: {paymentMethodDone == "CASH" ? "Tiền mặt" : paymentMethodDone == "CREDIT" ? "VNPAY" : "Chưa thanh toán"}</label>
+                                        <label>Trạng thái giao hàng: {deliveryStatus == "PENDING" ? "Đang sử lí" : "Thành công"}</label>
 
                                     </>
                                 )}

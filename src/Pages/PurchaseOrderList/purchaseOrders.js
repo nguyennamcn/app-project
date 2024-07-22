@@ -158,9 +158,9 @@ export default function PurchaseOrder() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentOrders.map(order => (
+                    {currentOrders.map((order, index) => (
                         <tr key={order.orderId}>
-                            <td data-label="Số thứ tự">{order.orderId}</td>
+                            <td data-label="Số thứ tự">{index + 1}</td>
                             <td data-label="Nhân viên">{order.salesStaffName}</td>
                             <td data-label="Mã đơn hàng">{order.orderCode}</td>
                             <td data-label="Tổng số tiền">{formatPrice(order.totalPrice)}</td>

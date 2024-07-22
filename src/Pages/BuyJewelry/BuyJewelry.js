@@ -189,7 +189,7 @@ const JewelrySelection = () => {
   
     // Handle goldType change
     if (field === 'goldType') {
-      if (value === 'None') {
+      if (value === 'Không') {
         // Clear and disable related fields
         updatedItems[index] = {
           ...updatedItems[index],
@@ -211,15 +211,15 @@ const JewelrySelection = () => {
   
     // Handle diamond change
     if (field === 'origin' || field === 'cut' || field === 'carat' || field === 'clarity' || field === 'color') {
-      if (value === 'None') {
+      if (value === 'Không') {
         // Clear and disable related fields
         updatedItems[index] = {
           ...updatedItems[index],
-          origin:'None',
+          origin:'Không',
           carat: 0,
-          color: 'None',
-          clarity: 'None',
-          cut: 'None',
+          color: 'Không',
+          clarity: 'Không',
+          cut: 'Không',
           gemBuyPrice: 0,
           gemSellPrice:0,
         };
@@ -265,7 +265,7 @@ const JewelrySelection = () => {
         const selectedGold = goldPrices.find(gold => gold.materialName === item.goldType);
         if (selectedGold) {
           const goldPrice = (selectedGold.materialBuyPrice + (selectedGold.materialSellPrice - selectedGold.materialBuyPrice) * goldPromotion )* parseFloat(item.weight || 0);
-          if (goldPrice <= 0 && item.goldType !== 'None'){
+          if (goldPrice <= 0 && item.goldType !== 'Không'){
             hasValidPrice = false;
             total += 0;
           } else {
@@ -332,9 +332,9 @@ const JewelrySelection = () => {
 
   const validateForm = (updatedItems) => {
     const isFormValid = updatedItems.every(item =>
-      ((item.goldType && item.goldType !== 'None' && item.weight) ||
-      (item.origin && item.origin !== 'None' && item.carat && item.color && item.clarity && item.cut)) &&
-      !(item.goldType === 'None' && item.origin === 'None') // Check if both are "None"
+      ((item.goldType && item.goldType !== 'Không' && item.weight) ||
+      (item.origin && item.origin !== 'Không' && item.carat && item.color && item.clarity && item.cut)) &&
+      !(item.goldType === 'Không' && item.origin === 'Không') // Check if both are "Không"
     );
     setFormValid(isFormValid);
   };
@@ -395,7 +395,7 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.name}
                 onChange={e => handleInputChange(index, 'name', e.target.value)}
-                //disabled={item.goldType === 'None'}
+                //disabled={item.goldType === 'Không'}
                 required
               />
             </div>
@@ -404,7 +404,7 @@ const JewelrySelection = () => {
               <label style={styles.label}>Loại vàng:</label>
               <select style={styles.input} value={item.goldType} onChange={e => handleInputChange(index, 'goldType', e.target.value)} required>
                 <option value=""></option>
-                <option value="None">None</option>
+                <option value="Không">Không</option>
                 {goldPrices.map((gold) => (
                   <option key={gold.materialId} value={gold.materialName}>{gold.materialName}</option>
                 ))}
@@ -417,16 +417,17 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.weight}
                 onChange={e => handleInputChange(index, 'weight', e.target.value)}
-                disabled={item.goldType === 'None'}
-                required={item.goldType !== 'None'}
-                
+                disabled={item.goldType === 'Không'}
+                required={item.goldType !== 'Không'}
+                min={0.1}
+                step={0.1}
               />
             </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Nguồn gốc:</label>
               <select style={styles.input} value={item.origin} onChange={e => handleInputChange(index, 'origin', e.target.value)} required>
                 <option value=""></option>
-                <option value="None">None</option>
+                <option value="Không">Không</option>
                 <option value="TỰ NHIÊN">TỰ NHIÊN</option>
                 <option value="NHÂN TẠO">NHÂN TẠO</option>
               </select>
@@ -438,8 +439,10 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.carat}
                 onChange={e => handleInputChange(index, 'carat', e.target.value)}
-                disabled={item.origin === 'None'}
-                required={item.origin !== 'None'}
+                disabled={item.origin === 'Không'}
+                required={item.origin !== 'Không'}
+                min={0.1}
+                step={0.1}
               />
             </div>
             <div style={styles.formGroup}>
@@ -448,8 +451,8 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.color}
                 onChange={e => handleInputChange(index, 'color', e.target.value)}
-                disabled={item.origin === 'None'}
-                required={item.origin !== 'None'}
+                disabled={item.origin === 'Không'}
+                required={item.origin !== 'Không'}
               >
                 <option value=''></option>
                 <option value='D'>D</option>
@@ -470,8 +473,8 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.clarity}
                 onChange={e => handleInputChange(index, 'clarity', e.target.value)}
-                disabled={item.origin === 'None'}
-                required={item.origin !== 'None'}
+                disabled={item.origin === 'Không'}
+                required={item.origin !== 'Không'}
               >
                 <option value=''></option>
                 <option value='FL'>FL</option>
@@ -493,8 +496,8 @@ const JewelrySelection = () => {
                 style={styles.input}
                 value={item.cut}
                 onChange={e => handleInputChange(index, 'cut', e.target.value)}
-                disabled={item.origin === 'None'}
-                required={item.origin !== 'None'}
+                disabled={item.origin === 'Không'}
+                required={item.origin !== 'Không'}
               >
                 <option value=""></option>
                 <option value="EX">EX</option>
