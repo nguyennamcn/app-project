@@ -170,6 +170,20 @@ const PurchaseDetailHistory = () => {
     return price ? price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Undefined';
 };
 
+const getPaid = (role) => {
+  switch (role) {
+    case 'CASH':
+      return 'Tiền Mặt';
+    case 'CREDIT':
+      return 'VNPAY';
+    case 'NONE':
+      return 'Chưa Chọn Hình Thức';
+    // Add more cases as needed
+    default:
+      return role;
+  }
+};
+
   const handleDownloadPDF = () => {
     console.log(orderCode);
     adornicaServ.postPurchaseExport(orderCode)
@@ -273,6 +287,7 @@ const PurchaseDetailHistory = () => {
           onChange={handleDetailChange}
         >
           <option value="CASH">Tiền mặt</option>
+          <option value="CREDIT">VNPAY</option>
         </select>
       </div>
       <div>

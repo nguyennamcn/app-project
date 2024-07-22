@@ -137,9 +137,9 @@ export default function PurchaseOrderByStaffId() {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentOrders.map(order => (
+                    {currentOrders.map((order,index) => (
                         <tr key={order.orderId}>
-                            <td data-label="Order ID">{order.orderId}</td>
+                            <td data-label="Order ID">{index + 1 + currentPage * ordersPerPage}</td>
                             <td data-label="Staff name">{order.salesStaffName}</td>
                             <td data-label="Purchase Code">{order.orderCode}</td>
                             <td data-label="Total Price">{formatPrice(order.totalPrice)}</td>

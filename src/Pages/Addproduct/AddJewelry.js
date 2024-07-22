@@ -214,7 +214,7 @@ function AddJewelry() {
                 </select>
               </div>
               <div className="add-gem-form-group">
-                <label>Trọng lượng vật liệu (gram):</label>
+                <label>Trọng lượng vật liệu (Chỉ):</label>
                 <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={1} required/>
               </div>
             </div>

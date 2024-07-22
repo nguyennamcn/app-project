@@ -90,7 +90,8 @@ export default function ManageDiamond() {
       adornicaServ.getListDiamond()
       .then((res) => {
         console.log(res.data.metadata.data);
-        setDiamondManage(res.data.metadata.data);
+        const sortedData = res.data.metadata.data.sort((a, b) => b.productId - a.productId);
+        setDiamondManage(sortedData);
       })
       .catch((err) => {
         console.log(err);
@@ -147,9 +148,9 @@ export default function ManageDiamond() {
           </tr>
         </thead>
         <tbody>
-          {currentDiamonds.map((diamond) => (
+          {currentDiamonds.map((diamond, index) => (
             <tr key={diamond.productId}>
-              <td className="diamond-td" data-label="ID">{diamond.productId}</td>
+              <td className="diamond-td" data-label="ID">{index + 1 + currentPage * itemsPerPage}</td>
               <td className="diamond-td" data-label="Code">{diamond.productCode}</td>
               <td className="diamond-td" data-label="Name">{diamond.productName}</td>
               <td className="gold-td" data-label="Price (VND)">{formatPrice(diamond.productPrice)}</td>

@@ -19,8 +19,8 @@ export default function ManageGold() {
   useEffect(() => {
     adornicaServ.getListGold()
       .then((res) => {
-        console.log(res.data.metadata.data);
-        setGoldManage(res.data.metadata.data);
+        const sortedData = res.data.metadata.data.sort((a, b) => b.productId - a.productId);
+        setGoldManage(sortedData);
       })
       .catch((err) => {
         console.log(err);
@@ -165,7 +165,7 @@ export default function ManageGold() {
       <table className="gold-table">
         <thead>
           <tr>
-            <th className="gold-th">ID</th>
+            <th className="gold-th">STT</th>
             <th className="gold-th">Mã sản phẩm</th>
             <th className="gold-th">Tên sản phẩm</th>
             <th className="gold-th">Giá (VND)</th>
@@ -174,9 +174,9 @@ export default function ManageGold() {
           </tr>
         </thead>
         <tbody>
-          {currentGold.map((product) => (
+          {currentGold.map((product, index) => (
             <tr key={product.productId}>
-              <td className="gold-td" data-label="ID">{product.productId}</td>
+              <td className="gold-td" data-label="ID">{index + 1 + currentPage * itemsPerPage}</td>
               <td className="gold-td" data-label="Code">{product.productCode}</td>
               <td className="gold-td" data-label="Name">{product.productName}</td>
               <td className="gold-td" data-label="Price (VND)">{formatPrice(product.productPrice)}</td>
