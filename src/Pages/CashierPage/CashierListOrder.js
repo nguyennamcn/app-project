@@ -118,7 +118,7 @@ export default function SellOrderPage() {
           case 'CASH':
             return 'Tiền Mặt';
           case 'CREDIT':
-            return 'Chuyển Khoản';
+            return 'VNPAY';
           case 'NONE':
             return 'Chưa Chọn Hình Thức';
           // Add more cases as needed

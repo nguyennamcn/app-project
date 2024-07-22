@@ -150,7 +150,7 @@ export default function ManageDiamond() {
         <tbody>
           {currentDiamonds.map((diamond, index) => (
             <tr key={diamond.productId}>
-              <td className="diamond-td" data-label="ID">{index + 1}</td>
+              <td className="diamond-td" data-label="ID">{index + 1 + currentPage * itemsPerPage}</td>
               <td className="diamond-td" data-label="Code">{diamond.productCode}</td>
               <td className="diamond-td" data-label="Name">{diamond.productName}</td>
               <td className="gold-td" data-label="Price (VND)">{formatPrice(diamond.productPrice)}</td>

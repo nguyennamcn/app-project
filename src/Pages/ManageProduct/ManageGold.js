@@ -176,7 +176,7 @@ export default function ManageGold() {
         <tbody>
           {currentGold.map((product, index) => (
             <tr key={product.productId}>
-              <td className="gold-td" data-label="ID">{index + 1}</td>
+              <td className="gold-td" data-label="ID">{index + 1 + currentPage * itemsPerPage}</td>
               <td className="gold-td" data-label="Code">{product.productCode}</td>
               <td className="gold-td" data-label="Name">{product.productName}</td>
               <td className="gold-td" data-label="Price (VND)">{formatPrice(product.productPrice)}</td>

@@ -46,6 +46,7 @@ export default function SentPage() {
                     discount: checkDiscount(order.discount),
                     createAt: formatDate(order.createAt),
                 }));
+                orders.sort((a, b) => b.productId - a.productId);
                 setDataSource(orders);
                 console.log(orders);
             })
@@ -104,7 +105,7 @@ export default function SentPage() {
           case 'CASH':
             return 'Tiền Mặt';
           case 'CREDIT':
-            return 'Chuyển Khoản';
+            return 'VNPAY';
           case 'NONE':
             return 'Chưa Chọn Hình Thức';
           // Add more cases as needed
@@ -147,9 +148,9 @@ export default function SentPage() {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentItems.map(order => (
+                        {currentItems.map((order,index) => (
                             <tr key={order.orderId}>
-                                <td data-label="ID">{order.orderId}</td>
+                                <td data-label="ID">{index + 1 + currentPage * itemsPerPage}</td>
                                 <td data-label="Order code">{order.orderCode}</td>
                                 <td data-label="Phone">{order.phone}</td>
                                 <td data-label="Name">{order.name}</td>

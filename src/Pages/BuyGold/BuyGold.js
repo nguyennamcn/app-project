@@ -229,7 +229,7 @@ const GoldSelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Khối lượng (gram):</label>
+              <label style={styles.label}>Khối lượng (Chỉ):</label>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <input type="number" style={styles.input} value={item.weight} onChange={e => handleWeightChange(index, e.target.value)} min={0} step={0.1} />
                 <button type="button" style={styles.deleteButton} onClick={() => handleDeleteItem(index)}>Xóa</button>

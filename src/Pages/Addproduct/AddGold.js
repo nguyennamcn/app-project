@@ -92,7 +92,7 @@ function AddGold() {
                 </select>
               </div>
               <div className="add-gold-form-group">
-                <label>Khối lượng (gram):</label>
+                <label>Khối lượng (Chỉ):</label>
                 <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={0.1} step={0.1}/>
               </div>
             </div>

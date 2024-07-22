@@ -411,7 +411,7 @@ const JewelrySelection = () => {
               </select>
             </div>
             <div style={styles.formGroup}>
-              <label style={styles.label}>Khối lượng (gram):</label>
+              <label style={styles.label}>Khối lượng (Chỉ):</label>
               <input
                 type="number"
                 style={styles.input}

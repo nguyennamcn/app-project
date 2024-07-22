@@ -318,6 +318,20 @@ export default function StoreProductDetail() {
         },
     ];
 
+    const getPaid = (role) => {
+        switch (role) {
+          case 'CASH':
+            return 'Tiền Mặt';
+          case 'CREDIT':
+            return 'VNPAY';
+          case 'NONE':
+            return 'Chưa Chọn Hình Thức';
+          // Add more cases as needed
+          default:
+            return role;
+        }
+      };
+
     const buyBackItem = [
         {
             title: 'Tên sản phẩm',
@@ -401,34 +415,39 @@ export default function StoreProductDetail() {
                 <div style={{ backgroundColor: 'black', width: '96%', height: '1px', marginLeft: '22px' }}></div>
             </div>
             <div className="container overflow-auto bg-white mt-2" style={{ width: '94%', boxShadow: 'rgba(0, 0, 0, 0.24) 3px 3px 3px', borderRadius: '20px' }}>
-                <div className="row justify-around bg-white pb-2">
+                <div
+                style={{
+                    display:'flex',
+                    justifyContent:'center  '
+                }}
+                className="row justify-around bg-white pb-2">
                     <div className="product__table col-sm-11"
                         style={{
-                            marginLeft: '10px',
                             backgroundColor: 'white',
+                            marginLeft: '16px',
                             width: '100%',
                             height: '400px',
                             padding: '0',
                         }}>
                         <div className='col-sm-1s'>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 0%' }}>
                                     Khách hàng : <span style={{ marginLeft: '4%' }}>{sp?.customerName}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 0%' }}>
                                     Số điện thoại : <span style={{ marginLeft: '4%' }}>{sp?.customerPhone}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 10px 11%' }}>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 10px 0%' }}>
                                     Ngày : <span style={{ marginLeft: '4%' }}>{dateSellFormatted}</span>
                                 </h1>
                             </div>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
-                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 11%' }}>
-                                    Phương thức thanh toán : <span style={{ marginLeft: '4%' }}>{sp?.paymentMethod}</span>
+                                <h1 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0px 6px 0%' }}>
+                                    Phương thức thanh toán : <span style={{ marginLeft: '4%' }}>{getPaid(sp?.paymentMethod)}</span>
                                 </h1>
                             </div>
                         </div>

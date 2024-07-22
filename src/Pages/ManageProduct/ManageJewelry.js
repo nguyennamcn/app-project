@@ -157,7 +157,7 @@ const JewelryInventoryPage = () => {
         <tbody>
           {currentJewelry.map((item, index) => (
             <tr key={item.productId}>
-              <td className="jewelry-td" data-label="ID">{index +1}</td>
+              <td className="jewelry-td" data-label="ID">{index + 1 + currentPage * itemsPerPage}</td>
               <td className="jewelry-td" data-label="Code">{item.productCode}</td>
               <td className="jewelry-td" data-label="Name">{item.productName}</td>
               <td className="gold-td" data-label="Price (VND)">{formatPrice(item.productPrice)}</td>

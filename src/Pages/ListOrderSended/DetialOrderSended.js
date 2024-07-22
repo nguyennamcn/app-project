@@ -52,6 +52,31 @@ export default function ListOrderPage() {
         fetchOrderDetails();
     }, [orderKey]);
 
+
+    const getPaid = (role) => {
+        switch (role) {
+          case 'CASH':
+            return 'Tiền Mặt';
+          case 'CREDIT':
+            return 'VNPAY';
+          case 'NONE':
+            return 'Chưa Chọn Hình Thức';
+          // Add more cases as needed
+          default:
+            return role;
+        }
+      };
+    
+    const getStt = (role) => {
+        switch (role) {
+          case 'SUCCESS':
+            return 'Đã Thanh Toán';
+          case 'PENDING':
+            return 'Đang Chờ';
+          default:
+            return role;
+        }
+      };
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => total + product.totalPrice, 0);
         setTotalPrice(calculatedTotalPrice);
@@ -129,8 +154,8 @@ export default function ListOrderPage() {
                         <label>Tên: {customerName}</label>
                         <label>Số điện thoại: {customerPhone}</label>
                         <label>Ngày : {datesale}</label>
-                        <label>Phương thức thanh toán: {paymentMethod}</label>
-                        <label>Trạng thái giao dịch: {deliveryStatus}</label>
+                        <label>Phương thức thanh toán: {getPaid(paymentMethod)}</label>
+                        <label>Trạng thái giao dịch: {getStt(deliveryStatus)}</label>
                     </div>
 
                     <div className="product__table col-sm-6"
