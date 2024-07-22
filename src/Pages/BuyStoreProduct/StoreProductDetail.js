@@ -319,6 +319,20 @@ export default function StoreProductDetail() {
         },
     ];
 
+    const getPaid = (role) => {
+        switch (role) {
+          case 'CASH':
+            return 'Tiền Mặt';
+          case 'CREDIT':
+            return 'VNPAY';
+          case 'NONE':
+            return 'Chưa Chọn Hình Thức';
+          // Add more cases as needed
+          default:
+            return role;
+        }
+      };
+
     const buyBackItem = [
         {
             title: 'Tên sản phẩm',
@@ -412,16 +426,18 @@ export default function StoreProductDetail() {
         </div>
                 <div className="row justify-around bg-white pb-2 m-0">
                 
+
                     <div className="product__table col-sm-11"
                         style={{
-                            marginLeft: '10px',
                             backgroundColor: 'white',
+                            marginLeft: '16px',
                             width: '100%',
                             height: '400px',
                             padding: '0',
                         }}>
                         <div className='col-sm-1s'>
                             <div className="col-sm-12" style={{ whiteSpace: 'nowrap' }}>
+
                                 <h2 style={{ fontSize: '16px', fontWeight: '600', margin: '8px 0px 6px 1%' }}>
                                     Khách hàng : <span style={{ marginLeft: '2%' }}>{sp?.customerName}</span>
                                 </h2>
@@ -440,6 +456,7 @@ export default function StoreProductDetail() {
                                 <h2 style={{ fontSize: '16px', fontWeight: '600', margin: '8px 0px 6px 1%' }}>
                                     Phương thức thanh toán : <span style={{ marginLeft: '2%' }}>{sp?.paymentMethod}</span>
                                 </h2>
+
                             </div>
                         </div>
                         <div style={{overflow:'auto'}}>

@@ -29,6 +29,7 @@ export default function ListOrderPage() {
     const [paymentUpdated, setPaymentUpdated] = useState(false);
     const [loading, setLoading] = useState(true);
     const userInfo = useSelector((state) => state.userReducer.userInfo);
+    const [isPaymentPending, setIsPaymentPending] = useState(false);
     console.log(userInfo);
 
     const convertMillisecondsToDateString = (milliseconds) => {
@@ -45,7 +46,7 @@ export default function ListOrderPage() {
                 console.log(res.data.metadata);
                 const orderList = res.data.metadata?.list?.map(item => ({
                     ...item,
-                    totalPrice: item.price 
+                    totalPrice: item.price
                 })) || [];
                 setProducts(orderList);
                 const customerData = res.data.metadata || {};
@@ -91,7 +92,7 @@ export default function ListOrderPage() {
             name: customerName,
             dateOfBirth: customerBirthday,
             paymentMethod: paymentMethod,
-            amount: (totalPrice - (totalPrice * discount / 100)) ,
+            amount: (totalPrice - (totalPrice * discount / 100)),
             customerPhone: customerPhone,
         };
 
@@ -112,14 +113,11 @@ export default function ListOrderPage() {
         adornicaServ.postPaidSummit(orderData)
             .then((res) => {
                 console.log('Order submitted successfully:', res.data);
-           
+
                 showModal(
                     <div className='notice__content'>
                         <i className="check__icon fa-solid fa-circle-check"></i>
                         <h1>Thanh toán thành công !</h1>
-                        <Button
-                            htmlType='submit'
-                            onClick={handleDownload}>Xuất hóa đơn</Button>
                     </div>
                 );
 
@@ -154,12 +152,12 @@ export default function ListOrderPage() {
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Lỗi ! Vui lòng kiểm tra lại";
-                notification.error({ message:  errorMessage});
+                notification.error({ message: errorMessage });
                 console.log(err);
             });
     };
 
-    const handleSubmitCredit = () => {
+    const handleSubmitCredit = (isCredit) => {
         const randomOrderKey = generateRandomKey();
 
         const orderData = {
@@ -169,7 +167,7 @@ export default function ListOrderPage() {
             name: customerName,
             dateOfBirth: customerBirthday,
             paymentMethod: paymentMethod,
-            amount: (totalPrice - (totalPrice * discount / 100)) ,
+            amount: (totalPrice - (totalPrice * discount / 100)),
             customerPhone: customerPhone,
         };
 
@@ -187,29 +185,72 @@ export default function ListOrderPage() {
             return;
         }
 
-        adornicaServ.postPaidSummit(orderData)
-            .then((res) => {
-                console.log('Order submitted successfully:', res.data);
+        setIsPaymentPending(true); // Đặt trạng thái chờ thanh toán
+
+        adornicaServ.getListOrderDetail(orderKey)
+                    .then((res) => {
+                        console.log(res.data.metadata);
+                        const orderList = res.data.metadata?.list?.map(item => ({
+                            ...item,
+                            totalPrice: item.price
+                        })) || [];
+                        setProducts(orderList);
+                        const customerData = res.data.metadata || {};
+                        console.log(customerData);
+                        setCustomer(customerData);
+                        setCustomerName(customerData.customerName || '');
+                        setCustomerPhone(customerData.customerPhone || '');
+                        setCustomerAddress(customerData.address || '');
+                        setCustomerBirthday(customerData.dateOfBirth ? moment(customerData.dateOfBirth).valueOf() : null);
+                        setDateSale(customerData.dateSell ? convertMillisecondsToDateString(customerData.dateSell) : '');
+                        setPaymentMethodDone(customerData.paymentMethod || '');
+                        setDeliveryStatus(customerData.deliveryStatus || '');
+                        setOrderId(customerData.orderId || '');
+                        setDiscount(customerData.discount || 0);
+                        if (customerData.paymentMethod !== 'NONE') {
+                            setPaymentUpdated(true);
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+
+        const paymentPromise = isCredit ? adornicaServ.postPaidSummit(orderData) : adornicaServ.postPaidSummit(orderData);
+        paymentPromise
+            .then(res => {
                 const linkCredit = res.data.metadata;
-                if (linkCredit) {
-                    window.location.href = linkCredit;
+                console.log(res)
+                if (isCredit && linkCredit) {
+                    window.open(linkCredit, '_blank');
                 }
                 showModal(
                     <div className='notice__content'>
-                        <i className="check__icon fa-solid fa-circle-check"></i>
-                        <h1>Thanh toán thành công !</h1>
-                        <Button
-                            htmlType='submit'
-                            onClick={handleDownload}>Xuất hóa đơn</Button>
+                        <i className="check__icon fa-solid fa-exclamation"></i>
+                        <h1>Đang chờ thanh toán!</h1>
                     </div>
                 );
 
+                setTimeout(() => {
+                    showModal(
+                        <div className='notice__content'>
+                            <i className="check__icon fa-solid fa-circle-check"></i>
+                            <h1>Thanh toán thành công!</h1>
+                        </div>
+                    );
+                    navigate(`/historyOrder`);
+                    window.location.reload();
+                }, 15000);
 
+
+
+
+                
             })
-            .catch((err) => {
-                const errorMessage = err.response?.data?.metadata?.message || err.message || "Lỗi ! Vui lòng kiểm tra lại";
-                notification.error({ message:  errorMessage});
-                console.log(err);
+            .catch(err => {
+                const errorMessage = err.response?.data?.metadata?.message || err.message || 'Lỗi! Vui lòng kiểm tra lại.';
+                notification.error({ message: errorMessage });
+                console.error(err);
+                setIsPaymentPending(false); // Đặt trạng thái thanh toán thất bại
             });
     };
 
@@ -285,7 +326,7 @@ export default function ListOrderPage() {
                                             <option value='CASH'>Tiền mặt</option>
                                             <option value='CREDIT'>Thẻ</option>
                                         </select></label>
-                                        <label>Trạng thái giao hàng : {deliveryStatus == "PENDING" ? "Đang sử lí": "Thành công"}</label>
+                                        <label>Trạng thái giao hàng : {deliveryStatus == "PENDING" ? "Đang sử lí" : "Thành công"}</label>
                                     </>
                                 ) : (
                                     <>
@@ -293,8 +334,8 @@ export default function ListOrderPage() {
                                         <label>Name: {customerName}</label>
                                         <label>Phone: {customerPhone}</label>
                                         <label>Date of sale: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
-                                        <label>Payment methods: {paymentMethodDone == "CASH" ? "Tiền mặt": paymentMethodDone == "CREDIT" ? "Thẻ": "Chưa thanh toán"}</label>
-                                        <label>Delivery status: {deliveryStatus == "PENDING" ? "Đang sử lí": "Thành công"}</label>
+                                        <label>Payment methods: {paymentMethodDone == "CASH" ? "Tiền mặt" : paymentMethodDone == "CREDIT" ? "VNPAY" : "Chưa thanh toán"}</label>
+                                        <label>Delivery status: {deliveryStatus == "PENDING" ? "Đang sử lí" : "Thành công"}</label>
 
                                     </>
                                 )}
@@ -342,6 +383,12 @@ export default function ListOrderPage() {
                                     style={{ padding: '0 60px', marginLeft: '30px' }}
                                     disabled={deliveryStatus === 'SUCCESS' || paymentMethodDone !== 'NONE'} // Disable button if deliveryStatus is success
                                 >Thanh toán</Button>
+                                <Button
+                                    size="large"
+                                    style={{ padding: '5px 60px', marginLeft: '30px' }}
+                                    htmlType='submit' onClick={handleDownload}
+                                    disabled={!deliveryStatus === 'SUCCESS' || paymentMethodDone == 'NONE'}
+                                >Xuất hóa đơn</Button>
                             </div>
                         </div>
 
