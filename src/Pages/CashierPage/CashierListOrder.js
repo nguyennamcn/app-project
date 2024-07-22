@@ -39,7 +39,7 @@ export default function SellOrderPage() {
                         paymentMethod: order.paymentMethod,
                         deliveryStatus: order.deliveryStatus,
                     }))
-                    .sort((a, b) => a.orderId - b.orderId);
+                    .sort((a, b) => b.orderId - a.orderId);
 
                 setDataSource(orders);
                 setFilteredData(orders);

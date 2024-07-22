@@ -20,7 +20,8 @@ const JewelryInventoryPage = () => {
     adornicaServ.getListJewelry()
       .then((res) => {
         console.log(res.data.metadata.data);
-        setJewelry(res.data.metadata.data);
+        const sortedData = res.data.metadata.data.sort((a, b) => b.productId - a.productId);
+        setJewelry(sortedData);
       })
       .catch((err) => {
         console.log(err);
@@ -34,7 +35,7 @@ const JewelryInventoryPage = () => {
     Modal.confirm({
       content: 'Bạn có muốn xóa sản phẩm này không?',
       okText: 'Có',
-      okType: 'danger',
+      okType: 'danger', 
       cancelText: 'Không',
       onOk() {
         handleDelete(jewelryCode);
@@ -145,7 +146,7 @@ const JewelryInventoryPage = () => {
       <table className="jewelry-table">
         <thead>
           <tr>
-            <th className="jewelry-th">ID</th>
+            <th className="jewelry-th">STT</th>
             <th className="jewelry-th">Mã sản phẩm</th>
             <th className="jewelry-th">Tên sản phẩm</th>
             <th className="jewelry-th">Giá (VND) </th>
@@ -154,9 +155,9 @@ const JewelryInventoryPage = () => {
           </tr>
         </thead>
         <tbody>
-          {currentJewelry.map((item) => (
+          {currentJewelry.map((item, index) => (
             <tr key={item.productId}>
-              <td className="jewelry-td" data-label="ID">{item.productId}</td>
+              <td className="jewelry-td" data-label="ID">{index +1}</td>
               <td className="jewelry-td" data-label="Code">{item.productCode}</td>
               <td className="jewelry-td" data-label="Name">{item.productName}</td>
               <td className="gold-td" data-label="Price (VND)">{formatPrice(item.productPrice)}</td>
