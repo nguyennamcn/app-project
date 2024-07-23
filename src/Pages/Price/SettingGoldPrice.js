@@ -110,6 +110,14 @@ export default function SettingGoldPrice() {
   };
 
   const handleCreate = () => {
+    const now = Date.now(); 
+
+    
+    if (createEffectDate < now) {
+        notification.error({ message: "Ngày tạo giá phải lớn hơn ngày hiện tại" });
+        return; 
+    }
+
     const dataUpdateWithEffectDate = {
       priceSell: createSellPrice,
       priceBuy: createBuyPrice,
@@ -139,28 +147,40 @@ export default function SettingGoldPrice() {
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
   };
-  const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('vi-VN', options);
-  };
+  const formatDate = (milliseconds) => {
+    const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    };
+    return new Date(milliseconds).toLocaleDateString('vi-VN', options);
+};
 
   const sortedGoldPrices = [...goldPrices].sort((a, b) => new Date(a.effectDate) - new Date(b.effectDate));
 
   const findClosestDate = (dates) => {
     if (dates.length === 0) return null;
-
-    let closestDate = dates[0];
-    let minDiff = Math.abs(moment(closestDate.effectDate).diff(currentDate, 'days'));
+    
+    const currentDate = moment(); 
+  
+    let closestDate = null;
+    let minDiff = Infinity; 
 
     dates.forEach(date => {
-      const diff = Math.abs(moment(date.effectDate).diff(currentDate, 'days'));
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestDate = date;
+      const effectDate = moment(date.effectDate);
+      
+      if (effectDate.isBefore(currentDate, 'day')) {
+        const diff = Math.abs(effectDate.diff(currentDate, 'days'));
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestDate = date;
+        }
       }
     });
-
-    return closestDate.effectDate;
+  
+    return closestDate ? closestDate.effectDate : null;
   };
 
   const closestEffectDate = findClosestDate(goldPrices);

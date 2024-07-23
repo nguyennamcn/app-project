@@ -13,6 +13,7 @@ const CartPage = () => {
     const [customerPhone, setCustomerPhone] = useState('');
     const [discount, setDiscount] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isDiscountModalVisible, setIsDiscountModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [newPrice, setNewPrice] = useState();
 
@@ -237,6 +238,7 @@ const CartPage = () => {
                         <p>Số lượng sản phẩm: {totalQuantity}</p>
                         <p>Tổng giá: {formatPrice(totalAllPrice)}</p>
                         <p>Giảm giá: {discount}%</p>
+                        <p><a style={{textDecoration:'underline', cursor: 'pointer', color:'blue'}} onClick={() => setIsDiscountModalVisible(true)}>Khuyến mãi</a></p>
                     </div>
                     <div style={{ marginTop: '0%', width: '20%' }}>
                         <p>Số điện thoại khách hàng:
@@ -292,6 +294,21 @@ const CartPage = () => {
                 className="custom-modal-send"
             >
                 <div>{modalMessage}</div>
+            </Modal>
+
+            <Modal
+                visible={isDiscountModalVisible}
+                footer={null}
+                title={ <h2 style={{fontSize:'24px'}}>Khuyến mãi khách hàng thân thiết</h2>}
+                onCancel={() => setIsDiscountModalVisible(false)}
+                className="custom-modal-send"
+            >
+                <div style={{textAlign:'left', fontSize:'18px', marginLeft:'28px'}}>
+                    <h1 style={{textAlign:'left', marginBottom:'16px'}}>Các mốc khuyến mãi:</h1>
+                    <p style={{marginBottom:'6px'}}>- Mốc 300.000.000 vnđ: <span>15%</span></p>
+                    <p style={{marginBottom:'6px'}}>- Mốc 200.000.000 vnđ: <span>10%</span></p>
+                    <p style={{marginBottom:'6px'}}>- Mốc 100.000.000 vnđ: <span>5%</span></p>
+                </div>
             </Modal>
         </div>
     );

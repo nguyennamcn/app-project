@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { adornicaServ } from '../../service/adornicaServ';
-import { Modal, Input, Button, notification } from 'antd';
+import { Modal, Input, Button, notification, DatePicker } from 'antd';
 import './Diamond.css';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
@@ -13,7 +13,17 @@ export default function SettingDiamondPrice() {
   const [selectedDiamond, setSelectedDiamond] = useState({});
   const [updatedBuyPrice, setUpdatedBuyPrice] = useState('');
   const [updatedSellPrice, setUpdatedSellPrice] = useState('');
+  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [createEffectDate, setCreateEffectDate] = useState(null);
+  const [createBuyPrice, setCreateBuyPrice] = useState();
+  const [createSellPrice, setCreateSellPrice] = useState();
+
+  const [createByOrigin, setCreateByOrigin] = useState();
+  const [createByColor, setCreateByColor] = useState();
+  const [createByClarity, setCreateByClarity] = useState();
+  const [createByCut, setCreateByCut] = useState();
+  const [createByCarat, setCreateByCarat] = useState();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -87,10 +97,16 @@ export default function SettingDiamondPrice() {
     navigate('/diamond-price');
   };
 
-  const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('vi-VN', options);
-  };
+  const formatDate = (milliseconds) => {
+    const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    };
+    return new Date(milliseconds).toLocaleDateString('vi-VN', options);
+};
 
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -104,20 +120,65 @@ export default function SettingDiamondPrice() {
   };
 
   const findClosestDate = (dates) => {
-  if (dates.length === 0) return null;
-
-    let closestDate = dates[0];
-    let minDiff = Math.abs(moment(closestDate.effectDate).diff(currentDate, 'days'));
+    if (dates.length === 0) return null;
+    
+    const currentDate = moment(); 
+  
+    let closestDate = null;
+    let minDiff = Infinity; 
 
     dates.forEach(date => {
-      const diff = Math.abs(moment(date.effectDate).diff(currentDate, 'days'));
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestDate = date;
+      const effectDate = moment(date.effectDate);
+      
+      if (effectDate.isBefore(currentDate, 'day')) {
+        const diff = Math.abs(effectDate.diff(currentDate, 'days'));
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestDate = date;
+        }
       }
     });
+  
+    return closestDate ? closestDate.effectDate : null;
+  };
 
-    return closestDate.effectDate;
+  const showCreateModal = () => {
+    setIsCreateModalVisible(true);
+  };
+
+  const handleCreate = () => {
+    const now = Date.now(); 
+
+    
+    if (createEffectDate < now) {
+        notification.error({ message: "Ngày tạo giá phải lớn hơn ngày hiện tại" });
+        return; 
+    }
+
+    const dataCreateWithEffectDate = {
+      origin: createByOrigin,
+      color: createByColor,
+      clarity: createByClarity,
+      cut: createByCut,
+      carat: parseFloat(createByCarat),
+      sellPrice: createSellPrice,
+      buyPrice: createBuyPrice,
+      effectDate: createEffectDate ? createEffectDate.valueOf() : 0
+    }; 
+
+    adornicaServ.postDiamondPrice(dataCreateWithEffectDate)
+    .then(response => {
+      console.log(response.data.metadata);
+      notification.success({ message: "Tạo giá mới thành công" });
+      setIsCreateModalVisible(false);
+      fetchDiamondList(); // Refresh the list
+    })
+    .catch(error => {
+      const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
+      notification.error({ message: "Vui lòng không bỏ trống" });
+      console.log(error);
+    });
+
   };
 
   const closestEffectDate = findClosestDate(diamondPrices);
@@ -138,6 +199,7 @@ export default function SettingDiamondPrice() {
           </option>
         ))}
       </select>
+      <button className="btnCreate" onClick={showCreateModal}>Tạo ngày thay đổi giá</button>
       <div className="DiamondPrice-tableContainer">
         <table className="DiamondPrice-table">
           <thead>
@@ -204,6 +266,103 @@ export default function SettingDiamondPrice() {
         </div>
       </Modal>
 
+      <Modal
+        title={<center><h1>Tạo giá mới</h1></center>}
+        visible={isCreateModalVisible}
+        style={{ marginRight:'22%' }}
+        onOk={handleCreate}
+        onCancel={() => setIsCreateModalVisible(false)}
+      >
+        <div>
+              <label className='lable-create-modal'>Màu sắc:</label>
+              <select className='select-create-modal'  value={createByColor} onChange={(e) => setCreateByColor(e.target.value)}>
+                <option value=""></option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="H">H</option>
+                <option value="I">I</option>
+                <option value="J">J</option>
+                <option value="K">K</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+              </select>
+              </div>
+              <div>
+              <label className='lable-create-modal'>Vết cắt:</label>
+              <select className='select-create-modal'  value={createByCut} onChange={(e) => setCreateByCut(e.target.value)}>
+                <option value=""></option>
+                <option value="EX">EX</option>
+                <option value="G">G</option>
+                <option value="F">F</option>
+                <option value="P">P</option>
+              </select>
+              </div>
+              <div>
+              <label className='lable-create-modal'>Độ tinh khiết:</label>
+              <select className='select-create-modal' value={createByClarity} onChange={(e) => setCreateByClarity(e.target.value)}>
+                <option value=""></option>
+                <option value="FL">FL</option>
+                <option value="IF">IF</option>
+                <option value="VVS1">VVS1</option>
+                <option value="VVS2">VVS2</option>
+                <option value="VS1">VS1</option>
+                <option value="VS2">VS2</option>
+                <option value="SI1">SI1</option>
+                <option value="SI2">SI2</option>
+                <option value="I1">I1</option>
+                <option value="I2">I2</option>
+                <option value="I3">I3</option>
+              </select>
+              </div>
+          <div>
+              <label className='lable-create-modal'>Khối lượng (Carat):</label>
+              <input className='select-create-modal' type="number" value={createByCarat} onChange={(e) => setCreateByCarat(e.target.value)} 
+                min={0}
+                step={0.1}
+              />
+          </div>
+          <div>
+              <label className='lable-create-modal' >Nguồn gốc:</label>
+              <select className='select-create-modal'  value={createByOrigin} onChange={(e) => setCreateByOrigin(e.target.value)}>
+                <option value=""></option>
+                <option value="TỰ NHIÊN">TỰ NHIÊN</option>
+                <option value="NHÂN TẠO">NHÂN TẠO</option>
+              </select>
+          </div>
+    
+        <div style={{ marginTop: '10px', marginBottom: '0px' }}>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Ngày hiệu lực:</label>
+          <DatePicker
+            style={{ marginLeft: '10px' }}
+            showTime={{ format: 'HH:mm' }}
+            format="YYYY-MM-DD HH:mm"
+            onChange={(date) => setCreateEffectDate(date)}
+          />
+        </div>
+
+        <div>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá thu mua (VND): </label>
+          <Input
+            value={createBuyPrice}
+            onChange={(e) => setCreateBuyPrice(e.target.value)}
+            type="number"
+            min={1000}
+            step={10000}
+          />
+        </div>
+        <div style={{ marginTop: '10px', marginBottom: '0px' }}>
+          <label style={{fontWeight:600, fontSize:'16px'}}>Giá bán (VND): </label>
+          <Input
+            value={createSellPrice}
+            onChange={(e) => setCreateSellPrice(e.target.value)}
+            type="number"
+            min={1000}
+            step={1000}
+          />
+        </div>
+      </Modal>
     </div>
       )
     }

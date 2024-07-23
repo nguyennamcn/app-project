@@ -310,9 +310,17 @@ export const adornicaServ = {
         return https.post(`/api/v1/prices/materials/create/${id}`, newPriceData);
     },
 
+
+    
+    postDiamondPrice: (newPriceData) =>{
+        console.log(newPriceData);
+        return https.post(`/api/v1/prices/gems/create`, newPriceData);
+    },
+
     changePasswork : (data) =>{
         console.log(data);
         return https.post(`/api/v1/users/change-password`, data);
+
     },
 
     fogotPass : (email) =>{
@@ -334,4 +342,5 @@ export const adornicaServ = {
         console.log(data);
         return https.post(`/api/v1/users/reset-password`, data);
     },
+
 }

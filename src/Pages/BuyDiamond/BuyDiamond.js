@@ -281,7 +281,10 @@ const DiamondSelection = () => {
             </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Khối lượng (Carat):</label>
-              <input type="number" style={styles.input} value={item.carat} onChange={(e) => handleDiamondItemChange(index, 'carat', e.target.value)} />
+              <input type="number" style={styles.input} value={item.carat} onChange={(e) => handleDiamondItemChange(index, 'carat', e.target.value)} 
+              min={0.1}
+              step={0.1}
+              />
             </div>
             <div style={styles.formGroup}>
               <label style={styles.label}>Nguồn gốc:</label>
