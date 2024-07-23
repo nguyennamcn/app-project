@@ -112,11 +112,6 @@ const Material = () => {
 
     const handleUpdateMaterial = (id) => {
         const updatedData = { name: editName };
-        const newPriceData = {
-            priceBuy: priceBuy,
-            priceSell: priceSell,
-            effectDate: effdate,
-        };
         adornicaServ.updateMaterial(id, updatedData)
             .then((res) => {
                 console.log(`Updated material with id: ${id}`);
@@ -134,22 +129,7 @@ const Material = () => {
             });
 
     
-            adornicaServ.updatePriceMaterial(id, newPriceData)
-            .then((res) => {
-                console.log(`Updated price for material with id: ${id}`);
-                setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, ...newPriceData } : item));
-                const activeItems = items.map(item => item.id === id ? { ...item, ...newPriceData } : item).filter(item => item.active); // Update active items
-                setFilteredItems(activeItems);
-                setPageCount(Math.ceil(activeItems.length / itemsPerPage));
-                closeMaterialModal();
-                notification.success({ message: "Cập nhật giá thành công !" });
-                navigate(0); // Reload lại trang
-            })
-            .catch((err) => {
-                const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
-                notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
-                console.log(err);
-            });
+
     };
 
     const showDeleteConfirm = (id) => {
@@ -289,7 +269,7 @@ const Material = () => {
                                         onChange={(e) => setEditName(e.target.value)}
                                     />
                                 </label>
-                                <label className="material-modal-label">
+                                {/* <label className="material-modal-label">
                                     Giá bán:
                                     <input
                                         className="material-modal-input"
@@ -305,7 +285,7 @@ const Material = () => {
                                         value={priceBuy}
                                         onChange={(e) => setPriceBuy(e.target.value)}
                                     />
-                                </label>
+                                </label> */}
                                 <div className="material-modal-buttons">
                                     <button style={{
                                         backgroundColor: '#00ca4d',
