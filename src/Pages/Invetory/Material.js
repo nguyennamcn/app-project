@@ -4,11 +4,12 @@ import { adornicaServ } from '../../service/adornicaServ';
 import Modal from 'react-modal';
 import ReactPaginate from 'react-paginate';
 import { Modal as AntdModal, notification } from 'antd';
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Spinner from '../../Components/Spinner/Spinner';
 
 const Material = () => {
     const [items, setItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -31,8 +32,10 @@ const Material = () => {
             .then((res) => {
                 console.log(res.data.metadata);
                 const sortedItems = res.data.metadata.sort((a, b) => a.id - b.id);
-                setItems(res.data.metadata);
-                setPageCount(Math.ceil(res.data.metadata.length / itemsPerPage));
+                const activeItems = sortedItems.filter(item => item.active); // Filter items
+                setItems(activeItems);
+                setFilteredItems(activeItems);
+                setPageCount(Math.ceil(activeItems.length / itemsPerPage));
             })
             .catch((err) => {
                 console.log(err);
@@ -45,7 +48,7 @@ const Material = () => {
 
     const openMaterialModal = (item) => {
         setSelectedItem(item);
-        setEditName(item.name);
+        setEditName(item.material);
         setModalIsOpen(true);
     };
 
@@ -71,20 +74,20 @@ const Material = () => {
         adornicaServ.createMaterial(newItemData)
             .then((res) => {
                 console.log(`Created new material with id: ${res.data.id}`);
-                setItems(prevItems => [...prevItems, { id: res.data.id, name: newItemName }]);
-                setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
+                const newItem = { id: res.data.id, material: newItemName, active: true }; // Ensure new item has active: true
+                setItems(prevItems => [...prevItems, newItem]);
+                const activeItems = [...items, newItem].filter(item => item.active); // Update active items
+                setFilteredItems(activeItems);
+                setPageCount(Math.ceil(activeItems.length / itemsPerPage));
                 closeCreateMaterialModal();
                 notification.success({ message: "Tạo thành công !" });
-                // navigate(0); // Reload lại trang
-
+                navigate(0); // Reload lại trang
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
                 notification.error({ message: "Lỗi ! Vui lòng kiểm tra lại" });
                 console.log(err);
             });
-
-        
     };
 
     const handleDeleteMaterial = (id) => {
@@ -92,10 +95,12 @@ const Material = () => {
             .then((res) => {
                 console.log(`Deleted material with id: ${id}`);
                 const newItems = items.filter(item => item.id !== id);
+                const activeItems = newItems.filter(item => item.active); // Update active items
                 setItems(newItems);
-                setPageCount(Math.ceil(newItems.length / itemsPerPage));
+                setFilteredItems(activeItems);
+                setPageCount(Math.ceil(activeItems.length / itemsPerPage));
                 notification.success({ message: "Xóa thành công !" });
-                // navigate(0); // Reload lại trang
+                navigate(0); // Reload lại trang
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
@@ -116,6 +121,8 @@ const Material = () => {
             .then((res) => {
                 console.log(`Updated material with id: ${id}`);
                 setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, ...updatedData } : item));
+                const activeItems = items.map(item => item.id === id ? { ...item, ...updatedData } : item).filter(item => item.active); // Update active items
+                setFilteredItems(activeItems);
                 notification.success({ message: "Cập nhật thành công !" });
                 navigate(0); // Reload lại trang
                 closeMaterialModal();
@@ -129,13 +136,14 @@ const Material = () => {
     
             adornicaServ.updatePriceMaterial(id, newPriceData)
             .then((res) => {
-                console.log(`Created new material with id: ${res.data.id}`);
-                setItems(prevItems => [...prevItems, { id: res.data.id, name: newItemName }]);
-                setPageCount(Math.ceil((items.length + 1) / itemsPerPage));
-                closeCreateMaterialModal();
-                notification.success({ message: "Tạo thành công !" });
+                console.log(`Updated price for material with id: ${id}`);
+                setItems(prevItems => prevItems.map(item => item.id === id ? { ...item, ...newPriceData } : item));
+                const activeItems = items.map(item => item.id === id ? { ...item, ...newPriceData } : item).filter(item => item.active); // Update active items
+                setFilteredItems(activeItems);
+                setPageCount(Math.ceil(activeItems.length / itemsPerPage));
+                closeMaterialModal();
+                notification.success({ message: "Cập nhật giá thành công !" });
                 navigate(0); // Reload lại trang
-
             })
             .catch((err) => {
                 const errorMessage = err.response?.data?.metadata?.message || err.message || "Server error";
@@ -165,7 +173,7 @@ const Material = () => {
         setCurrentPage(data.selected);
     };
 
-    const currentItems = items.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+    const currentItems = filteredItems.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
     return (
         <>
@@ -340,8 +348,6 @@ const Material = () => {
                                     onChange={(e) => setNewItemName(e.target.value)}
                                 />
                             </label>
-
-
                             <div className="material-modal-buttons">
                                 <button style={{
                                     backgroundColor: '#00ca4d',
@@ -373,10 +379,8 @@ const Material = () => {
                         <button onClick={closeConfirmationModal}>No</button>
                     </Modal>
                 </div>
-            )
-            }
+            )}
         </>
-
     );
 };
 
