@@ -54,7 +54,7 @@ function AddDiamond() {
     adornicaServ.postCreateProduct(productData)
       .then(response => {
         console.log(response.data.metadata);
-        notification.success({ message: "Add product successfully" });
+        notification.success({ message: "Thêm kim cương thành công" });
         navigate('/ManageDiamond');
       })
       .catch(error => {
@@ -99,8 +99,8 @@ function AddDiamond() {
                 <label>Nguồn gốc:</label>
                 <select type="text" name="origin" value={newDiamond.origin} onChange={handleInputChange} required>
                   <option value="" disabled>Hãy chọn nguồn gốc</option>
-                  <option value="NATURAL">NATURAL</option>
-                  <option value="LAB_GROWN">LAB_GROWN</option>
+                  <option value="TỰ NHIÊN">TỰ NHIÊN</option>
+                  <option value="NHÂN TẠO">NHÂN TẠO</option>
                 </select>
               </div>
             </div>
@@ -152,7 +152,7 @@ function AddDiamond() {
               </div>
               <div className="add-diamond-form-group">
                 <label>Khối lượng:</label>
-                <input type="number" name="carat" value={newDiamond.carat} onChange={handleInputChange} min={0.1} step={0.1} />
+                <input type="number" name="carat" value={newDiamond.carat} onChange={handleInputChange} min={0.1} step={0.01} />
               </div>
             </div>
             <div className="add-diamond-form-footer">

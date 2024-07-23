@@ -191,7 +191,7 @@ function UpDiamond() {
                   </div>
                   <div className="updiamond-form-group">
                     <label>Khối lượng:</label>
-                    <input type="number" name="carat" placeholder="Carat" value={sp.gem[0].carat} onChange={handleGemInputChange} min={0} />
+                    <input type="number" name="carat" placeholder="Carat" value={sp.gem[0].carat} onChange={handleGemInputChange} min={0} step={0.01} />
                   </div>
                 </div>
                 <div className="updiamond-form-footer">

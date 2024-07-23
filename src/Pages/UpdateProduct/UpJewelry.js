@@ -166,10 +166,12 @@ function UpJewelry() {
                   <div className="upjewelry-form-group">
                     <label>Giới tính:</label>
                     <select name="gender" value={sp.gender} onChange={handleInputChange}>
-                      <option value={sp.gender}>{sp.gender}</option>
-                      {sp.gender !== "MALE" && <option value="MALE">Nam</option>}
-                      {sp.gender !== "FEMALE" && <option value="FEMALE">Female</option>}
-                      {sp.gender !== "UNISEX" && <option value="UNISEX">Unisex</option>}
+                    {sp.gender === "MALE" && <option value="MALE">Nam</option>}
+  {sp.gender === "FEMALE" && <option value="FEMALE">Nữ</option>}
+  {sp.gender === "UNISEX" && <option value="UNISEX">Unisex</option>}
+  {sp.gender !== "MALE" && <option value="MALE">Nam</option>}
+  {sp.gender !== "FEMALE" && <option value="FEMALE">Nữ</option>}
+  {sp.gender !== "UNISEX" && <option value="UNISEX">Unisex</option>}
                     </select>
                   </div>
                   <div className="upjewelry-form-group">
@@ -183,11 +185,11 @@ function UpJewelry() {
                     <h2 className="upjewelry-static-input">{sp.materials[0]?.name}</h2>
                   </div>
                   <div className="upjewelry-form-group">
-                    <label>Trọng lượng vật liệu (gram):</label>
-                    <input type="number" name="weight" placeholder='Material weight' value={sp.materials[0]?.weight} onChange={(e) => handleMaterialInputChange(e, 0)} min={1} />
+                    <label>Trọng lượng vật liệu (Chỉ):</label>
+                    <input type="number" name="weight" placeholder='Material weight' value={sp.materials[0]?.weight} onChange={(e) => handleMaterialInputChange(e, 0)} min={0} step={0.1} />
                   </div>
                 </div>
-                {(isHaveGem !== "None") && (<>
+                {(isHaveGem !== "None") && isHaveGem !== "NONE" && (<>
                   <div className="upjewelry-form-row">
                     <div className="upjewelry-form-group">
                       <label>Mã đá quý (Kim cương):</label>
@@ -252,8 +254,8 @@ function UpJewelry() {
                       </select>
                     </div>
                     <div className="upjewelry-form-group">
-                      <label>Khối lượng:</label>
-                      <input type="number" name="carat" placeholder='Khối lượng (kim cương)' value={sp.gem[0]?.carat} onChange={(e) => handleGemInputChange(e, 0)} min={0} step={0.1} />
+                      <label>Khối lượng (carat):</label>
+                      <input type="number" name="carat" placeholder='Khối lượng (kim cương)' value={sp.gem[0]?.carat} onChange={(e) => handleGemInputChange(e, 0)} min={0} step={0.01} />
                     </div>
                   </div>
                 </>)}

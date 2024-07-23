@@ -176,7 +176,7 @@ function AddJewelry() {
     <div className="add-gem-container">
       <div className="add-gem-content">
         <div className="add-gem-form">
-          <h2 className="add-gem-title">Thêm sản phẩm từ Kim cương</h2>
+          <h2 className="add-gem-title">Thêm sản phẩm Trang Sức</h2>
           <form onSubmit={handleFormSubmit}>
             <div className="add-gem-form-row">
               <div className="add-gem-form-group">
@@ -327,7 +327,7 @@ function AddJewelry() {
               </div>
               <div className="add-gem-form-group">
                 <label>Khối lượng (carat):</label>
-                <input type="number" name="carat" value={newJewelry.carat} onChange={handleInputChange} min={0} step={0.1}/>
+                <input type="number" name="carat" value={newJewelry.carat} onChange={handleInputChange} min={0} step={0.01}/>
               </div>
               <div className="add-gem-form-group">
                 <label>Giá đá quý:</label>
