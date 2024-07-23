@@ -49,6 +49,9 @@ import SettingGoldPrice from './Pages/Price/SettingGoldPrice';
 import SettingDiamondPrice from './Pages/Price/SettingDiamondPrice'
 import Spinner from './Components/Spinner/Spinner';
 import ChangePass from './Pages/LoginPage/ChangePass';
+import FogotPass from './Pages/LoginPage/FogotPass';
+import FogotpassLogin from './Pages/LoginPage/FogotpassLogin';
+import RePass from './Pages/LoginPage/RePass';
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +76,8 @@ function App() {
           )}
 
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/login/fogotpass" element={<FogotpassLogin />} />
+          <Route path="/login/repass" element={<RePass />} />
           {/* Private Routes - Require authentication */}
           {userInfo && (
             <>
@@ -120,6 +125,7 @@ function App() {
               <Route path="/settingGoldPrice" element={<Layout Component={SettingGoldPrice} />} />
               <Route path="/settingDiamondPrice" element={<Layout Component={SettingDiamondPrice} />} />
               <Route path="/changepass" element={<Layout Component={ChangePass} />} />
+              <Route path="/fogotpass" element={<Layout Component={FogotPass} />} />
             </>
           )}
 

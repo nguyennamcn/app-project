@@ -313,5 +313,25 @@ export const adornicaServ = {
     changePasswork : (data) =>{
         console.log(data);
         return https.post(`/api/v1/users/change-password`, data);
-    }
+    },
+
+    fogotPass : (email) =>{
+        console.log(email);
+        return https.post(`/api/v1/users/forgot-password`, email);
+    },
+
+    resendPass : (email) =>{
+        console.log(email);
+        return https.post(`/api/v1/users/resend-otp`, email);
+    },
+
+    confimOtp : (data) =>{
+        console.log(data);
+        return https.post(`/api/v1/users/confirm-otp`, data);
+    },
+
+    resetPass : (data) =>{
+        console.log(data);
+        return https.post(`/api/v1/users/reset-password`, data);
+    },
 }
