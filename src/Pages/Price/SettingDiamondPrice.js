@@ -152,10 +152,10 @@ export default function SettingDiamondPrice() {
       clarity: createByClarity,
       cut: createByCut,
       carat: parseFloat(createByCarat),
-      priceSell: createSellPrice,
-      priceBuy: createBuyPrice,
+      sellPrice: createSellPrice,
+      buyPrice: createBuyPrice,
       effectDate: createEffectDate ? createEffectDate.valueOf() : 0
-    };
+    }; 
 
     adornicaServ.postDiamondPrice(dataCreateWithEffectDate)
     .then(response => {
