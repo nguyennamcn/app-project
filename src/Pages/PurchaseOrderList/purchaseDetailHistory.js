@@ -296,7 +296,7 @@ const getPaid = (role) => {
           onChange={handleDetailChange}
         >
           <option value="CASH">Tiền mặt</option>
-          <option value="CREDIT">VNPAY</option>
+        
         </select>
 
         <label style={pageStyles.detailLabel}>Trạng thái giao dịch:</label>
@@ -304,7 +304,7 @@ const getPaid = (role) => {
           type="text"
           style={pageStyles.detailInput}
           name="address"
-          value={sp?.paymentMethod === 'NONE' ? "Chưa thanh toán" : sp?.paymentMethod === 'CASH' ? "Tiền mặt" : "VN PAY"}
+          value={sp?.paymentMethod === 'NONE' ? "Chưa thanh toán" : sp?.paymentMethod === 'CASH' ? "Đã thanh toán" : "VN PAY"}
           disabled
         />
       </div>

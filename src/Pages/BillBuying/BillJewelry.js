@@ -279,6 +279,7 @@ const BillJewelry = () => {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [phoneError, setPhoneError] = useState('');
+  const [nameError, setNameError] = useState('');
   const [isCreated, setIsCreated] = useState(false); // Trạng thái đã tạo hóa đơn
   const navigate = useNavigate();
   useEffect(() => {
@@ -321,6 +322,15 @@ const BillJewelry = () => {
         return;
       } else {
         setPhoneError('');
+      }
+    }
+    if (name === 'name') {
+      const regex = /^[^\d!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?]*$/;
+      if (!regex.test(value)) {
+        setNameError('Tên không chứa số và các ký tự đặc biệt');
+        return;
+      } else {
+        setNameError('');
       }
     }
     setCustomerDetails((prevDetails) => ({
@@ -441,6 +451,8 @@ const BillJewelry = () => {
           value={customerDetails.name}
           onChange={handleDetailChange}
         />
+        {nameError && <div style={pageStyles.errorText}>{nameError}</div>}
+
 
         <div style={pageStyles.productTable}>
           <div style={pageStyles.tableHeader}>

@@ -159,6 +159,7 @@ export default function SellOrderPage() {
             <table className="sell-order-table">
                 <thead>
                     <tr>
+                        
                         <th>Số thứ tự</th>
                         <th>Tên nhân viên</th>
                         <th>Mã đơn hàng</th>
@@ -167,19 +168,21 @@ export default function SellOrderPage() {
                         <th>Thanh toán</th>
                         <th>Trạng thái</th>
                         <th></th>
+                      
                     </tr>
                 </thead>
                 <tbody>
     {currentOrders.map((order , index) => (
         <tr key={order.orderId}>
-            <td data-label="Số thứ tự">{index +1}</td>
+            {/* <td data-label="ID">{order.orderId}</td> */}
+            <td data-label="Số thứ tự">{index + 1 + currentPage * ordersPerPage}</td>
             <td data-label="Nhân viên">{order.salesStaffName}</td>
             <td data-label="Mã đơn hàng">{order.orderCode}</td>
             <td data-label="Số tiền">{formatPrice(order.totalPrice)}</td>
             <td data-label="Ngày">{order.dateOrder}</td>
             <td data-label="Thanh toán">{getPaid(order.paymentMethod)}</td>
             <td data-label="Trạng thái">{getStt(order.deliveryStatus)}</td>
-            <td data-label="">
+            <td data-label="Tùy chỉnh">
                 <div className="action-buttons">
                     <NavLink to={`/cashierOrderDetail/${order.orderCode}`}>
                         <Button

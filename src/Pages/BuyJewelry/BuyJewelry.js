@@ -442,7 +442,7 @@ const JewelrySelection = () => {
                 disabled={item.origin === 'Không'}
                 required={item.origin !== 'Không'}
                 min={0.1}
-                step={0.1}
+                step={0.01}
               />
             </div>
             <div style={styles.formGroup}>

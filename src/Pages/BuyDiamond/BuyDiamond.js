@@ -204,7 +204,7 @@ const DiamondSelection = () => {
       clarity: item.clarity,
       color: item.color,
       origin: item.origin,
-      gemBuyPrice: parseFloat(item.gemBuyPrice),
+      gemBuyPrice: parseFloat((parseFloat(item.gemBuyPrice) + (parseFloat(item.gemSellPrice) - parseFloat(item.gemBuyPrice)) * parseFloat(gemPromotion)).toFixed(0)),
       gemSellPrice: parseFloat(item.gemSellPrice),
     }));
 
@@ -283,7 +283,7 @@ const DiamondSelection = () => {
               <label style={styles.label}>Khối lượng (Carat):</label>
               <input type="number" style={styles.input} value={item.carat} onChange={(e) => handleDiamondItemChange(index, 'carat', e.target.value)} 
               min={0.1}
-              step={0.1}
+              step={0.01}
               />
             </div>
             <div style={styles.formGroup}>
@@ -332,7 +332,7 @@ const DiamondSelection = () => {
         className="home-jewelry-custom-modal-bracelet"
       >
         <div className='size_img_bracelet'>
-          <h2 >Chiết khấu vàng: {gemPromotion * 100}%</h2>
+          <h2 >Chiết khấu kim cương: {gemPromotion * 100}%</h2>
           <h2>Bảng tính giá thu mua sản phẩm:</h2>
           <h2 style={{marginLeft:'30px'}}>- Giá mua + (Giá bán - Giá mua) * (Chiết khấu)</h2>
         </div>

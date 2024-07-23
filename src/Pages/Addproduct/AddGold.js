@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, notification } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './AddGold.css';
@@ -17,6 +17,17 @@ function AddGold() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [productImages, setProductImages] = useState([]);
+  const [goldType, setGoldType] = useState([]);
+
+  useEffect(() => {
+    adornicaServ.getPriceMaterial()
+      .then((res) => {
+        setGoldType(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -85,10 +96,10 @@ function AddGold() {
               <div className="add-gold-form-group">
                 <label>Vật liệu:</label>
                 <select name="material" value={newJewelry.material} onChange={handleInputChange} >
-                  <option value={1}>24K GOLD</option>
-                  <option value={2}>18K GOLD</option>
-                  <option value={3}>WHITE GOLD</option>
-                  <option value={4}>GOLD BARS</option>
+                <option  value="">Chọn loại vật liệu</option>
+                {goldType.map((gold) => (
+                  <option key={gold.materialId} value={gold.materialId}>{gold.materialName}</option>
+                ))}
                 </select>
               </div>
               <div className="add-gold-form-group">
