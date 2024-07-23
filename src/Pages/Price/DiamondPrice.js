@@ -116,8 +116,15 @@ const DiamondPrice = () => {
                             style={{
                                 position: 'absolute',
                                 top: '15%',
-                                right: '5%'
-                            }}
+                                right: '2%',
+                                backgroundColor: '#007bff', 
+                                color: '#fff',            
+                                border: 'none',           
+                                padding: '10px 20px',      
+                                borderRadius: '5px',       
+                                cursor: 'pointer',         
+                                fontSize: '16px',         
+                              }}
                         >
                             Mở bảng
                         </a>

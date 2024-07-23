@@ -47,6 +47,7 @@ export default function GoldPrice() {
         <>
           <div className="gold-price-container">
             <h2 className="gold-price-header">Giá Vàng - {currentDate}</h2>
+            
             {goldPrices.length > 0 ? (
               <table className="gold-price-table">
                 <thead>
@@ -72,6 +73,7 @@ export default function GoldPrice() {
             {isManager && (
               <button className="btnSetting-gold" onClick={handleSetting}>Tùy chỉnh</button>
             )}
+            
           </div>
           <div>
             <a
@@ -81,7 +83,14 @@ export default function GoldPrice() {
               style={{
                 position: 'absolute',
                 top: '15%',
-                right: '5%'
+                right: '2%',
+                backgroundColor: '#007bff', 
+                color: '#fff',            
+                border: 'none',           
+                padding: '10px 20px',      
+                borderRadius: '5px',       
+                cursor: 'pointer',         
+                fontSize: '16px',         
               }}
             >
               Mở bảng
