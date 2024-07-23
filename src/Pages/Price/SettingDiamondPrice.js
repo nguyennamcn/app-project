@@ -3,7 +3,9 @@ import { adornicaServ } from '../../service/adornicaServ';
 import { Modal, Input, Button, notification } from 'antd';
 import './Diamond.css';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import Spinner from '../../Components/Spinner/Spinner';
+const currentDate = moment();
 
 export default function SettingDiamondPrice() {
   const [listDiamond, setListDiamond] = useState([]);
@@ -101,6 +103,24 @@ export default function SettingDiamondPrice() {
     setIsModalVisible(true);
   };
 
+  const findClosestDate = (dates) => {
+  if (dates.length === 0) return null;
+
+    let closestDate = dates[0];
+    let minDiff = Math.abs(moment(closestDate.effectDate).diff(currentDate, 'days'));
+
+    dates.forEach(date => {
+      const diff = Math.abs(moment(date.effectDate).diff(currentDate, 'days'));
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestDate = date;
+      }
+    });
+
+    return closestDate.effectDate;
+  };
+
+  const closestEffectDate = findClosestDate(diamondPrices);
   const sortedDiamondPrices = [...diamondPrices].sort((a, b) => new Date(a.effectDate) - new Date(b.effectDate));
 
 
@@ -135,7 +155,11 @@ export default function SettingDiamondPrice() {
           </thead>
           <tbody>
             {sortedDiamondPrices.map((price, index) => (
-              <tr key={index} onClick={() => showModal(price)} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
+              <tr
+                    key={index}
+                    onClick={() => showModal(price)}
+                    className={`DiamondPrice-row ${index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'} ${price.effectDate === closestEffectDate ? 'DiamondPrice-closestEffectDate' : ''}`}
+                  >
                 <td data-label="STT" className="DiamondPrice-td-toClick">{price.id}</td>
                 <td data-label="Origin" className="DiamondPrice-td">{price.origin}</td>
                 <td data-label="Color" className="DiamondPrice-td">{price.color}</td>

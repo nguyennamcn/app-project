@@ -120,3 +120,7 @@
     background-color: #ccc;
     cursor: pointer;
   }
+
+  .highlight {
+    background-color: yellow;
+  }

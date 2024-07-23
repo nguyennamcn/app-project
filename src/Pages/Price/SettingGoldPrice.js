@@ -146,6 +146,25 @@ export default function SettingGoldPrice() {
 
   const sortedGoldPrices = [...goldPrices].sort((a, b) => new Date(a.effectDate) - new Date(b.effectDate));
 
+  const findClosestDate = (dates) => {
+    if (dates.length === 0) return null;
+
+    let closestDate = dates[0];
+    let minDiff = Math.abs(moment(closestDate.effectDate).diff(currentDate, 'days'));
+
+    dates.forEach(date => {
+      const diff = Math.abs(moment(date.effectDate).diff(currentDate, 'days'));
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestDate = date;
+      }
+    });
+
+    return closestDate.effectDate;
+  };
+
+  const closestEffectDate = findClosestDate(goldPrices);
+
   return (
     <>
       {loading ? (
@@ -171,8 +190,7 @@ export default function SettingGoldPrice() {
         </thead>
         <tbody>
           {sortedGoldPrices.map((material, index) => (
-            <tr key={index} onClick={() => showModal(material)} className={index % 2 === 0 ? 'rowEven' : 'rowOdd'}>
-              <td className="td">{material.id}</td>
+            <tr key={index} onClick={() => showModal(material)} className={`${index % 2 === 0 ? 'rowEven' : 'rowOdd'} ${material.effectDate === closestEffectDate ? 'highlight' : ''}`}>              <td className="td">{material.id}</td>
               <td className="td">{material.materialName}</td>
               <td className="td">{formatPrice(material.materialBuyPrice)}</td>
               <td className="td">{formatPrice(material.materialSellPrice)}</td>
