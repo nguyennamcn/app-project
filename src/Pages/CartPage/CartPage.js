@@ -18,7 +18,14 @@ const CartPage = () => {
     const [newPrice, setNewPrice] = useState();
 
     const handleInputChange = (event) => {
-        setCustomerName(event.target.value);
+        const value = event.target.value;
+        const regex = /^[^\d!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?]*$/;
+    
+        if (!regex.test(value)) {
+             notification.error({message: 'Tên không chứa số và các ký tự đặc biệt'});
+        } else {
+            setCustomerName(value);
+        }    
     };
 
     const handleInputChange1 = (event) => {

@@ -148,6 +148,7 @@ export default function PurchaseOrder() {
             <table className="purchase-order-table">
                 <thead>
                     <tr>
+                     
                         <th>Số thứ tự</th>
                         <th>Nhân viên</th>
                         <th>Mã đơn hàng</th>
@@ -155,12 +156,14 @@ export default function PurchaseOrder() {
                         <th>Ngày</th>
                         <th>Thanh toán</th>
                         <th></th>
+                   
                     </tr>
                 </thead>
                 <tbody>
                     {currentOrders.map((order, index) => (
                         <tr key={order.orderId}>
-                            <td data-label="Số thứ tự">{index + 1}</td>
+                            {/* <td data-label="ID">{order.orderId}</td> */}
+                            <td data-label="Số thứ tự">{index + 1 + currentPage * ordersPerPage}</td>
                             <td data-label="Nhân viên">{order.salesStaffName}</td>
                             <td data-label="Mã đơn hàng">{order.orderCode}</td>
                             <td data-label="Tổng số tiền">{formatPrice(order.totalPrice)}</td>

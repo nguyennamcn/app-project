@@ -273,6 +273,26 @@ export default function ListOrderPage() {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
 
+    const handleNameChange = (event) => {
+        const value = event.target.value;
+        const regex = /^[^\d!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?]*$/;
+    
+        if (!regex.test(value)) {
+             notification.error({message: 'Tên không chứa số và các ký tự đặc biệt'});
+        } else {
+            setCustomerName(value);
+        }    
+    };
+
+    const handlePhoneChange = (event) => {
+        const input = event.target.value;
+        if (/^\d*$/.test(input) && input.length <= 10) {
+            setCustomerPhone(input);
+        } else {
+            notification.error({ message: 'Vui lòng nhập lại (tối đa 10 chữ số)' });
+        }
+    };
+
     const columns = [
         {
             title: 'Tên sản phẩm',
@@ -317,14 +337,14 @@ export default function ListOrderPage() {
                                 {paymentMethodDone === 'NONE' ? (
                                     <>
 
-                                        <label>Tên: <input style={{ width: '50%' }} type="text" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></label>
-                                        <label>Số điện thoại: <input style={{ width: '50%' }} type="text" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></label>
+                                        <label>Tên: <input style={{ width: '50%' }} type="text" value={customerName} onChange={handleNameChange} /></label>
+                                        <label>Số điện thoại: <input style={{ width: '50%' }} type="text" value={customerPhone} onChange={handlePhoneChange} /></label>
                                         <label>Địa chỉ:<textarea style={{ width: '90%', height: '64px', resize: 'none', border: '1px solid' }} type="text" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} /></label>
                                         <label>Sinh nhật: <DatePicker onChange={(date) => setCustomerBirthday(date ? date.valueOf() : null)} value={customerBirthday ? moment(customerBirthday) : null} /></label>
                                         <label>Ngày: <div style={{ marginLeft: '2.4%', display: 'inline-block' }}>{datesale}</div></label>
                                         <label>Phương thức thanh toán: <select style={{ marginLeft: '2%' }} value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
                                             <option value='CASH'>Tiền mặt</option>
-                                            <option value='CREDIT'>Thẻ</option>
+                                            <option value='CREDIT'>VN PAY</option>
                                         </select></label>
                                         <label>Trạng thái giao hàng : {deliveryStatus == "PENDING" ? "Đang sử lí" : "Thành công"}</label>
                                     </>

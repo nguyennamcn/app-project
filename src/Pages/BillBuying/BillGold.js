@@ -193,6 +193,7 @@ const BillGold = () => {
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [phoneError, setPhoneError] = useState('');
+  const [nameError, setNameError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('Cash');
   const [address, setAddress] = useState('');
   const [products, setProducts] = useState([]);
@@ -225,20 +226,34 @@ const BillGold = () => {
     setProducts(savedProducts);
   }, []);
 
-  const handleInputChange = (setter) => (event) => {
+  const handleInputChange = (setter, fieldName) => (event) => {
     const { value } = event.target;
-    if (setter === setCustomerPhone) {
+  
+    if (fieldName === 'phone') {
       if (!/^\d*$/.test(value)) {
         setPhoneError('Vui lòng chỉ nhập số');
         return;
       } else if (value.length > 10) {
+        setPhoneError('Số điện thoại không được vượt quá 10 chữ số');
         return;
       } else {
         setPhoneError('');
       }
     }
+  
+    if (fieldName === 'name') {
+      const regex = /^[^\d!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?]*$/;
+      if (!regex.test(value)) {
+        setNameError('Tên không chứa số và các ký tự đặc biệt');
+        return;
+      } else {
+        setNameError('');
+      }
+    }
+  
     setter(value);
   };
+  
 
   const totalItems = products.length;
 
@@ -327,7 +342,7 @@ const BillGold = () => {
           style={pageStyles.detailInput}
           name="phone"
           value={customerPhone}
-          onChange={handleInputChange(setCustomerPhone)}
+          onChange={handleInputChange(setCustomerPhone, 'phone')}
           maxLength={10}
         />
         {phoneError && <div style={pageStyles.errorText}>{phoneError}</div>}
@@ -338,8 +353,9 @@ const BillGold = () => {
           style={pageStyles.detailInput}
           name="name"
           value={customerName}
-          onChange={handleInputChange(setCustomerName)}
+          onChange={handleInputChange(setCustomerName, 'name')}
         />
+        {nameError && <div style={pageStyles.errorText}>{nameError}</div>}
 
 
 
