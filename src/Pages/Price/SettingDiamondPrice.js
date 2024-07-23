@@ -126,12 +126,12 @@ export default function SettingDiamondPrice() {
   
     let closestDate = null;
     let minDiff = Infinity; 
-
+  
     dates.forEach(date => {
       const effectDate = moment(date.effectDate);
       
-      if (effectDate.isBefore(currentDate, 'day')) {
-        const diff = Math.abs(effectDate.diff(currentDate, 'days'));
+      if (effectDate.isBefore(currentDate)) {
+        const diff = Math.abs(effectDate.diff(currentDate, 'milliseconds'));
         if (diff < minDiff) {
           minDiff = diff;
           closestDate = date;
@@ -141,6 +141,7 @@ export default function SettingDiamondPrice() {
   
     return closestDate ? closestDate.effectDate : null;
   };
+  
 
   const showCreateModal = () => {
     setIsCreateModalVisible(true);

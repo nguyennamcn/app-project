@@ -35,8 +35,19 @@ function AddJewelry() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [addGemContent, setAddGemContent] = useState(false);
+  const [goldType, setGoldType] = useState([]);
   const [availableSizes, setAvailableSizes] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    adornicaServ.getPriceMaterial()
+      .then((res) => {
+        setGoldType(res.data.metadata);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     if (newJewelry.categoryId) {
@@ -206,16 +217,16 @@ function AddJewelry() {
               <div className="add-gem-form-group">
                 <label>Vật liệu:</label>
                 <select name="material" placeholder='Material id' value={newJewelry.material} onChange={handleInputChange} required>
-                  <option value={0}>Hãy chọn vật liệu</option>
-                  <option value={1}>VÀNG 24K</option>
-                  <option value={2}>VÀNG 18K</option>
-                  <option value={3}>VÀNG TRẮNG</option>
-                  {/* <option value={4}>GOLD BARS</option> */}
+                  <option  value="">Chọn loại vật liệu</option>
+                
+                {goldType.map((gold) => (
+                  <option key={gold.materialId} value={gold.materialId}>{gold.materialName}</option>
+                ))}
                 </select>
               </div>
               <div className="add-gem-form-group">
                 <label>Trọng lượng vật liệu (Chỉ):</label>
-                <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={1} required/>
+                <input type="number" name="weight" value={newJewelry.weight} onChange={handleInputChange} min={0.1} step={0.1} required/>
               </div>
             </div>
             <div className="add-gem-form-row">

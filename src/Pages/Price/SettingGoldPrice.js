@@ -167,12 +167,12 @@ export default function SettingGoldPrice() {
   
     let closestDate = null;
     let minDiff = Infinity; 
-
+  
     dates.forEach(date => {
       const effectDate = moment(date.effectDate);
       
-      if (effectDate.isBefore(currentDate, 'day')) {
-        const diff = Math.abs(effectDate.diff(currentDate, 'days'));
+      if (effectDate.isBefore(currentDate)) {
+        const diff = Math.abs(effectDate.diff(currentDate, 'milliseconds'));
         if (diff < minDiff) {
           minDiff = diff;
           closestDate = date;
@@ -181,7 +181,7 @@ export default function SettingGoldPrice() {
     });
   
     return closestDate ? closestDate.effectDate : null;
-  };
+  };  
 
   const closestEffectDate = findClosestDate(goldPrices);
 
