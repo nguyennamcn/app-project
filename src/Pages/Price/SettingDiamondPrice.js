@@ -97,10 +97,16 @@ export default function SettingDiamondPrice() {
     navigate('/diamond-price');
   };
 
-  const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('vi-VN', options);
-  };
+  const formatDate = (milliseconds) => {
+    const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    };
+    return new Date(milliseconds).toLocaleDateString('vi-VN', options);
+};
 
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -141,9 +147,12 @@ export default function SettingDiamondPrice() {
   };
 
   const handleCreate = () => {
-    if (isNaN(createByCarat) || createByCarat === '') {
-      notification.error({ message: "Khối lượng phải là một số hợp lệ" });
-      return; 
+    const now = Date.now(); 
+
+    
+    if (createEffectDate < now) {
+        notification.error({ message: "Ngày tạo giá phải lớn hơn ngày hiện tại" });
+        return; 
     }
 
     const dataCreateWithEffectDate = {
@@ -166,7 +175,7 @@ export default function SettingDiamondPrice() {
     })
     .catch(error => {
       const errorMessage = error.response?.data?.metadata?.message || error.message || "Server error";
-      notification.error({ message: errorMessage });
+      notification.error({ message: "Vui lòng không bỏ trống" });
       console.log(error);
     });
 
