@@ -84,7 +84,13 @@ const DiamondPrice = () => {
                                 </thead>
                                 <tbody>
                                     {caratRanges[range].map((price, index) => (
-                                        <tr key={index} style={{ cursor: 'auto' }} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
+                                        <tr key={index} style={{
+                                            cursor: 'auto',
+                                            backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#fff',
+                                            ':hover': {
+                                              backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#fff', // Maintain the same background color on hover
+                                            }
+                                          }} className={index % 2 === 0 ? 'DiamondPrice-rowEven' : 'DiamondPrice-rowOdd'}>
                                             <td data-label="STT" className="DiamondPrice-td-toClick">{index + 1}</td>
                                             <td data-label="Origin" className="DiamondPrice-td">{price.origin}</td>
                                             <td data-label="Color" className="DiamondPrice-td">{price.color}</td>

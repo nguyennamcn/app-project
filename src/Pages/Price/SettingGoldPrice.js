@@ -19,6 +19,7 @@ export default function SettingGoldPrice() {
   const [createSellPrice, setCreateSellPrice] = useState();
   const [createEffectDate, setCreateEffectDate] = useState(null);
   const [createSelectedMaterialId, setCreateSelectedMaterialId] = useState();
+  const [createSelectedMaterialName, setCreateSelectedMaterialName] = useState("");
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function SettingGoldPrice() {
   useEffect(() => {
     adornicaServ.getMaterial()
       .then((res) => {
-        console.log(res.data.metadata);
+        console.log("List material",res.data.metadata);
         setListMaterial(res.data.metadata);
 
         if (res.data.metadata.length > 0) {
@@ -43,6 +44,9 @@ export default function SettingGoldPrice() {
   }, []);
 
   const handleMaterialChange = (materialId) => {
+    const selectedMaterial = listMaterial.find(material => material.id === materialId);
+    setCreateSelectedMaterialId(materialId);
+    setCreateSelectedMaterialName(selectedMaterial ? selectedMaterial.material : "");
     adornicaServ.getPriceMaterialExceptEffectDate(materialId)
       .then((res) => {
         console.log(res.data.metadata);
@@ -102,10 +106,6 @@ export default function SettingGoldPrice() {
   };
 
   const showCreateModal = () => {
-    setCreateSelectedMaterialId(null);
-    setCreateBuyPrice(null);
-    setCreateSellPrice(null);
-    setCreateEffectDate(null);
     setIsCreateModalVisible(true);
   };
 
@@ -122,6 +122,11 @@ export default function SettingGoldPrice() {
         notification.success({ message: "Tạo thành công" });
         setIsCreateModalVisible(false);
         handleMaterialChange(createSelectedMaterialId);
+
+        //clear input 
+        setCreateBuyPrice(null);
+        setCreateSellPrice(null);
+        setCreateEffectDate(null);
       })
       .catch(error => {
         const errorMessage = "Can not create, please try again !";
@@ -140,6 +145,25 @@ export default function SettingGoldPrice() {
   };
 
   const sortedGoldPrices = [...goldPrices].sort((a, b) => new Date(a.effectDate) - new Date(b.effectDate));
+
+  const findClosestDate = (dates) => {
+    if (dates.length === 0) return null;
+
+    let closestDate = dates[0];
+    let minDiff = Math.abs(moment(closestDate.effectDate).diff(currentDate, 'days'));
+
+    dates.forEach(date => {
+      const diff = Math.abs(moment(date.effectDate).diff(currentDate, 'days'));
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestDate = date;
+      }
+    });
+
+    return closestDate.effectDate;
+  };
+
+  const closestEffectDate = findClosestDate(goldPrices);
 
   return (
     <>
@@ -166,8 +190,7 @@ export default function SettingGoldPrice() {
         </thead>
         <tbody>
           {sortedGoldPrices.map((material, index) => (
-            <tr key={index} onClick={() => showModal(material)} className={index % 2 === 0 ? 'rowEven' : 'rowOdd'}>
-              <td className="td">{material.id}</td>
+            <tr key={index} onClick={() => showModal(material)} className={`${index % 2 === 0 ? 'rowEven' : 'rowOdd'} ${material.effectDate === closestEffectDate ? 'highlight' : ''}`}>              <td className="td">{material.id}</td>
               <td className="td">{material.materialName}</td>
               <td className="td">{formatPrice(material.materialBuyPrice)}</td>
               <td className="td">{formatPrice(material.materialSellPrice)}</td>
@@ -212,13 +235,7 @@ export default function SettingGoldPrice() {
         onOk={handleCreate}
         onCancel={handleCancel}
       >
-        <select style={{border:'1px solid'}} className='selectMaterial' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
-          <option value="">Chọn loại vàng</option>
-          {listMaterial.map((material) => (
-            <option key={material.id} value={material.id}>{material.material}</option>
-          ))}
-        </select>
-
+    
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
           <label style={{fontWeight:600, fontSize:'16px'}}>Ngày hiệu lực:</label>
           <DatePicker
