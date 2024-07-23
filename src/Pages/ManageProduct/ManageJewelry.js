@@ -20,7 +20,7 @@ const JewelryInventoryPage = () => {
     adornicaServ.getListJewelry()
       .then((res) => {
         console.log(res.data.metadata.data);
-        const sortedData = res.data.metadata.data.sort((a, b) => b.productId - a.productId);
+        const sortedData = res.data.metadata.data.sort((a, b) => a.productId - b.productId);
         setJewelry(sortedData);
       })
       .catch((err) => {

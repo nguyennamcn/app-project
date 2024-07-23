@@ -19,7 +19,7 @@ export default function ManageGold() {
   useEffect(() => {
     adornicaServ.getListGold()
       .then((res) => {
-        const sortedData = res.data.metadata.data.sort((a, b) => b.productId - a.productId);
+        const sortedData = res.data.metadata.data.sort((a, b) => a.productId - b.productId);
         setGoldManage(sortedData);
       })
       .catch((err) => {
