@@ -48,6 +48,7 @@ import Material from './Pages/Invetory/Material';
 import SettingGoldPrice from './Pages/Price/SettingGoldPrice';
 import SettingDiamondPrice from './Pages/Price/SettingDiamondPrice'
 import Spinner from './Components/Spinner/Spinner';
+import ChangePass from './Pages/LoginPage/ChangePass';
 
 function App() {
   const dispatch = useDispatch();
@@ -118,6 +119,7 @@ function App() {
               <Route path="/historyOrder" element={<Layout Component={HistoryOrder} />} />
               <Route path="/settingGoldPrice" element={<Layout Component={SettingGoldPrice} />} />
               <Route path="/settingDiamondPrice" element={<Layout Component={SettingDiamondPrice} />} />
+              <Route path="/changepass" element={<Layout Component={ChangePass} />} />
             </>
           )}
 

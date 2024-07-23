@@ -308,5 +308,10 @@ export const adornicaServ = {
     updatePriceMaterial: (id, newPriceData) =>{
         console.log(id, newPriceData);
         return https.post(`/api/v1/prices/materials/create/${id}`, newPriceData);
+    },
+
+    changePasswork : (data) =>{
+        console.log(data);
+        return https.post(`/api/v1/users/change-password`, data);
     }
 }
