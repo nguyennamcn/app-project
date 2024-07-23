@@ -19,6 +19,7 @@ export default function SettingGoldPrice() {
   const [createSellPrice, setCreateSellPrice] = useState();
   const [createEffectDate, setCreateEffectDate] = useState(null);
   const [createSelectedMaterialId, setCreateSelectedMaterialId] = useState();
+  const [createSelectedMaterialName, setCreateSelectedMaterialName] = useState("");
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function SettingGoldPrice() {
   useEffect(() => {
     adornicaServ.getMaterial()
       .then((res) => {
-        console.log(res.data.metadata);
+        console.log("List material",res.data.metadata);
         setListMaterial(res.data.metadata);
 
         if (res.data.metadata.length > 0) {
@@ -43,6 +44,9 @@ export default function SettingGoldPrice() {
   }, []);
 
   const handleMaterialChange = (materialId) => {
+    const selectedMaterial = listMaterial.find(material => material.id === materialId);
+    setCreateSelectedMaterialId(materialId);
+    setCreateSelectedMaterialName(selectedMaterial ? selectedMaterial.material : "");
     adornicaServ.getPriceMaterialExceptEffectDate(materialId)
       .then((res) => {
         console.log(res.data.metadata);
@@ -102,10 +106,6 @@ export default function SettingGoldPrice() {
   };
 
   const showCreateModal = () => {
-    setCreateSelectedMaterialId(null);
-    setCreateBuyPrice(null);
-    setCreateSellPrice(null);
-    setCreateEffectDate(null);
     setIsCreateModalVisible(true);
   };
 
@@ -212,13 +212,8 @@ export default function SettingGoldPrice() {
         onOk={handleCreate}
         onCancel={handleCancel}
       >
-        <select style={{border:'1px solid'}} className='selectMaterial' onChange={(e) => setCreateSelectedMaterialId(e.target.value)}>
-          <option value="">Chọn loại vàng</option>
-          {listMaterial.map((material) => (
-            <option key={material.id} value={material.id}>{material.material}</option>
-          ))}
-        </select>
-
+        <h2>ID: {createSelectedMaterialId}</h2>
+        <h2>Loại vàng: {createSelectedMaterialName}</h2>
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
           <label style={{fontWeight:600, fontSize:'16px'}}>Ngày hiệu lực:</label>
           <DatePicker
