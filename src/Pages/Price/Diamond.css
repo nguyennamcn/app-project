@@ -110,8 +110,10 @@
     max-width: 200px;
 }
 .DiamondPrice-closestEffectDate {
-    background-color: #ffeb3b !important;
+    background-color: #ffeb3b;
   } 
+
+ 
 
 @media only screen and (max-width: 768px) {
     .DiamondPrice-header {
