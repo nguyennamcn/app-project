@@ -308,5 +308,11 @@ export const adornicaServ = {
     updatePriceMaterial: (id, newPriceData) =>{
         console.log(id, newPriceData);
         return https.post(`/api/v1/prices/materials/create/${id}`, newPriceData);
-    }
+    },
+
+    
+    postDiamondPrice: (newPriceData,id) =>{
+        console.log(newPriceData);
+        return https.post(`/api/v1/prices/gems/create`, newPriceData);
+    },
 }
