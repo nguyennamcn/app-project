@@ -5,7 +5,7 @@ import './GoldPrice.css';
 import { useSelector } from 'react-redux';
 import Spinner from '../../Components/Spinner/Spinner';
 
-export default function GoldPrice() {
+export default function ShowGold() {
   const [goldPrices, setGoldPrices] = useState([]);
   const navigate = useNavigate();
 
@@ -29,10 +29,6 @@ export default function GoldPrice() {
       });
   }, []);
 
-  const handleSetting = () => {
-    navigate('/settingGoldPrice');
-  };
-
   const currentDate = new Date().toLocaleDateString();
   const formatPrice = (price) => {
     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -44,7 +40,7 @@ export default function GoldPrice() {
         <Spinner />
       ) : (
         <>
-          <div className="gold-price-container">
+          <div className="sgold-price-container">
             <h2 className="gold-price-header">Giá Vàng - {currentDate}</h2>
             <table className="gold-price-table">
               <thead>
@@ -64,21 +60,6 @@ export default function GoldPrice() {
                 ))}
               </tbody>
             </table>
-            {isManager ? (<button className="btnSetting-gold" onClick={handleSetting}>Tùy chỉnh</button>) : null}
-          </div>
-          <div>
-            <a
-              href="/showgold"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                position: 'absolute',
-                top: '15%',
-                right: '5%'
-              }}
-            >
-              Mở bảng
-            </a>
           </div>
         </>
       )
