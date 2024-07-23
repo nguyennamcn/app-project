@@ -264,9 +264,9 @@ export default function SettingDiamondPrice() {
         onOk={handleCreate}
         onCancel={() => setIsCreateModalVisible(false)}
       >
-        
-              <label >Màu sắc:</label>
-              <select  value={createByColor} onChange={(e) => setCreateByColor(e.target.value)}>
+        <div>
+              <label className='lable-create-modal'>Màu sắc:</label>
+              <select className='select-create-modal'  value={createByColor} onChange={(e) => setCreateByColor(e.target.value)}>
                 <option value=""></option>
                 <option value="D">D</option>
                 <option value="E">E</option>
@@ -279,20 +279,20 @@ export default function SettingDiamondPrice() {
                 <option value="L">L</option>
                 <option value="M">M</option>
               </select>
-         
-          
-              <label>Vết cắt:</label>
-              <select  value={createByCut} onChange={(e) => setCreateByCut(e.target.value)}>
+              </div>
+              <div>
+              <label className='lable-create-modal'>Vết cắt:</label>
+              <select className='select-create-modal'  value={createByCut} onChange={(e) => setCreateByCut(e.target.value)}>
                 <option value=""></option>
                 <option value="EX">EX</option>
                 <option value="G">G</option>
                 <option value="F">F</option>
                 <option value="P">P</option>
               </select>
-         
-           
-              <label >Độ tinh khiết:</label>
-              <select value={createByClarity} onChange={(e) => setCreateByClarity(e.target.value)}>
+              </div>
+              <div>
+              <label className='lable-create-modal'>Độ tinh khiết:</label>
+              <select className='select-create-modal' value={createByClarity} onChange={(e) => setCreateByClarity(e.target.value)}>
                 <option value=""></option>
                 <option value="FL">FL</option>
                 <option value="IF">IF</option>
@@ -306,19 +306,22 @@ export default function SettingDiamondPrice() {
                 <option value="I2">I2</option>
                 <option value="I3">I3</option>
               </select>
-          
-         
-              <label>Khối lượng (Carat):</label>
-              <input type="number" value={createByCarat} onChange={(e) => setCreateByCarat(e.target.value)} />
-           
-          
-              <label >Nguồn gốc:</label>
-              <select  value={createByOrigin} onChange={(e) => setCreateByOrigin(e.target.value)}>
+              </div>
+          <div>
+              <label className='lable-create-modal'>Khối lượng (Carat):</label>
+              <input className='select-create-modal' type="number" value={createByCarat} onChange={(e) => setCreateByCarat(e.target.value)} 
+                min={0}
+                step={0.1}
+              />
+          </div>
+          <div>
+              <label className='lable-create-modal' >Nguồn gốc:</label>
+              <select className='select-create-modal'  value={createByOrigin} onChange={(e) => setCreateByOrigin(e.target.value)}>
                 <option value=""></option>
                 <option value="TỰ NHIÊN">TỰ NHIÊN</option>
                 <option value="NHÂN TẠO">NHÂN TẠO</option>
               </select>
-           
+          </div>
     
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
           <label style={{fontWeight:600, fontSize:'16px'}}>Ngày hiệu lực:</label>
