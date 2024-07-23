@@ -114,20 +114,26 @@ export default function SettingDiamondPrice() {
   };
 
   const findClosestDate = (dates) => {
-  if (dates.length === 0) return null;
-
-    let closestDate = dates[0];
-    let minDiff = Math.abs(moment(closestDate.effectDate).diff(currentDate, 'days'));
+    if (dates.length === 0) return null;
+    
+    const currentDate = moment(); 
+  
+    let closestDate = null;
+    let minDiff = Infinity; 
 
     dates.forEach(date => {
-      const diff = Math.abs(moment(date.effectDate).diff(currentDate, 'days'));
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestDate = date;
+      const effectDate = moment(date.effectDate);
+      
+      if (effectDate.isBefore(currentDate, 'day')) {
+        const diff = Math.abs(effectDate.diff(currentDate, 'days'));
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestDate = date;
+        }
       }
     });
-
-    return closestDate.effectDate;
+  
+    return closestDate ? closestDate.effectDate : null;
   };
 
   const showCreateModal = () => {
