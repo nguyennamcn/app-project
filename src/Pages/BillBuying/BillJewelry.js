@@ -376,7 +376,7 @@ const BillJewelry = () => {
       address: customerDetails.address,
 
       list: products.map((product) => ({
-        name: product.goldType,
+        name: product.name,
         materialId: product.materialId ? product.materialId : "",
         weight: parseFloat(product.weight),
         color: product.color, // You need to provide the color

@@ -328,7 +328,7 @@ const getPaid = (role) => {
               cursor: 'pointer',
               marginRight:'5px' }}
           >
-            Hoàn thành
+            Xuất hóa đơn
           </button>
         </div>
       ) 
