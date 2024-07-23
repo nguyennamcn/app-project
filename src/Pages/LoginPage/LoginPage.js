@@ -113,6 +113,13 @@ const LoginPage = () => {
                 >
                   <Input.Password />
                 </Form.Item>
+                <NavLink to={'/login/fogotpass'}
+                  style={{
+                    margin: ''
+                  }}
+                >
+                  Quên mật khẩu
+                </NavLink>
                 <Form.Item className="flex justify-center" wrapperCol={{ span: 24 }}>
                   <Button className="bg-black text-yellow-600 hover:text-white hover:border-hidden" htmlType="submit">
                     Đăng nhập

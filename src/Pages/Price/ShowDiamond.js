@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Spinner from '../../Components/Spinner/Spinner';
 
-const DiamondPrice = () => {
+const ShowDiamond = () => {
     const [diamondPrices, setDiamondPrices] = useState([]);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -31,9 +31,6 @@ const DiamondPrice = () => {
             });
     }, []);
 
-    const handleSetting = () => {
-        navigate('/settingDiamondPrice');
-    };
 
     const formatDate = (dateString) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -65,7 +62,7 @@ const DiamondPrice = () => {
                 <Spinner />
             ) : (
                 <>
-                    <div className="DiamondPrice-container">
+                    <div className="sDiamondPrice-container">
                         <h2 className="DiamondPrice-header">Giá Kim Cương - {currentDate}</h2>
                         {Object.keys(caratRanges).map((range, idx) => (
                             <div key={idx} className="DiamondPrice-tableContainer">
@@ -106,26 +103,13 @@ const DiamondPrice = () => {
                                 </table>
                             </div>
                         ))}
-                        {isManager ? (<button className="btnSetting-diamond" onClick={handleSetting}>Tùy chỉnh</button>) : null}
+                
                     </div>
-                    <div>
-                        <a
-                            href="/showdiamond"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{
-                                position: 'absolute',
-                                top: '15%',
-                                right: '5%'
-                            }}
-                        >
-                            Mở bảng
-                        </a>
-                    </div>
+                    
                 </>
             )}
         </>
     );
 };
 
-export default DiamondPrice;
+export default ShowDiamond;

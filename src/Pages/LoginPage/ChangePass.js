@@ -149,9 +149,6 @@ export default function ChangePass() {
                             />
                         </div>
                     </Space>
-                    <NavLink to="/forgot-password">
-                        Bạn quên mật khẩu ư?
-                    </NavLink>
                     {error && <p className="error">{error}</p>}
                     <Button
 
