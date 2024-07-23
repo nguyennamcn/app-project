@@ -122,6 +122,11 @@ export default function SettingGoldPrice() {
         notification.success({ message: "Tạo thành công" });
         setIsCreateModalVisible(false);
         handleMaterialChange(createSelectedMaterialId);
+
+        //clear input 
+        setCreateBuyPrice(null);
+        setCreateSellPrice(null);
+        setCreateEffectDate(null);
       })
       .catch(error => {
         const errorMessage = "Can not create, please try again !";
@@ -212,8 +217,7 @@ export default function SettingGoldPrice() {
         onOk={handleCreate}
         onCancel={handleCancel}
       >
-        <h2>ID: {createSelectedMaterialId}</h2>
-        <h2>Loại vàng: {createSelectedMaterialName}</h2>
+    
         <div style={{ marginTop: '10px', marginBottom: '0px' }}>
           <label style={{fontWeight:600, fontSize:'16px'}}>Ngày hiệu lực:</label>
           <DatePicker
