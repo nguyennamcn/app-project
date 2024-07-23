@@ -43,6 +43,13 @@ const UserDropdown = ({ user, logoutBtn }) => {
           >
             <button onClick={() => navigate('/profile')} style={{width:'120px',height:'32px',}}>Hồ Sơ</button>
           </div>
+          <div 
+            style={itemStyle} 
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = itemHoverStyle.backgroundColor}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+          >
+            <button onClick={() => navigate('/changepass')} style={{width:'120px',height:'32px',}}>Đổi mật khẩu</button>
+          </div>  
         </div>
       )}
       trigger={['click']}

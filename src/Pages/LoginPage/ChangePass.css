@@ -1,0 +1,44 @@
+.change-pass-container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 2%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.change-pass-container h1 {
+  font-size: 16px;
+  text-align: left;
+}
+
+.change-pass-container h2 {
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 26px;
+}
+
+.change-pass-container .span-text {
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 30px;
+}
+
+.change-pass-container .form-group {
+  margin-bottom: 15px;
+}
+
+.change-pass-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.change-pass-container .error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
