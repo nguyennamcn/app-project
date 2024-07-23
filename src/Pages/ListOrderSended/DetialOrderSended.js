@@ -70,7 +70,7 @@ export default function ListOrderPage() {
     const getStt = (role) => {
         switch (role) {
           case 'SUCCESS':
-            return 'Đã Thanh Toán';
+            return 'Đã Giao Hàng';
           case 'PENDING':
             return 'Đang Chờ';
           default:
